@@ -100,7 +100,6 @@
     "replace-in-file": "6.2.0",
     "rimraf": "3.0.2",
     "ts-jest": "27.0.3",
-    "ts-loader": "9.2.3",
     "ts-node": "10.0.0",
     "tsconfig-paths": "3.9.0",
     "ttypescript": "1.5.12",
