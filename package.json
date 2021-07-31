@@ -35,7 +35,7 @@
     "clean": "rimraf node_modules",
     "postinstall": "husky-run install",
     "check:format": "prettier --check .",
-    "check:style": "eslint . --ext md,js,ts.tsx",
+    "check:style": "eslint . --ext md,js,ts",
     "fix:format": "prettier --write .",
     "fix:style": "yarn check:style --fix --cache",
     "test": "bash scripts/jest.sh",
