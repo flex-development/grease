@@ -60,7 +60,7 @@ module.exports = {
         'tests',
         'typescript',
         ...readdirSync(resolve(__dirname, 'src')).filter(path => {
-          return lstatSync(resolve(dpath, path)).isDirectory()
+          return lstatSync(resolve(__dirname, 'src', path)).isDirectory()
         })
       ]
     ],
@@ -68,7 +68,7 @@ module.exports = {
     /**
      * Commit message subject casing.
      */
-    'subject-case': [2, 'always', ['lower-case', 'upper-case']],
+    'subject-case': [1, 'always', ['lower-case', 'upper-case']],
 
     /**
      * Rules for valid commit types.
