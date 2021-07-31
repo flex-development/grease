@@ -1,0 +1,11 @@
+# Prettier Ignore
+# See: https://prettier.io/docs/en/ignore.html
+
+.yarn/
+build/
+coverage/
+node_modules/
+
+.env.*
+.env
+*.d.ts

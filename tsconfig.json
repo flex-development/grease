@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowUnreachableCode": false,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "checkJs": true,
+    "downlevelIteration": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["dom", "es2018"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "paths": {
+      "@": ["src/index.ts"],
+      "@/*": ["src/*"],
+      "@tests/fixtures/*": ["__tests__/__fixtures__/*"],
+      "@tests/*": ["__tests__/*"]
+    },
+    "preserveConstEnums": true,
+    "pretty": true,
+    "resolveJsonModule": true,
+    "sourceMap": false,
+    "strictPropertyInitialization": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "strict": true,
+    "target": "es2018"
+  },
+  "exclude": ["**/__mocks__", "**/__tests__", "build", "node_modules"]
+}

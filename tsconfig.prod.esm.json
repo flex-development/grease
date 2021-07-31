@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "outDir": "./build/esm",
+    "paths": {
+      "@": ["src/index.ts"],
+      "@/*": ["src/*"],
+      "@tests/fixtures/*": ["__tests__/__fixtures__/*"],
+      "@tests/*": ["__tests__/*"],
+      "lodash/*": ["node_modules/lodash-es/*"]
+    }
+  },
+  "extends": "./tsconfig.prod.json"
+}
