@@ -38,11 +38,6 @@ const BUILD_FILES: string[] = ['CHANGELOG.md', 'LICENSE.md', 'README.md']
 const BUILD_FORMATS: BuildPackageOptions['formats'] = ['cjs', 'esm']
 
 /**
- * @property {string} TSCONFIG_PROD - Base production config file
- */
-const TSCONFIG_PROD: string = 'tsconfig.prod.json'
-
-/**
  * @property {yargs.Argv} args - Command line arguments parser
  * @see https://github.com/yargs/yargs
  */

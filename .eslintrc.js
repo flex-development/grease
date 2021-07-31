@@ -115,7 +115,7 @@ const RULES = {
       skipWords: [
         'argv',
         'bday',
-        'bgi',
+        'cjs',
         'commitlint',
         'curr',
         'distributable',
@@ -154,6 +154,7 @@ const RULES = {
         'strinigify',
         'tgz',
         'tsconfig',
+        'ttsc',
         'ttypescript',
         'tutils',
         'typeof',
@@ -172,7 +173,6 @@ const RULES = {
 
 module.exports = {
   env: {
-    browser: true,
     es6: true,
     node: true
   },
