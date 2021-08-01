@@ -4,3 +4,4 @@
  */
 
 export * from './semver'
+export * from './validation'
