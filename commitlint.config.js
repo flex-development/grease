@@ -45,21 +45,29 @@ module.exports = {
      *
      * @return {RuleConfigTuple} Scope rules
      */
-    'scope-enum': [
-      2,
-      'always',
-      [
+    'scope-enum': () => {
+      const scopes = [
         'deploy',
         'deps',
         'deps-dev',
-        'grease',
-        'grease-cli',
         'release',
         'scripts',
         'tests',
         'typescript'
       ]
-    ],
+
+      const scopes_package = ['cli', 'node']
+
+      return [
+        2,
+        'always',
+        [
+          ...scopes,
+          ...scopes_package,
+          ...scopes_package.map(ps => scopes.map(s => `${ps}-${s}`)).flat()
+        ]
+      ]
+    },
 
     /**
      * Commit message subject casing.
