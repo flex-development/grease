@@ -38,6 +38,11 @@ const BUILD_FILES: string[] = ['CHANGELOG.md', 'LICENSE.md', 'README.md']
 const BUILD_FORMATS: BuildPackageOptions['formats'] = ['cjs', 'esm']
 
 /**
+ * @property {string} TSCONFIG_PROD - Base production config file
+ */
+const TSCONFIG_PROD: string = 'tsconfig.prod.json'
+
+/**
  * @property {yargs.Argv} args - Command line arguments parser
  * @see https://github.com/yargs/yargs
  */
@@ -80,14 +85,45 @@ const build = (argv: BuildPackageOptions): void => {
     rimraf.sync(BUILD_DIR)
     sh.echo(ch.white(`✓ remove ${file(BUILD_DIR)}`))
 
+    // Get base TypeScript config path
+    const TSCONFIG_PATH = path.join(process.cwd(), TSCONFIG_PROD)
+
+    // Check if base TypeScript config file already exists
+    const HAS_TSCONFIG = fse.existsSync(TSCONFIG_PATH)
+
+    // Copy base TypeScript config file if base does not exist
+    if (!HAS_TSCONFIG) {
+      fse.copyFileSync(
+        path.join('..', '..', TSCONFIG_PROD),
+        path.join(process.cwd(), TSCONFIG_PROD)
+      )
+    }
+
     // Build project with ttypescript - https://github.com/cevek/ttypescript
     formats.forEach(format => {
-      // Get tsconfig config file
+      // Get tsconfig config file and path
       const tsconfig: string = `tsconfig.prod.${format}.json`
+      const tsconfig_path = path.join(process.cwd(), tsconfig)
+
+      // Check if TypeScript config already exists
+      const tsconfig_exists = fse.existsSync(tsconfig_path)
+
+      // Copy temporary TypeScript config file to current working directory
+      if (!tsconfig_exists) {
+        fse.copyFileSync(path.join('..', '..', tsconfig), tsconfig_path)
+      }
 
       // Run build command
       if (sh.exec(`ttsc -p ${tsconfig}`)) sh.echo(ch.white(`✓ build ${format}`))
+
+      // Delete temporary config file
+      if (!tsconfig_exists) {
+        fse.removeSync(tsconfig_path)
+      }
     })
+
+    // Remove base TypeScript config file
+    if (!HAS_TSCONFIG) fse.removeSync(TSCONFIG_PATH)
 
     // Fix node module import paths
     fixNodeModulePaths()

@@ -16,6 +16,49 @@ Package release workflow tool
 ## Getting Started
 
 `grease` is a package release workflow tool for Node.js and CLI environments.
+Built on top of the [`standard-version`][5] library, it helps maintainers create
+releases and upload release assets via the [GitHub CLI][2].
+
+Release notes can be generated using the `CHANGELOG` entry for the most recent
+semver tag. Maintainers also have the option of generating blank notes, notes in
+birthday (first release) format, or skipping note generation entirely.
+
+## Installation
+
+1. Authenticate with [GitHub Package Registry][9] (GPR)
+
+   **NPM**
+
+   ```properties
+   //registry.npmjs.org/:_authToken=$GITHUB_PAT_GPR
+   @flex-development:registry=https://npm.pkg.github.com/
+   ```
+
+   **Yarn 1**
+
+   ```properties
+   //registry.yarnpkg.com/:_authToken=$GITHUB_PAT_GPR
+   @flex-development:registry=https://npm.pkg.github.com/
+   ```
+
+   **Yarn 2**
+
+   ```yml
+   npmScopes:
+     flex-development:
+       npmAlwaysAuth: true
+       npmAuthToken: '${GITHUB_PAT_GPR}'
+       npmRegistryServer: 'https://npm.pkg.github.com'
+   ```
+
+   where `$GITHUB_PAT_GPR` is [GitHub Personal Access Token][10] with at least
+   the `read:packages` scope.
+
+2. Add project to `dependencies`
+
+   ```zsh
+   yarn add @flex-development/grease # or npm i @flex-development/grease
+   ```
 
 ## Usage
 
@@ -40,3 +83,5 @@ Package release workflow tool
 [7]:
   https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/git-semver-tags#readme
 [8]: https://github.com/yargs/yargs
+[9]: https://github.com/features/packages
+[10]: https://github.com/settings/tokens/new

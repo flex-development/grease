@@ -6,6 +6,7 @@ import { compilerOptions } from './tsconfig.json'
 /**
  * @file Jest Configuration - Base
  * @see https://jestjs.io/docs/next/configuration
+ * @see https://orlandobayo.com/blog/monorepo-testing-using-jest
  */
 
 const TYPE = 'e2e|functional|integration'
@@ -24,7 +25,9 @@ const config: Config.InitialOptions = {
   moduleFileExtensions: ['node', 'js', 'json', 'ts'],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix }),
   prettierPath: `${prefix}/node_modules/prettier`,
-  roots: [`${prefix}/__mocks__`, `${prefix}/src`],
+  rootDir: '../..',
+  roots: [`${prefix}/__mocks__`, `${prefix}/packages`],
+  setupFiles: [`${prefix}/__tests__/config/setup.ts`],
   setupFilesAfterEnv: [`${prefix}/__tests__/config/setupAfterEnv.ts`],
   testRegex: `(/__tests__/)(spec/(${TYPE}))?(.*)(${TYPE})?.spec.ts$`,
   verbose: true

@@ -2,7 +2,6 @@ const prettierConfig = require('./.prettierrc')
 
 /**
  * @file ESLint Configuration
- * @module eslint-config
  * @see https://eslint.org/docs/user-guide/configuring
  * @see https://github.com/prettier/eslint-config-prettier
  */
@@ -19,7 +18,7 @@ const PARSER_OPTIONS = {
   babelOptions: {},
   ecmaFeatures: {
     impliedStrict: true,
-    jsx: true
+    jsx: false
   },
   ecmaVersion: 2020,
   sourceType: 'module'
@@ -27,7 +26,7 @@ const PARSER_OPTIONS = {
 
 const PARSER_OPTIONS_TYPESCRIPT = {
   ...PARSER_OPTIONS,
-  project: ['./tsconfig.json']
+  project: ['./tsconfig.json', './packages/**/tsconfig.json']
 }
 
 const PLUGINS = [

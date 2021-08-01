@@ -20,8 +20,8 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "paths": {
-      "@": ["src/index.ts"],
-      "@/*": ["src/*"],
+      "@/*": ["packages/*"],
+      "@grease/*": ["packages/grease/src/*"],
       "@tests/fixtures/*": ["__tests__/__fixtures__/*"],
       "@tests/*": ["__tests__/*"]
     },
@@ -34,5 +34,5 @@
     "strict": true,
     "target": "es2018"
   },
-  "exclude": ["build", "node_modules"]
+  "exclude": ["**/build", "**/node_modules"]
 }

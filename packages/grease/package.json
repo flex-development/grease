@@ -1,0 +1,70 @@
+{
+  "name": "@flex-development/grease",
+  "description": "Package release workflow tool",
+  "version": "1.0.0",
+  "keywords": [
+    "bitbucket",
+    "github cli",
+    "github release",
+    "release notes",
+    "standard-version",
+    "typescript"
+  ],
+  "homepage": "https://github.com/flex-development/grease",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/flex-development/grease.git",
+    "directory": "packages/grease"
+  },
+  "bugs": {
+    "url": "https://github.com/flex-development/grease/issues"
+  },
+  "license": "BSD-3-Clause",
+  "author": {
+    "name": "Lexus Drumgold",
+    "email": "lex@flexdevlopment.llc",
+    "url": "https://flexdevelopment.llc"
+  },
+  "publishConfig": {
+    "access": "public",
+    "branch": "main",
+    "branch_latest": "next",
+    "directory": "./build",
+    "registry": "https://npm.pkg.github.com"
+  },
+  "main": "./cjs/index.js",
+  "module": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "scripts": {
+    "test": "bash ../../scripts/jest.sh",
+    "build": "dotenv -c production ts-node ../../scripts/build",
+    "prepare": "install-peers; yarn build",
+    "prepack": "yarn prepare"
+  },
+  "dependencies": {
+    "@flex-development/exceptions": "2.0.0",
+    "@flex-development/tutils": "3.1.0",
+    "@types/debug": "4.1.5",
+    "@types/lodash": "4.14.170",
+    "@types/node": "16.4.8",
+    "@types/shelljs": "0.8.9",
+    "@types/standard-version": "7.0.1",
+    "chalk": "4.1.1",
+    "debug": "4.3.2",
+    "lodash": "4.17.21",
+    "lodash-es": "4.17.21",
+    "shelljs": "0.8.4",
+    "standard-version": "9.3.1"
+  },
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0",
+    "yarn": "3.0.0-rc.2"
+  },
+  "env": {
+    "optional": [
+      "DEBUG",
+      "DEBUG_COLORS"
+    ],
+    "required": []
+  }
+}

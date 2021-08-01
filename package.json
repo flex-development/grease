@@ -1,62 +1,30 @@
 {
-  "name": "@flex-development/grease",
+  "name": "@flex-development/p010",
   "description": "Package release workflow tool",
   "version": "1.0.0",
-  "keywords": [
-    "bitbucket",
-    "github cli",
-    "github release",
-    "release notes",
-    "standard-version",
-    "typescript"
-  ],
+  "keywords": [],
   "homepage": "https://github.com/flex-development/grease",
   "repository": "git://github.com/flex-development/grease.git",
   "bugs": {
     "url": "https://github.com/flex-development/grease/issues"
   },
-  "license": "BSD-3-Clause",
   "author": {
     "name": "Lexus Drumgold",
     "email": "lex@flexdevlopment.llc",
     "url": "https://flexdevelopment.llc"
   },
-  "publishConfig": {
-    "access": "public",
-    "branch": "main",
-    "branch_latest": "next",
-    "directory": "./build",
-    "registry": "https://npm.pkg.github.com"
-  },
-  "main": "./cjs/index.js",
-  "module": "./esm/index.js",
-  "types": "./esm/index.d.ts",
   "scripts": {
     "clean": "rimraf node_modules",
+    "prepare": "yarn workspaces foreach -itv run prepare",
     "postinstall": "husky-run install",
+    "bootstrap": "yarn; yarn prepare",
     "check:format": "prettier --check .",
     "check:style": "eslint . --ext md,js,ts",
     "fix:format": "prettier --write .",
     "fix:style": "yarn check:style --fix --cache",
     "test": "bash scripts/jest.sh",
-    "build": "dotenv -c production ts-node ./scripts/build",
-    "prepare": "install-peers; yarn build",
-    "prepack": "yarn prepare"
-  },
-  "dependencies": {
-    "@flex-development/exceptions": "2.0.0",
-    "@flex-development/tutils": "3.1.0",
-    "@types/debug": "4.1.5",
-    "@types/lodash": "4.14.170",
-    "@types/node": "16.4.8",
-    "@types/shelljs": "0.8.9",
-    "@types/standard-version": "7.0.1",
-    "chalk": "4.1.1",
-    "debug": "4.3.2",
-    "lodash": "4.17.21",
-    "lodash-es": "4.17.21",
-    "shelljs": "0.8.4",
-    "standard-version": "9.3.1"
+    "test:node": "yarn workspace @flex-development/grease test",
+    "build:node": "yarn workspace @flex-development/grease build"
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.14.7",
@@ -115,7 +83,11 @@
       "DEBUG_COLORS"
     ],
     "required": [
-      "GITHUB_PAT_GPR"
+      "GITHUB_PAT_GPR_FLDV"
     ]
-  }
+  },
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
 }

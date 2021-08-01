@@ -658,32 +658,45 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@flex-development/grease@workspace:.":
+"@flex-development/grease@workspace:packages/grease":
   version: 0.0.0-use.local
-  resolution: "@flex-development/grease@workspace:."
+  resolution: "@flex-development/grease@workspace:packages/grease"
+  dependencies:
+    "@flex-development/exceptions": 2.0.0
+    "@flex-development/tutils": 3.1.0
+    "@types/debug": 4.1.5
+    "@types/lodash": 4.14.170
+    "@types/node": 16.4.8
+    "@types/shelljs": 0.8.9
+    "@types/standard-version": 7.0.1
+    chalk: 4.1.1
+    debug: 4.3.2
+    lodash: 4.17.21
+    lodash-es: 4.17.21
+    shelljs: 0.8.4
+    standard-version: 9.3.1
+  languageName: unknown
+  linkType: soft
+
+"@flex-development/p010@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@flex-development/p010@workspace:."
   dependencies:
     "@babel/eslint-parser": 7.14.7
     "@commitlint/cli": 13.0.0
     "@commitlint/config-conventional": 13.0.0
     "@commitlint/format": 13.0.0
-    "@flex-development/exceptions": 2.0.0
-    "@flex-development/tutils": 3.1.0
-    "@types/debug": 4.1.5
     "@types/faker": 5.5.6
     "@types/fs-extra": 9.0.11
     "@types/jest": 26.0.23
-    "@types/lodash": 4.14.170
     "@types/mvdan-sh": 0.5.0
     "@types/node": 15.12.5
     "@types/rimraf": 2.0.4
     "@types/shelljs": 0.8.8
-    "@types/standard-version": 7.0.1
     "@typescript-eslint/eslint-plugin": 4.28.0
     "@typescript-eslint/parser": 4.28.0
     "@zerollup/ts-transform-paths": 1.7.18
-    chalk: 4.1.1
     chalk-cli: 4.1.0
-    debug: 4.3.2
     dotenv-cli: 4.0.0
     eslint: 7.29.0
     eslint-config-prettier: 8.3.0
@@ -702,8 +715,6 @@ __metadata:
     jest: 27.0.0-next.11
     jest-extended: 0.11.5
     lint-staged: 11.0.0
-    lodash: 4.17.21
-    lodash-es: 4.17.21
     mkdirp: 0.5.5
     npm: 7.19.0
     npm-run-all: 4.1.5
@@ -711,8 +722,6 @@ __metadata:
     prettier-plugin-sh: 0.7.0
     replace-in-file: 6.2.0
     rimraf: 3.0.2
-    shelljs: 0.8.4
-    standard-version: 9.3.1
     ts-jest: 27.0.3
     ts-node: 10.0.0
     tsconfig-paths: 3.9.0
@@ -1485,7 +1494,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:16.4.8":
   version: 16.4.8
   resolution: "@types/node@npm:16.4.8"
   checksum: 1d4a421b95ac4d7671de17c56969bf95943c252c410dbe33c380e97a8afdfa7c2e5dcda0063a5c24fcc5538f40ef33c2582ae37f004c3c666da3758d8c8eecfc
@@ -1537,6 +1546,16 @@ __metadata:
     "@types/glob": "*"
     "@types/node": "*"
   checksum: a45c5e176aec1b2e09094ce19053cd45c4aaca7f406ea962d94c176fe1d333d28f2f4b12517b2099dc99f266842be1255bd183e2db5d5e68ffb7ccb3c734a46d
+  languageName: node
+  linkType: hard
+
+"@types/shelljs@npm:0.8.9":
+  version: 0.8.9
+  resolution: "@types/shelljs@npm:0.8.9"
+  dependencies:
+    "@types/glob": "*"
+    "@types/node": "*"
+  checksum: 3d36b010d84665eed34076b4d4501c81f327df5e0c4062183bd2ce14ad927e82de2d1b00d49d356f9cc48390dd6b4db7b38fa221bc9f0eeb63cb7f873cd09fe4
   languageName: node
   linkType: hard
 

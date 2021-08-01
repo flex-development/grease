@@ -7,26 +7,19 @@ project. This includes, but is not limited to:
 - how pull requests are handled
 - how to file bug reports
 
+> **Note:** This general guide is referenced in every workspace-specific guide.
+> Please read both guides before contributing to any workspace to prevent
+> duplicated work and misunderstandings.
+
 ## Overview
 
 [Getting Started](#getting-started)  
 [Contributing Code](#contributing-code)  
-[Pull Requests & Code Reviews](#pull-requests-&-code-reviews)  
+[Labels](#labels)  
+[Pull Requests](#pull-requests)  
 [Opening Issues](#opening-issues)
 
 ## Getting Started
-
-### Environment Variables
-
-All project environment variables in `package.json`, under the `env.optional`
-and `env.required` fields.
-
-### Git Configuration
-
-The examples in this guide contain references to custom Git aliases.
-
-Copy the [starter Git global configuration](.github/.gitconfig) to follow along
-fully, as well as begin extending your own workflow.
 
 ### Terminology
 
@@ -45,14 +38,72 @@ People interacting with the `grease` project are grouped into 4 categories:
 - **contribution**:
   - new features
   - engaging in discussions for new feature requests
-  - documentation fixes
+  - documentation **fixes**
   - bug reports with reproducible steps
   - answering questions
 - **ticket**: [JIRA][1] issue
 
+### Environment Variables
+
+All environment variables are documented in `package.json` of each project,
+under the `env.optional` and `env.required` fields.
+
+### Yarn
+
+This project uses Yarn 2 (`v3.0.0-rc.2`). The Yarn configuration for this
+project can be found in [`.yarnrc.yml`](.yarnrc.yml). If you're already using
+Yarn globally, see the [Yarn 2 Migration docs][2].
+
+[Yarn Workspaces][3] is used to _efficiently_ interact with the monorepo. It
+allows multiple projects to live together in the same repository AND reference
+each other without using `yarn link`.
+
+- **Project**: Directory tree containing workspaces, often the repository itself
+- **Workspace**: Named package under the [`packages/`](packages/) directory,
+  where the workspace name is `package.json#name`
+- **Worktree**: Name given to packages that list their own child workspaces. A
+  project contains one or more worktrees, which may themselves contain any
+  number of workspaces
+
+### GitHub Packages
+
+Some workspaces depend on scoped packages (e.g: `@flex-development`). Some of
+those packages are published to the [GitHub Package Registry][4], but **_not to
+NPM_**. A GitHub Personal Access Token is required for [installation][5].
+
+Scopes, their registry servers, and required environment variables are defined
+in [`.yarnrc.yml`](.yarnrc.yml) under the `npmScopes` field.
+
+Before [cloning and installing the project](#clone-&-install), you'll need to
+add the `GITHUB_PAT_GPR_FLDV` variable to your shell:
+
+1. Retrieve `GITHUB_PAT_GPR_FLDV` from a project maintainer
+2. Open `~/.bash_profile`, `~/.zprofile`, `~/.zshenv`, **or** `~/.zshrc`
+3. Save file and re-launch shell
+
+### Clone & Install
+
+```zsh
+git clone https://github.com/flex-development/grease
+cd grease
+yarn bootstrap
+```
+
+Note that if you have a global Yarn configuration (or any `YARN_*` environment
+variables set), an error will be displayed in the terminal if any settings
+conflict with the project's Yarn configuration, or the Yarn 2 API. An error will
+also be displayed if you're missing any environment variables.
+
+### Git Configuration
+
+The examples in this guide contain references to custom Git aliases.
+
+Copy the [starter Git global configuration](.github/.gitconfig) to follow along
+fully, as well as begin extending your own workflow.
+
 ## Contributing Code
 
-[Husky][2] is used to run Git hooks that locally enforce coding and commit
+[Husky][6] is used to run Git hooks that locally enforce coding and commit
 message standards, as well run tests associated with any files changed since the
 last commit.
 
@@ -93,7 +144,7 @@ will create a new branch titled `feat/P010-1-repository-setup`.
 
 ### Commit Messages
 
-This project follows [Conventional Commit][3] standards and uses [commitlint][4]
+This project follows [Conventional Commit][7] standards and uses [commitlint][8]
 to enforce those standards.
 
 This means every commit must conform to the following format:
@@ -147,7 +198,7 @@ valid commit scopes and types.
 
 ### Code Style
 
-[Prettier][5] is used to format code, and [ESLint][6] to lint files.
+[Prettier][9] is used to format code, and [ESLint][10] to lint files.
 
 **Prettier Configuration**
 
@@ -161,25 +212,26 @@ valid commit scopes and types.
 
 ### Making Changes
 
-All source code can be found in the [`src`](src) directory.
+All workspace source code can be found in [`packages/*/src`](packages/).
 
 The purpose of each file should be documented using the `@file` annotation,
-along with an accompanying `@module` annotation.
+along with an accompanying `@module` annotation. A guide to workspace-specific
+changes can be found in the each workspace's Contributing Guide.
 
 ### Documentation
 
-- JavaScript & TypeScript: [JSDoc][7], linted with [`eslint-plugin-jsdoc`][8]
+- JavaScript & TypeScript: [JSDoc][11], linted with [`eslint-plugin-jsdoc`][12]
 
 Before making a pull request, be sure your code is well documented, as it will
 be part of your code review.
 
 ### Testing
 
-This project uses [Jest][9] as its test runner. To run _all_ the tests in this
+This project uses [Jest][13] as its test runner. To run _all_ the tests in this
 project, run `yarn test` from the project root.
 
-Husky is configured to run tests before every push. Use [`describe.skip`][10] or
-[`it.skip`][11] if you need to create a new issue regarding the test, or need to
+Husky is configured to run tests before every push. Use [`describe.skip`][14] or
+[`it.skip`][15] if you need to create a new issue regarding the test, or need to
 make a `wip` commit.
 
 ### Getting Help
@@ -190,9 +242,9 @@ possible, create a test to reproduce the error. Make sure to label your issue as
 
 ## Labels
 
-The `hooks` repository uses a well-defined list of labels to organize tickets
-and pull requests. Most labels are grouped into different categories (identified
-by the prefix, eg: `status:`).
+This project uses a well-defined list of labels to organize tickets and pull
+requests. Most labels are grouped into different categories (identified by the
+prefix, eg: `status:`).
 
 A list of labels can be found in [`.github/labels.yml`](.github/labels.yml).
 
@@ -261,13 +313,17 @@ traits:
 - includes links to prior discussion if you've found any
 
 [1]: https://www.atlassian.com/software/jira
-[2]: https://github.com/typicode/husky
-[3]: https://www.conventionalcommits.org
-[4]: https://github.com/conventional-changelog/commitlint
-[5]: https://prettier.io
-[6]: https://eslint.org
-[7]: https://jsdoc.app
-[8]: https://github.com/gajus/eslint-plugin-jsdoc
-[9]: https://jestjs.io
-[10]: https://jestjs.io/docs/api#describeskipname-fn
-[11]: https://jestjs.io/docs/api#testskipname-fn
+[2]: https://yarnpkg.com/getting-started/migration
+[3]: https://yarnpkg.com/features/workspaces
+[4]: https://github.com/features/packages
+[5]: https://docs.github.com/packages/learn-github-packages/installing-a-package
+[6]: https://github.com/typicode/husky
+[7]: https://www.conventionalcommits.org
+[8]: https://github.com/conventional-changelog/commitlint
+[9]: https://prettier.io
+[10]: https://eslint.org
+[11]: https://jsdoc.app
+[12]: https://github.com/gajus/eslint-plugin-jsdoc
+[13]: https://jestjs.io
+[14]: https://jestjs.io/docs/api#describeskipname-fn
+[15]: https://jestjs.io/docs/api#testskipname-fn

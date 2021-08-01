@@ -1,13 +1,10 @@
 const { Rule, RuleConfigTuple } = require('@commitlint/types')
-const { lstatSync, readdirSync } = require('fs')
-const { resolve } = require('path')
 const { Record } = require('typescript')
 
 /**
  * @file Commitlint Configuration
  * @see https://commitlint.js.org/#/guides-local-setup
  * @see https://commitlint.js.org/#/reference-configuration
- * @see https://github.com/Gherciu/commitlint-jira
  */
 
 module.exports = {
@@ -55,20 +52,19 @@ module.exports = {
         'deploy',
         'deps',
         'deps-dev',
+        'grease',
+        'grease-cli',
         'release',
         'scripts',
         'tests',
-        'typescript',
-        ...readdirSync(resolve(__dirname, 'src')).filter(path => {
-          return lstatSync(resolve(__dirname, 'src', path)).isDirectory()
-        })
+        'typescript'
       ]
     ],
 
     /**
      * Commit message subject casing.
      */
-    'subject-case': [1, 'always', ['lower-case', 'upper-case']],
+    'subject-case': [1, 'always', 'lower-case'],
 
     /**
      * Rules for valid commit types.
