@@ -48,7 +48,6 @@
     "@types/git-semver-tags": "4.1.1",
     "@types/lodash": "4.14.170",
     "@types/node": "16.4.8",
-    "@types/nodegit": "0.27.3",
     "@types/semver": "7.3.8",
     "@types/shelljs": "0.8.9",
     "@types/standard-version": "7.0.1",
@@ -58,9 +57,9 @@
     "class-validator": "0.13.1",
     "debug": "4.3.2",
     "git-semver-tags": "4.1.1",
+    "isomorphic-git": "1.9.2",
     "lodash": "4.17.21",
     "lodash-es": "4.17.21",
-    "nodegit": "0.27.0",
     "shelljs": "0.8.4",
     "standard-version": "9.3.1"
   },
