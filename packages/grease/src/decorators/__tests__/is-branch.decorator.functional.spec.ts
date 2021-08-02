@@ -40,7 +40,10 @@ describe('functional:grease/decorators/IsBranch', () => {
 
   describe('validation', () => {
     type Property = OneOrMany<string>
-    type Case = Testcase<number> & { options?: IsBranchOptions }
+    type Case = Testcase<number> & {
+      option: 'no options' | `options.${'remote'}`
+      options?: IsBranchOptions
+    }
 
     describe('fails', () => {
       type CaseFail = Case & {
@@ -52,18 +55,22 @@ describe('functional:grease/decorators/IsBranch', () => {
       const EXPECTED = 1
 
       const cases: CaseFail[] = [
-        { code: 'LOCAL', expected: EXPECTED, value: null },
+        {
+          code: 'LOCAL',
+          expected: EXPECTED,
+          option: 'no options',
+          value: null
+        },
         {
           code: 'REMOTE',
           expected: EXPECTED,
+          option: 'options.remote',
           options: { each: true, remote },
           value: BRANCHES[404]
         }
       ]
 
-      const name = 'should fail given $value'
-
-      it.each<CaseFail>(cases)(name, async testcase => {
+      it.each<CaseFail>(cases)('should fail with $option', async testcase => {
         // Arrange
         const { code, expected, options, value } = testcase
 
@@ -88,28 +95,27 @@ describe('functional:grease/decorators/IsBranch', () => {
     })
 
     describe('passes', () => {
-      type CaseSuccess = Case & { value: OneOrMany<Property> }
+      type CasePass = Case & { value: OneOrMany<Property> }
 
       const EXPECTED = 0
 
-      const cases: CaseSuccess[] = [
-        { expected: EXPECTED, value: BRANCHES.local[0] },
+      const cases: CasePass[] = [
+        { expected: EXPECTED, option: 'no options', value: BRANCHES.local[0] },
         {
           expected: EXPECTED,
+          option: 'options.remote',
           options: { each: true, remote },
           value: BRANCHES.remote.slice(0, 2)
         }
       ]
 
-      const name = 'should pass given $value'
-
-      it.each<CaseSuccess>(cases)(name, async testcase => {
+      it.each<CasePass>(cases)('should pass with $option', async testcase => {
         // Arrange
         const { expected, options, value } = testcase
 
         class TestClass {
           @TestSubject(options)
-          $property: CaseSuccess['value']
+          $property: CasePass['value']
 
           constructor($property: TestClass['$property']) {
             this.$property = $property

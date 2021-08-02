@@ -6,7 +6,6 @@ import BRANCHES from '@tests/fixtures/git-branches.fixture'
 import COMMITS from '@tests/fixtures/git-commit-shas.fixture'
 import type { Testcase } from '@tests/utils/types'
 import { validate, ValidateBy } from 'class-validator'
-import faker from 'faker'
 import TestSubject from '../is-target-branch.decorator'
 
 /**
@@ -43,7 +42,10 @@ describe('functional:grease/decorators/IsTargetBranch', () => {
 
   describe('validation', () => {
     type Property = OneOrMany<string>
-    type Case = Testcase<number> & { options?: IsTargetBranchOptions }
+    type Case = Testcase<number> & {
+      option: 'no options' | `options.${'remote' | 'sha'}`
+      options?: IsTargetBranchOptions
+    }
 
     describe('fails', () => {
       type CaseFail = Case & {
@@ -55,30 +57,29 @@ describe('functional:grease/decorators/IsTargetBranch', () => {
       const EXPECTED = 1
 
       const cases: CaseFail[] = [
-        { code: 'DOES_NOT_EXIST', expected: EXPECTED, value: 'branch' },
         {
           code: 'DOES_NOT_EXIST',
           expected: EXPECTED,
+          option: 'no options',
+          value: 'branch'
+        },
+        {
+          code: 'DOES_NOT_EXIST',
+          expected: EXPECTED,
+          option: 'options.remote',
           options: { each: true, remote },
           value: BRANCHES[404]
         },
         {
           code: 'DOES_NOT_EXIST',
           expected: EXPECTED,
+          option: 'options.sha',
           options: { sha: true },
           value: 'commit'
-        },
-        {
-          code: 'DOES_NOT_EXIST',
-          expected: EXPECTED,
-          options: { each: true, sha: true },
-          value: [faker.git.commitSha(), faker.git.commitSha()]
         }
       ]
 
-      const name = 'should fail given $value'
-
-      it.each<CaseFail>(cases)(name, async testcase => {
+      it.each<CaseFail>(cases)('should fail with $option', async testcase => {
         // Arrange
         const { code, expected, options, value } = testcase
 
@@ -103,41 +104,37 @@ describe('functional:grease/decorators/IsTargetBranch', () => {
     })
 
     describe('passes', () => {
-      type CaseSuccess = Case & { value: OneOrMany<Property> }
+      type CasePass = Case & { value: OneOrMany<Property> }
 
       const EXPECTED = 0
 
-      const cases: CaseSuccess[] = [
+      const cases: CasePass[] = [
         {
           expected: EXPECTED,
+          option: 'no options',
           value: BRANCHES.remote[BRANCHES.remote.length - 1]
         },
         {
           expected: EXPECTED,
+          option: 'options.remote',
           options: { each: true, remote },
           value: BRANCHES.remote.slice(0, 2)
         },
         {
           expected: EXPECTED,
-          options: { sha: true },
-          value: COMMITS[COMMITS.length - 1]
-        },
-        {
-          expected: EXPECTED,
+          option: 'options.sha',
           options: { each: true, sha: true },
           value: COMMITS.slice(0, 2)
         }
       ]
 
-      const name = 'should pass given $value'
-
-      it.each<CaseSuccess>(cases)(name, async testcase => {
+      it.each<CasePass>(cases)('should pass with $option', async testcase => {
         // Arrange
         const { expected, options, value } = testcase
 
         class TestClass {
           @TestSubject(options)
-          $property: CaseSuccess['value']
+          $property: CasePass['value']
 
           constructor($property: TestClass['$property']) {
             this.$property = $property
