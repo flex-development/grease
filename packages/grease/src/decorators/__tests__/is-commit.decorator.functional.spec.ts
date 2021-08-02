@@ -1,46 +1,34 @@
 import type { OneOrMany } from '@flex-development/tutils'
-import Validator from '@grease/constraints/is-branch.constraint'
-import { IsBranchMessage as Msg } from '@grease/enums/is-branch-message.enum'
-import type { IsBranchOptions } from '@grease/interfaces'
-import BRANCHES from '@tests/fixtures/git-branches.fixture'
+import Validator from '@grease/constraints/is-commit.constraint'
+import { IsCommitMessage as Msg } from '@grease/enums/is-commit-message.enum'
+import COMMITS from '@tests/fixtures/git-commit-shas.fixture'
 import type { Testcase } from '@tests/utils/types'
+import type { ValidationOptions } from 'class-validator'
 import { validate, ValidateBy } from 'class-validator'
-import TestSubject from '../is-branch.decorator'
+import faker from 'faker'
+import TestSubject from '../is-commit.decorator'
 
 /**
- * @file Functional Tests - IsBranch
- * @module grease/decorators/tests/functional/IsBranch
+ * @file Functional Tests - IsCommit
+ * @module grease/decorators/tests/functional/IsCommit
  */
 
 const MockValidateBy = ValidateBy as jest.MockedFunction<typeof ValidateBy>
 
-describe('functional:grease/decorators/IsBranch', () => {
-  const remote: IsBranchOptions['remote'] = 'origin'
-  const options: IsBranchOptions = { remote }
-
+describe('functional:grease/decorators/IsCommit', () => {
   describe('decorator logic', () => {
     it('should create property decorator', () => {
       // Act
-      TestSubject(options)
+      TestSubject({})
 
       // Expect
       expect(MockValidateBy).toBeCalledTimes(1)
-    })
-
-    it('should push options into constraints array', () => {
-      // Act
-      TestSubject(options)
-
-      // Expect
-      expect(MockValidateBy.mock.calls[0][0].constraints).toIncludeSameMembers([
-        options
-      ])
     })
   })
 
   describe('validation', () => {
     type Property = OneOrMany<string>
-    type Case = Testcase<number> & { options?: IsBranchOptions }
+    type Case = Testcase<number> & { options?: ValidationOptions }
 
     describe('fails', () => {
       type CaseFail = Case & {
@@ -52,12 +40,16 @@ describe('functional:grease/decorators/IsBranch', () => {
       const EXPECTED = 1
 
       const cases: CaseFail[] = [
-        { code: 'LOCAL', expected: EXPECTED, value: null },
         {
-          code: 'REMOTE',
+          code: 'DOES_NOT_EXIST',
           expected: EXPECTED,
-          options: { each: true, remote },
-          value: BRANCHES[404]
+          value: null
+        },
+        {
+          code: 'DOES_NOT_EXIST',
+          expected: EXPECTED,
+          options: { each: true },
+          value: [faker.git.commitSha(), faker.git.commitSha()]
         }
       ]
 
@@ -93,11 +85,11 @@ describe('functional:grease/decorators/IsBranch', () => {
       const EXPECTED = 0
 
       const cases: CaseSuccess[] = [
-        { expected: EXPECTED, value: BRANCHES.local[0] },
+        { expected: EXPECTED, value: COMMITS[0] },
         {
           expected: EXPECTED,
-          options: { each: true, remote },
-          value: BRANCHES.remote.slice(0, 2)
+          options: { each: true },
+          value: COMMITS.slice(0, 2)
         }
       ]
 
