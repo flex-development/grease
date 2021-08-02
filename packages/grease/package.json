@@ -32,13 +32,13 @@
     "directory": "./build",
     "registry": "https://npm.pkg.github.com"
   },
-  "main": "./cjs/index.js",
-  "module": "./esm/index.js",
-  "types": "./esm/index.d.ts",
+  "main": "./cjs/main.js",
+  "module": "./esm/main.js",
+  "types": "./esm/main.d.ts",
   "scripts": {
     "test": "bash ../../scripts/jest.sh",
     "build": "dotenv -c production ts-node ../../scripts/build",
-    "prepare": "install-peers; yarn build",
+    "prepare": "yarn build",
     "prepack": "yarn prepare"
   },
   "dependencies": {
@@ -62,6 +62,9 @@
     "lodash-es": "4.17.21",
     "shelljs": "0.8.4",
     "standard-version": "9.3.1"
+  },
+  "devDependencies": {
+    "axios": "0.21.1"
   },
   "engines": {
     "node": "^14.17.4 || >=16.6.0",
