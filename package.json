@@ -77,6 +77,9 @@
     "node": "^14.17.4 || >=16.6.0",
     "yarn": "3.0.0-rc.2"
   },
+  "resolutions": {
+    "read-pkg": "5.2.0"
+  },
   "env": {
     "optional": [
       "DEBUG",
