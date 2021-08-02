@@ -153,6 +153,7 @@ const RULES = {
         'resize',
         'sem',
         'semver',
+        'shas',
         'stringified',
         'strinigify',
         'tgz',
