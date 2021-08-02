@@ -3,7 +3,7 @@
 import ch from 'chalk'
 import fse from 'fs-extra'
 import path from 'path'
-import readPackage from 'read-pkg'
+import { sync as readPackage } from 'read-pkg'
 import rimraf from 'rimraf'
 import sh from 'shelljs'
 import { hideBin } from 'yargs/helpers'
@@ -129,7 +129,7 @@ const build = (argv: BuildPackageOptions): void => {
     fixNodeModulePaths()
 
     // Get copy of `package.json`
-    const pkgjson = readPackage.sync({ cwd: process.cwd() })
+    const pkgjson = readPackage({ cwd: process.cwd() })
 
     // Remove `devDependencies` and `scripts` from package.json
     Reflect.deleteProperty(pkgjson, 'devDependencies')

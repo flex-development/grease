@@ -17,8 +17,7 @@ const config: Config.InitialOptions = {
   clearMocks: true,
   globals: {
     'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.test.json',
-      useESM: true
+      tsconfig: '<rootDir>/tsconfig.test.json'
     }
   },
   moduleDirectories: ['node_modules'],
