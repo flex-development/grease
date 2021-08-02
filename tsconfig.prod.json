@@ -14,7 +14,7 @@
     "rootDir": "./src",
     "sourceMap": true
   },
-  "exclude": ["**/build", "**/__mocks__", "**/node_modules", "**/__tests__"],
+  "exclude": ["**/build", "**/__mocks__", "**/__tests__", "**/node_modules"],
   "extends": "./tsconfig.json",
   "include": ["src"]
 }
