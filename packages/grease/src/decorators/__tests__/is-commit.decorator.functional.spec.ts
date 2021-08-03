@@ -64,7 +64,9 @@ describe('functional:grease/decorators/IsCommit', () => {
         }
       ]
 
-      it.each<CaseFail>(cases)('should fail with $option', async testcase => {
+      const name = 'should fail given $value and $option'
+
+      it.each<CaseFail>(cases)(name, async testcase => {
         // Arrange
         const { code, expected, options, value } = testcase
 
@@ -102,7 +104,9 @@ describe('functional:grease/decorators/IsCommit', () => {
         }
       ]
 
-      it.each<CasePass>(cases)('should pass with $option', async testcase => {
+      const name = 'should pass given $value and $option'
+
+      it.each<CasePass>(cases)(name, async testcase => {
         // Arrange
         const { expected, options, value } = testcase
 

@@ -44,7 +44,7 @@ describe('functional:grease/decorators/IsBranch', () => {
   describe('validation', () => {
     type Property = OneOrMany<string>
     type Case = TestcaseDecorator<number, Option> & {
-      options?: IsBranchOptions
+      options: IsBranchOptions
     }
 
     describe('fails', () => {
@@ -61,6 +61,7 @@ describe('functional:grease/decorators/IsBranch', () => {
           code: 'LOCAL',
           expected: EXPECTED,
           option: 'no options',
+          options: {},
           value: null
         },
         {
@@ -72,7 +73,9 @@ describe('functional:grease/decorators/IsBranch', () => {
         }
       ]
 
-      it.each<CaseFail>(cases)('should fail with $option', async testcase => {
+      const name = 'should fail given $value and $option'
+
+      it.each<CaseFail>(cases)(name, async testcase => {
         // Arrange
         const { code, expected, options, value } = testcase
 
@@ -102,7 +105,12 @@ describe('functional:grease/decorators/IsBranch', () => {
       const EXPECTED = 0
 
       const cases: CasePass[] = [
-        { expected: EXPECTED, option: 'no options', value: BRANCHES.local[0] },
+        {
+          expected: EXPECTED,
+          option: 'no options',
+          options: {},
+          value: BRANCHES.local[0]
+        },
         {
           expected: EXPECTED,
           option: 'options.remote',
@@ -111,7 +119,9 @@ describe('functional:grease/decorators/IsBranch', () => {
         }
       ]
 
-      it.each<CasePass>(cases)('should pass with $option', async testcase => {
+      const name = 'should pass given $value and $option'
+
+      it.each<CasePass>(cases)(name, async testcase => {
         // Arrange
         const { expected, options, value } = testcase
 

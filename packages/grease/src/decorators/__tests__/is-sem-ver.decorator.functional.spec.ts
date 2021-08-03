@@ -1,25 +1,35 @@
+import pkg from '@/grease/package.json'
 import type { OneOrMany } from '@flex-development/tutils'
-import Validator from '@grease/constraints/is-path.constraint'
-import { IsPathMessage as Msg } from '@grease/enums/is-path-message.enum'
-import type { IsPathOptions } from '@grease/interfaces'
-import type { PathLike } from '@grease/types'
+import Validator from '@grease/constraints/is-sem-ver.constraint'
+import { IsSemVerMessage as Msg } from '@grease/enums/is-sem-ver-message.enum'
+import type { IsSemVerOptions } from '@grease/interfaces'
+import type { SemanticVersion } from '@grease/types'
+import { OPTIONS_LERNA } from '@tests/fixtures/git-tags.fixture'
 import type {
-  IsPathOption as Option,
+  IsSemVerOption as Option,
   TestcaseDecorator
 } from '@tests/utils/types'
 import { validate, ValidateBy } from 'class-validator'
-import TestSubject from '../is-path.decorator'
+import TestSubject from '../is-sem-ver.decorator'
 
 /**
- * @file Functional Tests - IsPath
- * @module grease/decorators/tests/functional/IsPath
+ * @file Functional Tests - IsSemVer
+ * @module grease/decorators/tests/functional/IsSemVer
  */
 
 const MockValidateBy = ValidateBy as jest.MockedFunction<typeof ValidateBy>
 
-describe('functional:grease/decorators/IsPath', () => {
+describe('functional:grease/decorators/IsSemVer', () => {
+  const version = pkg.version as SemanticVersion
+
   describe('decorator logic', () => {
-    const options: IsPathOptions = { cwd: true, exists: true, gh: true }
+    const options: IsSemVerOptions = {
+      cmp: [],
+      coerce: true,
+      git: true,
+      negit: false,
+      satisfies: []
+    }
 
     it('should create property decorator', () => {
       // Act
@@ -41,9 +51,9 @@ describe('functional:grease/decorators/IsPath', () => {
   })
 
   describe('validation', () => {
-    type Property = OneOrMany<PathLike>
+    type Property = OneOrMany<SemanticVersion>
     type Case = TestcaseDecorator<number, Option> & {
-      options: IsPathOptions
+      options: IsSemVerOptions
     }
 
     describe('fails', () => {
@@ -55,36 +65,55 @@ describe('functional:grease/decorators/IsPath', () => {
       const CONSTRAINT = Validator.options?.name as string
       const EXPECTED = 1
 
-      const path_asset = '/path/to/asset.zip#My display label'
-
       const cases: CaseFail[] = [
         {
-          code: 'PATH_LIKE',
+          code: 'SEM_VER',
           expected: EXPECTED,
           option: 'no options',
           options: {},
           value: null
         },
         {
-          code: 'PATH_LIKE',
+          code: 'SEM_VER',
           expected: EXPECTED,
-          option: 'options.cwd',
-          options: { cwd: true, each: true },
-          value: [13]
+          option: 'options.clean',
+          options: { clean: true },
+          value: `${OPTIONS_LERNA.package}@${pkg.version}`
+        },
+        {
+          code: 'CMP',
+          expected: EXPECTED,
+          option: 'options.cmp',
+          options: { cmp: ['>', version] },
+          value: version
+        },
+        {
+          code: 'SEM_VER',
+          expected: EXPECTED,
+          option: 'options.coerce',
+          options: { coerce: true },
+          value: undefined
         },
         {
           code: 'DOES_NOT_EXIST',
           expected: EXPECTED,
-          option: 'options.exists',
-          options: { exists: true },
-          value: ''
+          option: 'options.git',
+          options: { git: true },
+          value: '3.13.98'
         },
         {
-          code: 'DOES_NOT_EXIST',
+          code: 'CONFLICT',
           expected: EXPECTED,
-          option: 'options.gh',
-          options: { gh: true },
-          value: path_asset
+          option: 'options.negit',
+          options: { negit: true },
+          value: version
+        },
+        {
+          code: 'RANGE_UNSATISFIED',
+          expected: EXPECTED,
+          option: 'options.satisfies',
+          options: { satisfies: ['^2.0.0'] },
+          value: version
         }
       ]
 
@@ -119,32 +148,48 @@ describe('functional:grease/decorators/IsPath', () => {
 
       const EXPECTED = 0
 
-      const path_asset = 'README.md#My display label'
-
       const cases: CasePass[] = [
         {
           expected: EXPECTED,
           option: 'no options',
-          options: { each: true },
-          value: [__filename]
+          options: {},
+          value: version
         },
         {
           expected: EXPECTED,
-          option: 'options.cwd',
-          options: { cwd: true },
-          value: 'package.json'
+          option: 'options.clean',
+          options: { clean: true },
+          value: `v${version}` as SemanticVersion
         },
         {
           expected: EXPECTED,
-          option: 'options.exists',
-          options: { each: true, exists: true },
-          value: ['package.json', 'tsconfig.json']
+          option: 'options.cmp',
+          options: { cmp: ['===', version], each: true },
+          value: [version]
         },
         {
           expected: EXPECTED,
-          option: 'options.gh',
-          options: { gh: true },
-          value: path_asset
+          option: 'options.coerce',
+          options: { coerce: true },
+          value: '13' as SemanticVersion
+        },
+        {
+          expected: EXPECTED,
+          option: 'options.git',
+          options: { each: true, git: OPTIONS_LERNA },
+          value: [version]
+        },
+        {
+          expected: EXPECTED,
+          option: 'options.negit',
+          options: { each: true, git: true, negit: true },
+          value: ['3.13.98-dev.640']
+        },
+        {
+          expected: EXPECTED,
+          option: 'options.satisfies',
+          options: { satisfies: [`<=${version}`] },
+          value: version
         }
       ]
 
