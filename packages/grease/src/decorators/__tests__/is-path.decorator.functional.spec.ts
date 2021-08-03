@@ -3,7 +3,10 @@ import Validator from '@grease/constraints/is-path.constraint'
 import { IsPathMessage as Msg } from '@grease/enums/is-path-message.enum'
 import type { IsPathOptions } from '@grease/interfaces'
 import type { PathLike } from '@grease/types'
-import type { Testcase } from '@tests/utils/types'
+import type {
+  IsPathOption as Option,
+  TestcaseDecorator
+} from '@tests/utils/types'
 import { validate, ValidateBy } from 'class-validator'
 import TestSubject from '../is-path.decorator'
 
@@ -39,8 +42,7 @@ describe('functional:grease/decorators/IsPath', () => {
 
   describe('validation', () => {
     type Property = OneOrMany<PathLike>
-    type Case = Testcase<number> & {
-      option: 'no options' | `options.${'cwd' | 'exists' | 'gh'}`
+    type Case = TestcaseDecorator<number, Option> & {
       options: IsPathOptions
     }
 

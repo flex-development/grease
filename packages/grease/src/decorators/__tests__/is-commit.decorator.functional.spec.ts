@@ -2,7 +2,7 @@ import type { OneOrMany } from '@flex-development/tutils'
 import Validator from '@grease/constraints/is-commit.constraint'
 import { IsCommitMessage as Msg } from '@grease/enums/is-commit-message.enum'
 import COMMITS from '@tests/fixtures/git-commit-shas.fixture'
-import type { Testcase } from '@tests/utils/types'
+import type { TestcaseDecorator } from '@tests/utils/types'
 import type { ValidationOptions } from 'class-validator'
 import { validate, ValidateBy } from 'class-validator'
 import faker from 'faker'
@@ -24,12 +24,24 @@ describe('functional:grease/decorators/IsCommit', () => {
       // Expect
       expect(MockValidateBy).toBeCalledTimes(1)
     })
+
+    it('should push options into constraints array', () => {
+      // Arrange
+      const options = { each: true }
+
+      // Act
+      TestSubject(options)
+
+      // Expect
+      expect(MockValidateBy.mock.calls[0][0].constraints).toIncludeSameMembers([
+        options
+      ])
+    })
   })
 
   describe('validation', () => {
     type Property = OneOrMany<string>
-    type Case = Testcase<number> & {
-      option: 'no options'
+    type Case = TestcaseDecorator<number> & {
       options?: ValidationOptions
     }
 

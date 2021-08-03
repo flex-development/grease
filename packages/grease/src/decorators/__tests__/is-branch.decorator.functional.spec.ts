@@ -3,7 +3,10 @@ import Validator from '@grease/constraints/is-branch.constraint'
 import { IsBranchMessage as Msg } from '@grease/enums/is-branch-message.enum'
 import type { IsBranchOptions } from '@grease/interfaces'
 import BRANCHES from '@tests/fixtures/git-branches.fixture'
-import type { Testcase } from '@tests/utils/types'
+import type {
+  IsBranchOption as Option,
+  TestcaseDecorator
+} from '@tests/utils/types'
 import { validate, ValidateBy } from 'class-validator'
 import TestSubject from '../is-branch.decorator'
 
@@ -40,8 +43,7 @@ describe('functional:grease/decorators/IsBranch', () => {
 
   describe('validation', () => {
     type Property = OneOrMany<string>
-    type Case = Testcase<number> & {
-      option: 'no options' | `options.${'remote'}`
+    type Case = TestcaseDecorator<number, Option> & {
       options?: IsBranchOptions
     }
 

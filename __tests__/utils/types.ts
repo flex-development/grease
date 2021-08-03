@@ -4,6 +4,32 @@
  */
 
 /**
+ * Names of custom validation options for the `IsBranch` decorator.
+ */
+export type IsBranchOption = 'remote'
+
+/**
+ * Names of custom validation options for the `IsPath` decorator.
+ */
+export type IsPathOption = 'cwd' | 'exists' | 'gh'
+
+/**
+ * Names of custom validation options for the `IsSemVer` decorator.
+ */
+export type IsSemVerOption =
+  | 'clean'
+  | 'cmp'
+  | 'coerce'
+  | 'git'
+  | 'negit'
+  | 'satisfies'
+
+/**
+ * Names of custom validation options for the `IsTargetBranch` decorator.
+ */
+export type IsTargetBranchOption = IsBranchOption | 'sha'
+
+/**
  * Represents a test case.
  *
  * @template Expected - Type of expected value
@@ -38,4 +64,27 @@
  */
 export interface Testcase<Expected extends any = any> {
   expected: Expected
+}
+
+/**
+ * Represents a `toBeCalled*` test case.
+ *
+ * @see https://jestjs.io/docs/expect#tohavebeencalled
+ * @see https://jestjs.io/docs/expect#tohavebeencalledtimesnumber
+ */
+export interface TestcaseCalled extends Testcase<number> {
+  call: 'call' | 'not call'
+}
+
+/**
+ * Represents a decorator or decorator constraint test case.
+ *
+ * @template Expected - Type of expected value
+ * @template Option - Option names
+ */
+export interface TestcaseDecorator<
+  Expected extends any = any,
+  Option extends string | never = never
+> extends Testcase<Expected> {
+  option: 'no options' | (Option extends never ? never : `options.${Option}`)
 }

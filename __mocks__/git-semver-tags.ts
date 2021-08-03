@@ -8,7 +8,7 @@ import { mockGitTags } from '@tests/utils'
 /**
  * @file Node Module Mock - git-semver-tags
  * @module mocks/git-semver-tags
- * @see https://jestjs.io/docs/next/manual-mocks#mocking-node-modules
+ * @see https://jestjs.io/docs/manual-mocks#mocking-node-modules
  * @see https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/git-semver-tags
  */
 

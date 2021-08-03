@@ -39,6 +39,7 @@ describe('unit:grease/constraints/IsCommitConstraint', () => {
   describe('#validate', () => {
     type Case = Testcase<boolean> & {
       args: Partial<ValidationArguments>
+      option: 'no options'
       value: any
     }
 
@@ -46,16 +47,18 @@ describe('unit:grease/constraints/IsCommitConstraint', () => {
       {
         args,
         expected: false,
+        option: 'no options',
         value
       },
       {
-        args: { constraints: [{ value: COMMITS[0] }], value: COMMITS[0] },
+        args: { constraints: [{}], value: COMMITS[0] },
         expected: true,
+        option: 'no options',
         value: COMMITS[0]
       }
     ]
 
-    const name = 'should return $expected given $value'
+    const name = 'should return $expected given $value and $option'
 
     it.each<Case>(cases)(name, async testcase => {
       // Arrange

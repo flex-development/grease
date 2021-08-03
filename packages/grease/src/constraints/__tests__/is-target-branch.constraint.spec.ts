@@ -1,7 +1,11 @@
 import { IsTargetBranchMessage as Msg } from '@grease/enums'
 import BRANCHES from '@tests/fixtures/git-branches.fixture'
 import COMMITS from '@tests/fixtures/git-commit-shas.fixture'
-import type { Testcase } from '@tests/utils/types'
+import type {
+  IsTargetBranchOption as Option,
+  Testcase,
+  TestcaseDecorator
+} from '@tests/utils/types'
 import type { ValidationArguments } from 'class-validator'
 import faker from 'faker'
 import TestSubject from '../is-target-branch.constraint'
@@ -55,7 +59,7 @@ describe('unit:grease/constraints/IsTargetBranchConstraint', () => {
   })
 
   describe('#validate', () => {
-    type Case = Testcase<boolean> & {
+    type Case = TestcaseDecorator<boolean, Option> & {
       args: Partial<ValidationArguments>
       value: any
     }
@@ -66,26 +70,45 @@ describe('unit:grease/constraints/IsTargetBranchConstraint', () => {
       {
         args: { constraints: [{}], value: BRANCHES[404][0] },
         expected: false,
+        option: 'no options',
         value: BRANCHES[404][0]
+      },
+      {
+        args: { constraints: [{ remote: 'prod' }], value: commit },
+        expected: false,
+        option: 'options.remote',
+        value: commit
       },
       {
         args: { constraints: [{ sha: true }], value: commit },
         expected: false,
+        option: 'options.sha',
         value: commit
       },
       {
         args: { constraints: [{}], value: BRANCHES.remote[0] },
         expected: true,
+        option: 'no options',
         value: BRANCHES.remote[0]
+      },
+      {
+        args: {
+          constraints: [{ remote: 'origin' }],
+          value: BRANCHES.remote[1]
+        },
+        expected: true,
+        option: 'options.remote',
+        value: BRANCHES.remote[1]
       },
       {
         args: { constraints: [{ sha: true }], value: COMMITS[0] },
         expected: true,
+        option: 'options.sha',
         value: COMMITS[0]
       }
     ]
 
-    const name = 'should return $expected given $value'
+    const name = 'should return $expected given $value and $option'
 
     it.each<Case>(cases)(name, async testcase => {
       // Arrange

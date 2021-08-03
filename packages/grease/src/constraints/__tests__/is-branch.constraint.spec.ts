@@ -1,6 +1,10 @@
 import { IsBranchMessage as Msg } from '@grease/enums/is-branch-message.enum'
 import BRANCHES from '@tests/fixtures/git-branches.fixture'
-import type { Testcase } from '@tests/utils/types'
+import type {
+  IsBranchOption as Option,
+  Testcase,
+  TestcaseDecorator
+} from '@tests/utils/types'
 import type { ValidationArguments } from 'class-validator'
 import TestSubject from '../is-branch.constraint'
 
@@ -62,7 +66,7 @@ describe('unit:grease/constraints/IsBranchConstraint', () => {
   })
 
   describe('#validate', () => {
-    type Case = Testcase<boolean> & {
+    type Case = TestcaseDecorator<boolean, Option> & {
       args: Partial<ValidationArguments>
       value: any
     }
@@ -74,6 +78,7 @@ describe('unit:grease/constraints/IsBranchConstraint', () => {
           value: BRANCHES[404][1]
         },
         expected: false,
+        option: 'no options',
         value: BRANCHES[404][1]
       },
       {
@@ -82,11 +87,12 @@ describe('unit:grease/constraints/IsBranchConstraint', () => {
           value: BRANCHES.remote[1]
         },
         expected: true,
+        option: 'options.remote',
         value: BRANCHES.remote[1]
       }
     ]
 
-    const name = 'should return $expected given $value'
+    const name = 'should return $expected given $value and $option'
 
     it.each<Case>(cases)(name, async testcase => {
       // Arrange

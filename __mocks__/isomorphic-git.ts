@@ -5,7 +5,7 @@ import fs from 'fs'
 /**
  * @file Node Module Mock - isomorphic-git
  * @module mocks/isomorphic-git
- * @see https://jestjs.io/docs/next/manual-mocks#mocking-node-modules
+ * @see https://jestjs.io/docs/manual-mocks#mocking-node-modules
  * @see https://github.com/isomorphic-git/isomorphic-git
  */
 

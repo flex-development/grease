@@ -5,7 +5,7 @@ import pkg from './package.json'
 
 /**
  * @file Jest Project Configuration
- * @see https://jestjs.io/docs/next/configuration
+ * @see https://jestjs.io/docs/configuration
  * @see https://orlandobayo.com/blog/monorepo-testing-using-jest/
  */
 

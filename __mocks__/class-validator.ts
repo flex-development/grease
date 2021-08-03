@@ -3,7 +3,7 @@ import * as item from 'class-validator'
 /**
  * @file Node Module Mock - class-validator
  * @module mocks/class-validator
- * @see https://jestjs.io/docs/next/manual-mocks#mocking-node-modules
+ * @see https://jestjs.io/docs/manual-mocks#mocking-node-modules
  * @see https://github.com/typestack/class-validator
  */
 

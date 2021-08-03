@@ -5,7 +5,7 @@ import { compilerOptions } from './tsconfig.json'
 
 /**
  * @file Jest Configuration - Base
- * @see https://jestjs.io/docs/next/configuration
+ * @see https://jestjs.io/docs/configuration
  * @see https://orlandobayo.com/blog/monorepo-testing-using-jest
  */
 

@@ -1,6 +1,10 @@
 import { IsPathCode as Code, IsPathMessage as Msg } from '@grease/enums'
 import { stringifyType } from '@tests/utils'
-import type { Testcase } from '@tests/utils/types'
+import type {
+  IsPathOption as Option,
+  Testcase,
+  TestcaseDecorator
+} from '@tests/utils/types'
 import type { ValidationArguments } from 'class-validator'
 import TestSubject from '../is-path.constraint'
 
@@ -84,50 +88,69 @@ describe('unit:grease/constraints/IsPathConstraint', () => {
   })
 
   describe('#validate', () => {
-    type Case = Testcase<boolean> & {
+    type Case = TestcaseDecorator<boolean, Option> & {
       args: Partial<ValidationArguments>
       value: any
     }
 
     const path = 'foo'
-    const path_asset = `${__filename}#My display label`
+    const path_readme = 'README.md'
+    const path_asset = `${path_readme}#My display label`
     const path_pkg = 'package.json'
     const path_esm = '.esmrc.js'
 
     const cases: Case[] = [
       {
+        args: { constraints: [{}], value: 13 },
+        expected: false,
+        option: 'no options',
+        value: 13
+      },
+      {
         args: { constraints: [{ cwd: false }], value: path_esm },
         expected: false,
+        option: 'options.cwd',
         value: path_esm
       },
       {
-        args: { constraints: [{}], value: path },
+        args: { constraints: [{ exists: true }], value: path },
         expected: false,
+        option: 'options.exists',
         value: path
       },
       {
         args: { constraints: [{ gh: false }], value: path_asset },
         expected: false,
+        option: 'options.gh',
         value: path_asset
+      },
+      {
+        args: { constraints: [{}], value: path_pkg },
+        expected: true,
+        option: 'no options',
+        value: path_pkg
       },
       {
         args: { constraints: [{ cwd: true }], value: path_pkg },
         expected: true,
+        option: 'options.cwd',
         value: path_pkg
       },
       {
-        args: { constraints: [{}], value: __filename },
+        args: { constraints: [{ exists: true }], value: path_readme },
         expected: true,
-        value: __filename
+        option: 'options.exists',
+        value: path_readme
       },
       {
         args: { constraints: [{ gh: true }], value: path_asset },
         expected: true,
+        option: 'options.gh',
         value: path_asset
       }
     ]
 
-    const name = 'should return $expected given $value'
+    const name = 'should return $expected given $value and $option'
 
     it.each<Case>(cases)(name, testcase => {
       // Arrange
