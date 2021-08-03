@@ -5,8 +5,7 @@
     "paths": {
       "@grease/*": ["packages/grease/src/*"],
       "lodash/*": ["node_modules/lodash-es/*"]
-    },
-    "target": "es2020"
+    }
   },
   "extends": "./tsconfig.prod.json"
 }

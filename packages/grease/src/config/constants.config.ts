@@ -4,6 +4,12 @@
  */
 
 /**
+ * @property {string} CHANGELOG_HEADING_PATTERN - `CHANGELOG` heading pattern
+ */
+export const CHANGELOG_HEADING_PATTERN =
+  /(^#+ \[?[0-9]+\.[0-9]+\.[0-9]+|<a name=)/gm
+
+/**
  * @property {string} DEBUG_NAMESPACE - Name of `debug` namespace
  * @see https://github.com/visionmedia/debug
  */
