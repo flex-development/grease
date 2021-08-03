@@ -35,5 +35,5 @@ jobs:
         run: yarn check:style
       - name: Run test suites
         run: TERM=xterm-256color yarn test --ci
-      - name: Build project
-        run: yarn build
+      - name: Build Node.js program
+        run: yarn build:node
