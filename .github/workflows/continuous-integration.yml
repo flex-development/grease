@@ -8,11 +8,11 @@
 ---
 name: Continuous Integration
 on: [pull_request]
-env:
-  PAT_GPR: ${{ secrets.PAT_GPR }}
 jobs:
   continuous-integration:
     runs-on: ubuntu-latest
+    env:
+      PAT_GPR: ${{ secrets.PAT_GPR }}
     steps:
       - name: Checkout branch
         uses: actions/checkout@v2
