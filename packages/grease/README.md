@@ -30,14 +30,14 @@ birthday (first release) format, or skipping note generation entirely.
    **NPM**
 
    ```properties
-   //registry.npmjs.org/:_authToken=$GITHUB_PAT_GPR
+   //registry.npmjs.org/:_authToken=$PAT_GPR
    @flex-development:registry=https://npm.pkg.github.com/
    ```
 
    **Yarn 1**
 
    ```properties
-   //registry.yarnpkg.com/:_authToken=$GITHUB_PAT_GPR
+   //registry.yarnpkg.com/:_authToken=$PAT_GPR
    @flex-development:registry=https://npm.pkg.github.com/
    ```
 
@@ -47,12 +47,12 @@ birthday (first release) format, or skipping note generation entirely.
    npmScopes:
      flex-development:
        npmAlwaysAuth: true
-       npmAuthToken: '${GITHUB_PAT_GPR}'
+       npmAuthToken: '${PAT_GPR}'
        npmRegistryServer: 'https://npm.pkg.github.com'
    ```
 
-   where `$GITHUB_PAT_GPR` is [GitHub Personal Access Token][10] with at least
-   the `read:packages` scope.
+   where `$PAT_GPR` is [GitHub Personal Access Token][10] with at least the
+   `read:packages` scope.
 
 2. Add project to `dependencies`
 

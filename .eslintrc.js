@@ -115,6 +115,7 @@ const RULES = {
         'argv',
         'bday',
         'cjs',
+        'cmp',
         'commitlint',
         'curr',
         'distributable',
@@ -135,6 +136,7 @@ const RULES = {
         'impl',
         'jira',
         'jsdoc',
+        'lerna',
         'localhost',
         'namespace',
         'nullable',
@@ -149,6 +151,9 @@ const RULES = {
         'repo',
         'req',
         'resize',
+        'sem',
+        'semver',
+        'shas',
         'stringified',
         'strinigify',
         'tgz',
@@ -160,8 +165,9 @@ const RULES = {
         'usr',
         'utf',
         'utf8',
-        'workspace',
+        'ver',
         'wip',
+        'workspace',
         'yargs',
         'zsh'
       ],
@@ -195,7 +201,7 @@ module.exports = {
       }
     },
     {
-      files: ['**/__tests__/**', '*.spec.ts'],
+      files: ['*.spec.ts'],
       env: {
         es6: true,
         'jest/globals': true,
@@ -203,7 +209,8 @@ module.exports = {
       },
       extends: EXTENDS.splice(1, 0, 'plugin:jest/recommended'),
       rules: {
-        'jest/no-disabled-tests': 0
+        'jest/no-disabled-tests': 0,
+        'jest/valid-title': 0
       }
     },
     {

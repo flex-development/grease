@@ -75,9 +75,9 @@ Scopes, their registry servers, and required environment variables are defined
 in [`.yarnrc.yml`](.yarnrc.yml) under the `npmScopes` field.
 
 Before [cloning and installing the project](#clone-&-install), you'll need to
-add the `GITHUB_PAT_GPR_FLDV` variable to your shell:
+add the `PAT_GPR` variable to your shell:
 
-1. Retrieve `GITHUB_PAT_GPR_FLDV` from a project maintainer
+1. Retrieve `PAT_GPR` from a project maintainer
 2. Open `~/.bash_profile`, `~/.zprofile`, `~/.zshenv`, **or** `~/.zshrc`
 3. Save file and re-launch shell
 
@@ -285,14 +285,14 @@ are enabled.
 When merging, please make sure to use the following commit message format:
 
 ```txt
-merge: <TICKET-ID> (pull request #n)
+merge: <TICKET-ID> (#pull-request-n)
         │            │
         │            └─⫸ check your pull request
         │
         └─⫸ check jira issue
 ```
 
-e.g: `merge: P010-1 (pull request #1)`
+e.g: `merge: P010-1 (#1)`
 
 ## Opening Issues
 

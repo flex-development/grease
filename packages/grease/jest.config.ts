@@ -5,7 +5,7 @@ import pkg from './package.json'
 
 /**
  * @file Jest Project Configuration
- * @see https://jestjs.io/docs/next/configuration
+ * @see https://jestjs.io/docs/configuration
  * @see https://orlandobayo.com/blog/monorepo-testing-using-jest/
  */
 
@@ -19,8 +19,14 @@ const config: Config.InitialOptions = merge(baseConfig, {
     }
   },
   roots: ['<rootDir>/__mocks__', ROOT],
-  setupFiles: ['<rootDir>/__tests__/config/setup.grease.ts'],
-  setupFilesAfterEnv: ['<rootDir>/__tests__/config/setupAfterEnv.grease.ts'],
+  setupFiles: [
+    '<rootDir>/__tests__/config/setup.ts',
+    '<rootDir>/__tests__/config/setup.grease.ts'
+  ],
+  setupFilesAfterEnv: [
+    '<rootDir>/__tests__/config/setupAfterEnv.ts',
+    '<rootDir>/__tests__/config/setupAfterEnv.grease.ts'
+  ],
   testEnvironment: 'node'
 })
 

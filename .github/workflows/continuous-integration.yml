@@ -11,27 +11,33 @@ on: [pull_request]
 jobs:
   continuous-integration:
     runs-on: ubuntu-latest
+    env:
+      PAT_GPR: ${{ secrets.PAT_GPR }}
+    strategy:
+      matrix:
+        node: ['14.17.4', '16.6.0']
     steps:
       - name: Checkout branch
         uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
-      - name: Setup Node.js environment
+      - name: Setup Node ${{ matrix.node }} environment
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
           always-auth: true
+          cache: 'yarn'
+          node-version: ${{ matrix.node }}
           registry-url: 'https://npm.pkg.github.com'
           scope: '@flex-development'
       - name: Install dependencies
         run: yarn
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.PAT_GPR }}
+          NODE_AUTH_TOKEN: ${PAT_GPR}
       - name: Check code formatting
         run: yarn check:format
       - name: Check code style
         run: yarn check:style
       - name: Run test suites
         run: TERM=xterm-256color yarn test --ci
-      - name: Build project
-        run: yarn build
+      - name: Build Node.js program
+        run: yarn build:node

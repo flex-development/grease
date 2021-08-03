@@ -161,3 +161,7 @@
 - name: scope:utils
   description: Utilities
   color: 74cefc
+
+- name: scope:validation
+  description: Decorators, constraints, and other validation logic
+  color: 74cefc

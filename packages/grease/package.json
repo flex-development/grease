@@ -32,32 +32,42 @@
     "directory": "./build",
     "registry": "https://npm.pkg.github.com"
   },
-  "main": "./cjs/index.js",
-  "module": "./esm/index.js",
-  "types": "./esm/index.d.ts",
+  "main": "./cjs/main.js",
+  "module": "./esm/main.js",
+  "types": "./esm/main.d.ts",
   "scripts": {
     "test": "bash ../../scripts/jest.sh",
     "build": "dotenv -c production ts-node ../../scripts/build",
-    "prepare": "install-peers; yarn build",
+    "prepare": "yarn build",
     "prepack": "yarn prepare"
   },
   "dependencies": {
     "@flex-development/exceptions": "2.0.0",
     "@flex-development/tutils": "3.1.0",
     "@types/debug": "4.1.5",
+    "@types/git-semver-tags": "4.1.1",
     "@types/lodash": "4.14.170",
     "@types/node": "16.4.8",
+    "@types/semver": "7.3.8",
     "@types/shelljs": "0.8.9",
     "@types/standard-version": "7.0.1",
     "chalk": "4.1.1",
+    "class-transformer": "0.4.0",
+    "class-transformer-validator": "0.9.1",
+    "class-validator": "0.13.1",
     "debug": "4.3.2",
+    "git-semver-tags": "4.1.1",
+    "isomorphic-git": "1.9.2",
     "lodash": "4.17.21",
     "lodash-es": "4.17.21",
     "shelljs": "0.8.4",
     "standard-version": "9.3.1"
   },
+  "devDependencies": {
+    "axios": "0.21.1"
+  },
   "engines": {
-    "node": "^12.20.0 || ^14.13.1 || >=16.0.0",
+    "node": "^14.17.4 || >=16.6.0",
     "yarn": "3.0.0-rc.2"
   },
   "env": {

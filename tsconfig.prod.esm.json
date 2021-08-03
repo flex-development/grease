@@ -1,14 +1,12 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "module": "es2020",
     "outDir": "./build/esm",
     "paths": {
-      "@": ["src/index.ts"],
-      "@/*": ["src/*"],
-      "@tests/fixtures/*": ["__tests__/__fixtures__/*"],
-      "@tests/*": ["__tests__/*"],
+      "@grease/*": ["packages/grease/src/*"],
       "lodash/*": ["node_modules/lodash-es/*"]
-    }
+    },
+    "target": "es2020"
   },
   "extends": "./tsconfig.prod.json"
 }

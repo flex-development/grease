@@ -28,6 +28,7 @@
     "preserveConstEnums": true,
     "pretty": true,
     "resolveJsonModule": true,
+    "rootDir": "./",
     "sourceMap": false,
     "strictPropertyInitialization": false,
     "suppressImplicitAnyIndexErrors": true,
