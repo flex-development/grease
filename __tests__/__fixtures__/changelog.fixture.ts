@@ -3,7 +3,7 @@ import { readFileSync } from 'fs'
 import { join } from 'path'
 
 /**
- * @file Test Fixture - CHANGELOG content
+ * @file Global Fixture - CHANGELOG content
  * @module tests/fixtures/changelog
  */
 
