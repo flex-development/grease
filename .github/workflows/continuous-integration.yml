@@ -8,6 +8,8 @@
 ---
 name: Continuous Integration
 on: [pull_request]
+env:
+  PAT_GPR: ${{ secrets.PAT_GPR }}
 jobs:
   continuous-integration:
     runs-on: ubuntu-latest
@@ -24,9 +26,9 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
           scope: '@flex-development'
       - name: Install dependencies
-        run: PAT_GPR=${{ secrets.PAT_GPR }} yarn
+        run: yarn
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.PAT_GPR }}
+          NODE_AUTH_TOKEN: ${PAT_GPR}
       - name: Check code formatting
         run: yarn check:format
       - name: Check code style
