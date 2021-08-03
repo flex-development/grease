@@ -1,7 +1,7 @@
 import {
   DEBUG_NAMESPACE,
   DEBUG_NAMESPACE_COLOR
-} from '@grease/config/constants'
+} from '@grease/config/constants.config'
 import type { ILogger } from '@grease/interfaces'
 import chalk from 'chalk'
 import debug from 'debug'

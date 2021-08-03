@@ -7,7 +7,7 @@ import type {
 import { OPTIONS_LERNA } from '@tests/fixtures/git-tags.fixture'
 import { mockGitTags, stringCompare } from '@tests/utils'
 import type { Testcase } from '@tests/utils/types'
-import TestSubject from '../semver'
+import TestSubject from '../semver.util'
 
 /**
  * @file Unit Tests - semver

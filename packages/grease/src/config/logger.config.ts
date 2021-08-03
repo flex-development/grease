@@ -1,4 +1,4 @@
-import createLogger from '@grease/utils/create-logger'
+import createLogger from '@grease/utils/create-logger.util'
 
 /**
  * @file Configuration - Logger

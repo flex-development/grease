@@ -1,4 +1,4 @@
-import logger from '@grease/config/logger'
+import logger from '@grease/config/logger.config'
 import { DependencyCommand } from '@grease/enums/dependency-command.enum'
 import { ExitCode } from '@grease/enums/exit-code.enum'
 import sh from 'shelljs'
