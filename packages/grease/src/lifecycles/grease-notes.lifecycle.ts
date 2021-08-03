@@ -13,7 +13,7 @@ import type { PathLike, SemanticVersion } from '@grease/types'
 import changelogVersions from '@grease/utils/changelog-versions.util'
 import validate from '@grease/utils/validate.util'
 import fs from 'fs'
-import indexOf from 'lodash/indexof'
+import indexOf from 'lodash/indexOf'
 
 /**
  * @file Lifecycles - Grease Notes
