@@ -5,6 +5,7 @@
 
 export { DependencyCommand } from './dependency-command.enum'
 export { ExitCode } from './exit-code.enum'
+export { GreaseNotesType } from './grease-notes-type.enum'
 export { IsBranchMessage } from './is-branch-message.enum'
 export { IsCommitMessage } from './is-commit-message.enum'
 export { IsPathCode } from './is-path-code.enum'

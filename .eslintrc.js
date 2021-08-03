@@ -114,6 +114,7 @@ const RULES = {
       skipWords: [
         'argv',
         'bday',
+        'changelog',
         'cjs',
         'cmp',
         'commitlint',

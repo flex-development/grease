@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["dom", "es2018"],
+    "lib": ["dom", "es2021"],
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmit": true,
@@ -33,7 +33,7 @@
     "strictPropertyInitialization": false,
     "suppressImplicitAnyIndexErrors": true,
     "strict": true,
-    "target": "es2018"
+    "target": "es2021"
   },
   "exclude": ["**/build", "**/node_modules"]
 }
