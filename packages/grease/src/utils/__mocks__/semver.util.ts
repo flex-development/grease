@@ -6,7 +6,7 @@ import { mockGitTags } from '@tests/utils'
  * @see https://jestjs.io/docs/manual-mocks#mocking-user-modules
  */
 
-const semver = jest.requireActual('../semver').default
+const semver = jest.requireActual('../semver.util').default
 
 export default {
   clean: jest.fn((...args) => semver.clean(...args)),

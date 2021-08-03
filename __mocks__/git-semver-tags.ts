@@ -2,7 +2,7 @@ import type {
   GitSemverTagsCallback as Callback,
   GitSemverTagsOptions as Options
 } from '@grease/types'
-import semver from '@grease/utils/semver'
+import semver from '@grease/utils/semver.util'
 import { mockGitTags } from '@tests/utils'
 
 /**

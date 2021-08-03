@@ -3,5 +3,5 @@
  * @module grease/types
  */
 
-export * from './semver'
-export * from './validation'
+export * from './semver.types'
+export * from './validation.types'

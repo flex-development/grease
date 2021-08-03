@@ -9,7 +9,7 @@ import type {
   SemanticVersion,
   ValidatorConstraintOptions
 } from '@grease/types'
-import semver from '@grease/utils/semver'
+import semver from '@grease/utils/semver.util'
 import type { ValidationArguments } from 'class-validator'
 import {
   buildMessage,

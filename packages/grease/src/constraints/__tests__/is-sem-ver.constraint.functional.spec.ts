@@ -2,7 +2,7 @@ import pkg from '@/grease/package.json'
 import type { ObjectPlain } from '@flex-development/tutils'
 import type { IsSemVerOptions } from '@grease/interfaces'
 import type { GitSemverTagsOptions, SemanticVersion } from '@grease/types'
-import semver from '@grease/utils/semver'
+import semver from '@grease/utils/semver.util'
 import { OPTIONS_LERNA } from '@tests/fixtures/git-tags.fixture'
 import type { TestcaseCalled } from '@tests/utils/types'
 import type { ValidationArguments } from 'class-validator'
@@ -14,7 +14,7 @@ import TestSubject from '../is-sem-ver.constraint'
  * @module grease/constraints/tests/functional/IsSemVer
  */
 
-jest.mock('@grease/utils/semver')
+jest.mock('@grease/utils/semver.util')
 
 const mockSemver = semver as jest.Mocked<typeof semver>
 

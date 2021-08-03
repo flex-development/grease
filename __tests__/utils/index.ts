@@ -1,5 +1,5 @@
 import type { GitSemverTagsOptions } from '@grease/types'
-import semver from '@grease/utils/semver'
+import semver from '@grease/utils/semver.util'
 import TAGS from '@tests/fixtures/git-tags.fixture'
 
 /**
