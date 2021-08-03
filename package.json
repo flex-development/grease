@@ -85,7 +85,7 @@
       "DEBUG_COLORS"
     ],
     "required": [
-      "GITHUB_PAT_GPR_FLDV"
+      "PAT_GPR"
     ]
   },
   "private": true,

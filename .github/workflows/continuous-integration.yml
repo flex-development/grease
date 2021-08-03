@@ -24,7 +24,7 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
           scope: '@flex-development'
       - name: Install dependencies
-        run: yarn
+        run: PAT_GPR=${{ secrets.PAT_GPR }} yarn
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PAT_GPR }}
       - name: Check code formatting
