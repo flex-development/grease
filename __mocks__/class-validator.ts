@@ -11,5 +11,6 @@ const actual = jest.requireActual<typeof item>('class-validator')
 
 export const buildMessage = jest.fn(actual.buildMessage)
 export const validate = jest.fn(actual.validate)
+export const IsString = jest.fn(actual.IsString)
 export const ValidateBy = jest.fn(actual.ValidateBy)
 export const ValidatorConstraint = jest.fn(actual.ValidatorConstraint)

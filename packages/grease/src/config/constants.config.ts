@@ -1,3 +1,5 @@
+import type { TVODefaults } from '@grease/types'
+
 /**
  * @file Configuration - Constant Values
  * @module grease/config/constants
@@ -20,3 +22,18 @@ export const DEBUG_NAMESPACE = 'grease'
  * @see https://github.com/visionmedia/debug#namespace-colors
  */
 export const DEBUG_NAMESPACE_COLOR = '111111111111'
+
+/**
+ * @property {TVODefaults} TVO_DEFAULTS - `class-transformer-validator` options
+ * @see https://github.com/MichalLytek/class-transformer-validator
+ */
+export const TVO_DEFAULTS: TVODefaults = Object.freeze({
+  transformer: {},
+  validator: {
+    enableDebugMessages: true,
+    forbidNonWhitelisted: true,
+    stopAtFirstError: false,
+    validationError: { target: true, value: true },
+    whitelist: false
+  }
+})
