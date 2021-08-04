@@ -126,16 +126,16 @@
   description: Application cache
   color: 74cefc
 
+- name: scope:cli
+  description: CLI application
+  color: 74cefc
+
 - name: scope:deploy
   description: Package deployment tasks
   color: 74cefc
 
 - name: scope:deps
   description: Dependency updates
-  color: 74cefc
-
-- name: scope:grease-cli
-  description: CLI application
   color: 74cefc
 
 - name: scope:lifecycles
