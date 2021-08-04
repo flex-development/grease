@@ -122,6 +122,10 @@
 # Scope labels
 # Project-specific groups for issues, pull requests, and discussions.
 
+- name: scope:cache
+  description: Application cache
+  color: 74cefc
+
 - name: scope:deploy
   description: Package deployment tasks
   color: 74cefc
