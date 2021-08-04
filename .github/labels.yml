@@ -134,16 +134,16 @@
   description: Dependency updates
   color: 74cefc
 
-- name: scope:grease
-  description: Node.js application
-  color: 74cefc
-
 - name: scope:grease-cli
   description: CLI application
   color: 74cefc
 
 - name: scope:lifecycles
   description: Lifecycle functions
+  color: 74cefc
+
+- name: scope:node
+  description: Node.js program
   color: 74cefc
 
 - name: scope:release
