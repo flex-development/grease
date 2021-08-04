@@ -1,3 +1,4 @@
+import cache from '@grease/config/cache.config'
 import IsPath from '@grease/decorators/is-path.decorator'
 import IsSemVer from '@grease/decorators/is-sem-ver.decorator'
 import { GreaseNotesType } from '@grease/enums/grease-notes-type.enum'
@@ -31,10 +32,8 @@ export default class CreateGreaseNotesDTO {
 
   /**
    * Most recently released version.
-   *
-   * @todo Get `git` settings from application cache
    */
-  @IsSemVer({})
+  @IsSemVer({ git: cache.git })
   @ValidateIf(o => o.type === GreaseNotesType.CHANGELOG)
   version?: SemanticVersion | string
 }

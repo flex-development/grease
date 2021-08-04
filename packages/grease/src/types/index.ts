@@ -5,3 +5,4 @@
 
 export * from './semver.types'
 export * from './validation.types'
+export * from './workflow.types'

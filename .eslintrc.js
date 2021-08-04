@@ -68,7 +68,13 @@ const RULES = {
   'jsdoc/no-undefined-types': [
     1,
     {
-      definedTypes: ['Exception', 'ExceptionJSON', 'NodeJS', 'never']
+      definedTypes: [
+        'Exception',
+        'ExceptionJSON',
+        'NodeJS',
+        'ValidationException',
+        'never'
+      ]
     }
   ],
   'jsdoc/require-hyphen-before-param-description': 1,

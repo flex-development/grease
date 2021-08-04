@@ -1,26 +1,26 @@
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
 import { IsString } from 'class-validator'
-import testSubject from '../validate.util'
+import testSubject from '../validate-sync.util'
 
 /**
- * @file Unit Tests - validate
- * @module grease/utils/tests/unit/validate
+ * @file Unit Tests - validateSync
+ * @module grease/utils/tests/unit/validateSync
  */
 
-describe('unit:utils/validate', () => {
+describe('unit:utils/validateSync', () => {
   class Model {
     @IsString()
     $property: string
   }
 
   describe('error handling', () => {
-    it('should throw ValidationException', async () => {
+    it('should throw ValidationException', () => {
       // Arrange
       let exception = {} as Exception
 
       // Act
       try {
-        await testSubject(Model, {})
+        testSubject(Model, {})
       } catch (error) {
         exception = error
       }
