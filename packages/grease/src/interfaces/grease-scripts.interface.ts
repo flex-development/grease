@@ -22,6 +22,11 @@ export interface IGreaseScripts extends StandardVersionOptions.Scripts {
   postnotes?: string
 
   /**
+   * Executed **before** the `depchecker` lifecycle.
+   */
+  predepchecker?: string
+
+  /**
    * Executed **before** the `greaser` lifecycle.
    */
   pregreaser?: string
