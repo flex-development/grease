@@ -1,3 +1,4 @@
+import cache from '@grease/config/cache.config'
 import {
   DEBUG_NAMESPACE,
   DEBUG_NAMESPACE_COLOR
@@ -32,10 +33,47 @@ const createLogger = (namespace?: string, delimiter?: string): ILogger => {
   // Set log color
   logger.color = DEBUG_NAMESPACE_COLOR
 
-  // Add log level functions
-  logger.error = (...text: unknown[]) => logger(chalk.red(...text))
-  logger.success = (...text: unknown[]) => logger(chalk.green(...text))
-  logger.warn = (...text: unknown[]) => logger(chalk.yellow(...text))
+  /**
+   * Base log function. Logs `args` if logging is enabled.
+   *
+   * @param {Parameters<typeof logger>} args - Log arguments
+   * @return {void} Nothing when complete
+   */
+  const log = (...args: Parameters<typeof logger>): void => {
+    if (!cache.options?.silent ?? false) logger(...args)
+  }
+
+  /**
+   * Logs a message to the console in red.
+   *
+   * @param {unknown[]} text - Log data
+   * @return {void} Nothing when complete
+   */
+  logger.error = (...text: unknown[]): void => log(chalk.red(...text))
+
+  /**
+   * Logs a message to the console in green.
+   *
+   * @param {unknown[]} text - Log data
+   * @return {void} Nothing when complete
+   */
+  logger.success = (...text: unknown[]): void => log(chalk.green(...text))
+
+  /**
+   * Logs a message to the console in yellow.
+   *
+   * @param {unknown[]} text - Log data
+   * @return {void} Nothing when complete
+   */
+  logger.warn = (...text: unknown[]): void => log(chalk.yellow(...text))
+
+  /**
+   * Log a message to the console.
+   *
+   * @param {unknown[]} text - Log data
+   * @return {void} Nothing when complete
+   */
+  logger.log = (...text: unknown[]): void => log(chalk.white(...text))
 
   return logger
 }
