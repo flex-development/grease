@@ -1,7 +1,7 @@
 import type { IGreaseOptions } from '@grease/interfaces'
 import type { GitSemverTagsOptions } from '@grease/types'
 import validate from '@grease/utils/validate.util'
-import { OPTIONS_LERNA } from '@tests/fixtures/git-tags.fixture'
+import { TAGS_OPTIONS_LERNA } from '@tests/fixtures/git-tags.fixture'
 import type { Testcase } from '@tests/utils/types'
 import { mocked } from 'ts-jest/utils'
 import TestSubject from '../grease-cache.service'
@@ -18,7 +18,11 @@ const mockValidate = mocked(validate)
 describe('unit:services/GreaseCache', () => {
   const Subject = new TestSubject()
 
-  const options: IGreaseOptions = { lernaPackage: OPTIONS_LERNA.package }
+  const options: IGreaseOptions = {
+    lernaPackage: TAGS_OPTIONS_LERNA.package,
+    tagPrefix: TAGS_OPTIONS_LERNA.tagPrefix,
+    skipUnstable: TAGS_OPTIONS_LERNA.skipUnstable
+  }
 
   describe('get git', () => {
     type Case = Testcase<GitSemverTagsOptions> & {
@@ -28,7 +32,7 @@ describe('unit:services/GreaseCache', () => {
 
     const cases: Case[] = [
       { expected: {}, options: {}, ready: false },
-      { expected: OPTIONS_LERNA, options, ready: true }
+      { expected: TAGS_OPTIONS_LERNA, options: options, ready: true }
     ]
 
     const name = 'should return $expected if ready === $ready'

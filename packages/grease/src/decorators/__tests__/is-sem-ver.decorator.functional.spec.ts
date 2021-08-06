@@ -4,7 +4,7 @@ import Validator from '@grease/constraints/is-sem-ver.constraint'
 import { IsSemVerMessage as Msg } from '@grease/enums/is-sem-ver-message.enum'
 import type { IsSemVerOptions } from '@grease/interfaces'
 import type { SemanticVersion } from '@grease/types'
-import { OPTIONS_LERNA } from '@tests/fixtures/git-tags.fixture'
+import { TAGS_OPTIONS_LERNA } from '@tests/fixtures/git-tags.fixture'
 import type {
   IsSemVerOption as Option,
   TestcaseDecorator
@@ -78,7 +78,7 @@ describe('functional:grease/decorators/IsSemVer', () => {
           expected: EXPECTED,
           option: 'options.clean',
           options: { clean: true },
-          value: `${OPTIONS_LERNA.package}@${pkg.version}`
+          value: `${TAGS_OPTIONS_LERNA.package}@${pkg.version}`
         },
         {
           code: 'CMP',
@@ -176,7 +176,7 @@ describe('functional:grease/decorators/IsSemVer', () => {
         {
           expected: EXPECTED,
           option: 'options.git',
-          options: { each: true, git: OPTIONS_LERNA },
+          options: { each: true, git: TAGS_OPTIONS_LERNA },
           value: [version]
         },
         {

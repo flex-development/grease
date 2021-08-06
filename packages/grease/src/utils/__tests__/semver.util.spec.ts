@@ -4,7 +4,7 @@ import type {
   SemanticVersion,
   SemVerOptions
 } from '@grease/types'
-import { OPTIONS_LERNA } from '@tests/fixtures/git-tags.fixture'
+import { TAGS_OPTIONS_LERNA } from '@tests/fixtures/git-tags.fixture'
 import { mockGitTags, stringCompare } from '@tests/utils'
 import type { Testcase } from '@tests/utils/types'
 import TestSubject from '../semver.util'
@@ -35,13 +35,13 @@ describe('unit:utils/semver', () => {
         expected: VERSION,
         options: undefined,
         tagPrefix: '@',
-        version: `${OPTIONS_LERNA.package}@${pkg.version}`
+        version: `${TAGS_OPTIONS_LERNA.package}@${pkg.version}`
       },
       {
         expected: null,
         options: undefined,
         tagPrefix: undefined,
-        version: `${OPTIONS_LERNA.package}@${pkg.version}`
+        version: `${TAGS_OPTIONS_LERNA.package}@${pkg.version}`
       },
       {
         expected: null,
@@ -67,7 +67,7 @@ describe('unit:utils/semver', () => {
     }
 
     const tags = mockGitTags()
-    const tagsLerna = mockGitTags(OPTIONS_LERNA)
+    const tagsLerna = mockGitTags(TAGS_OPTIONS_LERNA)
 
     const cases: Case[] = [
       {
@@ -82,12 +82,12 @@ describe('unit:utils/semver', () => {
       },
       {
         expected: tagsLerna,
-        options: OPTIONS_LERNA,
+        options: TAGS_OPTIONS_LERNA,
         reverse: true
       },
       {
         expected: tagsLerna.sort(stringCompare),
-        options: OPTIONS_LERNA,
+        options: TAGS_OPTIONS_LERNA,
         reverse: false
       }
     ]

@@ -15,6 +15,7 @@ export default {
     silent: false,
     verbose: false
   },
+  echo: jest.fn(),
   exec: jest.fn().mockReturnValue({ stdout: '' }),
   exit: jest.fn(),
   which: jest.fn()

@@ -24,6 +24,12 @@ export const DEBUG_NAMESPACE = 'grease'
 export const DEBUG_NAMESPACE_COLOR = '111111111111'
 
 /**
+ * @property {string} GH_RELEASE_CREATE - Command to create releases via GH CLI
+ * @see https://cli.github.com/manual/gh_release_create
+ */
+export const GH_RELEASE_CREATE = 'gh release create'
+
+/**
  * @property {string} GREASER_NOTES_BIRTHDAY - `Greaser#notes` birthday format
  */
 export const GREASER_NOTES_BIRTHDAY = `## Overview

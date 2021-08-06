@@ -1,13 +1,14 @@
-import type { GitSemverTagsOptions } from '@grease/types'
+import type { GitSemverTagsOptions, SemanticVersionTag } from '@grease/types'
 
 /**
  * @file Global Fixture - Git Semver Tags
  * @module tests/fixtures/git-tags
  */
 
-export const OPTIONS_LERNA: GitSemverTagsOptions = {
+export const TAGS_OPTIONS_LERNA: GitSemverTagsOptions = {
   lernaTags: true,
-  package: 'foo-package'
+  package: 'foo-package',
+  tagPrefix: '@'
 }
 
 export default [
@@ -22,4 +23,4 @@ export default [
   'v2.0.0',
   'v1.1.0-alpha.1',
   'v1.0.0'
-]
+] as SemanticVersionTag[]
