@@ -3,7 +3,7 @@ import type { ObjectPlain } from '@flex-development/tutils'
 import type { IsSemVerOptions } from '@grease/interfaces'
 import type { GitSemverTagsOptions, SemanticVersion } from '@grease/types'
 import semver from '@grease/utils/semver.util'
-import { OPTIONS_LERNA } from '@tests/fixtures/git-tags.fixture'
+import { TAGS_OPTIONS_LERNA } from '@tests/fixtures/git-tags.fixture'
 import type { TestcaseCalled } from '@tests/utils/types'
 import type { ValidationArguments } from 'class-validator'
 import type { CoerceOptions } from 'semver'
@@ -34,9 +34,9 @@ describe('functional:grease/constraints/IsSemVerConstraint', () => {
     const CASES_GIT: CaseGit[] = [
       {
         call: 'call',
-        calledWith: OPTIONS_LERNA,
+        calledWith: TAGS_OPTIONS_LERNA,
         expected: 1,
-        git: OPTIONS_LERNA,
+        git: TAGS_OPTIONS_LERNA,
         value: version
       },
       { call: 'call', calledWith: {}, expected: 1, git: true, value: version }
