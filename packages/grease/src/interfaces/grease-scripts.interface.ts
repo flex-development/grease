@@ -12,6 +12,11 @@ import type { StandardVersionOptions } from '@grease/types'
  */
 export interface IGreaseScripts extends StandardVersionOptions.Scripts {
   /**
+   * Executed **after** the `depchecker` lifecycle.
+   */
+  postdepchecker?: string
+
+  /**
    * Executed **after** the `greaser` lifecycle.
    */
   postgreaser?: string
