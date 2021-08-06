@@ -9,6 +9,7 @@ import {
 } from '@grease/config/constants.config'
 import CreateGreaseNotesDTO from '@grease/dtos/create-grease-notes.dto'
 import { GreaseNotesType as GNT } from '@grease/enums/grease-notes-type.enum'
+import GreaseOptions from '@grease/models/grease-options.model'
 import type { PathLike, SemanticVersion } from '@grease/types'
 import changelogVersions from '@grease/utils/changelog-versions.util'
 import validate from '@grease/utils/validate.util'
@@ -37,11 +38,13 @@ import indexOf from 'lodash/indexOf'
  * @param {PathLike} [dto.changelog] - Path to latest `CHANGELOG`
  * @param {GNT} [dto.type] - Release notes type
  * @param {SemanticVersion | string} [dto.version] - Package version
+ * @param {GreaseOptions} [options={}] - Application options
  * @return {Promise<NullishString>} Promise containing release notes or null
  * @throws {Exception}
  */
 const GreaseNotes = async (
-  dto: CreateGreaseNotesDTO = {}
+  dto: CreateGreaseNotesDTO = {},
+  options: GreaseOptions = {}
 ): Promise<NullishString> => {
   // Validate config
   dto = await validate(CreateGreaseNotesDTO, dto)
@@ -53,7 +56,7 @@ const GreaseNotes = async (
   if (type === GNT.BLANK) return GREASER_NOTES_BLANK
 
   // Generate birthday notes
-  if (type === GNT.BIRTHDAY || version === '1' || version === '1.0.0') {
+  if (options.firstRelease || type === GNT.BIRTHDAY) {
     return GREASER_NOTES_BIRTHDAY
   }
 

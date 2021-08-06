@@ -8,6 +8,7 @@ import {
 } from '@grease/config/constants.config'
 import CreateGreaseNotesDTO from '@grease/dtos/create-grease-notes.dto'
 import { GreaseNotesType } from '@grease/enums/grease-notes-type.enum'
+import GreaseOptions from '@grease/models/grease-options.model'
 import changelogVersions from '@grease/utils/changelog-versions.util'
 import { RELEASE_NOTES, VERSIONS } from '@tests/fixtures/changelog.fixture'
 import type { Testcase } from '@tests/utils/types'
@@ -33,6 +34,7 @@ describe('unit:lifecycles/grease-notes', () => {
   describe('returns', () => {
     type Case = Testcase<NullishString> & {
       dto: CreateGreaseNotesDTO
+      options?: GreaseOptions
       state: string
       expected_string:
         | `${'birthday' | 'blank' | 'changelog'} notes`
@@ -47,10 +49,11 @@ describe('unit:lifecycles/grease-notes', () => {
         expected_string: 'birthday notes'
       },
       {
-        dto: { version: '1.0.0' },
+        dto: {},
         expected: GREASER_NOTES_BIRTHDAY,
         expected_string: 'birthday notes',
-        state: 'dto.version satisfies 1.0.0'
+        options: { firstRelease: true },
+        state: 'options.firstRelease === true'
       },
       {
         dto: { type: GreaseNotesType.BLANK },
@@ -76,12 +79,12 @@ describe('unit:lifecycles/grease-notes', () => {
 
     it.each<Case>(cases)(name, async testcase => {
       // Arrange
-      const { dto, expected } = testcase
+      const { dto, expected, options } = testcase
 
       mockChangelogVersions.mockReturnValue(VERSIONS)
 
       // Act + Expect
-      expect(await TestSubject(dto)).toBe(expected)
+      expect(await TestSubject(dto, options)).toBe(expected)
     })
   })
 
