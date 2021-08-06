@@ -1,3 +1,4 @@
+import type { IGreaseOptions } from '@grease/interfaces'
 import type { Debugger } from 'debug'
 
 /**
@@ -13,7 +14,14 @@ import type { Debugger } from 'debug'
  * @extends Debugger
  */
 export interface ILogger extends Debugger {
+  checkpoint: (
+    options?: IGreaseOptions,
+    message?: string,
+    args?: string[],
+    figure?: string
+  ) => void
   error: (...text: unknown[]) => void
+  info: (...text: unknown[]) => void
   warn: (...text: unknown[]) => void
   success: (...text: unknown[]) => void
 }

@@ -3,9 +3,11 @@ import {
   DEBUG_NAMESPACE,
   DEBUG_NAMESPACE_COLOR
 } from '@grease/config/constants.config'
-import type { ILogger } from '@grease/interfaces'
-import chalk from 'chalk'
+import type { IGreaseOptions, ILogger } from '@grease/interfaces'
+import ch from 'chalk'
 import debug from 'debug'
+import figures from 'figures'
+import util from 'util'
 
 /**
  * @file Utility - Create Logger
@@ -39,7 +41,7 @@ const createLogger = (namespace?: string, delimiter?: string): ILogger => {
    * @param {Parameters<typeof logger>} args - Log arguments
    * @return {void} Nothing when complete
    */
-  const log = (...args: Parameters<typeof logger>): void => {
+  const logbase = (...args: Parameters<typeof logger>): void => {
     if (!cache.options?.silent ?? false) logger(...args)
   }
 
@@ -49,7 +51,15 @@ const createLogger = (namespace?: string, delimiter?: string): ILogger => {
    * @param {unknown[]} text - Log data
    * @return {void} Nothing when complete
    */
-  logger.error = (...text: unknown[]): void => log(chalk.red(...text))
+  const error = (...text: unknown[]): void => logbase(ch.red(...text))
+
+  /**
+   * Logs a message to the console in blue.
+   *
+   * @param {unknown[]} text - Log data
+   * @return {void} Nothing when complete
+   */
+  const info = (...text: unknown[]): void => logbase(ch.blue(...text))
 
   /**
    * Logs a message to the console in green.
@@ -57,7 +67,7 @@ const createLogger = (namespace?: string, delimiter?: string): ILogger => {
    * @param {unknown[]} text - Log data
    * @return {void} Nothing when complete
    */
-  logger.success = (...text: unknown[]): void => log(chalk.green(...text))
+  const success = (...text: unknown[]): void => logbase(ch.green(...text))
 
   /**
    * Logs a message to the console in yellow.
@@ -65,7 +75,7 @@ const createLogger = (namespace?: string, delimiter?: string): ILogger => {
    * @param {unknown[]} text - Log data
    * @return {void} Nothing when complete
    */
-  logger.warn = (...text: unknown[]): void => log(chalk.yellow(...text))
+  const warn = (...text: unknown[]): void => logbase(ch.yellow(...text))
 
   /**
    * Log a message to the console.
@@ -73,7 +83,41 @@ const createLogger = (namespace?: string, delimiter?: string): ILogger => {
    * @param {unknown[]} text - Log data
    * @return {void} Nothing when complete
    */
-  logger.log = (...text: unknown[]): void => log(chalk.white(...text))
+  const log = (...text: unknown[]): void => logbase(ch.white(...text))
+
+  /**
+   * Logs a library checkpoint. If `options.dryRun` is `true`, `message` will be
+   * logged as warning. Otherwise, it'll be logged as a success message.
+   *
+   * @param {IGreaseOptions} [options={}] - Application options
+   * @param {string} [msg=''] - Message to log
+   * @param {string[]} [args=[]] - Additional messages
+   * @param {string} [figure] - Unicode symbol
+   * @return {void} Nothing when complete
+   */
+  const checkpoint = (
+    options: IGreaseOptions = {},
+    msg: string = '',
+    args: string[] = [],
+    figure?: string
+  ): void => {
+    // Get dryRun setting
+    const dryRun = options?.dryRun ?? false
+
+    // Get full message
+    msg = util.format.apply([msg].concat(args.map(arg => ch.bold(arg))))
+
+    // Log info message
+    info(`${figure || ch[dryRun ? 'yellow' : 'green'](figures.tick)} ${msg}`)
+  }
+
+  // Add custom log functions
+  logger.checkpoint = checkpoint
+  logger.error = error
+  logger.info = info
+  logger.success = success
+  logger.warn = warn
+  logger.log = log
 
   return logger
 }
