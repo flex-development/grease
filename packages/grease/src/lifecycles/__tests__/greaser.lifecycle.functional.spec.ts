@@ -4,13 +4,13 @@ import sh from 'shelljs'
 import TestSubject from '../greaser.lifecycle'
 
 /**
- * @file Unit Tests - Greaser
- * @module grease/lifecycles/tests/unit/Greaser
+ * @file Functional Tests - Greaser
+ * @module grease/lifecycles/tests/functional/Greaser
  */
 
 const mockSH = sh as jest.Mocked<typeof sh>
 
-describe('unit:lifecycles/greaser', () => {
+describe('functional:lifecycles/greaser', () => {
   beforeEach(async () => {
     await TestSubject({ version: '3.13.98-rc.6.40' })
   })
