@@ -4,20 +4,23 @@ import { ExitCode } from '@grease/enums/exit-code.enum'
 import sh from 'shelljs'
 
 /**
- * @file Lifecycles - Dependency Checker
- * @module grease/lifecycles/DependencyChecker
+ * @file Lifecycles - Depchecker
+ * @module grease/lifecycles/Depchecker
  */
 
 /**
- * Checks if the [GitHub CLI][1] is installed and logs the dependency check.
- * Forces the shell to exit with code `0` if both programs are installed, exit
- * code `127` otherwise.
+ * Checks if required dependencies are installed. Forces the shell to exit with
+ * code `0` if all dependencies are installed, and `127` otherwise.
+ *
+ * Required Dependencies:
+ *
+ * - GitHub CLI - [`gh`][1]
  *
  * [1]: https://cli.github.com/manual
  *
  * @return {never} Shell exits with `ExitCode.NOT_FOUND` | `ExitCode.SUCCESS`
  */
-const DependencyChecker = (): never => {
+const Depchecker = (): never => {
   const checks = Object.keys(DependencyCommand)
   logger.warn(`running dependency check: ${JSON.stringify(checks)}`)
 
@@ -48,4 +51,4 @@ const DependencyChecker = (): never => {
   return sh.exit(!gh ? ExitCode.NOT_FOUND : ExitCode.SUCCESS)
 }
 
-export default DependencyChecker
+export default Depchecker

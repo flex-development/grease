@@ -3,11 +3,11 @@ import { DependencyCommand } from '@grease/enums/dependency-command.enum'
 import { ExitCode } from '@grease/enums/exit-code.enum'
 import type { ILogger } from '@grease/interfaces'
 import sh from 'shelljs'
-import TestSubject from '../dependency-checker.lifecycle'
+import TestSubject from '../depchecker.lifecycle'
 
 /**
- * @file Functional Tests - Dependency Checker
- * @module grease/lifecycles/tests/functional/DependencyChecker
+ * @file Functional Tests - Depchecker
+ * @module grease/lifecycles/tests/functional/Depchecker
  */
 
 jest.mock('@grease/config/logger.config')
@@ -15,7 +15,7 @@ jest.mock('@grease/config/logger.config')
 const mockLogger = logger as jest.Mocked<ILogger>
 const mockSh = sh as jest.Mocked<typeof sh>
 
-describe('functional:lifecycles/dependency-checker', () => {
+describe('functional:lifecycles/depchecker', () => {
   Object.keys(DependencyCommand).forEach((dep, i) => {
     describe(dep, () => {
       describe('error', () => {

@@ -4,7 +4,7 @@
  */
 
 /**
- * Shell commands used by the `dependency-checker` lifecycle.
+ * Shell commands used by the `depchecker` lifecycle.
  */
 export enum DependencyCommand {
   gh = 'gh'
