@@ -723,6 +723,7 @@ __metadata:
     husky: 4.3.8
     jest: 27.0.6
     jest-extended: 0.11.5
+    jest-mock-console: 1.1.0
     lint-staged: 11.0.0
     mkdirp: 0.5.5
     npm: 7.19.0
@@ -6037,6 +6038,15 @@ fsevents@^2.3.2:
     slash: ^3.0.0
     stack-utils: ^2.0.3
   checksum: ef35619ea72511216f285591878b06c6ca1fd885fbceaac91bed1e8f49a5198b08c7014f6fe2c772814107997e533ec9bd4e6fc3c1d8e3ec6c8e35151ee3e42a
+  languageName: node
+  linkType: hard
+
+"jest-mock-console@npm:1.1.0":
+  version: 1.1.0
+  resolution: "jest-mock-console@npm:1.1.0"
+  peerDependencies:
+    jest: ">= 22.4.2"
+  checksum: 65cb7045d00ae9fc348e9c04e40aaaa9fccaa11005a3eefc7351a40c86e9f99b1004cc9a1d50ed43048d87b17cf6fdef2681e13b43bb2565b2d66aab0577aabc
   languageName: node
   linkType: hard
 
