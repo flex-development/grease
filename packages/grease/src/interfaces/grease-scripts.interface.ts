@@ -22,7 +22,7 @@ export interface IGreaseScripts extends StandardVersionOptions.Scripts {
   postgreaser?: string
 
   /**
-   * Executed **after** the `grease-notes` lifecycle.
+   * Executed **after** the `notes` lifecycle.
    */
   postnotes?: string
 
@@ -37,7 +37,7 @@ export interface IGreaseScripts extends StandardVersionOptions.Scripts {
   pregreaser?: string
 
   /**
-   * Executed **before** the `grease-notes` lifecycle.
+   * Executed **before** the `notes` lifecycle.
    */
   prenotes?: string
 }

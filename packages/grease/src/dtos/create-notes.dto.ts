@@ -1,23 +1,23 @@
 import cache from '@grease/config/cache.config'
 import IsPath from '@grease/decorators/is-path.decorator'
 import IsSemVer from '@grease/decorators/is-sem-ver.decorator'
-import { GreaseNotesType } from '@grease/enums/grease-notes-type.enum'
+import { NotesType } from '@grease/enums/notes-type.enum'
 import type { PathLike, SemanticVersion } from '@grease/types'
 import { IsEnum, IsOptional, ValidateIf } from 'class-validator'
 
 /**
- * @file Data Transfer Objects - CreateGreaseNotesDTO
- * @module grease/dtos/CreateGreaseNotes
+ * @file Data Transfer Objects - CreateNotesDTO
+ * @module grease/dtos/CreateNotes
  */
 
 /**
- * `GreaserNotes` plugin configuration options.
+ * Data used to generate release notes.
  */
-export default class CreateGreaseNotesDTO {
+export default class CreateNotesDTO {
   /**
    * Path to `CHANGELOG` if `type` is `ReleaseNotesType.CHANGELOG`.
    */
-  @ValidateIf(o => o.type === GreaseNotesType.CHANGELOG)
+  @ValidateIf(o => o.type === NotesType.CHANGELOG)
   @IsPath({ cwd: true, exists: true })
   changelog?: PathLike
 
@@ -26,14 +26,14 @@ export default class CreateGreaseNotesDTO {
    *
    * @default ReleaseNotesType.NULL
    */
-  @IsEnum(GreaseNotesType)
+  @IsEnum(NotesType)
   @IsOptional()
-  type?: GreaseNotesType
+  type?: NotesType
 
   /**
    * Most recently released version.
    */
   @IsSemVer({ git: cache.git })
-  @ValidateIf(o => o.type === GreaseNotesType.CHANGELOG)
+  @ValidateIf(o => o.type === NotesType.CHANGELOG)
   version?: SemanticVersion | string
 }

@@ -6,47 +6,47 @@ import {
   GREASER_NOTES_BLANK,
   GREASER_NOTES_NULL
 } from '@grease/config/constants.config'
-import CreateGreaseNotesDTO from '@grease/dtos/create-grease-notes.dto'
-import { GreaseNotesType } from '@grease/enums/grease-notes-type.enum'
+import CreateNotesDTO from '@grease/dtos/create-notes.dto'
+import { NotesType } from '@grease/enums/notes-type.enum'
 import GreaseOptions from '@grease/models/grease-options.model'
 import changelogVersions from '@grease/utils/changelog-versions.util'
 import { RELEASE_NOTES, VERSIONS } from '@tests/fixtures/changelog.fixture'
 import type { Testcase } from '@tests/utils/types'
 import { mocked } from 'ts-jest/utils'
-import TestSubject from '../grease-notes.lifecycle'
+import TestSubject from '../notes.lifecycle'
 
 /**
- * @file Unit Tests - Grease Notes
- * @module grease/lifecycles/tests/unit/GreaseNotes
+ * @file Unit Tests - Notes
+ * @module grease/lifecycles/tests/unit/Notes
  */
 
 jest.mock('@grease/utils/changelog-versions.util')
 
 const mockChangelogVersions = mocked(changelogVersions)
 
-describe('unit:lifecycles/grease-notes', () => {
-  const dto: CreateGreaseNotesDTO = {
+describe('unit:lifecycles/notes', () => {
+  const dto: CreateNotesDTO = {
     changelog: '__tests__/__fixtures__/CHANGELOG.fixture.md',
-    type: GreaseNotesType.CHANGELOG,
+    type: NotesType.CHANGELOG,
     version: '2.0.0'
   }
 
   describe('returns', () => {
     type Case = Testcase<NullishString> & {
-      dto: CreateGreaseNotesDTO
+      dto: CreateNotesDTO
       options?: GreaseOptions
       state: string
       expected_string:
         | `${'birthday' | 'blank' | 'changelog'} notes`
-        | GreaseNotesType.NULL
+        | NotesType.NULL
     }
 
     const cases: Case[] = [
       {
-        dto: { type: GreaseNotesType.BIRTHDAY },
+        dto: { type: NotesType.BIRTHDAY },
         expected: GREASER_NOTES_BIRTHDAY,
         expected_string: 'birthday notes',
-        state: 'dto.type === GreaseNotesType.BIRTHDAY'
+        state: 'dto.type === NotesType.BIRTHDAY'
       },
       {
         dto: {},
@@ -56,22 +56,22 @@ describe('unit:lifecycles/grease-notes', () => {
         state: 'options.firstRelease === true'
       },
       {
-        dto: { type: GreaseNotesType.BLANK },
+        dto: { type: NotesType.BLANK },
         expected: GREASER_NOTES_BLANK,
         expected_string: 'blank notes',
-        state: 'dto.type === GreaseNotesType.BLANK'
+        state: 'dto.type === NotesType.BLANK'
       },
       {
         dto,
         expected: RELEASE_NOTES['2.0.0'],
         expected_string: 'changelog notes',
-        state: 'dto.type === GreaseNotesType.CHANGELOG'
+        state: 'dto.type === NotesType.CHANGELOG'
       },
       {
-        dto: { type: GreaseNotesType.NULL },
+        dto: { type: NotesType.NULL },
         expected: GREASER_NOTES_NULL,
-        expected_string: GreaseNotesType.NULL,
-        state: 'dto.type === GreaseNotesType.NULL'
+        expected_string: NotesType.NULL,
+        state: 'dto.type === NotesType.NULL'
       }
     ]
 

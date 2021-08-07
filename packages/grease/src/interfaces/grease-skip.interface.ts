@@ -17,7 +17,7 @@ export interface IGreaseSkip extends StandardVersionOptions.Skip {
   greaser?: boolean
 
   /**
-   * Skip `grease-notes` lifecycle.
+   * Skip `notes` lifecycle.
    */
   notes?: boolean
 }

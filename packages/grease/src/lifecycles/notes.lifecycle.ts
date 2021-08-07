@@ -7,8 +7,8 @@ import {
   GREASER_NOTES_NULL,
   LINE_BREAK as BR
 } from '@grease/config/constants.config'
-import CreateGreaseNotesDTO from '@grease/dtos/create-grease-notes.dto'
-import { GreaseNotesType as GNT } from '@grease/enums/grease-notes-type.enum'
+import CreateNotesDTO from '@grease/dtos/create-notes.dto'
+import { NotesType } from '@grease/enums/notes-type.enum'
 import GreaseOptions from '@grease/models/grease-options.model'
 import type { PathLike, SemanticVersion } from '@grease/types'
 import changelogVersions from '@grease/utils/changelog-versions.util'
@@ -17,8 +17,8 @@ import fs from 'fs'
 import indexOf from 'lodash/indexOf'
 
 /**
- * @file Lifecycles - Grease Notes
- * @module grease/lifecycles/GreaseNotes
+ * @file Lifecycles - Notes
+ * @module grease/lifecycles/Notes
  */
 
 /**
@@ -34,34 +34,34 @@ import indexOf from 'lodash/indexOf'
  * - package version (`dto.version`) is not in the changelog content
  *
  * @async
- * @param {CreateGreaseNotesDTO} [dto] - Generator configuration options
+ * @param {CreateNotesDTO} [dto] - Generator configuration options
  * @param {PathLike} [dto.changelog] - Path to latest `CHANGELOG`
- * @param {GNT} [dto.type] - Release notes type
+ * @param {NotesType} [dto.type] - Release notes type
  * @param {SemanticVersion | string} [dto.version] - Package version
  * @param {GreaseOptions} [options={}] - Application options
  * @return {Promise<NullishString>} Promise containing release notes or null
  * @throws {Exception}
  */
-const GreaseNotes = async (
-  dto: CreateGreaseNotesDTO = {},
+const Notes = async (
+  dto: CreateNotesDTO = {},
   options: GreaseOptions = {}
 ): Promise<NullishString> => {
   // Validate config
-  dto = await validate(CreateGreaseNotesDTO, dto)
+  dto = await validate(CreateNotesDTO, dto)
 
   // Get note generation options
-  const { changelog, type = GNT.NULL, version } = dto
+  const { changelog, type = NotesType.NULL, version } = dto
 
   // Generate blank notes
-  if (type === GNT.BLANK) return GREASER_NOTES_BLANK
+  if (type === NotesType.BLANK) return GREASER_NOTES_BLANK
 
   // Generate birthday notes
-  if (options.firstRelease || type === GNT.BIRTHDAY) {
+  if (options.firstRelease || type === NotesType.BIRTHDAY) {
     return GREASER_NOTES_BIRTHDAY
   }
 
   // Skip note generation
-  if (type === GNT.NULL) return GREASER_NOTES_NULL
+  if (type === NotesType.NULL) return GREASER_NOTES_NULL
 
   // Skip notes if no changelog path or versions config is missing
   if (!changelog || !version) return GREASER_NOTES_NULL
@@ -101,4 +101,4 @@ const GreaseNotes = async (
   return notes.substring(notes.indexOf(BR), notes.lastIndexOf(BR)).trim()
 }
 
-export default GreaseNotes
+export default Notes
