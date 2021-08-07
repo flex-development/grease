@@ -1,6 +1,8 @@
 import logger from '@grease/config/logger.config'
 import { DependencyCommand } from '@grease/enums/dependency-command.enum'
 import { ExitCode } from '@grease/enums/exit-code.enum'
+import ch from 'chalk'
+import figures from 'figures'
 import sh from 'shelljs'
 
 /**
@@ -21,34 +23,25 @@ import sh from 'shelljs'
  * @return {never} Shell exits with `ExitCode.NOT_FOUND` | `ExitCode.SUCCESS`
  */
 const Depchecker = (): never => {
-  const checks = Object.keys(DependencyCommand)
-  logger.warn(`running dependency check: ${JSON.stringify(checks)}`)
-
-  /**
-   * Logs the result of a dependency check.
-   *
-   * @param {DependencyCommand} command - Dependency being checked
-   * @param {sh.ShellString | null} [which] - If null, `log` as error
-   * @return {void} Nothing when complete
-   */
-  const log = (
-    command: DependencyCommand,
-    which: sh.ShellString | null
-  ): void => {
-    // Get log level
-    const level = which ? 'success' : 'error'
-
-    // Log dependency check
-    logger[level](which ? `✓ ${command}` : `${command} not found`)
-  }
+  logger.checkpoint(
+    'checking dependency commands',
+    Object.keys(DependencyCommand),
+    ch.yellow('!!')
+  )
 
   // Check if dependencies are installed
-  const gh: sh.ShellString = sh.which(DependencyCommand.gh)
+  Object.values(DependencyCommand).forEach(command => {
+    if (!sh.which(command)) {
+      logger.checkpoint(`${command} not found`, [], ch.red(figures.cross))
+      return sh.exit(ExitCode.NOT_FOUND)
+    }
 
-  // Log dependency checks
-  log(DependencyCommand.gh, gh)
+    return
+  })
 
-  return sh.exit(!gh ? ExitCode.NOT_FOUND : ExitCode.SUCCESS)
+  return sh.exit(ExitCode.SUCCESS)
 }
 
 export default Depchecker
+
+Depchecker()

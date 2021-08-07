@@ -9,5 +9,13 @@ const rootConfig = require('../../.eslintrc')
 module.exports = merge(rootConfig, {
   parserOptions: {
     project: ['./tsconfig.json']
-  }
+  },
+  overrides: rootConfig.overrides.concat([
+    {
+      files: ['src/services/logger.service.ts'],
+      rules: {
+        'prefer-spread': 0
+      }
+    }
+  ])
 })
