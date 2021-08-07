@@ -62,7 +62,8 @@
     "lodash-es": "4.17.21",
     "reflect-metadata": "0.1.13",
     "shelljs": "0.8.4",
-    "standard-version": "9.3.1"
+    "standard-version": "9.3.1",
+    "typedi": "0.10.0"
   },
   "devDependencies": {
     "axios": "0.21.1"
