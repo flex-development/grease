@@ -20,8 +20,8 @@ describe('functional:lifecycles/depchecker', () => {
     describe(dep, () => {
       describe('error', () => {
         beforeEach(() => {
-          // @ts-expect-error sh.which type def is wrong
-          mockSh.which.mockImplementation((command: string) => null)
+          // @ts-expect-error 'null' is not assignable to type 'ShellString'
+          mockSh.which.mockImplementation(() => null)
           TestSubject()
         })
 

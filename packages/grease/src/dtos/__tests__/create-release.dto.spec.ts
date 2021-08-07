@@ -29,7 +29,7 @@ describe('unit:dtos/CreateReleaseDTO', () => {
       property:
         | `#${keyof ICreateReleaseDTO}`
         | `release tag${' (lerna-style)' | ''}`
-        | `title if #version ${'satisifies' | 'does not satisfy'} 1.0.0`
+        | `title if #version ${'satisfies' | 'does not satisfy'} 1.0.0`
       stringify: 'stringify' | 'not stringify'
     }
 
@@ -160,7 +160,7 @@ describe('unit:dtos/CreateReleaseDTO', () => {
         dto: { tagPrefix, version: V1 },
         expected: `${V1TAG} --title ${V1TAG} ${GREASER_TITLE_BIRTHDAY}`,
         git: {},
-        property: 'title if #version satisifies 1.0.0',
+        property: 'title if #version satisfies 1.0.0',
         stringify: 'stringify'
       },
       {

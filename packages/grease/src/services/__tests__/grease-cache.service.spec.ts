@@ -14,8 +14,8 @@ describe('unit:services/GreaseCache', () => {
 
   const options: IGreaseOptions = {
     lernaPackage: TAGS_OPTIONS_LERNA.package,
-    tagPrefix: TAGS_OPTIONS_LERNA.tagPrefix,
-    skipUnstable: TAGS_OPTIONS_LERNA.skipUnstable
+    skipUnstable: TAGS_OPTIONS_LERNA.skipUnstable,
+    tagPrefix: TAGS_OPTIONS_LERNA.tagPrefix
   }
 
   describe('get git', () => {

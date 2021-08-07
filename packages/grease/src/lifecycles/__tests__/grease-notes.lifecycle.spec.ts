@@ -45,8 +45,8 @@ describe('unit:lifecycles/grease-notes', () => {
       {
         dto: { type: GreaseNotesType.BIRTHDAY },
         expected: GREASER_NOTES_BIRTHDAY,
-        state: 'dto.type === GreaseNotesType.BIRTHDAY',
-        expected_string: 'birthday notes'
+        expected_string: 'birthday notes',
+        state: 'dto.type === GreaseNotesType.BIRTHDAY'
       },
       {
         dto: {},

@@ -53,6 +53,7 @@ export default class IsCommitConstraint implements IConstraint {
    */
   async validate(
     value: any,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     args: ValidationArguments = {} as ValidationArguments
   ): Promise<boolean> {
     try {
