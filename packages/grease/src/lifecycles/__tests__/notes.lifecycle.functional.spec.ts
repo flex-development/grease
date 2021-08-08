@@ -24,10 +24,10 @@ const mockRunLifecycleScript = runLifecycleScript as jest.MockedFunction<
 const mockValidate = validate as jest.MockedFunction<typeof validate>
 
 describe('functional:lifecycles/notes', () => {
-  const options: GreaseOptions = {}
+  const options: GreaseOptions = { dryRun: true }
 
   const dto: CreateNotesDTO = {
-    changelog: '__tests__/__fixtures__/CHANGELOG.fixture.md',
+    infile: '__tests__/__fixtures__/CHANGELOG.fixture.md',
     type: NotesType.CHANGELOG,
     version: TAGS[1].replace('v', '')
   }
@@ -44,7 +44,7 @@ describe('functional:lifecycles/notes', () => {
     })
 
     it('should log checkpoints', () => {
-      expect(mockLogger.checkpoint).toBeCalledTimes(2)
+      expect(mockLogger.checkpoint).toBeCalledTimes(3)
     })
 
     it('should validate dto', () => {

@@ -1,5 +1,6 @@
 import type {
   GitSemverTagsOptions,
+  PathLike,
   StandardVersionOptions
 } from '@grease/types'
 import type { Config } from 'conventional-changelog-config-spec'
@@ -16,7 +17,15 @@ import type { IGreaseSkip } from './grease-skip.interface'
  *
  * @extends StandardVersionOptions
  */
-export interface IGreaseOptions extends Omit<StandardVersionOptions, 'types'> {
+export interface IGreaseOptions
+  extends Omit<StandardVersionOptions, 'infile' | 'types'> {
+  /**
+   * Read the CHANGELOG from this file.
+   *
+   * @default 'CHANGELOG.md'
+   */
+  infile?: PathLike
+
   /**
    * Name of the package from which tags will be extracted.
    */

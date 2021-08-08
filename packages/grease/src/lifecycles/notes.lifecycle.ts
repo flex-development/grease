@@ -15,6 +15,7 @@ import type { PathLike, SemanticVersion } from '@grease/types'
 import changelogVersions from '@grease/utils/changelog-versions.util'
 import validate from '@grease/utils/validate.util'
 import ch from 'chalk'
+import figures from 'figures'
 import fs from 'fs'
 import indexOf from 'lodash/indexOf'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
@@ -39,7 +40,7 @@ import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
  * @async
  * @param {GreaseOptions} [options={}] - Application options
  * @param {CreateNotesDTO} [dto] - Generator configuration options
- * @param {PathLike} [dto.changelog] - Path to latest `CHANGELOG`
+ * @param {PathLike} [dto.infile] - Path to latest `CHANGELOG`
  * @param {NotesType} [dto.type] - Release notes type
  * @param {SemanticVersion | string} [dto.version] - Package version
  * @return {Promise<NullishString>} Promise containing release notes or null
@@ -64,7 +65,7 @@ const Notes = async (
   dto = await validate(CreateNotesDTO, dto)
 
   // Get note generation options
-  const { changelog, type = NotesType.NULL, version } = dto
+  const { infile, type = NotesType.NULL, version } = dto
 
   // Generate blank notes
   if (type === NotesType.BLANK) return GREASER_NOTES_BLANK
@@ -74,20 +75,24 @@ const Notes = async (
     return GREASER_NOTES_BIRTHDAY
   }
 
-  // Log validation checkpoint
-  logger.checkpoint('generating release notes...', [], ch.yellow('!!'))
-
   // Skip notes if no changelog path or versions config is missing
-  if (!changelog || !version) return GREASER_NOTES_NULL
+  if (!infile || !version) return GREASER_NOTES_NULL
+
+  // Log validation checkpoint
+  logger.checkpoint(
+    'generating release notes from %s',
+    [infile.toString()],
+    ch.yellow('!!')
+  )
 
   // Get changelog content and versions (in descending order)
-  const content = fs.readFileSync(changelog as fs.PathLike, 'utf8')
+  const content = fs.readFileSync(infile as fs.PathLike, 'utf8')
   const versions = changelogVersions(content)
 
   // Throw error if no versions found in changelog content
   if (!versions.length) {
-    const data = { dto, errors: { changelog }, versions }
-    const message = `No package versions found in ${changelog}`
+    const data = { dto, errors: { infile }, versions }
+    const message = `No package versions found in ${infile}`
 
     throw new Exception(ExceptionStatusCode.NOT_FOUND, message, data)
   }
@@ -95,7 +100,7 @@ const Notes = async (
   // Search for package version in changelog content
   if (!versions.includes(version)) {
     const data = { dto, errors: { version }, versions }
-    const message = `${version} not found in ${changelog}`
+    const message = `${version} not found in ${infile}`
 
     throw new Exception(ExceptionStatusCode.NOT_FOUND, message, data)
   }
@@ -114,6 +119,9 @@ const Notes = async (
 
   // Format release notes
   notes = notes.substring(notes.indexOf(BR), notes.lastIndexOf(BR)).trim()
+
+  // Log notes checkpoint if dry run is enabled
+  if (options.dryRun) logger.checkpoint(notes, [], ch.blue(figures.info))
 
   // Run `postnotes` script
   runLifecycleScript(options, 'postnotes')

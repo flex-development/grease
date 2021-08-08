@@ -26,7 +26,7 @@ const mockChangelogVersions = mocked(changelogVersions)
 
 describe('unit:lifecycles/notes', () => {
   const dto: CreateNotesDTO = {
-    changelog: '__tests__/__fixtures__/CHANGELOG.fixture.md',
+    infile: '__tests__/__fixtures__/CHANGELOG.fixture.md',
     type: NotesType.CHANGELOG,
     version: '2.0.0'
   }
@@ -96,7 +96,7 @@ describe('unit:lifecycles/notes', () => {
   })
 
   describe('throws', () => {
-    it('should throw if no package versions found in changelog', async () => {
+    it('should throw if no package versions found in dto.infile', async () => {
       // Arrange
       let exception = {} as Exception
       mockChangelogVersions.mockReturnValue([])
@@ -112,12 +112,12 @@ describe('unit:lifecycles/notes', () => {
       expect(exception).toMatchObject({
         code: ExceptionStatusCode.NOT_FOUND,
         data: { dto, versions: [] },
-        errors: { changelog: dto.changelog },
-        message: `No package versions found in ${dto.changelog}`
+        errors: { infile: dto.infile },
+        message: `No package versions found in ${dto.infile}`
       })
     })
 
-    it('should throw if dto.version not found in changelog', async () => {
+    it('should throw if dto.version not found in dto.infile', async () => {
       // Arrange
       const versions = VERSIONS.slice(1, 3)
       let exception = {} as Exception
@@ -135,7 +135,7 @@ describe('unit:lifecycles/notes', () => {
         code: ExceptionStatusCode.NOT_FOUND,
         data: { dto, versions },
         errors: { version: dto.version },
-        message: `${dto.version} not found in ${dto.changelog}`
+        message: `${dto.version} not found in ${dto.infile}`
       })
     })
   })

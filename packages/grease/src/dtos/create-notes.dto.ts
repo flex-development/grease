@@ -19,7 +19,7 @@ export default class CreateNotesDTO {
    */
   @ValidateIf(o => o.type === NotesType.CHANGELOG)
   @IsPath({ cwd: true, exists: true })
-  changelog?: PathLike
+  infile?: PathLike
 
   /**
    * Type of release notes to generate.
