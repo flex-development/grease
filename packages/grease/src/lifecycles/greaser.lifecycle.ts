@@ -43,8 +43,12 @@ const Greaser = async (
   // Log release start checkpoint
   logger.checkpoint('starting github release...', [], ch.yellow('!!'))
 
+  // Get release command
+  const command = `${GH_RELEASE_CREATE} ${release.toString()}`
+
   // Execute GitHub release
-  sh.exec(`${GH_RELEASE_CREATE} ${release.toString()}`)
+  if (!options.dryRun) sh.exec(command, { silent: options.silent })
+  else logger.checkpoint(command, [], ch.yellow('!!'))
 
   // Run `postgreaser` script
   runLifecycleScript(options, 'postgreaser')
