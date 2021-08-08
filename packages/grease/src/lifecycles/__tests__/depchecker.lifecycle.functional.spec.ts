@@ -2,7 +2,6 @@ import { ExceptionStatusCode } from '@flex-development/exceptions/enums'
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
 import logger from '@grease/config/logger.config'
 import { DependencyCommand } from '@grease/enums/dependency-command.enum'
-import { ExitCode } from '@grease/enums/exit-code.enum'
 import type { ILogger } from '@grease/interfaces'
 import GreaseOptions from '@grease/models/grease-options.model'
 import ch from 'chalk'
@@ -71,7 +70,7 @@ describe('functional:lifecycles/depchecker', () => {
       ]
 
       describe.each<Case>(cases)('$command', ({ command, i }) => {
-        it('should throw if not found && options.dryRun is falsy', () => {
+        it('should throw if not found', () => {
           // Arrange
           // @ts-expect-error 'null' is not assignable to type 'ShellString'
           mockSH.which.mockReturnValue(null)
@@ -79,7 +78,7 @@ describe('functional:lifecycles/depchecker', () => {
 
           // Act
           try {
-            TestSubject({ dryRun: false })
+            TestSubject(options)
           } catch (error) {
             exception = error
           }
@@ -88,8 +87,7 @@ describe('functional:lifecycles/depchecker', () => {
           expect(exception).toMatchObject({
             code: ExceptionStatusCode.NOT_FOUND,
             data: {
-              checkpoint: { args: [], figure: mockCH.red(figures.cross) },
-              exit: ExitCode.NOT_FOUND
+              checkpoint: { args: [], figure: mockCH.red(figures.cross) }
             },
             message: `${command} not found`
           })
@@ -105,18 +103,6 @@ describe('functional:lifecycles/depchecker', () => {
 
             // Expect
             expect(mockLogger.checkpoint.mock.calls[i + 1][0]).toBe(command)
-          })
-
-          it('should log if not found && options.dryRun === true', () => {
-            // Arrange
-            // @ts-expect-error 'null' is not assignable to type 'ShellString'
-            mockSH.which.mockReturnValue(null)
-
-            // Act
-            TestSubject(options)
-
-            // Expect
-            expect(mockLogger.checkpoint.mock.calls[i + 1][0]).toMatch(command)
           })
         })
       })
