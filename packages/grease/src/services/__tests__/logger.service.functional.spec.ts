@@ -1,6 +1,7 @@
+import type { ILogger } from '@grease/interfaces'
 import type { TestcaseCalled } from '@tests/utils/types'
 import ch from 'chalk'
-import GreaseCache from '../grease-cache.service'
+import { Container } from 'typedi'
 import TestSubject from '../logger.service'
 
 /**
@@ -11,7 +12,7 @@ import TestSubject from '../logger.service'
 const mockCH = ch as jest.Mocked<typeof ch>
 
 describe('functional:services/Logger', () => {
-  const Subject = new TestSubject(new GreaseCache())
+  const Subject = Container.get<ILogger>(TestSubject)
 
   const spy_debug = jest.spyOn(Subject, 'debug')
 
