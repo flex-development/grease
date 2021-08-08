@@ -4,5 +4,5 @@
  */
 
 export * from './semver.types'
+export * from './standard-version.types'
 export * from './validation.types'
-export * from './workflow.types'

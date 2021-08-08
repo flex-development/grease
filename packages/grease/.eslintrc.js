@@ -43,11 +43,18 @@ module.exports = merge(rootConfig, {
               'repo',
               'stringified',
               'strinigify',
+              'updaters',
               'utf8',
               'versioning'
             ])
           }
         ]
+      }
+    },
+    {
+      files: ['**/*.spec.ts'],
+      rules: {
+        'no-empty': 0
       }
     },
     {
