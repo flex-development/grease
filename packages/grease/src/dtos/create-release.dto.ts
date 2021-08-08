@@ -113,7 +113,7 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
     if (repo && repo.length) args.push(`--repo ${repo}`)
 
     // Add release title
-    if (version === '1.0.0') {
+    if (version === '1.0.0' && (!title || !title.length)) {
       args.push(`--title ${tag} ${GREASER_TITLE_BIRTHDAY}`)
     } else if (title && title.length) {
       args.push(`--title ${title}`)

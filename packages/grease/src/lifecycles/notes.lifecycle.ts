@@ -8,12 +8,10 @@ import {
   LINE_BREAK as BR
 } from '@grease/config/constants.config'
 import logger from '@grease/config/logger.config'
-import CreateNotesDTO from '@grease/dtos/create-notes.dto'
 import { NotesType } from '@grease/enums/notes-type.enum'
 import GreaseOptions from '@grease/models/grease-options.model'
-import type { PathLike, SemanticVersion } from '@grease/types'
+import type { SemanticVersion } from '@grease/types'
 import changelogVersions from '@grease/utils/changelog-versions.util'
-import validate from '@grease/utils/validate.util'
 import ch from 'chalk'
 import figures from 'figures'
 import fs from 'fs'
@@ -33,74 +31,61 @@ import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
  *
  * Throws an `Exception` if:
  *
- * - any configuration options are invalid
  * - no package versions are found in the changelog content
- * - package version (`dto.version`) is not in the changelog content
+ * - `version` is not in the changelog content
  *
  * @async
  * @param {GreaseOptions} [options={}] - Application options
- * @param {CreateNotesDTO} [dto] - Generator configuration options
- * @param {PathLike} [dto.infile] - Path to latest `CHANGELOG`
- * @param {NotesType} [dto.type] - Release notes type
- * @param {SemanticVersion | string} [dto.version] - Package version
+ * @param {SemanticVersion | NullishString} [version] - Latest package version
  * @return {Promise<NullishString>} Promise containing release notes or null
  * @throws {Exception}
  */
 const Notes = async (
   options: GreaseOptions = {},
-  dto: CreateNotesDTO = {}
+  version: SemanticVersion | NullishString = null
 ): Promise<NullishString> => {
   // Skip lifecycle
-  if (options.skip?.notes || dto.type === NotesType.NULL) {
+  if (options.skip?.notes || options.notesType === NotesType.NULL) {
     return GREASER_NOTES_NULL
   }
 
   // Run `prenotes` script
   runLifecycleScript(options, 'prenotes')
 
-  // Log validation checkpoint
-  logger.checkpoint('validating notes data...', [], ch.yellow('!!'))
-
-  // Validate config
-  dto = await validate(CreateNotesDTO, dto)
-
-  // Get note generation options
-  const { infile, type = NotesType.NULL, version } = dto
-
   // Generate blank notes
-  if (type === NotesType.BLANK) return GREASER_NOTES_BLANK
+  if (options.notesType === NotesType.BLANK) return GREASER_NOTES_BLANK
 
   // Generate birthday notes
-  if (options.firstRelease || type === NotesType.BIRTHDAY) {
+  if (options.firstRelease || options.notesType === NotesType.BIRTHDAY) {
     return GREASER_NOTES_BIRTHDAY
   }
 
   // Skip notes if no changelog path or versions config is missing
-  if (!infile || !version) return GREASER_NOTES_NULL
+  if (!options.infile || !version) return GREASER_NOTES_NULL
 
   // Log validation checkpoint
   logger.checkpoint(
     'generating release notes from %s',
-    [infile.toString()],
+    [options.infile.toString()],
     ch.yellow('!!')
   )
 
   // Get changelog content and versions (in descending order)
-  const content = fs.readFileSync(infile as fs.PathLike, 'utf8')
+  const content = fs.readFileSync(options.infile as fs.PathLike, 'utf8')
   const versions = changelogVersions(content)
 
   // Throw error if no versions found in changelog content
   if (!versions.length) {
-    const data = { dto, errors: { infile }, versions }
-    const message = `No package versions found in ${infile}`
+    const data = { errors: { infile: options.infile }, versions }
+    const message = `No package versions found in ${options.infile}`
 
     throw new Exception(ExceptionStatusCode.NOT_FOUND, message, data)
   }
 
   // Search for package version in changelog content
   if (!versions.includes(version)) {
-    const data = { dto, errors: { version }, versions }
-    const message = `${version} not found in ${infile}`
+    const data = { errors: { version }, versions }
+    const message = `${version} not found in ${options.infile}`
 
     throw new Exception(ExceptionStatusCode.NOT_FOUND, message, data)
   }
