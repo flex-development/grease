@@ -113,3 +113,38 @@ export interface IGreaseOptions
    */
   types?: Config.Type.Base[]
 }
+
+/**
+ * Default `grease` options.
+ */
+export type GreaseOptionsDefaults = NonNullable<
+  Pick<
+    IGreaseOptions,
+    | 'bumpFiles'
+    | 'commitAll'
+    | 'commitUrlFormat'
+    | 'compareUrlFormat'
+    | 'dryRun'
+    | 'firstRelease'
+    | 'gitTagFallback'
+    | 'header'
+    | 'infile'
+    | 'issuePrefixes'
+    | 'issueUrlFormat'
+    | 'noVerify'
+    | 'notesType'
+    | 'packageFiles'
+    | 'preMajor'
+    | 'preset'
+    | 'releaseCommitMessageFormat'
+    | 'releaseDraft'
+    | 'releaseTarget'
+    | 'scripts'
+    | 'sign'
+    | 'silent'
+    | 'skip'
+    | 'tagPrefix'
+    | 'types'
+    | 'userUrlFormat'
+  >
+>
