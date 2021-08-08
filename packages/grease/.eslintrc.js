@@ -32,6 +32,8 @@ module.exports = merge(rootConfig, {
               'msg',
               'namespace',
               'nullish',
+              'postdepchecker',
+              'predepchecker',
               'prepend',
               'prerelease',
               'repo',

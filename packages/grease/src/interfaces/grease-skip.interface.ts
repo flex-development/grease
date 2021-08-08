@@ -12,6 +12,13 @@ import type { StandardVersionOptions } from '@grease/types'
  */
 export interface IGreaseSkip extends StandardVersionOptions.Skip {
   /**
+   * Skip `depchecker` lifecycle.
+   *
+   * If skipped, the `greaser` lifecycle will be skipped as well.
+   */
+  depchecker?: boolean
+
+  /**
    *  Skip `greaser` lifecycle.
    */
   greaser?: boolean
