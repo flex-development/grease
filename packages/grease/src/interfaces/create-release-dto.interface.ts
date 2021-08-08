@@ -1,3 +1,4 @@
+import type { NullishString } from '@flex-development/tutils'
 import type { PathLike, SemanticVersion } from '@grease/types'
 
 /**
@@ -21,7 +22,7 @@ export interface ICreateReleaseDTO {
   /**
    * Release notes.
    */
-  notes?: string
+  notes?: NullishString
 
   /**
    * Read release notes from file.

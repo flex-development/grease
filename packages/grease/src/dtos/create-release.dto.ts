@@ -1,11 +1,9 @@
+import type { ObjectPlain } from '@flex-development/tutils'
 import cache from '@grease/config/cache.config'
 import { GREASER_TITLE_BIRTHDAY } from '@grease/config/constants.config'
-import IsPath from '@grease/decorators/is-path.decorator'
-import IsSemVer from '@grease/decorators/is-sem-ver.decorator'
-import IsTargetBranch from '@grease/decorators/is-target-branch.decorator'
 import type { ICreateReleaseDTO } from '@grease/interfaces'
-import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 import join from 'lodash/join'
+import pick from 'lodash/pick'
 
 /**
  * @file Data Transfer Objects - CreateReleaseDTO
@@ -20,44 +18,38 @@ import join from 'lodash/join'
  * @implements {ICreateReleaseDTO}
  */
 export default class CreateReleaseDTO implements ICreateReleaseDTO {
-  @IsBoolean()
-  @IsOptional()
-  draft?: ICreateReleaseDTO['draft']
+  readonly draft?: ICreateReleaseDTO['draft']
+  readonly files?: ICreateReleaseDTO['files']
+  readonly notes?: ICreateReleaseDTO['notes']
+  readonly notesFile?: ICreateReleaseDTO['notesFile']
+  readonly prerelease?: ICreateReleaseDTO['prerelease']
+  readonly repo?: ICreateReleaseDTO['repo']
+  readonly tagPrefix?: ICreateReleaseDTO['tagPrefix']
+  readonly target?: ICreateReleaseDTO['target']
+  readonly title?: ICreateReleaseDTO['title']
+  readonly version: ICreateReleaseDTO['version']
 
-  @IsPath({ each: true, exists: true, gh: true })
-  @IsOptional()
-  files?: ICreateReleaseDTO['files']
+  /**
+   * Creates a new GitHub release data transfer object.
+   *
+   * @param {ICreateReleaseDTO | ObjectPlain} [data={}] - Data to create release
+   */
+  constructor(data: ICreateReleaseDTO | ObjectPlain = {}) {
+    const keys: (keyof ICreateReleaseDTO)[] = [
+      'draft',
+      'files',
+      'notes',
+      'notesFile',
+      'prerelease',
+      'repo',
+      'tagPrefix',
+      'target',
+      'title',
+      'version'
+    ]
 
-  @IsString()
-  @IsOptional()
-  notes?: ICreateReleaseDTO['notes']
-
-  @IsPath({ exists: true })
-  @IsOptional()
-  notesFile?: ICreateReleaseDTO['notesFile']
-
-  @IsBoolean()
-  @IsOptional()
-  prerelease?: ICreateReleaseDTO['prerelease']
-
-  @IsNotEmpty()
-  @IsOptional()
-  repo?: ICreateReleaseDTO['repo']
-
-  @IsNotEmpty()
-  @IsOptional()
-  tagPrefix?: ICreateReleaseDTO['tagPrefix']
-
-  @IsTargetBranch({ sha: true })
-  @IsOptional()
-  target?: ICreateReleaseDTO['target']
-
-  @IsNotEmpty()
-  @IsOptional()
-  title?: ICreateReleaseDTO['title']
-
-  @IsSemVer({ git: cache.git, negit: true })
-  version: ICreateReleaseDTO['version']
+    Object.assign(this, pick(data, keys))
+  }
 
   /**
    * Converts the DTO into a [`gh release create`][1] argument string.
