@@ -1,5 +1,5 @@
 import type { NullishString } from '@flex-development/tutils'
-import { CHANGELOG_HEADING_PATTERN } from '@grease/config/constants.config'
+import { RELEASE_PATTERN } from '@grease/config/constants.config'
 import semver from '@grease/utils/semver.util'
 
 /**
@@ -21,7 +21,7 @@ const changelogVersions = (changelog: NullishString = null): string[] => {
   if (!changelog || !changelog.trim().length) return []
 
   // Match changelog content against heading pattern
-  const headings = changelog.match(CHANGELOG_HEADING_PATTERN)
+  const headings = changelog.match(RELEASE_PATTERN)
 
   // If no headings, do nothing
   if (!headings) return []

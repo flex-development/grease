@@ -6,12 +6,6 @@ import type { TVODefaults } from '@grease/types'
  */
 
 /**
- * @property {string} CHANGELOG_HEADING_PATTERN - `CHANGELOG` heading pattern
- */
-export const CHANGELOG_HEADING_PATTERN =
-  /(^#+ \[?[0-9]+\.[0-9]+\.[0-9]+|<a name=)/gm
-
-/**
  * @property {string} GH_RELEASE_CREATE - Command to create releases via GH CLI
  * @see https://cli.github.com/manual/gh_release_create
  */
@@ -53,6 +47,11 @@ export const GREASER_TITLE_BIRTHDAY = '(🎂 First Release)'
  * @property {string} LINE_BREAK - Line break
  */
 export const LINE_BREAK = '\n'
+
+/**
+ * @property {string} RELEASE_PATTERN - `CHANGELOG` release heading pattern
+ */
+export const RELEASE_PATTERN = /(^#+ \[?[0-9]+\.[0-9]+\.[0-9]+|<a name=)/gm
 
 /**
  * @property {TVODefaults} TVO_DEFAULTS - `class-transformer-validator` options
