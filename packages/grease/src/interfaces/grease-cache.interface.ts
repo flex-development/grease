@@ -14,5 +14,5 @@ export interface IGreaseCache {
   options: IGreaseOptions
 
   get git(): GitSemverTagsOptions
-  set args(args: IGreaseOptions | ObjectPlain)
+  setOptions(args: IGreaseOptions | ObjectPlain): Promise<IGreaseOptions>
 }
