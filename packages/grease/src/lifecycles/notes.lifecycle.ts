@@ -7,14 +7,17 @@ import {
   GREASER_NOTES_NULL,
   LINE_BREAK as BR
 } from '@grease/config/constants.config'
+import logger from '@grease/config/logger.config'
 import CreateNotesDTO from '@grease/dtos/create-notes.dto'
 import { NotesType } from '@grease/enums/notes-type.enum'
 import GreaseOptions from '@grease/models/grease-options.model'
 import type { PathLike, SemanticVersion } from '@grease/types'
 import changelogVersions from '@grease/utils/changelog-versions.util'
 import validate from '@grease/utils/validate.util'
+import ch from 'chalk'
 import fs from 'fs'
 import indexOf from 'lodash/indexOf'
+import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
 
 /**
  * @file Lifecycles - Notes
@@ -34,18 +37,29 @@ import indexOf from 'lodash/indexOf'
  * - package version (`dto.version`) is not in the changelog content
  *
  * @async
+ * @param {GreaseOptions} [options={}] - Application options
  * @param {CreateNotesDTO} [dto] - Generator configuration options
  * @param {PathLike} [dto.changelog] - Path to latest `CHANGELOG`
  * @param {NotesType} [dto.type] - Release notes type
  * @param {SemanticVersion | string} [dto.version] - Package version
- * @param {GreaseOptions} [options={}] - Application options
  * @return {Promise<NullishString>} Promise containing release notes or null
  * @throws {Exception}
  */
 const Notes = async (
-  dto: CreateNotesDTO = {},
-  options: GreaseOptions = {}
+  options: GreaseOptions = {},
+  dto: CreateNotesDTO = {}
 ): Promise<NullishString> => {
+  // Skip lifecycle
+  if (options.skip?.notes || dto.type === NotesType.NULL) {
+    return GREASER_NOTES_NULL
+  }
+
+  // Run `prenotes` script
+  runLifecycleScript(options, 'prenotes')
+
+  // Log validation checkpoint
+  logger.checkpoint('validating notes data...', [], ch.yellow('!!'))
+
   // Validate config
   dto = await validate(CreateNotesDTO, dto)
 
@@ -60,8 +74,8 @@ const Notes = async (
     return GREASER_NOTES_BIRTHDAY
   }
 
-  // Skip note generation
-  if (type === NotesType.NULL) return GREASER_NOTES_NULL
+  // Log validation checkpoint
+  logger.checkpoint('generating release notes...', [], ch.yellow('!!'))
 
   // Skip notes if no changelog path or versions config is missing
   if (!changelog || !version) return GREASER_NOTES_NULL
@@ -92,13 +106,19 @@ const Notes = async (
   const prev_heading = prev === '1.0.0' ? `## ${prev}` : `[${prev}]`
 
   // Generate release notes
-  const notes = content
+  let notes = content
     .substring(content.indexOf(`[${version}]`), content.indexOf(prev_heading))
     .replaceAll('###', '##')
     .replaceAll('* ', '- ')
     .replaceAll(':*-', ':**')
 
-  return notes.substring(notes.indexOf(BR), notes.lastIndexOf(BR)).trim()
+  // Format release notes
+  notes = notes.substring(notes.indexOf(BR), notes.lastIndexOf(BR)).trim()
+
+  // Run `postnotes` script
+  runLifecycleScript(options, 'postnotes')
+
+  return notes
 }
 
 export default Notes

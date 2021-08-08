@@ -43,6 +43,13 @@ describe('unit:lifecycles/notes', () => {
 
     const cases: Case[] = [
       {
+        dto: {},
+        expected: GREASER_NOTES_NULL,
+        expected_string: NotesType.NULL,
+        options: { skip: { notes: true } },
+        state: 'options.skip.notes === true'
+      },
+      {
         dto: { type: NotesType.BIRTHDAY },
         expected: GREASER_NOTES_BIRTHDAY,
         expected_string: 'birthday notes',
@@ -84,7 +91,7 @@ describe('unit:lifecycles/notes', () => {
       mockChangelogVersions.mockReturnValue(VERSIONS)
 
       // Act + Expect
-      expect(await TestSubject(dto, options)).toBe(expected)
+      expect(await TestSubject(options, dto)).toBe(expected)
     })
   })
 
@@ -96,7 +103,7 @@ describe('unit:lifecycles/notes', () => {
 
       // Act
       try {
-        await TestSubject(dto)
+        await TestSubject({}, dto)
       } catch (error) {
         exception = error
       }
@@ -118,7 +125,7 @@ describe('unit:lifecycles/notes', () => {
 
       // Act
       try {
-        await TestSubject(dto)
+        await TestSubject({}, dto)
       } catch (error) {
         exception = error
       }
