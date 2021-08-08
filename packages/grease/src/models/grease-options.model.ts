@@ -27,11 +27,6 @@ export default class GreaseOptions implements IGreaseOptions {
   @IsOptional()
   bumpFiles?: IGreaseOptions['bumpFiles']
 
-  /** @deprecated - use `header` */
-  @IsString()
-  @IsOptional()
-  changelogHeader?: IGreaseOptions['changelogHeader']
-
   @IsString()
   @IsOptional()
   commitUrlFormat?: IGreaseOptions['commitUrlFormat']
@@ -72,11 +67,6 @@ export default class GreaseOptions implements IGreaseOptions {
   @IsNotEmpty()
   @IsOptional()
   lernaPackage?: IGreaseOptions['lernaPackage']
-
-  /** @deprecated - use `releaseCommitMessageFormat` */
-  @IsString()
-  @IsOptional()
-  message?: IGreaseOptions['message']
 
   @IsBoolean()
   @IsOptional()
