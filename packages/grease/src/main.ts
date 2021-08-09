@@ -1,5 +1,6 @@
 import { ExceptionStatusCode } from '@flex-development/exceptions/enums'
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
+import type { ObjectPlain } from '@flex-development/tutils'
 import ch from 'chalk'
 import fig from 'figures'
 import isEmpty from 'lodash/isEmpty'
@@ -13,10 +14,10 @@ import cache from './config/cache.config'
 import { RELEASE_PATTERN } from './config/constants.config'
 import defaults from './config/defaults.config'
 import logger from './config/logger.config'
+import type { IGreaseOptions } from './interfaces'
 import depchecker from './lifecycles/depchecker.lifecycle'
 import greaser from './lifecycles/greaser.lifecycle'
 import notes from './lifecycles/notes.lifecycle'
-import GreaseOptions from './models/grease-options.model'
 import readPackageFiles from './utils/read-package-files.util'
 
 /**
@@ -30,10 +31,10 @@ import readPackageFiles from './utils/read-package-files.util'
  * [1]: https://github.com/conventional-changelog/standard-version
  *
  * @async
- * @param {GreaseOptions} [args={}] - Application options
+ * @param {IGreaseOptions | ObjectPlain} [args={}] - Application options
  * @return {Promise<void>} Empty promise when complete
  */
-const main = async (args: GreaseOptions = {}): Promise<void> => {
+const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
   try {
     // Set application options
     const options = await cache.setOptions(merge(defaults, args))
