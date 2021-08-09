@@ -5,7 +5,10 @@
 
 export type { ICreateReleaseDTO } from './create-release-dto.interface'
 export type { IGreaseCache } from './grease-cache.interface'
-export type { IGreaseOptions } from './grease-options.interface'
+export type {
+  GreaseOptionsDefaults,
+  IGreaseOptions
+} from './grease-options.interface'
 export type { IGreaseScripts } from './grease-scripts.interface'
 export type { IGreaseSkip } from './grease-skip.interface'
 export type { IsBranchOptions } from './is-branch-options.interface'

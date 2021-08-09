@@ -1,7 +1,10 @@
 import IsPath from '@grease/decorators/is-path.decorator'
+import IsTargetBranch from '@grease/decorators/is-target-branch.decorator'
+import { NotesType } from '@grease/enums/notes-type.enum'
 import type { IGreaseOptions } from '@grease/interfaces'
 import {
   IsBoolean,
+  IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -27,11 +30,6 @@ export default class GreaseOptions implements IGreaseOptions {
   @IsOptional()
   bumpFiles?: IGreaseOptions['bumpFiles']
 
-  /** @deprecated - use `header` */
-  @IsString()
-  @IsOptional()
-  changelogHeader?: IGreaseOptions['changelogHeader']
-
   @IsString()
   @IsOptional()
   commitUrlFormat?: IGreaseOptions['commitUrlFormat']
@@ -56,7 +54,7 @@ export default class GreaseOptions implements IGreaseOptions {
   @IsOptional()
   header?: IGreaseOptions['header']
 
-  @IsPath({ cwd: true })
+  @IsPath()
   @IsOptional()
   infile?: IGreaseOptions['infile']
 
@@ -73,14 +71,17 @@ export default class GreaseOptions implements IGreaseOptions {
   @IsOptional()
   lernaPackage?: IGreaseOptions['lernaPackage']
 
-  /** @deprecated - use `releaseCommitMessageFormat` */
-  @IsString()
-  @IsOptional()
-  message?: IGreaseOptions['message']
-
   @IsBoolean()
   @IsOptional()
   noVerify?: IGreaseOptions['noVerify']
+
+  @IsPath()
+  @IsOptional()
+  notesFile?: IGreaseOptions['notesFile']
+
+  @IsEnum(NotesType)
+  @IsOptional()
+  notesType?: IGreaseOptions['notesType']
 
   @IsString({ each: true })
   @IsOptional()
@@ -106,9 +107,30 @@ export default class GreaseOptions implements IGreaseOptions {
   @IsOptional()
   releaseAs?: IGreaseOptions['releaseAs']
 
+  @IsPath({ each: true, gh: true })
+  @IsOptional()
+  releaseAssets?: IGreaseOptions['releaseAssets']
+
   @IsString()
   @IsOptional()
   releaseCommitMessageFormat?: IGreaseOptions['releaseCommitMessageFormat']
+
+  @IsBoolean()
+  @IsOptional()
+  releaseDraft?: IGreaseOptions['releaseDraft']
+
+  @IsTargetBranch({ sha: true })
+  @IsOptional()
+  releaseTarget?: IGreaseOptions['releaseTarget']
+
+  @IsString()
+  @IsOptional()
+  releaseTitle?: IGreaseOptions['releaseTitle']
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  repo?: IGreaseOptions['repo']
 
   @IsBoolean()
   @IsOptional()
@@ -132,7 +154,7 @@ export default class GreaseOptions implements IGreaseOptions {
 
   @IsString()
   @IsOptional()
-  tagPrefix?: IGreaseOptions['releaseAs']
+  tagPrefix?: IGreaseOptions['tagPrefix']
 
   @ValidateNested({ each: true })
   @IsOptional()

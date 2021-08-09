@@ -1,4 +1,6 @@
-import type { Debugger } from 'debug'
+import ch from 'chalk'
+import figures from 'figures'
+import type { IGreaseCache } from './grease-cache.interface'
 
 /**
  * @file Interfaces - ILogger
@@ -6,14 +8,17 @@ import type { Debugger } from 'debug'
  */
 
 /**
- * Custom logger that adds log-level functions to the base [`debug`][1] logger.
- *
- * [1]: https://github.com/visionmedia/debug
- *
- * @extends Debugger
+ * `Logger` service interface.
  */
-export interface ILogger extends Debugger {
+export interface ILogger {
+  readonly cache: IGreaseCache
+  readonly ch: typeof ch
+
+  checkpoint: (
+    msg?: string,
+    args?: any[],
+    figure?: keyof typeof figures | string
+  ) => void
+  debug: (...args: any[]) => void
   error: (...text: unknown[]) => void
-  warn: (...text: unknown[]) => void
-  success: (...text: unknown[]) => void
 }

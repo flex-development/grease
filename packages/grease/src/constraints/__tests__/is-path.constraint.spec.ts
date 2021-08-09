@@ -13,7 +13,7 @@ import TestSubject from '../is-path.constraint'
  * @module grease/constraints/tests/unit/IsPath
  */
 
-describe('unit:grease/constraints/IsPathConstraint', () => {
+describe('unit:constraints/IsPathConstraint', () => {
   const CONSTRAINT = TestSubject.options?.name as string
   const Subject = new TestSubject()
 

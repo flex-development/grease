@@ -3,6 +3,7 @@ import type { IGreaseCache, IGreaseOptions } from '@grease/interfaces'
 import GreaseOptions from '@grease/models/grease-options.model'
 import type { GitSemverTagsOptions } from '@grease/types'
 import validate from '@grease/utils/validate.util'
+import { Service } from 'typedi'
 
 /**
  * @file Services - GreaseCache
@@ -15,18 +16,13 @@ import validate from '@grease/utils/validate.util'
  * @class
  * @implements {IGreaseCache}
  */
+@Service()
 export default class GreaseCache implements IGreaseCache {
   /**
    * @instance
    * @property {IGreaseOptions} options - Application options
    */
   options: IGreaseOptions = {}
-
-  /**
-   * @instance
-   * @property {boolean} ready - Boolean indicating if cache was initialized
-   */
-  ready: boolean = false
 
   /**
    * `GitSemverTagsOptions` object.
@@ -36,10 +32,8 @@ export default class GreaseCache implements IGreaseCache {
    * @return {GitSemverTagsOptions} `git-semver-tags` options
    */
   get git(): GitSemverTagsOptions {
-    // If cache hasn't been initialized, return empty object
-    if (!this.ready) return {}
+    if (!Object.keys(this.options).length) return {}
 
-    // Return `git-semver-tags` options
     return {
       lernaTags: typeof this.options.lernaPackage === 'string',
       package: this.options.lernaPackage,
@@ -49,21 +43,16 @@ export default class GreaseCache implements IGreaseCache {
   }
 
   /**
-   * Initializes the application cache by validation application options.
+   * Caches application options after validating.
    *
    * @async
-   * @param {IGreaseOptions | ObjectPlain} [opts={}] - Application options
-   * @return {Promise<GreaseOptions>} Promise containing validated options
+   * @param {IGreaseOptions | ObjectPlain} [args={}] - Application options
    * @throws {ValidationException}
    */
-  async init(opts: IGreaseOptions | ObjectPlain = {}): Promise<IGreaseOptions> {
-    // Validate application options
-    this.options = await validate(GreaseOptions, opts)
-
-    // Update cache ready state
-    this.ready = true
-
-    // Return validated options
+  async setOptions(
+    args: IGreaseOptions | ObjectPlain
+  ): Promise<IGreaseOptions> {
+    this.options = await validate<IGreaseOptions>(GreaseOptions, args)
     return this.options
   }
 }

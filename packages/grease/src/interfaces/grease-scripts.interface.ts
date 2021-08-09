@@ -12,14 +12,24 @@ import type { StandardVersionOptions } from '@grease/types'
  */
 export interface IGreaseScripts extends StandardVersionOptions.Scripts {
   /**
+   * Executed **after** the `depchecker` lifecycle.
+   */
+  postdepchecker?: string
+
+  /**
    * Executed **after** the `greaser` lifecycle.
    */
   postgreaser?: string
 
   /**
-   * Executed **after** the `grease-notes` lifecycle.
+   * Executed **after** the `notes` lifecycle.
    */
   postnotes?: string
+
+  /**
+   * Executed **before** the `depchecker` lifecycle.
+   */
+  predepchecker?: string
 
   /**
    * Executed **before** the `greaser` lifecycle.
@@ -27,7 +37,7 @@ export interface IGreaseScripts extends StandardVersionOptions.Scripts {
   pregreaser?: string
 
   /**
-   * Executed **before** the `grease-notes` lifecycle.
+   * Executed **before** the `notes` lifecycle.
    */
   prenotes?: string
 }

@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 /**
  * @file Test Configuration - Setup
  * @module tests/config/setup

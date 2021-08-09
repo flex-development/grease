@@ -27,6 +27,10 @@ export default class GreaseSkip implements IGreaseSkip {
 
   @IsBoolean()
   @IsOptional()
+  depchecker?: IGreaseSkip['depchecker']
+
+  @IsBoolean()
+  @IsOptional()
   greaser?: IGreaseSkip['greaser']
 
   @IsBoolean()

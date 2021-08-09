@@ -10,7 +10,7 @@ import TestSubject from '../is-commit.constraint'
 
 const mockReadTree = readCommit as jest.MockedFunction<typeof readCommit>
 
-describe('functional:grease/constraints/IsCommitConstraint', () => {
+describe('functional:constraints/IsCommitConstraint', () => {
   const Subject = new TestSubject()
 
   describe('#validate', () => {

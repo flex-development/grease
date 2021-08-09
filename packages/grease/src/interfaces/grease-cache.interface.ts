@@ -12,8 +12,7 @@ import type { IGreaseOptions } from './grease-options.interface'
  */
 export interface IGreaseCache {
   options: IGreaseOptions
-  ready: boolean
 
   get git(): GitSemverTagsOptions
-  init(opts?: IGreaseOptions | ObjectPlain): Promise<IGreaseOptions>
+  setOptions(args: IGreaseOptions | ObjectPlain): Promise<IGreaseOptions>
 }

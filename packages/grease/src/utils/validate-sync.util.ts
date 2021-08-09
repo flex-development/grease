@@ -32,7 +32,7 @@ import merge from 'lodash/merge'
  * @param {boolean} [plain] - Convert back into plain object after validating
  * @param {TransformValidationOptions} [options] - Validation options
  * @param {ObjectPlain} [data] - Additional data if error occurs
- * @return {Promise<T>} Promise containing class or plain object
+ * @return {T} Class or plain object
  * @throws {ValidationException}
  */
 function validateSync<T extends ObjectPlain = ObjectPlain>(
@@ -41,7 +41,7 @@ function validateSync<T extends ObjectPlain = ObjectPlain>(
   plain: boolean = true,
   options: TransformValidationOptions = {},
   data: ObjectPlain = {}
-): Promise<T> {
+): T {
   options = merge({ ...TVO_DEFAULTS }, options)
 
   try {

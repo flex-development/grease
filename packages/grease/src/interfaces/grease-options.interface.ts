@@ -1,8 +1,11 @@
+import { NotesType } from '@grease/enums/notes-type.enum'
 import type {
   GitSemverTagsOptions,
+  PathLike,
   StandardVersionOptions
 } from '@grease/types'
 import type { Config } from 'conventional-changelog-config-spec'
+import type { ICreateReleaseDTO } from './create-release-dto.interface'
 import type { IGreaseScripts } from './grease-scripts.interface'
 import type { IGreaseSkip } from './grease-skip.interface'
 
@@ -16,11 +19,62 @@ import type { IGreaseSkip } from './grease-skip.interface'
  *
  * @extends StandardVersionOptions
  */
-export interface IGreaseOptions extends Omit<StandardVersionOptions, 'types'> {
+export interface IGreaseOptions
+  extends Omit<StandardVersionOptions, 'infile' | 'types'> {
+  /**
+   * Read the CHANGELOG from this file.
+   *
+   * @default 'CHANGELOG.md'
+   */
+  infile?: PathLike
+
   /**
    * Name of the package from which tags will be extracted.
    */
   lernaPackage?: GitSemverTagsOptions['package']
+
+  /**
+   * Read GitHub release from file.
+   *
+   * If defined, the `notes` lifecycle will be skipped.
+   */
+  notesFile?: ICreateReleaseDTO['notesFile']
+
+  /**
+   * Type of release notes to generate.
+   *
+   * @default NotesType.CHANGELOG
+   */
+  notesType?: NotesType
+
+  /**
+   * GitHub release asset paths.
+   */
+  releaseAssets?: ICreateReleaseDTO['files']
+
+  /**
+   * Save GitHub release as a draft instead of publishing it.
+   *
+   * @default true
+   */
+  releaseDraft?: ICreateReleaseDTO['draft']
+
+  /**
+   * GitHub release target branch or full commit SHA.
+   *
+   * @default 'main'
+   */
+  releaseTarget?: ICreateReleaseDTO['target']
+
+  /**
+   * GitHub release title.
+   */
+  releaseTitle?: ICreateReleaseDTO['title']
+
+  /**
+   * Select another repository using the `[HOST/]OWNER/REPO` format.
+   */
+  repo?: ICreateReleaseDTO['repo']
 
   /**
    * Map containing scripts to execute before and/or lifecycle events.
@@ -59,3 +113,38 @@ export interface IGreaseOptions extends Omit<StandardVersionOptions, 'types'> {
    */
   types?: Config.Type.Base[]
 }
+
+/**
+ * Default `grease` options.
+ */
+export type GreaseOptionsDefaults = NonNullable<
+  Pick<
+    IGreaseOptions,
+    | 'bumpFiles'
+    | 'commitAll'
+    | 'commitUrlFormat'
+    | 'compareUrlFormat'
+    | 'dryRun'
+    | 'firstRelease'
+    | 'gitTagFallback'
+    | 'header'
+    | 'infile'
+    | 'issuePrefixes'
+    | 'issueUrlFormat'
+    | 'noVerify'
+    | 'notesType'
+    | 'packageFiles'
+    | 'preMajor'
+    | 'preset'
+    | 'releaseCommitMessageFormat'
+    | 'releaseDraft'
+    | 'releaseTarget'
+    | 'scripts'
+    | 'sign'
+    | 'silent'
+    | 'skip'
+    | 'tagPrefix'
+    | 'types'
+    | 'userUrlFormat'
+  >
+>

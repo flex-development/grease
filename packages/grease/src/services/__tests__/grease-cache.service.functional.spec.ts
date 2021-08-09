@@ -1,7 +1,5 @@
-import type { IGreaseOptions } from '@grease/interfaces'
 import validate from '@grease/utils/validate.util'
 import { TAGS_OPTIONS_LERNA } from '@tests/fixtures/git-tags.fixture'
-import { mocked } from 'ts-jest/utils'
 import TestSubject from '../grease-cache.service'
 
 /**
@@ -11,20 +9,18 @@ import TestSubject from '../grease-cache.service'
 
 jest.mock('@grease/utils/validate.util')
 
-const mockValidate = mocked(validate)
+const mockValidate = validate as jest.MockedFunction<typeof validate>
 
 describe('functional:services/GreaseCache', () => {
   const Subject = new TestSubject()
 
-  const options: IGreaseOptions = {
-    lernaPackage: TAGS_OPTIONS_LERNA.package,
-    tagPrefix: TAGS_OPTIONS_LERNA.tagPrefix,
-    skipUnstable: TAGS_OPTIONS_LERNA.skipUnstable
-  }
-
-  describe('#init', () => {
+  describe('#setOptions', () => {
     beforeEach(async () => {
-      await Subject.init(options)
+      await Subject.setOptions({
+        lernaPackage: TAGS_OPTIONS_LERNA.package,
+        skipUnstable: TAGS_OPTIONS_LERNA.skipUnstable,
+        tagPrefix: TAGS_OPTIONS_LERNA.tagPrefix
+      })
     })
 
     it('should call validate utility', () => {

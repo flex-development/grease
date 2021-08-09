@@ -2,7 +2,7 @@ import pkg from '@/grease/package.json'
 import cache from '@grease/config/cache.config'
 import { GREASER_TITLE_BIRTHDAY } from '@grease/config/constants.config'
 import type { ICreateReleaseDTO } from '@grease/interfaces'
-import { GitSemverTagsOptions, SemanticVersion } from '@grease/types'
+import type { GitSemverTagsOptions, SemanticVersion } from '@grease/types'
 import TAGS, {
   TAGS_OPTIONS_LERNA as TOL
 } from '@tests/fixtures/git-tags.fixture'
@@ -29,7 +29,7 @@ describe('unit:dtos/CreateReleaseDTO', () => {
       property:
         | `#${keyof ICreateReleaseDTO}`
         | `release tag${' (lerna-style)' | ''}`
-        | `title if #version ${'satisifies' | 'does not satisfy'} 1.0.0`
+        | `title if #version ${'satisfies' | 'does not satisfy'} 1.0.0`
       stringify: 'stringify' | 'not stringify'
     }
 
@@ -160,7 +160,7 @@ describe('unit:dtos/CreateReleaseDTO', () => {
         dto: { tagPrefix, version: V1 },
         expected: `${V1TAG} --title ${V1TAG} ${GREASER_TITLE_BIRTHDAY}`,
         git: {},
-        property: 'title if #version satisifies 1.0.0',
+        property: 'title if #version satisfies 1.0.0',
         stringify: 'stringify'
       },
       {

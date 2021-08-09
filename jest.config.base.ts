@@ -27,7 +27,10 @@ const config: Config.InitialOptions = {
   rootDir: '../..',
   roots: [`${prefix}/__mocks__`, `${prefix}/packages`],
   setupFiles: [`${prefix}/__tests__/config/setup.ts`],
-  setupFilesAfterEnv: [`${prefix}/__tests__/config/setupAfterEnv.ts`],
+  setupFilesAfterEnv: [
+    'jest-mock-console/dist/setupTestFramework.js',
+    `${prefix}/__tests__/config/setupAfterEnv.ts`
+  ],
   testRegex: `(/__tests__/)(spec/(${TYPE}))?(.*)(${TYPE})?.spec.ts$`,
   verbose: true
 }

@@ -6,69 +6,82 @@ import {
   GREASER_NOTES_BLANK,
   GREASER_NOTES_NULL
 } from '@grease/config/constants.config'
-import CreateGreaseNotesDTO from '@grease/dtos/create-grease-notes.dto'
-import { GreaseNotesType } from '@grease/enums/grease-notes-type.enum'
+import { NotesType } from '@grease/enums/notes-type.enum'
+import GreaseOptions from '@grease/models/grease-options.model'
+import type { SemanticVersion } from '@grease/types'
 import changelogVersions from '@grease/utils/changelog-versions.util'
 import { RELEASE_NOTES, VERSIONS } from '@tests/fixtures/changelog.fixture'
 import type { Testcase } from '@tests/utils/types'
 import { mocked } from 'ts-jest/utils'
-import TestSubject from '../grease-notes.lifecycle'
+import TestSubject from '../notes.lifecycle'
 
 /**
- * @file Unit Tests - Grease Notes
- * @module grease/lifecycles/tests/unit/GreaseNotes
+ * @file Unit Tests - notes
+ * @module grease/lifecycles/tests/unit/notes
  */
 
 jest.mock('@grease/utils/changelog-versions.util')
 
 const mockChangelogVersions = mocked(changelogVersions)
 
-describe('unit:lifecycles/grease-notes', () => {
-  const dto: CreateGreaseNotesDTO = {
-    changelog: '__tests__/__fixtures__/CHANGELOG.fixture.md',
-    type: GreaseNotesType.CHANGELOG,
-    version: '2.0.0'
+describe('unit:lifecycles/notes', () => {
+  const options: GreaseOptions = {
+    infile: '__tests__/__fixtures__/CHANGELOG.fixture.md',
+    notesType: NotesType.CHANGELOG
   }
 
   describe('returns', () => {
     type Case = Testcase<NullishString> & {
-      dto: CreateGreaseNotesDTO
-      state: string
       expected_string:
         | `${'birthday' | 'blank' | 'changelog'} notes`
-        | GreaseNotesType.NULL
+        | NotesType.NULL
+      options: GreaseOptions
+      state: string
+      version: SemanticVersion | NullishString
     }
 
     const cases: Case[] = [
       {
-        dto: { type: GreaseNotesType.BIRTHDAY },
-        expected: GREASER_NOTES_BIRTHDAY,
-        state: 'dto.type === GreaseNotesType.BIRTHDAY',
-        expected_string: 'birthday notes'
+        expected: GREASER_NOTES_NULL,
+        expected_string: NotesType.NULL,
+        options: { skip: { notes: true } },
+        state: 'options.skip.notes === true',
+        version: null
       },
       {
-        dto: { version: '1.0.0' },
         expected: GREASER_NOTES_BIRTHDAY,
         expected_string: 'birthday notes',
-        state: 'dto.version satisfies 1.0.0'
+        options: { notesType: NotesType.BIRTHDAY },
+        state: 'options.notesType === NotesType.BIRTHDAY',
+        version: '1.0.0-alpha'
       },
       {
-        dto: { type: GreaseNotesType.BLANK },
+        expected: GREASER_NOTES_BIRTHDAY,
+        expected_string: 'birthday notes',
+        options: { firstRelease: true },
+        state: 'options.firstRelease === true',
+        version: '1.0.0-beta'
+      },
+      {
         expected: GREASER_NOTES_BLANK,
         expected_string: 'blank notes',
-        state: 'dto.type === GreaseNotesType.BLANK'
+        options: { notesType: NotesType.BLANK },
+        state: 'options.notesType === NotesType.BLANK',
+        version: '7.7.7'
       },
       {
-        dto,
         expected: RELEASE_NOTES['2.0.0'],
         expected_string: 'changelog notes',
-        state: 'dto.type === GreaseNotesType.CHANGELOG'
+        options,
+        state: 'options.notesType === NotesType.CHANGELOG',
+        version: '2.0.0'
       },
       {
-        dto: { type: GreaseNotesType.NULL },
         expected: GREASER_NOTES_NULL,
-        expected_string: GreaseNotesType.NULL,
-        state: 'dto.type === GreaseNotesType.NULL'
+        expected_string: NotesType.NULL,
+        options: { notesType: NotesType.NULL },
+        state: 'options.notesType === NotesType.NULL',
+        version: '1.1.5'
       }
     ]
 
@@ -76,24 +89,24 @@ describe('unit:lifecycles/grease-notes', () => {
 
     it.each<Case>(cases)(name, async testcase => {
       // Arrange
-      const { dto, expected } = testcase
+      const { expected, options, version } = testcase
 
       mockChangelogVersions.mockReturnValue(VERSIONS)
 
       // Act + Expect
-      expect(await TestSubject(dto)).toBe(expected)
+      expect(await TestSubject(options, version)).toBe(expected)
     })
   })
 
   describe('throws', () => {
-    it('should throw if no package versions found in changelog', async () => {
+    it('should throw if no versions are found in options.infile', async () => {
       // Arrange
       let exception = {} as Exception
       mockChangelogVersions.mockReturnValue([])
 
       // Act
       try {
-        await TestSubject(dto)
+        await TestSubject(options, VERSIONS[VERSIONS.length - 2])
       } catch (error) {
         exception = error
       }
@@ -101,21 +114,22 @@ describe('unit:lifecycles/grease-notes', () => {
       // Expect
       expect(exception).toMatchObject({
         code: ExceptionStatusCode.NOT_FOUND,
-        data: { dto, versions: [] },
-        errors: { changelog: dto.changelog },
-        message: `No package versions found in ${dto.changelog}`
+        data: { versions: [] },
+        errors: { infile: options.infile },
+        message: `No package versions found in ${options.infile}`
       })
     })
 
-    it('should throw if dto.version not found in changelog', async () => {
+    it('should throw if version is not found in options.infile', async () => {
       // Arrange
       const versions = VERSIONS.slice(1, 3)
+      const version = VERSIONS[VERSIONS.length - 3]
       let exception = {} as Exception
       mockChangelogVersions.mockReturnValue(versions)
 
       // Act
       try {
-        await TestSubject(dto)
+        await TestSubject(options, version)
       } catch (error) {
         exception = error
       }
@@ -123,9 +137,9 @@ describe('unit:lifecycles/grease-notes', () => {
       // Expect
       expect(exception).toMatchObject({
         code: ExceptionStatusCode.NOT_FOUND,
-        data: { dto, versions },
-        errors: { version: dto.version },
-        message: `${dto.version} not found in ${dto.changelog}`
+        data: { versions },
+        errors: { version },
+        message: `${version} not found in ${options.infile}`
       })
     })
   })
