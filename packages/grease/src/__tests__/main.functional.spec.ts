@@ -13,6 +13,7 @@ import bump from 'standard-version/lib/lifecycles/bump'
 import changelog from 'standard-version/lib/lifecycles/changelog'
 import commit from 'standard-version/lib/lifecycles/commit'
 import tag from 'standard-version/lib/lifecycles/tag'
+import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
 import { mocked } from 'ts-jest/utils'
 import testSubject from '../main'
 
@@ -38,6 +39,9 @@ const mockLogger = logger as jest.Mocked<typeof logger>
 const mockNotes = notes as jest.MockedFunction<typeof notes>
 const mockReadPackageFiles = readPackageFiles as jest.MockedFunction<
   typeof readPackageFiles
+>
+const mockRunLifecycleScript = runLifecycleScript as jest.MockedFunction<
+  typeof runLifecycleScript
 >
 const mockTag = tag as jest.MockedFunction<typeof tag>
 
@@ -78,6 +82,11 @@ describe('functional:main', () => {
     it('should cache application options', () => {
       expect(mockCache.setOptions).toBeCalledTimes(1)
       expect(mockCache.setOptions).toBeCalledWith(OPTIONS)
+    })
+
+    it('should run prerelease script', () => {
+      expect(mockRunLifecycleScript).toBeCalledTimes(1)
+      expect(mockRunLifecycleScript).toBeCalledWith(OPTIONS, 'prerelease')
     })
 
     it('should read package files', () => {

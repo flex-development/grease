@@ -8,6 +8,7 @@ import bump from 'standard-version/lib/lifecycles/bump'
 import changelog from 'standard-version/lib/lifecycles/changelog'
 import commit from 'standard-version/lib/lifecycles/commit'
 import tag from 'standard-version/lib/lifecycles/tag'
+import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
 import cache from './config/cache.config'
 import { RELEASE_PATTERN } from './config/constants.config'
 import defaults from './config/defaults.config'
@@ -36,6 +37,9 @@ const main = async (args: GreaseOptions = {}): Promise<void> => {
   try {
     // Set application options
     const options = await cache.setOptions(merge(defaults, args))
+
+    // Run prerelease script
+    runLifecycleScript(options, 'prerelease')
 
     // Check custom changelog header pattern
     if (options.header && options.header.search(RELEASE_PATTERN) !== -1) {
