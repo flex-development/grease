@@ -16,13 +16,9 @@ export interface ILogger {
 
   checkpoint: (
     msg?: string,
-    args?: string[],
+    args?: any[],
     figure?: keyof typeof figures | string
   ) => void
   debug: (...args: any[]) => void
   error: (...text: unknown[]) => void
-  info: (...text: unknown[]) => void
-  log: (...text: unknown[]) => void
-  success: (...text: unknown[]) => void
-  warn: (...text: unknown[]) => void
 }

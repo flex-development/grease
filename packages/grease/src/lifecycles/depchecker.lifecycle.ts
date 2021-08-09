@@ -9,8 +9,8 @@ import sh from 'shelljs'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
 
 /**
- * @file Lifecycles - Depchecker
- * @module grease/lifecycles/Depchecker
+ * @file Lifecycles - depchecker
+ * @module grease/lifecycles/depchecker
  */
 
 /**

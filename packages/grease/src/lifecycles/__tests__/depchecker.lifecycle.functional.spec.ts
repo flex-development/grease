@@ -12,8 +12,8 @@ import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
 import TestSubject from '../depchecker.lifecycle'
 
 /**
- * @file Functional Tests - Depchecker
- * @module grease/lifecycles/tests/functional/Depchecker
+ * @file Functional Tests - depchecker
+ * @module grease/lifecycles/tests/functional/depchecker
  */
 
 jest.mock('@grease/config/logger.config')

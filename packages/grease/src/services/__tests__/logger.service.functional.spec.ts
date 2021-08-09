@@ -1,6 +1,9 @@
 import type { ILogger } from '@grease/interfaces'
-import type { TestcaseCalled } from '@tests/utils/types'
+import type { Testcase, TestcaseCalled } from '@tests/utils/types'
 import ch from 'chalk'
+import type { RestoreConsole } from 'jest-mock-console'
+import mockConsole from 'jest-mock-console'
+import checkpoint from 'standard-version/lib/checkpoint'
 import { Container } from 'typedi'
 import TestSubject from '../logger.service'
 
@@ -10,23 +13,25 @@ import TestSubject from '../logger.service'
  */
 
 const mockCH = ch as jest.Mocked<typeof ch>
+const mockCheckpoint = checkpoint as jest.MockedFunction<typeof checkpoint>
 
 describe('functional:services/Logger', () => {
+  const restoreConsole: RestoreConsole = mockConsole()
   const Subject = Container.get<ILogger>(TestSubject)
 
   const spy_debug = jest.spyOn(Subject, 'debug')
+
+  afterAll(() => {
+    restoreConsole()
+  })
 
   describe('#checkpoint', () => {
     beforeEach(() => {
       Subject.checkpoint('checkpoint', ['arg'])
     })
 
-    it('should call #ch.bold', () => {
-      expect(mockCH.bold).toBeCalledTimes(3)
-    })
-
-    it('should call #debug', () => {
-      expect(spy_debug).toBeCalledTimes(1)
+    it('should call standard-version/lib/checkpoint', () => {
+      expect(mockCheckpoint).toBeCalledTimes(1)
     })
   })
 
@@ -82,73 +87,28 @@ describe('functional:services/Logger', () => {
     })
   })
 
-  describe('#error', () => {
-    beforeEach(() => {
-      Subject.error('error message')
-    })
+  describe('log levels', () => {
+    type Case = Testcase<null> & {
+      ch: 'red'
+      method: 'error'
+    }
 
-    it('should call #ch.red', () => {
-      expect(mockCH.red).toBeCalledTimes(1)
-    })
+    const cases: Case[] = [{ ch: 'red', expected: null, method: 'error' }]
 
-    it('should call #debug', () => {
-      expect(spy_debug).toBeCalledTimes(1)
-    })
-  })
+    describe.each<Case>(cases)('$method', ({ ch, method }) => {
+      describe(`#${method}`, () => {
+        beforeEach(() => {
+          Subject[method](`${method} message`)
+        })
 
-  describe('#info', () => {
-    beforeEach(() => {
-      Subject.info('info message')
-    })
+        it(`should call #ch.${ch}`, () => {
+          expect(mockCH[ch]).toBeCalledTimes(1)
+        })
 
-    it('should call #ch.blue', () => {
-      expect(mockCH.blue).toBeCalledTimes(1)
-    })
-
-    it('should call #debug', () => {
-      expect(spy_debug).toBeCalledTimes(1)
-    })
-  })
-
-  describe('#log', () => {
-    beforeEach(() => {
-      Subject.log('log message')
-    })
-
-    it('should call #ch.white', () => {
-      expect(mockCH.white).toBeCalledTimes(1)
-    })
-
-    it('should call #debug', () => {
-      expect(spy_debug).toBeCalledTimes(1)
-    })
-  })
-
-  describe('#success', () => {
-    beforeEach(() => {
-      Subject.success('success message')
-    })
-
-    it('should call #ch.green', () => {
-      expect(mockCH.green).toBeCalledTimes(1)
-    })
-
-    it('should call #debug', () => {
-      expect(spy_debug).toBeCalledTimes(1)
-    })
-  })
-
-  describe('#warn', () => {
-    beforeEach(() => {
-      Subject.warn('warning message')
-    })
-
-    it('should call #ch.yellow', () => {
-      expect(mockCH.yellow).toBeCalledTimes(1)
-    })
-
-    it('should call #debug', () => {
-      expect(spy_debug).toBeCalledTimes(1)
+        it('should call #debug', () => {
+          expect(spy_debug).toBeCalledTimes(1)
+        })
+      })
     })
   })
 })

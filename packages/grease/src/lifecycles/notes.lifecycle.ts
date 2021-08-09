@@ -19,8 +19,8 @@ import indexOf from 'lodash/indexOf'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
 
 /**
- * @file Lifecycles - Notes
- * @module grease/lifecycles/Notes
+ * @file Lifecycles - notes
+ * @module grease/lifecycles/notes
  */
 
 /**

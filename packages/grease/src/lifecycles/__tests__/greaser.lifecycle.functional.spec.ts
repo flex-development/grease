@@ -7,8 +7,8 @@ import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
 import TestSubject from '../greaser.lifecycle'
 
 /**
- * @file Functional Tests - Greaser
- * @module grease/lifecycles/tests/functional/Greaser
+ * @file Functional Tests - greaser
+ * @module grease/lifecycles/tests/functional/greaser
  */
 
 jest.mock('@grease/config/logger.config')

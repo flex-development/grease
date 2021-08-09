@@ -16,8 +16,8 @@ import { mocked } from 'ts-jest/utils'
 import TestSubject from '../notes.lifecycle'
 
 /**
- * @file Unit Tests - Notes
- * @module grease/lifecycles/tests/unit/Notes
+ * @file Unit Tests - notes
+ * @module grease/lifecycles/tests/unit/notes
  */
 
 jest.mock('@grease/utils/changelog-versions.util')

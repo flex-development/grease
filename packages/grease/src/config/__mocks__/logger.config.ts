@@ -11,8 +11,5 @@ const mockLogger = jest.requireActual('../logger.config').default as ILogger
 mockLogger.checkpoint = jest.fn()
 mockLogger.debug = jest.fn()
 mockLogger.error = jest.fn()
-mockLogger.info = jest.fn()
-mockLogger.success = jest.fn()
-mockLogger.warn = jest.fn()
 
 export default mockLogger

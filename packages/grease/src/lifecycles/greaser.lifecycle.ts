@@ -4,12 +4,13 @@ import CreateReleaseDTO from '@grease/dtos/create-release.dto'
 import type { ICreateReleaseDTO } from '@grease/interfaces'
 import GreaseOptions from '@grease/models/grease-options.model'
 import ch from 'chalk'
+import { classToPlain } from 'class-transformer'
 import sh from 'shelljs'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
 
 /**
- * @file Lifecycles - Greaser
- * @module grease/lifecycles/Greaser
+ * @file Lifecycles - greaser
+ * @module grease/lifecycles/greaser
  */
 
 /**
@@ -40,7 +41,7 @@ const Greaser = async (
 
   // Execute GitHub release
   if (!options.dryRun) sh.exec(command, { silent: options.silent })
-  else logger.checkpoint(command, [], ch.yellow('!!'))
+  else logger.checkpoint(command, [classToPlain(dto)], ch.yellow('!!'))
 
   // Run `postgreaser` script
   runLifecycleScript(options, 'postgreaser')

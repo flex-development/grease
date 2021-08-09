@@ -6,8 +6,8 @@ import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
 import TestSubject from '../notes.lifecycle'
 
 /**
- * @file Functional Tests - Notes
- * @module grease/lifecycles/tests/functional/Notes
+ * @file Functional Tests - notes
+ * @module grease/lifecycles/tests/functional/notes
  */
 
 jest.mock('@grease/config/logger.config')

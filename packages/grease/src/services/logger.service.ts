@@ -1,6 +1,7 @@
 import type { IGreaseCache, ILogger } from '@grease/interfaces'
 import ch from 'chalk'
 import figures from 'figures'
+import checkpoint from 'standard-version/lib/checkpoint'
 import { Service } from 'typedi'
 import u from 'util'
 import GreaseCache from './grease-cache.service'
@@ -50,19 +51,16 @@ export default class Logger implements ILogger {
    * Logs a library checkpoint.
    *
    * @param {string} [msg=''] - Message to log
-   * @param {string[]} [args=[]] - Additional messages
+   * @param {any[]} [args=[]] - Additional messages
    * @param {keyof typeof figures | string} [figure='tick'] - Unicode symbol
    * @return {void} Nothing when complete
    */
   checkpoint(
     msg: string = '',
-    args: string[] = [],
+    args: any[] = [],
     figure: keyof typeof figures | string = 'tick'
   ): void {
-    return this.debug(
-      this.ch.bold(figures[figure] || figure),
-      u.format.apply(u, [msg].concat(args.map(arg => this.ch.bold(arg))))
-    )
+    return checkpoint(this.cache.options, msg, args, figures[figure] || figure)
   }
 
   /**
@@ -72,8 +70,6 @@ export default class Logger implements ILogger {
    * @return {void} Nothing when complete
    */
   debug(...args: any[]): void {
-    console.warn(this.cache.options)
-
     // Spread options
     const { dryRun: dry, silent } = this.cache.options
 
@@ -84,7 +80,7 @@ export default class Logger implements ILogger {
     const message = dry ? this.ch.yellow(args) : u.format.apply(u, args.flat())
 
     // Log message to console
-    return console.log('  ', this.ch.bold(Logger.NAMESPACE), message)
+    return console.log(message)
   }
 
   /**
@@ -95,45 +91,5 @@ export default class Logger implements ILogger {
    */
   error(...text: unknown[]): void {
     return this.debug(this.ch.red(...text))
-  }
-
-  /**
-   * Logs a message to the console in blue.
-   *
-   * @param {unknown[]} text - Log data
-   * @return {void} Nothing when complete
-   */
-  info(...text: unknown[]): void {
-    return this.debug(this.ch.blue(...text))
-  }
-
-  /**
-   * Log a message to the console in white.
-   *
-   * @param {unknown[]} text - Log data
-   * @return {void} Nothing when complete
-   */
-  log(...text: unknown[]): void {
-    return this.debug(this.ch.white(...text))
-  }
-
-  /**
-   * Logs a message to the console in green.
-   *
-   * @param {unknown[]} text - Log data
-   * @return {void} Nothing when complete
-   */
-  success(...text: unknown[]): void {
-    return this.debug(this.ch.green(...text))
-  }
-
-  /**
-   * Logs a message to the console in yellow.
-   *
-   * @param {unknown[]} text - Log data
-   * @return {void} Nothing when complete
-   */
-  warn(...text: unknown[]): void {
-    return this.debug(this.ch.yellow(...text))
   }
 }
