@@ -63,7 +63,7 @@ export const TVO_DEFAULTS: TVODefaults = Object.freeze({
     enableDebugMessages: true,
     forbidNonWhitelisted: true,
     stopAtFirstError: false,
-    validationError: { target: true, value: true },
+    validationError: { target: false, value: true },
     whitelist: false
   }
 })

@@ -50,7 +50,7 @@ function validateSync<T extends ObjectPlain = ObjectPlain>(
   } catch (error) {
     const model = new Model().constructor.name
 
-    throw new ValidationException(model, error, merge(data, { options }))
+    throw new ValidationException(model, error, merge(data, { target: value }))
   }
 
   return value
