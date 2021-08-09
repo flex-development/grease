@@ -17,7 +17,7 @@ jest.mock('../is-commit.constraint')
 const MockIsBranchConstraint = mocked(IsBranchConstraint)
 const MockIsCommitConstraint = mocked(IsCommitConstraint)
 
-describe('functional:grease/constraints/IsTargetBranchConstraint', () => {
+describe('functional:constraints/IsTargetBranchConstraint', () => {
   const CONSTRAINT = TestSubject.options?.name as string
   const Subject = new TestSubject()
 

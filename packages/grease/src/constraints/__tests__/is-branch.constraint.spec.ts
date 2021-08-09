@@ -13,7 +13,7 @@ import TestSubject from '../is-branch.constraint'
  * @module grease/constraints/tests/unit/IsBranch
  */
 
-describe('unit:grease/constraints/IsBranchConstraint', () => {
+describe('unit:constraints/IsBranchConstraint', () => {
   const CONSTRAINT = TestSubject.options?.name as string
   const Subject = new TestSubject()
 

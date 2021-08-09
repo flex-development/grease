@@ -14,7 +14,7 @@ import TestSubject from '../is-sem-ver.constraint'
  * @module grease/constraints/tests/unit/IsSemVer
  */
 
-describe('unit:grease/constraints/IsSemVerConstraint', () => {
+describe('unit:constraints/IsSemVerConstraint', () => {
   const CONSTRAINT = TestSubject.options?.name as string
   const Subject = new TestSubject()
 

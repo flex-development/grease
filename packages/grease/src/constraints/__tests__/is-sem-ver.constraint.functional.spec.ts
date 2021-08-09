@@ -18,7 +18,7 @@ jest.mock('@grease/utils/semver.util')
 
 const mockSemver = semver as jest.Mocked<typeof semver>
 
-describe('functional:grease/constraints/IsSemVerConstraint', () => {
+describe('functional:constraints/IsSemVerConstraint', () => {
   const CONSTRAINT = TestSubject.options?.name as string
   const Subject = new TestSubject()
 

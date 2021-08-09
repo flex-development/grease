@@ -9,7 +9,7 @@ import TestSubject from '../is-commit.constraint'
  * @module grease/constraints/tests/unit/IsCommit
  */
 
-describe('unit:grease/constraints/IsCommitConstraint', () => {
+describe('unit:constraints/IsCommitConstraint', () => {
   const Subject = new TestSubject()
 
   const value = 'commit'

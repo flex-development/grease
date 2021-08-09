@@ -14,7 +14,7 @@ const mockListBranches = listBranches as jest.MockedFunction<
   typeof listBranches
 >
 
-describe('functional:grease/constraints/IsBranchConstraint', () => {
+describe('functional:constraints/IsBranchConstraint', () => {
   const CONSTRAINT = TestSubject.options?.name as string
   const Subject = new TestSubject()
 
