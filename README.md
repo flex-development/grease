@@ -16,6 +16,17 @@ Package release workflow tool for Node.js and CLI environments
 
 ## Getting Started
 
+`grease` is a package release workflow tool for CLI and Node.js environments.
+
+Built on top of the [`standard-version`][4] library, it helps maintainers create
+releases and upload release assets via the [GitHub CLI][2].
+
+Release notes can be generated using the `CHANGELOG` entry for the most recent
+semver tag. Maintainers also have the option of generating blank notes, notes in
+birthday (first release) format, or skipping note generation entirely.
+
+### How It Works
+
 1. Follow the [Conventional Commits Specification][8] in your repository
 2. When ready to release, run `grease` or `grease(options: IGreaseOptions)`
 
