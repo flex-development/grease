@@ -128,17 +128,20 @@ const build = (argv: BuildPackageOptions): void => {
     // Fix node module import paths
     fixNodeModulePaths()
 
-    // Get copy of `package.json`
-    const pkgjson = readPackage({ cwd: process.cwd() })
+    // Get copy of package.json
+    const pkgjson = readPackage({ cwd: process.cwd(), normalize: false })
 
     // Remove `devDependencies` and `scripts` from package.json
     Reflect.deleteProperty(pkgjson, 'devDependencies')
     Reflect.deleteProperty(pkgjson, 'scripts')
 
-    // Get `package.json` path in $BUILD_DIR
+    // Add `_id` field
+    pkgjson._id = `${pkgjson.name}@${pkgjson.version}`
+
+    // Get package.json path in $BUILD_DIR
     const pkgjson_path_build = path.join(BUILD_DIR, 'package.json')
 
-    // Create `package.json` file in $BUILD_DIR
+    // Create package.json file in $BUILD_DIR
     fse.writeFileSync(pkgjson_path_build, JSON.stringify(pkgjson, null, 2))
     sh.echo(ch.white(`✓ create ${file(pkgjson_path_build)}`))
 
