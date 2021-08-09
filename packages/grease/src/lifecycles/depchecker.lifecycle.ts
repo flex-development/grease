@@ -43,10 +43,7 @@ const Depchecker = (options: GreaseOptions = {}): void => {
   // Check if required dependencies are installed
   Object.values(DependencyCommand).forEach(command => {
     if (!sh.which(command)) {
-      throw new Exception(ExceptionStatusCode.NOT_FOUND, undefined, {
-        checkpoint: { args: [], figure: ch.red(figures.cross) },
-        message: `${command} not found`
-      })
+      throw new Exception(ExceptionStatusCode.NOT_FOUND, `${command} not found`)
     }
 
     logger.checkpoint(command, [], ch.green(figures.tick))

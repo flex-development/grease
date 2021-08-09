@@ -5,7 +5,6 @@ import { DependencyCommand } from '@grease/enums/dependency-command.enum'
 import type { ILogger } from '@grease/interfaces'
 import GreaseOptions from '@grease/models/grease-options.model'
 import ch from 'chalk'
-import figures from 'figures'
 import indexOf from 'lodash/indexOf'
 import sh from 'shelljs'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
@@ -86,9 +85,6 @@ describe('functional:lifecycles/depchecker', () => {
           // Expect
           expect(exception).toMatchObject({
             code: ExceptionStatusCode.NOT_FOUND,
-            data: {
-              checkpoint: { args: [], figure: mockCH.red(figures.cross) }
-            },
             message: `${command} not found`
           })
         })
