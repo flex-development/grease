@@ -25,7 +25,12 @@ export type BuildPackageOptions = {
 /**
  * @property {string} BUILD_DIR - Build directory
  */
-const BUILD_DIR: string = path.join(process.cwd(), 'build')
+const BUILD_DIR: string = 'build'
+
+/**
+ * @property {string} BUILD_DIR_PATH - Build directory (full path)
+ */
+const BUILD_DIR_PATH: string = path.join(process.cwd(), BUILD_DIR)
 
 /**
  * @property {string[]} BUILD_FILES - Distribution files
@@ -82,8 +87,8 @@ const build = (argv: BuildPackageOptions): void => {
     sh.echo(ch.yellow(`build workflow started: ${formats}`))
 
     // Remove build directory
-    rimraf.sync(BUILD_DIR)
-    sh.echo(ch.white(`✓ remove ${file(BUILD_DIR)}`))
+    rimraf.sync(BUILD_DIR_PATH)
+    sh.echo(ch.white(`✓ remove ${file(BUILD_DIR_PATH)}`))
 
     // Get base TypeScript config path
     const TSCONFIG_PATH = path.join(process.cwd(), TSCONFIG_PROD)
@@ -131,6 +136,11 @@ const build = (argv: BuildPackageOptions): void => {
     // Get copy of package.json
     const pkgjson = readPackage({ cwd: process.cwd(), normalize: false })
 
+    // Reset `main`, `module`, and `types`
+    pkgjson.main = pkgjson.main?.replace(`${BUILD_DIR}/`, '')
+    pkgjson.module = pkgjson.module?.replace(`${BUILD_DIR}/`, '')
+    pkgjson.types = pkgjson.types?.replace(`${BUILD_DIR}/`, '')
+
     // Remove `devDependencies` and `scripts` from package.json
     Reflect.deleteProperty(pkgjson, 'devDependencies')
     Reflect.deleteProperty(pkgjson, 'scripts')
@@ -138,17 +148,17 @@ const build = (argv: BuildPackageOptions): void => {
     // Add `_id` field
     pkgjson._id = `${pkgjson.name}@${pkgjson.version}`
 
-    // Get package.json path in $BUILD_DIR
-    const pkgjson_path_build = path.join(BUILD_DIR, 'package.json')
+    // Get package.json path in $BUILD_DIR_PATH
+    const pkgjson_path_build = path.join(BUILD_DIR_PATH, 'package.json')
 
-    // Create package.json file in $BUILD_DIR
+    // Create package.json file in $BUILD_DIR_PATH
     fse.writeFileSync(pkgjson_path_build, JSON.stringify(pkgjson, null, 2))
     sh.echo(ch.white(`✓ create ${file(pkgjson_path_build)}`))
 
     // Copy distribution files
     BUILD_FILES.forEach(buildfile => {
       const src = path.join(process.cwd(), buildfile)
-      const dest = path.join(BUILD_DIR, buildfile)
+      const dest = path.join(BUILD_DIR_PATH, buildfile)
 
       if (fse.existsSync(src)) {
         fse.copyFileSync(src, dest)

@@ -32,9 +32,9 @@
     "directory": "./build",
     "registry": "https://npm.pkg.github.com"
   },
-  "main": "./cjs/main.js",
-  "module": "./esm/main.js",
-  "types": "./esm/main.d.ts",
+  "main": "./build/cjs/main.js",
+  "module": "./build/esm/main.js",
+  "types": "./build/esm/main.d.ts",
   "scripts": {
     "test": "bash ../../scripts/jest.sh",
     "build": "dotenv -c production ts-node ../../scripts/build",
@@ -63,7 +63,9 @@
     "typedi": "0.10.0"
   },
   "devDependencies": {
-    "@types/node": "16.4.13"
+    "@types/node": "16.4.13",
+    "dotenv-cli": "4.0.0",
+    "ttypescript": "1.5.12"
   },
   "peerDependencies": {
     "@types/node": ">=15.0.0"

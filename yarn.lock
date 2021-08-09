@@ -672,6 +672,7 @@ __metadata:
     class-transformer: 0.4.0
     class-transformer-validator: 0.9.1
     class-validator: 0.13.1
+    dotenv-cli: 4.0.0
     git-semver-tags: 4.1.1
     isomorphic-git: 1.9.2
     lodash: 4.17.21
@@ -679,6 +680,7 @@ __metadata:
     reflect-metadata: 0.1.13
     shelljs: 0.8.4
     standard-version: 9.3.1
+    ttypescript: 1.5.12
     typedi: 0.10.0
   peerDependencies:
     "@types/node": ">=15.0.0"
