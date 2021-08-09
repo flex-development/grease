@@ -7,10 +7,8 @@
 
 ## Overview
 
-[🚧 Making Changes](#making-changes)
+[Making Changes](#making-changes)
 
 ## Making Changes
-
-**TODO**: Update documentation.
 
 All source code can be found in the [`src`](src/) directory.
