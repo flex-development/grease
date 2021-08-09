@@ -7,7 +7,7 @@
 
 export default {
   blue: jest.fn(),
-  bold: { ...jest.fn(), red: jest.fn() },
+  bold: { ...jest.fn(), red: jest.fn(), white: jest.fn() },
   dim: jest.fn(),
   green: jest.fn(),
   red: jest.fn(),

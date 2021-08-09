@@ -86,7 +86,6 @@ const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
       version: newVersion
     })
   } catch (error) {
-    // Spread error data
     const {
       code = ExceptionStatusCode.INTERNAL_SERVER_ERROR,
       data = {},
@@ -95,7 +94,7 @@ const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
       stack
     } = error as Exception
 
-    logger.checkpoint(message, [], `${ch.red(fig.cross)} ${ch.bold.red(code)}`)
+    logger.checkpoint(ch.bold.white(message), [], ch.bold.red(fig.cross))
 
     throw new Exception(code, message, { ...data, errors }, stack).toJSON()
   }
