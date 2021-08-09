@@ -2,7 +2,7 @@ import pkg from '@/grease/package.json'
 import cache from '@grease/config/cache.config'
 import { GREASER_TITLE_BIRTHDAY } from '@grease/config/constants.config'
 import type { ICreateReleaseDTO } from '@grease/interfaces'
-import { GitSemverTagsOptions, SemanticVersion } from '@grease/types'
+import type { GitSemverTagsOptions, SemanticVersion } from '@grease/types'
 import TAGS, {
   TAGS_OPTIONS_LERNA as TOL
 } from '@tests/fixtures/git-tags.fixture'
