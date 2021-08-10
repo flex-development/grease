@@ -1,18 +1,12 @@
-import type { Debugger } from 'debug'
-import debug from 'debug'
 import type { ReplaceInFileConfig, ReplaceResult } from 'replace-in-file'
 import replace from 'replace-in-file'
+import echo from './echo'
 
 /**
  * @file Scripts - Fix Node Module Import Paths
  * @module scripts/fix-node-module-paths
  * @see https://github.com/adamreisnz/replace-in-file
  */
-
-/**
- * @property {Debugger} logger - Debug logger
- */
-const logger: Debugger = debug('scripts').extend('fix-node-module-paths')
 
 /**
  * @see https://github.com/adamreisnz/replace-in-file#custom-regular-expressions
@@ -42,10 +36,10 @@ const fixNodeModulePaths = (): ReplaceResult[] => {
   try {
     results = replace.sync(OPTIONS)
   } catch (error) {
-    logger('%O', error)
+    echo(error.message, true, 'red', 'cross')
   }
 
-  console.log('✓ fix import paths')
+  echo('fix import paths')
   return results
 }
 

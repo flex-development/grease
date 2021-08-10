@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "module": "esnext",
+    "outDir": "./build/types",
+    "plugins": [
+      {
+        "afterDeclarations": true,
+        "exclude": ["*"],
+        "transform": "@zerollup/ts-transform-paths"
+      }
+    ],
+    "target": "es2021"
+  },
+  "extends": "./tsconfig.prod.json"
+}

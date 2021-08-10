@@ -1,20 +1,13 @@
 {
   "compilerOptions": {
-    "declaration": true,
+    "declaration": false,
     "noEmit": false,
     "outDir": "./build/node",
-    "plugins": [
-      {
-        "afterDeclarations": true,
-        "exclude": ["*"],
-        "transform": "@zerollup/ts-transform-paths"
-      }
-    ],
     "removeComments": false,
     "rootDir": "./src",
     "sourceMap": true
   },
-  "exclude": ["**/build", "**/__mocks__", "**/__tests__", "**/node_modules"],
+  "exclude": ["**/__mocks__", "**/__tests__", "**/build", "**/node_modules"],
   "extends": "./tsconfig.json",
   "include": ["src"]
 }

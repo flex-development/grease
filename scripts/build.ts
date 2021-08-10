@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 
 import ch from 'chalk'
-import fse from 'fs-extra'
-import path from 'path'
+import figures from 'figures'
+import { copyFileSync, existsSync, removeSync, writeFileSync } from 'fs-extra'
+import { join } from 'path'
 import { sync as readPackage } from 'read-pkg'
 import rimraf from 'rimraf'
 import sh from 'shelljs'
 import { hideBin } from 'yargs/helpers'
 import yargs from 'yargs/yargs'
+import echo from './echo'
 import fixNodeModulePaths from './fix-node-module-paths'
 
 /**
@@ -19,7 +21,7 @@ export type BuildPackageOptions = {
   /**
    * Specify module build formats.
    */
-  formats?: ('cjs' | 'esm')[]
+  formats?: ('cjs' | 'esm' | 'types')[]
 }
 
 /**
@@ -30,7 +32,7 @@ const BUILD_DIR: string = 'build'
 /**
  * @property {string} BUILD_DIR_PATH - Build directory (full path)
  */
-const BUILD_DIR_PATH: string = path.join(process.cwd(), BUILD_DIR)
+const BUILD_DIR_PATH: string = join(process.cwd(), BUILD_DIR)
 
 /**
  * @property {string[]} BUILD_FILES - Distribution files
@@ -80,27 +82,35 @@ const build = (argv: BuildPackageOptions): void => {
    * @param {string} path - File path
    * @return {string} Relative file path
    */
-  const file = (path: string): string => `.${path.split(`${process.cwd()}`)[1]}`
+  const file = (path: string): string => `${path.split(`${process.cwd()}/`)[1]}`
 
   try {
+    // Force `types` build
+    if (!formats.includes('types')) formats.push('types')
+
     // Log workflow start
-    sh.echo(ch.yellow(`build workflow started: ${formats}`))
+    echo(
+      `build workflow started: ${formats}`,
+      true,
+      'white',
+      ch.blue(figures.info)
+    )
 
     // Remove build directory
     rimraf.sync(BUILD_DIR_PATH)
-    sh.echo(ch.white(`✓ remove ${file(BUILD_DIR_PATH)}`))
+    echo(`remove ${BUILD_DIR} directory`)
 
     // Get base TypeScript config path
-    const TSCONFIG_PATH = path.join(process.cwd(), TSCONFIG_PROD)
+    const TSCONFIG_PATH = join(process.cwd(), TSCONFIG_PROD)
 
     // Check if base TypeScript config file already exists
-    const HAS_TSCONFIG = fse.existsSync(TSCONFIG_PATH)
+    const HAS_TSCONFIG = existsSync(TSCONFIG_PATH)
 
     // Copy base TypeScript config file if base does not exist
     if (!HAS_TSCONFIG) {
-      fse.copyFileSync(
-        path.join('..', '..', TSCONFIG_PROD),
-        path.join(process.cwd(), TSCONFIG_PROD)
+      copyFileSync(
+        join('..', '..', TSCONFIG_PROD),
+        join(process.cwd(), TSCONFIG_PROD)
       )
     }
 
@@ -108,27 +118,25 @@ const build = (argv: BuildPackageOptions): void => {
     formats.forEach(format => {
       // Get tsconfig config file and path
       const tsconfig: string = `tsconfig.prod.${format}.json`
-      const tsconfig_path = path.join(process.cwd(), tsconfig)
+      const tsconfig_path = join(process.cwd(), tsconfig)
 
       // Check if TypeScript config already exists
-      const tsconfig_exists = fse.existsSync(tsconfig_path)
+      const tsconfig_exists = existsSync(tsconfig_path)
 
       // Copy temporary TypeScript config file to current working directory
       if (!tsconfig_exists) {
-        fse.copyFileSync(path.join('..', '..', tsconfig), tsconfig_path)
+        copyFileSync(join('..', '..', tsconfig), tsconfig_path)
       }
 
       // Run build command
-      if (sh.exec(`ttsc -p ${tsconfig}`)) sh.echo(ch.white(`✓ build ${format}`))
+      if (sh.exec(`ttsc -p ${tsconfig}`)) echo(`create build/${format}`)
 
       // Delete temporary config file
-      if (!tsconfig_exists) {
-        fse.removeSync(tsconfig_path)
-      }
+      if (!tsconfig_exists) removeSync(tsconfig_path)
     })
 
     // Remove base TypeScript config file
-    if (!HAS_TSCONFIG) fse.removeSync(TSCONFIG_PATH)
+    if (!HAS_TSCONFIG) removeSync(TSCONFIG_PATH)
 
     // Fix node module import paths
     fixNodeModulePaths()
@@ -149,30 +157,35 @@ const build = (argv: BuildPackageOptions): void => {
     pkgjson._id = `${pkgjson.name}@${pkgjson.version}`
 
     // Get package.json path in $BUILD_DIR_PATH
-    const pkgjson_path_build = path.join(BUILD_DIR_PATH, 'package.json')
+    const pkgjson_path_build = join(BUILD_DIR_PATH, 'package.json')
 
     // Create package.json file in $BUILD_DIR_PATH
-    fse.writeFileSync(pkgjson_path_build, JSON.stringify(pkgjson, null, 2))
-    sh.echo(ch.white(`✓ create ${file(pkgjson_path_build)}`))
+    writeFileSync(pkgjson_path_build, JSON.stringify(pkgjson, null, 2))
+    echo(`create ${file(pkgjson_path_build)}`)
 
     // Copy distribution files
     BUILD_FILES.forEach(buildfile => {
-      const src = path.join(process.cwd(), buildfile)
-      const dest = path.join(BUILD_DIR_PATH, buildfile)
+      const src = join(process.cwd(), buildfile)
+      const dest = join(BUILD_DIR_PATH, buildfile)
 
-      if (fse.existsSync(src)) {
-        fse.copyFileSync(src, dest)
-        sh.echo(ch.white(`✓ create ${file(dest)}`))
+      if (existsSync(src)) {
+        copyFileSync(src, dest)
+        echo(`create ${file(dest)}`)
       } else {
-        sh.echo(ch.yellow(`skipped ${file(src)} -> ${file(dest)}`))
+        echo(
+          `skipped ${file(src)} -> ${file(dest)}`,
+          false,
+          'white',
+          ch.yellow('!')
+        )
       }
     })
 
     // End workflow
-    sh.echo(ch.bold.green(`build workflow complete: ${formats}`))
+    echo(`build workflow complete: ${formats}`, true)
   } catch (error) {
-    sh.echo(ch.bold.red(`build workflow failed: ${formats}`))
-    sh.echo(ch.red(error.message))
+    echo(`build workflow failed: ${formats}`, true, 'red', 'cross')
+    echo(error.message, false, 'red', 'cross')
   }
 
   sh.exit(0)
