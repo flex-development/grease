@@ -8,6 +8,7 @@ import greaser from '@grease/lifecycles/greaser.lifecycle'
 import notes from '@grease/lifecycles/notes.lifecycle'
 import GreaseOptions from '@grease/models/grease-options.model'
 import readPackageFiles from '@grease/utils/read-package-files.util'
+import omit from 'lodash.omit'
 import merge from 'lodash/merge'
 import bump from 'standard-version/lib/lifecycles/bump'
 import changelog from 'standard-version/lib/lifecycles/changelog'
@@ -46,7 +47,9 @@ const mockRunLifecycleScript = runLifecycleScript as jest.MockedFunction<
 const mockTag = tag as jest.MockedFunction<typeof tag>
 
 describe('functional:main', () => {
-  const OPTIONS: GreaseOptions = merge({}, DEFAULT_OPTIONS)
+  const OPTIONS: GreaseOptions = merge({}, DEFAULT_OPTIONS, {
+    scripts: { prerelease: 'bash scripts/release-assets' }
+  })
 
   beforeAll(() => {
     mockCache.setOptions.mockImplementation(async options => options)
@@ -95,24 +98,22 @@ describe('functional:main', () => {
     })
 
     it('should run lifecycle events', () => {
-      expect(mockBump).toBeCalledTimes(1)
-      expect(mockBump).toBeCalledWith(OPTIONS, expect.anything())
+      // Arrange
+      const options_bump = omit(OPTIONS, ['scripts.prerelease'])
 
+      // Expect
+      expect(mockBump).toBeCalledTimes(1)
+      expect(mockBump).toBeCalledWith(options_bump, expect.anything())
       expect(mockChangelog).toBeCalledTimes(1)
       expect(mockChangelog).toBeCalledWith(OPTIONS, expect.anything())
-
       expect(mockCommit).toBeCalledTimes(1)
       expect(mockCommit).toBeCalledWith(OPTIONS, expect.anything())
-
       expect(mockDepchecker).toBeCalledTimes(1)
       expect(mockDepchecker).toBeCalledWith(OPTIONS)
-
       expect(mockGreaser).toBeCalledTimes(1)
       expect(mockGreaser).toBeCalledWith(OPTIONS, expect.anything())
-
       expect(mockNotes).toBeCalledTimes(1)
       expect(mockNotes).toBeCalledWith(OPTIONS, expect.anything())
-
       expect(mockTag).toBeCalledTimes(1)
       expect(mockTag).toBeCalledWith(expect.anything(), false, OPTIONS)
     })

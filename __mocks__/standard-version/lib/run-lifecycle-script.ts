@@ -5,7 +5,4 @@
  * @see https://github.com/conventional-changelog/standard-version
  */
 
-export default jest.fn((...args) => {
-  const moduleName = 'standard-version/lib/run-lifecycle-script'
-  return jest.requireActual(moduleName)(...args)
-})
+export default jest.fn()

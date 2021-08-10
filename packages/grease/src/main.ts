@@ -39,9 +39,6 @@ const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
     // Set application options
     const options = await cache.setOptions(merge(defaults, args))
 
-    // Run prerelease script
-    runLifecycleScript(options, 'prerelease')
-
     // Check custom changelog header pattern
     if (options.header && options.header.search(RELEASE_PATTERN) !== -1) {
       const code = ExceptionStatusCode.BAD_REQUEST
@@ -54,11 +51,17 @@ const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
       throw new Exception(code, undefined, data, undefined)
     }
 
+    // Run prerelease script
+    runLifecycleScript(options, 'prerelease')
+
     // Read package files
     const { isPrivate, version } = await readPackageFiles(options)
 
     // Run bump lifecycle to get new package version
-    const newVersion = await bump(options, version)
+    const newVersion = await bump(
+      merge({}, options, { scripts: { prerelease: undefined } }),
+      version
+    )
 
     // Run changelog lifecycle
     await changelog(options, newVersion)
