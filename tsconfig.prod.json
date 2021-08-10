@@ -3,6 +3,13 @@
     "declaration": false,
     "noEmit": false,
     "outDir": "./build/node",
+    "plugins": [
+      {
+        "afterDeclarations": true,
+        "exclude": ["*"],
+        "transform": "@zerollup/ts-transform-paths"
+      }
+    ],
     "removeComments": false,
     "rootDir": "./src",
     "sourceMap": true
