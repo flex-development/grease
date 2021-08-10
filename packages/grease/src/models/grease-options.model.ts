@@ -54,7 +54,7 @@ export default class GreaseOptions implements IGreaseOptions {
   @IsOptional()
   header?: IGreaseOptions['header']
 
-  @IsPath()
+  @IsPath({ exists: false })
   @IsOptional()
   infile?: IGreaseOptions['infile']
 
