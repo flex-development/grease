@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "declaration": false,
+    "declaration": true,
     "noEmit": false,
     "outDir": "./build/node",
     "plugins": [

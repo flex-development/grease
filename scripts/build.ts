@@ -21,7 +21,7 @@ export type BuildPackageOptions = {
   /**
    * Specify module build formats.
    */
-  formats?: ('cjs' | 'esm' | 'types')[]
+  formats?: ('cjs' | 'esm')[]
 }
 
 /**
@@ -85,9 +85,6 @@ const build = (argv: BuildPackageOptions): void => {
   const file = (path: string): string => `${path.split(`${process.cwd()}/`)[1]}`
 
   try {
-    // Force `types` build
-    if (!formats.includes('types')) formats.push('types')
-
     // Log workflow start
     echo(
       `build workflow started: ${formats}`,
