@@ -49,6 +49,7 @@
     "@types/semver": "7.3.8",
     "@types/shelljs": "0.8.9",
     "@types/standard-version": "7.0.1",
+    "anymatch": "3.1.2",
     "chalk": "4.1.2",
     "class-transformer": "0.4.0",
     "class-transformer-validator": "0.9.1",

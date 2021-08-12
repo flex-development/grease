@@ -9,6 +9,13 @@ import fs from 'fs'
  * @see https://github.com/isomorphic-git/isomorphic-git
  */
 
+export const currentBranch = jest.fn(async () => {
+  const command = 'git rev-parse --abbrev-ref HEAD'
+  const options = { silent: true }
+
+  return jest.requireActual('shelljs').exec(command, options).toString()
+})
+
 export const listBranches = jest.fn(async ({ remote }) => {
   if (!remote) return BRANCHES.local
   if (remote === 'origin') return BRANCHES.remote

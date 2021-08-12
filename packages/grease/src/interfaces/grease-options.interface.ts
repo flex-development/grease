@@ -53,6 +53,13 @@ export interface IGreaseOptions
   releaseAssets?: ICreateReleaseDTO['files']
 
   /**
+   * Array of [branch names or branch name globs][1] to restrict releases to.
+   *
+   * [1]: https://github.com/micromatch/anymatch
+   */
+  releaseBranchWhitelist?: string[]
+
+  /**
    * Save GitHub release as a draft instead of publishing it.
    *
    * @default true

@@ -111,6 +111,11 @@ export default class GreaseOptions implements IGreaseOptions {
   @IsOptional()
   releaseAssets?: IGreaseOptions['releaseAssets']
 
+  @IsString({ each: true })
+  @IsNotEmpty()
+  @IsOptional()
+  releaseBranchWhitelist?: IGreaseOptions['releaseBranchWhitelist']
+
   @IsString()
   @IsOptional()
   releaseCommitMessageFormat?: IGreaseOptions['releaseCommitMessageFormat']

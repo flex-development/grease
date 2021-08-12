@@ -668,6 +668,7 @@ __metadata:
     "@types/semver": 7.3.8
     "@types/shelljs": 0.8.9
     "@types/standard-version": 7.0.1
+    anymatch: 3.1.2
     chalk: 4.1.2
     class-transformer: 0.4.0
     class-transformer-validator: 0.9.1
@@ -698,7 +699,6 @@ __metadata:
     "@commitlint/cli": 13.0.0
     "@commitlint/config-conventional": 13.0.0
     "@commitlint/format": 13.0.0
-    "@types/debug": 4.1.7
     "@types/faker": 5.5.6
     "@types/fs-extra": 9.0.11
     "@types/jest": 26.0.23
@@ -710,7 +710,6 @@ __metadata:
     "@typescript-eslint/parser": 4.28.0
     "@zerollup/ts-transform-paths": 1.7.18
     chalk-cli: 4.1.0
-    debug: 4.3.2
     dotenv-cli: 4.0.0
     eslint: 7.29.0
     eslint-config-prettier: 8.3.0
@@ -1345,15 +1344,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/debug@npm:4.1.7":
-  version: 4.1.7
-  resolution: "@types/debug@npm:4.1.7"
-  dependencies:
-    "@types/ms": "*"
-  checksum: 0a7b89d8ed72526858f0b61c6fd81f477853e8c4415bb97f48b1b5545248d2ae389931680b94b393b993a7cfe893537a200647d93defe6d87159b96812305adc
-  languageName: node
-  linkType: hard
-
 "@types/faker@npm:5.5.6":
   version: 5.5.6
   resolution: "@types/faker@npm:5.5.6"
@@ -1500,13 +1490,6 @@ __metadata:
   version: 1.2.2
   resolution: "@types/minimist@npm:1.2.2"
   checksum: b8da83c66eb4aac0440e64674b19564d9d86c80ae273144db9681e5eeff66f238ade9515f5006ffbfa955ceff8b89ad2bd8ec577d7caee74ba101431fb07045d
-  languageName: node
-  linkType: hard
-
-"@types/ms@npm:*":
-  version: 0.7.31
-  resolution: "@types/ms@npm:0.7.31"
-  checksum: daadd354aedde024cce6f5aa873fefe7b71b22cd0e28632a69e8b677aeb48ae8caa1c60e5919bb781df040d116b01cb4316335167a3fc0ef6a63fa3614c0f6da
   languageName: node
   linkType: hard
 
@@ -2064,7 +2047,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"anymatch@npm:^3.0.3":
+"anymatch@npm:3.1.2, anymatch@npm:^3.0.3":
   version: 3.1.2
   resolution: "anymatch@npm:3.1.2"
   dependencies:
@@ -3370,7 +3353,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:4.3.2, debug@npm:^4.0.0, debug@npm:^4.0.1, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2":
+"debug@npm:4, debug@npm:^4.0.0, debug@npm:^4.0.1, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2":
   version: 4.3.2
   resolution: "debug@npm:4.3.2"
   dependencies:

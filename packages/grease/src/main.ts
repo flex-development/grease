@@ -1,8 +1,11 @@
 import { ExceptionStatusCode } from '@flex-development/exceptions/enums'
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
 import type { ObjectPlain } from '@flex-development/tutils'
+import anymatch from 'anymatch'
 import ch from 'chalk'
 import fig from 'figures'
+import fs from 'fs'
+import { currentBranch } from 'isomorphic-git'
 import isEmpty from 'lodash/isEmpty'
 import merge from 'lodash/merge'
 import bump from 'standard-version/lib/lifecycles/bump'
@@ -39,13 +42,28 @@ const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
     // Set application options
     const options = await cache.setOptions(merge(defaults, args))
 
+    // Check if current branch is whitelisted release branch
+    if (Array.isArray(options.releaseBranchWhitelist)) {
+      const branch = await currentBranch({ dir: process.cwd(), fs })
+
+      if (!anymatch(options.releaseBranchWhitelist, branch || '')) {
+        const code = ExceptionStatusCode.CONFLICT
+        const data = {
+          errors: { branch },
+          message: `${branch} not included in release branch whitelist`,
+          releaseBranchWhitelist: options.releaseBranchWhitelist
+        }
+
+        throw new Exception(code, undefined, data)
+      }
+    }
+
     // Check custom changelog header pattern
     if (options.header && options.header.search(RELEASE_PATTERN) !== -1) {
       const code = ExceptionStatusCode.BAD_REQUEST
       const data = {
         errors: { header: options.header },
-        message: `custom changelog header must not match ${RELEASE_PATTERN}`,
-        options: options
+        message: `custom changelog header must not match ${RELEASE_PATTERN}`
       }
 
       throw new Exception(code, undefined, data, undefined)

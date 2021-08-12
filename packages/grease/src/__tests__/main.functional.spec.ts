@@ -1,6 +1,6 @@
+import { ExceptionStatusCode } from '@flex-development/exceptions/enums'
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
 import cache from '@grease/config/cache.config'
-import { RELEASE_PATTERN } from '@grease/config/constants.config'
 import DEFAULT_OPTIONS from '@grease/config/defaults.config'
 import logger from '@grease/config/logger.config'
 import depchecker from '@grease/lifecycles/depchecker.lifecycle'
@@ -8,6 +8,8 @@ import greaser from '@grease/lifecycles/greaser.lifecycle'
 import notes from '@grease/lifecycles/notes.lifecycle'
 import GreaseOptions from '@grease/models/grease-options.model'
 import readPackageFiles from '@grease/utils/read-package-files.util'
+import anymatch from 'anymatch'
+import { currentBranch } from 'isomorphic-git'
 import omit from 'lodash.omit'
 import merge from 'lodash/merge'
 import bump from 'standard-version/lib/lifecycles/bump'
@@ -30,10 +32,14 @@ jest.mock('@grease/lifecycles/greaser.lifecycle')
 jest.mock('@grease/lifecycles/notes.lifecycle')
 jest.mock('@grease/utils/read-package-files.util')
 
+const mockAnymatch = anymatch as jest.MockedFunction<typeof anymatch>
 const mockBump = bump as jest.MockedFunction<typeof bump>
 const mockCache = mocked(cache, true)
 const mockChangelog = changelog as jest.MockedFunction<typeof changelog>
 const mockCommit = commit as jest.MockedFunction<typeof commit>
+const mockCurrentBranch = currentBranch as jest.MockedFunction<
+  typeof currentBranch
+>
 const mockDepchecker = depchecker as jest.MockedFunction<typeof depchecker>
 const mockGreaser = greaser as jest.MockedFunction<typeof greaser>
 const mockLogger = logger as jest.Mocked<typeof logger>
@@ -48,6 +54,7 @@ const mockTag = tag as jest.MockedFunction<typeof tag>
 
 describe('functional:main', () => {
   const OPTIONS: GreaseOptions = merge({}, DEFAULT_OPTIONS, {
+    releaseBranchWhitelist: ['main', 'release/*'],
     scripts: { prerelease: 'bash scripts/release-assets' }
   })
 
@@ -57,12 +64,13 @@ describe('functional:main', () => {
 
   it('should log and throw Exceptions', async () => {
     // Arrange
-    const options = merge({}, OPTIONS, { header: `${RELEASE_PATTERN}` })
+    // @ts-expect-error Expected 1 arguments, but got 0
+    const branch = await mockCurrentBranch()
     let exception = {} as Exception
 
     // Act
     try {
-      await testSubject(options)
+      await testSubject(OPTIONS)
     } catch (error) {
       exception = error
     }
@@ -70,21 +78,40 @@ describe('functional:main', () => {
     // Expect
     expect(mockLogger.checkpoint).toBeCalledTimes(1)
     expect(exception).toMatchObject({
-      data: { options },
-      errors: { header: options.header },
-      message: `custom changelog header must not match ${RELEASE_PATTERN}`
+      code: ExceptionStatusCode.CONFLICT,
+      data: { releaseBranchWhitelist: OPTIONS.releaseBranchWhitelist },
+      errors: { branch },
+      message: `${branch} not included in release branch whitelist`
     })
   })
 
   describe('runs without throwing', () => {
     beforeEach(async () => {
       mockBump.mockImplementationOnce(async () => '2.0.0')
+      mockCurrentBranch.mockImplementation(async () => {
+        return OPTIONS.releaseBranchWhitelist?.[0] as string
+      })
+
       await testSubject(OPTIONS)
     })
 
     it('should cache application options', () => {
       expect(mockCache.setOptions).toBeCalledTimes(1)
       expect(mockCache.setOptions).toBeCalledWith(OPTIONS)
+    })
+
+    it('should check release branch whitelist', () => {
+      expect(mockCurrentBranch).toBeCalledTimes(1)
+      expect(mockCurrentBranch).toBeCalledWith({
+        dir: process.cwd(),
+        fs: expect.anything()
+      })
+
+      expect(mockAnymatch).toBeCalledTimes(1)
+      expect(mockAnymatch).toBeCalledWith(
+        OPTIONS.releaseBranchWhitelist,
+        expect.anything()
+      )
     })
 
     it('should run prerelease script', () => {

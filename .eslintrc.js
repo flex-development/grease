@@ -119,6 +119,7 @@ const RULES = {
       skipIfMatch: [],
       skipWordIfMatch: [],
       skipWords: [
+        'anymatch',
         'argv',
         'changelog',
         'cjs',
