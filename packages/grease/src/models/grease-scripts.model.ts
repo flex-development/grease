@@ -27,6 +27,10 @@ export default class GreaseScripts implements IGreaseScripts {
 
   @IsString()
   @IsOptional()
+  postdepchecker?: IGreaseScripts['postdepchecker']
+
+  @IsString()
+  @IsOptional()
   postgreaser?: IGreaseScripts['postgreaser']
 
   @IsString()
