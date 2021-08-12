@@ -27,6 +27,11 @@ export interface IGreaseScripts extends StandardVersionOptions.Scripts {
   postnotes?: string
 
   /**
+   * Executed **after** the release workflow is completed.
+   */
+  postrelease?: string
+
+  /**
    * Executed **before** the `depchecker` lifecycle.
    */
   predepchecker?: string

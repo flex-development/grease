@@ -106,6 +106,9 @@ const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
       title: options.releaseTitle,
       version: newVersion
     })
+
+    // Run postrelease script
+    runLifecycleScript(options, 'postrelease')
   } catch (error) {
     const {
       code = ExceptionStatusCode.INTERNAL_SERVER_ERROR,

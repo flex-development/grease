@@ -114,9 +114,12 @@ describe('functional:main', () => {
       )
     })
 
-    it('should run prerelease script', () => {
-      expect(mockRunLifecycleScript).toBeCalledTimes(1)
+    it('should run prerelease and postrelease scripts', () => {
+      expect(mockRunLifecycleScript).toBeCalledTimes(2)
       expect(mockRunLifecycleScript).toBeCalledWith(OPTIONS, 'prerelease')
+      expect(mockRunLifecycleScript.mock.calls[0][1]).toBe('prerelease')
+      expect(mockRunLifecycleScript).toBeCalledWith(OPTIONS, 'postrelease')
+      expect(mockRunLifecycleScript.mock.calls[1][1]).toBe('postrelease')
     })
 
     it('should read package files', () => {

@@ -39,6 +39,10 @@ export default class GreaseScripts implements IGreaseScripts {
 
   @IsString()
   @IsOptional()
+  postrelease?: IGreaseScripts['postrelease']
+
+  @IsString()
+  @IsOptional()
   posttag?: IGreaseScripts['posttag']
 
   @IsString()
