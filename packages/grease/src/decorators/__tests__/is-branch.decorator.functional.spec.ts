@@ -65,6 +65,13 @@ describe('functional:grease/decorators/IsBranch', () => {
           value: null
         },
         {
+          code: 'LOCAL',
+          expected: EXPECTED,
+          option: 'options.dir',
+          options: { dir: process.env.PWD },
+          value: BRANCHES[404][0]
+        },
+        {
           code: 'REMOTE',
           expected: EXPECTED,
           option: 'options.remote',
@@ -110,6 +117,12 @@ describe('functional:grease/decorators/IsBranch', () => {
           option: 'no options',
           options: {},
           value: BRANCHES.local[0]
+        },
+        {
+          expected: EXPECTED,
+          option: 'options.dir',
+          options: { dir: process.env.PWD },
+          value: BRANCHES.local[1]
         },
         {
           expected: EXPECTED,

@@ -68,16 +68,23 @@ describe('functional:grease/decorators/IsTargetBranch', () => {
         {
           code: 'DOES_NOT_EXIST',
           expected: EXPECTED,
-          option: 'options.remote',
-          options: { each: true, remote },
+          option: 'options.dir',
+          options: { dir: process.cwd(), each: true },
           value: BRANCHES[404]
         },
         {
           code: 'DOES_NOT_EXIST',
           expected: EXPECTED,
+          option: 'options.remote',
+          options: { remote },
+          value: BRANCHES[404][0]
+        },
+        {
+          code: 'DOES_NOT_EXIST',
+          expected: EXPECTED,
           option: 'options.sha',
-          options: { sha: true },
-          value: 'commit'
+          options: { each: true, sha: true },
+          value: ['commit']
         }
       ]
 
@@ -120,9 +127,15 @@ describe('functional:grease/decorators/IsTargetBranch', () => {
         },
         {
           expected: EXPECTED,
+          option: 'options.dir',
+          options: { dir: process.env.PWD, each: true },
+          value: BRANCHES.local.slice(0, 2)
+        },
+        {
+          expected: EXPECTED,
           option: 'options.remote',
-          options: { each: true, remote },
-          value: BRANCHES.remote.slice(0, 2)
+          options: { remote },
+          value: BRANCHES.remote[1]
         },
         {
           expected: EXPECTED,

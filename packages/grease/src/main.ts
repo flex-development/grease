@@ -2,8 +2,6 @@ import { ExceptionStatusCode } from '@flex-development/exceptions/enums'
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
 import type { ObjectPlain } from '@flex-development/tutils'
 import anymatch from 'anymatch'
-import ch from 'chalk'
-import fig from 'figures'
 import fs from 'fs'
 import { currentBranch } from 'isomorphic-git'
 import isEmpty from 'lodash/isEmpty'
@@ -16,11 +14,11 @@ import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
 import cache from './config/cache.config'
 import { RELEASE_PATTERN } from './config/constants.config'
 import defaults from './config/defaults.config'
-import logger from './config/logger.config'
 import type { IGreaseOptions } from './interfaces'
 import depchecker from './lifecycles/depchecker.lifecycle'
 import greaser from './lifecycles/greaser.lifecycle'
 import notes from './lifecycles/notes.lifecycle'
+import log from './utils/log.util'
 import readPackageFiles from './utils/read-package-files.util'
 
 /**
@@ -38,13 +36,15 @@ import readPackageFiles from './utils/read-package-files.util'
  * @return {Promise<void>} Empty promise when complete
  */
 const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
+  args = merge(defaults, args)
+
   try {
     // Set application options
-    const options = await cache.setOptions(merge(defaults, args))
+    const options = await cache.setOptions(args)
 
     // Check if current branch is whitelisted release branch
     if (Array.isArray(options.releaseBranchWhitelist)) {
-      const branch = await currentBranch({ dir: process.cwd(), fs })
+      const branch = await currentBranch({ dir: options.gitdir, fs })
 
       if (!anymatch(options.releaseBranchWhitelist, branch || '')) {
         const code = ExceptionStatusCode.CONFLICT
@@ -118,7 +118,7 @@ const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
       stack
     } = error as Exception
 
-    logger.checkpoint(ch.bold.white(message), [], ch.bold.red(fig.cross))
+    log(args, message, [], 'error', true)
 
     throw new Exception(code, message, { ...data, errors }, stack).toJSON()
   }

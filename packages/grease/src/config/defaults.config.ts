@@ -12,6 +12,7 @@ import DEFAULTS_STANDARD_VERSION from 'standard-version/defaults'
  * @property {GreaseOptionsDefaults} defaults - Default application options
  */
 const defaults: GreaseOptionsDefaults = merge(DEFAULTS_STANDARD_VERSION, {
+  gitdir: process.env.PWD,
   notesType: NotesType.CHANGELOG,
   releaseDraft: true,
   releaseTarget: 'main'

@@ -22,6 +22,13 @@ import type { IGreaseSkip } from './grease-skip.interface'
 export interface IGreaseOptions
   extends Omit<StandardVersionOptions, 'infile' | 'types'> {
   /**
+   * `.git` dir location.
+   *
+   * @default process.env.PWD
+   */
+  gitdir?: string
+
+  /**
    * Read the CHANGELOG from this file.
    *
    * @default 'CHANGELOG.md'
@@ -154,4 +161,5 @@ export type GreaseOptionsDefaults = NonNullable<
     | 'types'
     | 'userUrlFormat'
   >
->
+> &
+  Pick<IGreaseOptions, 'gitdir'>

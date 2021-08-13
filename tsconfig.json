@@ -36,5 +36,14 @@
     "target": "es2021"
   },
   "exclude": ["**/build", "**/node_modules"],
-  "files": ["typings/jest.d.ts"]
+  "files": ["typings/jest.d.ts"],
+  "include": [
+    "__mocks__",
+    "__tests__",
+    "packages",
+    "scripts",
+    "typings",
+    "*.js",
+    "*.ts"
+  ]
 }

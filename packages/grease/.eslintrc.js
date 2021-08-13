@@ -27,6 +27,7 @@ module.exports = merge(rootConfig, {
               'enums',
               'esmrc',
               'explicitly',
+              'gitdir',
               'infile',
               'lifecycles',
               'msg',

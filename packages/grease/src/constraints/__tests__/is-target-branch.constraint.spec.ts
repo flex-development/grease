@@ -74,6 +74,15 @@ describe('unit:constraints/IsTargetBranchConstraint', () => {
         value: BRANCHES[404][0]
       },
       {
+        args: {
+          constraints: [{ dir: process.cwd() }],
+          value: BRANCHES[404][0]
+        },
+        expected: false,
+        option: 'options.dir',
+        value: BRANCHES[404][0]
+      },
+      {
         args: { constraints: [{ remote: 'prod' }], value: commit },
         expected: false,
         option: 'options.remote',
@@ -90,6 +99,15 @@ describe('unit:constraints/IsTargetBranchConstraint', () => {
         expected: true,
         option: 'no options',
         value: BRANCHES.remote[0]
+      },
+      {
+        args: {
+          constraints: [{ dir: process.env.PWD }],
+          value: BRANCHES.remote[1]
+        },
+        expected: true,
+        option: 'options.dir',
+        value: BRANCHES.remote[1]
       },
       {
         args: {

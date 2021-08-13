@@ -9,6 +9,8 @@ import TestSubject from '../grease-cache.service'
  * @module grease/services/tests/unit/GreaseCache
  */
 
+jest.mock('@grease/config/cache.config')
+
 describe('unit:services/GreaseCache', () => {
   const Subject = new TestSubject()
 

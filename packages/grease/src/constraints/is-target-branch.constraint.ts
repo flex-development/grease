@@ -72,6 +72,7 @@ export default class IsTargetBranchConstraint implements IConstraint {
    * @param {ValidationArguments} args - Message builder arguments
    * @param {any[]} args.constraints - Validator constraints
    * @param {IsTargetBranchOptions} args.constraints.0 - Validation options
+   * @param {string} [args.constraints.0.dir=process.env.PWD] - `.git` directory
    * @param {string} [args.constraints.0.remote='origin'] - Name of remote
    * @param {boolean} [args.constraints.0.sha] - Allow Git commit SHAs
    * @return {Promise<boolean>} Boolean indicating if value is branch or commit
@@ -85,13 +86,16 @@ export default class IsTargetBranchConstraint implements IConstraint {
     args.constraints[0] = merge({}, args.constraints[0], { context })
 
     // Get validation options
-    const { remote, sha = false } = args.constraints[0] as IsTargetBranchOptions
+    const options = args.constraints[0] as IsTargetBranchOptions
+    const { dir = process.env.PWD, remote, sha = false } = options
 
     // Check if value is branch name or commit sha
     const branch = await new IsBranchConstraint().validate(value, {
-      constraints: [{ remote: remote || 'origin' }]
+      constraints: [{ dir, remote: remote || 'origin' }]
     } as ValidationArguments)
-    const commit = await new IsCommitConstraint().validate(value)
+    const commit = await new IsCommitConstraint().validate(value, {
+      constraints: [{ dir }]
+    } as ValidationArguments)
 
     // Invalidate if value is not branch name or commit sha
     if ((!sha && !branch) || (sha && !commit)) {

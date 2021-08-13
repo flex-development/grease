@@ -1,6 +1,10 @@
 import { IsCommitMessage as Msg } from '@grease/enums/is-commit-message.enum'
 import COMMITS from '@tests/fixtures/git-commit-shas.fixture'
-import type { Testcase } from '@tests/utils/types'
+import type {
+  IsCommitOption as Option,
+  Testcase,
+  TestcaseDecorator
+} from '@tests/utils/types'
 import type { ValidationArguments } from 'class-validator'
 import TestSubject from '../is-commit.constraint'
 
@@ -37,9 +41,8 @@ describe('unit:constraints/IsCommitConstraint', () => {
   })
 
   describe('#validate', () => {
-    type Case = Testcase<boolean> & {
+    type Case = TestcaseDecorator<boolean, Option> & {
       args: Partial<ValidationArguments>
-      option: 'no options'
       value: any
     }
 
@@ -55,6 +58,18 @@ describe('unit:constraints/IsCommitConstraint', () => {
         expected: true,
         option: 'no options',
         value: COMMITS[0]
+      },
+      {
+        args,
+        expected: false,
+        option: 'options.dir',
+        value
+      },
+      {
+        args: { constraints: [{ dir: process.env.PWD }], value: COMMITS[1] },
+        expected: true,
+        option: 'options.dir',
+        value: COMMITS[1]
       }
     ]
 

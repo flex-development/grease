@@ -1,4 +1,5 @@
 import type { ObjectPlain } from '@flex-development/tutils'
+import TOKENS from '@grease/config/tokens.config'
 import type { IGreaseCache, IGreaseOptions } from '@grease/interfaces'
 import GreaseOptions from '@grease/models/grease-options.model'
 import type { GitSemverTagsOptions } from '@grease/types'
@@ -16,7 +17,7 @@ import { Service } from 'typedi'
  * @class
  * @implements {IGreaseCache}
  */
-@Service()
+@Service({ global: true, id: TOKENS.GreaseCache, type: GreaseCache })
 export default class GreaseCache implements IGreaseCache {
   /**
    * @instance

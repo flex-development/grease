@@ -12,9 +12,14 @@ import type { ValidationOptions } from 'class-validator'
  */
 export interface IsBranchOptions extends ValidationOptions {
   /**
-   * List branches in `refs/remotes/${remote}` instead of `refs/heads`.
+   * `.git` directory.
    *
-   * @default 'origin'
+   * @default process.env.PWD
+   */
+  dir?: string
+
+  /**
+   * List branches in `refs/remotes/${remote}` instead of `refs/heads`.
    */
   remote?: string
 }

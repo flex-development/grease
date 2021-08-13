@@ -50,7 +50,7 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
   @IsOptional()
   readonly tagPrefix?: ICreateReleaseDTO['tagPrefix']
 
-  @IsTargetBranch({ sha: true })
+  @IsTargetBranch({ dir: cache.options.gitdir, sha: true })
   @IsOptional()
   readonly target?: ICreateReleaseDTO['target']
 

@@ -27,7 +27,6 @@
   },
   "publishConfig": {
     "access": "public",
-    "branch": "main",
     "branch_latest": "next",
     "directory": "./build",
     "registry": "https://npm.pkg.github.com"

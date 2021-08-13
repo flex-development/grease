@@ -1,5 +1,5 @@
-import logger from '@grease/config/logger.config'
-import GreaseOptions from '@grease/models/grease-options.model'
+import type { IGreaseOptions } from '@grease/interfaces'
+import log from '@grease/utils/log.util'
 import TAGS from '@tests/fixtures/git-tags.fixture'
 import sh from 'shelljs'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
@@ -10,16 +10,16 @@ import TestSubject from '../notes.lifecycle'
  * @module grease/lifecycles/tests/functional/notes
  */
 
-jest.mock('@grease/config/logger.config')
+jest.mock('@grease/utils/log.util')
 
 const mockSH = sh as jest.Mocked<typeof sh>
-const mockLogger = logger as jest.Mocked<typeof logger>
+const mockLog = log as jest.MockedFunction<typeof log>
 const mockRunLifecycleScript = runLifecycleScript as jest.MockedFunction<
   typeof runLifecycleScript
 >
 
 describe('functional:lifecycles/notes', () => {
-  const options: GreaseOptions = {
+  const options: IGreaseOptions = {
     dryRun: true,
     infile: '__tests__/__fixtures__/CHANGELOG.fixture.md'
   }
@@ -38,7 +38,7 @@ describe('functional:lifecycles/notes', () => {
     })
 
     it('should log checkpoints', () => {
-      expect(mockLogger.checkpoint).toBeCalledTimes(2)
+      expect(mockLog).toBeCalledTimes(2)
     })
   })
 
@@ -49,7 +49,7 @@ describe('functional:lifecycles/notes', () => {
 
       // Expect
       expect(mockRunLifecycleScript).not.toBeCalled()
-      expect(mockLogger.checkpoint).not.toBeCalled()
+      expect(mockLog).not.toBeCalled()
       expect(mockSH.exec).not.toBeCalled()
     })
   })

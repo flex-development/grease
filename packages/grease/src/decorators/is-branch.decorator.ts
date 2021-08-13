@@ -17,6 +17,7 @@ import { ValidateBy } from 'class-validator'
  * @param {IsBranchOptions} [options] - Validation options
  * @param {boolean} [options.always] - Perform validation and ignore `groups`
  * @param {ObjectPlain} [options.context] - Custom validation context
+ * @param {string} [options.dir=process.env.PWD] - `.git` directory
  * @param {string[]} [options.groups] - Groups used for this validation
  * @param {ValidationMessage} [options.message] - Custom error message
  * @param {string} [options.remote] - Name of remote

@@ -2,10 +2,13 @@ import type { OneOrMany } from '@flex-development/tutils'
 import Validator from '@grease/constraints/is-commit.constraint'
 import { IsCommitMessage as Msg } from '@grease/enums/is-commit-message.enum'
 import COMMITS from '@tests/fixtures/git-commit-shas.fixture'
-import type { TestcaseDecorator } from '@tests/utils/types'
-import type { ValidationOptions } from 'class-validator'
+import type {
+  IsCommitOption as Option,
+  TestcaseDecorator
+} from '@tests/utils/types'
 import { validate, ValidateBy } from 'class-validator'
 import faker from 'faker'
+import { IsCommitOptions } from '../../interfaces'
 import TestSubject from '../is-commit.decorator'
 
 /**
@@ -41,8 +44,8 @@ describe('functional:grease/decorators/IsCommit', () => {
 
   describe('validation', () => {
     type Property = OneOrMany<string>
-    type Case = TestcaseDecorator<number> & {
-      options?: ValidationOptions
+    type Case = TestcaseDecorator<number, Option> & {
+      options: IsCommitOptions
     }
 
     describe('fails', () => {
@@ -61,6 +64,13 @@ describe('functional:grease/decorators/IsCommit', () => {
           option: 'no options',
           options: { each: true },
           value: [faker.git.commitSha(), faker.git.commitSha()]
+        },
+        {
+          code: 'DOES_NOT_EXIST',
+          expected: EXPECTED,
+          option: 'options.dir',
+          options: { dir: process.env.PWD },
+          value: faker.git.commitSha()
         }
       ]
 
@@ -101,6 +111,12 @@ describe('functional:grease/decorators/IsCommit', () => {
           option: 'no options',
           options: { each: true },
           value: COMMITS.slice(0, 2)
+        },
+        {
+          expected: EXPECTED,
+          option: 'options.dir',
+          options: { dir: process.env.PWD },
+          value: COMMITS[0]
         }
       ]
 

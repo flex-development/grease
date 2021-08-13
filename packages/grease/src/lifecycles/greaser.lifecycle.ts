@@ -1,10 +1,8 @@
 import { GH_RELEASE_CREATE } from '@grease/config/constants.config'
-import logger from '@grease/config/logger.config'
 import CreateReleaseDTO from '@grease/dtos/create-release.dto'
-import type { ICreateReleaseDTO } from '@grease/interfaces'
-import GreaseOptions from '@grease/models/grease-options.model'
+import type { ICreateReleaseDTO, IGreaseOptions } from '@grease/interfaces'
+import log from '@grease/utils/log.util'
 import validate from '@grease/utils/validate.util'
-import ch from 'chalk'
 import { classToPlain } from 'class-transformer'
 import sh from 'shelljs'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
@@ -20,12 +18,12 @@ import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
  * [1]: https://cli.github.com/manual/gh_release_create
  *
  * @async
- * @param {GreaseOptions} [options={}] - Application options
+ * @param {IGreaseOptions} [options={}] - Application options
  * @param {ICreateReleaseDTO} dto - Data to create GitHub release
  * @return {Promise<void>} Empty promise when complete
  */
 const Greaser = async (
-  options: GreaseOptions = {},
+  options: IGreaseOptions = {},
   dto: ICreateReleaseDTO
 ): Promise<void> => {
   // Skip lifecycle
@@ -35,7 +33,7 @@ const Greaser = async (
   runLifecycleScript(options, 'pregreaser')
 
   // Log release start checkpoint
-  logger.checkpoint('starting github release...', [], ch.yellow('!!'))
+  log(options, 'starting github release...', [], 'info')
 
   // Validate release data
   dto = await validate(CreateReleaseDTO, dto, false)
@@ -45,7 +43,7 @@ const Greaser = async (
 
   // Execute GitHub release
   if (!options.dryRun) sh.exec(command, { silent: options.silent })
-  else logger.checkpoint(command, [classToPlain(dto)], ch.yellow('!!'))
+  else log(options, command, [classToPlain(dto)])
 
   // Run `postgreaser` script
   runLifecycleScript(options, 'postgreaser')

@@ -65,6 +65,7 @@ export default class IsBranchConstraint implements IConstraint {
    * @param {ValidationArguments} args - Message builder arguments
    * @param {any[]} args.constraints - Validator constraints
    * @param {IsBranchOptions} args.constraints.0 - Validation options
+   * @param {string} [args.constraints.0.dir=process.env.PWD] - `.git` directory
    * @param {string} [args.constraints.0.remote] - Name of remote
    * @return {Promise<boolean>} Boolean indicating if value is branch
    */
@@ -82,10 +83,11 @@ export default class IsBranchConstraint implements IConstraint {
     args.constraints[0] = merge({}, args.constraints[0], { context })
 
     // Get validation options
-    const { remote } = args.constraints[0] as IsBranchOptions
+    const options = args.constraints[0] as IsBranchOptions
+    const { dir = process.env.PWD, remote } = options
 
     // Get branches
-    const branches = await listBranches({ dir: process.cwd(), fs, remote })
+    const branches = await listBranches({ dir, fs, remote })
 
     // Check if value is the name of a branch in the current repo
     if (!branches.filter(branch => branch !== '.DS_Store').includes(value)) {

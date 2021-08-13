@@ -1,3 +1,4 @@
+import cache from '@grease/config/cache.config'
 import IsPath from '@grease/decorators/is-path.decorator'
 import IsTargetBranch from '@grease/decorators/is-target-branch.decorator'
 import { NotesType } from '@grease/enums/notes-type.enum'
@@ -25,6 +26,7 @@ import GreaseSkip from './grease-skip.model'
  * @class
  * @implements {IGreaseOptions}
  */
+
 export default class GreaseOptions implements IGreaseOptions {
   @IsString({ each: true })
   @IsOptional()
@@ -45,6 +47,10 @@ export default class GreaseOptions implements IGreaseOptions {
   @IsBoolean()
   @IsOptional()
   firstRelease?: IGreaseOptions['firstRelease']
+
+  @IsString()
+  @IsOptional()
+  gitdir?: IGreaseOptions['gitdir']
 
   @IsBoolean()
   @IsOptional()
@@ -124,7 +130,7 @@ export default class GreaseOptions implements IGreaseOptions {
   @IsOptional()
   releaseDraft?: IGreaseOptions['releaseDraft']
 
-  @IsTargetBranch({ sha: true })
+  @IsTargetBranch({ dir: cache.options.gitdir, sha: true })
   @IsOptional()
   releaseTarget?: IGreaseOptions['releaseTarget']
 

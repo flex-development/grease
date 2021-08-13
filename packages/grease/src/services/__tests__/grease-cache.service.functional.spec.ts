@@ -7,6 +7,7 @@ import TestSubject from '../grease-cache.service'
  * @module grease/services/tests/functional/GreaseCache
  */
 
+jest.mock('@grease/config/cache.config')
 jest.mock('@grease/utils/validate.util')
 
 const mockValidate = validate as jest.MockedFunction<typeof validate>

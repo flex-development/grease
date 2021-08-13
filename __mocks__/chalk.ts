@@ -5,9 +5,9 @@
  * @see https://github.com/chalk/chalk
  */
 
-export default {
+const mockChalk = {
   blue: jest.fn(),
-  bold: { ...jest.fn(), red: jest.fn(), white: jest.fn() },
+  bold: jest.fn(),
   dim: jest.fn(),
   green: jest.fn(),
   inverse: jest.fn(),
@@ -15,3 +15,9 @@ export default {
   white: jest.fn(),
   yellow: jest.fn()
 }
+
+Object.keys(mockChalk).forEach(key => {
+  mockChalk.bold[key] = jest.fn(mockChalk[key])
+})
+
+export default mockChalk

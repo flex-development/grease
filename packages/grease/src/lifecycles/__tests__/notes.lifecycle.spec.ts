@@ -7,7 +7,7 @@ import {
   GREASER_NOTES_NULL
 } from '@grease/config/constants.config'
 import { NotesType } from '@grease/enums/notes-type.enum'
-import GreaseOptions from '@grease/models/grease-options.model'
+import type { IGreaseOptions } from '@grease/interfaces'
 import type { SemanticVersion } from '@grease/types'
 import changelogVersions from '@grease/utils/changelog-versions.util'
 import { RELEASE_NOTES, VERSIONS } from '@tests/fixtures/changelog.fixture'
@@ -25,7 +25,7 @@ jest.mock('@grease/utils/changelog-versions.util')
 const mockChangelogVersions = mocked(changelogVersions)
 
 describe('unit:lifecycles/notes', () => {
-  const options: GreaseOptions = {
+  const options: IGreaseOptions = {
     infile: '__tests__/__fixtures__/CHANGELOG.fixture.md',
     notesType: NotesType.CHANGELOG
   }
@@ -35,7 +35,7 @@ describe('unit:lifecycles/notes', () => {
       expected_string:
         | `${'birthday' | 'blank' | 'changelog'} notes`
         | NotesType.NULL
-      options: GreaseOptions
+      options: IGreaseOptions
       state: string
       version: SemanticVersion | NullishString
     }

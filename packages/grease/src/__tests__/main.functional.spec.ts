@@ -1,12 +1,13 @@
 import { ExceptionStatusCode } from '@flex-development/exceptions/enums'
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
 import cache from '@grease/config/cache.config'
-import DEFAULT_OPTIONS from '@grease/config/defaults.config'
-import logger from '@grease/config/logger.config'
+import defaults from '@grease/config/defaults.config'
+import type { IGreaseCache } from '@grease/interfaces'
 import depchecker from '@grease/lifecycles/depchecker.lifecycle'
 import greaser from '@grease/lifecycles/greaser.lifecycle'
 import notes from '@grease/lifecycles/notes.lifecycle'
 import GreaseOptions from '@grease/models/grease-options.model'
+import log from '@grease/utils/log.util'
 import readPackageFiles from '@grease/utils/read-package-files.util'
 import anymatch from 'anymatch'
 import { currentBranch } from 'isomorphic-git'
@@ -17,7 +18,6 @@ import changelog from 'standard-version/lib/lifecycles/changelog'
 import commit from 'standard-version/lib/lifecycles/commit'
 import tag from 'standard-version/lib/lifecycles/tag'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
-import { mocked } from 'ts-jest/utils'
 import testSubject from '../main'
 
 /**
@@ -26,15 +26,15 @@ import testSubject from '../main'
  */
 
 jest.mock('@grease/config/cache.config')
-jest.mock('@grease/config/logger.config')
 jest.mock('@grease/lifecycles/depchecker.lifecycle')
 jest.mock('@grease/lifecycles/greaser.lifecycle')
 jest.mock('@grease/lifecycles/notes.lifecycle')
+jest.mock('@grease/utils/log.util')
 jest.mock('@grease/utils/read-package-files.util')
 
 const mockAnymatch = anymatch as jest.MockedFunction<typeof anymatch>
 const mockBump = bump as jest.MockedFunction<typeof bump>
-const mockCache = mocked(cache, true)
+const mockCache = cache as jest.Mocked<IGreaseCache>
 const mockChangelog = changelog as jest.MockedFunction<typeof changelog>
 const mockCommit = commit as jest.MockedFunction<typeof commit>
 const mockCurrentBranch = currentBranch as jest.MockedFunction<
@@ -42,7 +42,7 @@ const mockCurrentBranch = currentBranch as jest.MockedFunction<
 >
 const mockDepchecker = depchecker as jest.MockedFunction<typeof depchecker>
 const mockGreaser = greaser as jest.MockedFunction<typeof greaser>
-const mockLogger = logger as jest.Mocked<typeof logger>
+const mockLog = log as jest.MockedFunction<typeof log>
 const mockNotes = notes as jest.MockedFunction<typeof notes>
 const mockReadPackageFiles = readPackageFiles as jest.MockedFunction<
   typeof readPackageFiles
@@ -53,12 +53,13 @@ const mockRunLifecycleScript = runLifecycleScript as jest.MockedFunction<
 const mockTag = tag as jest.MockedFunction<typeof tag>
 
 describe('functional:main', () => {
-  const OPTIONS: GreaseOptions = merge({}, DEFAULT_OPTIONS, {
-    releaseBranchWhitelist: ['main', 'release/*'],
+  const OPTIONS: GreaseOptions = merge({}, defaults, {
+    releaseBranchWhitelist: ['BRANCH'],
     scripts: { prerelease: 'bash scripts/release-assets' }
   })
 
   beforeAll(() => {
+    mockCache.options = defaults
     mockCache.setOptions.mockImplementation(async options => options)
   })
 
@@ -76,7 +77,7 @@ describe('functional:main', () => {
     }
 
     // Expect
-    expect(mockLogger.checkpoint).toBeCalledTimes(1)
+    expect(mockLog).toBeCalledTimes(1)
     expect(exception).toMatchObject({
       code: ExceptionStatusCode.CONFLICT,
       data: { releaseBranchWhitelist: OPTIONS.releaseBranchWhitelist },
@@ -103,7 +104,7 @@ describe('functional:main', () => {
     it('should check release branch whitelist', () => {
       expect(mockCurrentBranch).toBeCalledTimes(1)
       expect(mockCurrentBranch).toBeCalledWith({
-        dir: process.cwd(),
+        dir: defaults.gitdir,
         fs: expect.anything()
       })
 

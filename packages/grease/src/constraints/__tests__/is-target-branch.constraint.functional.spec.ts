@@ -16,10 +16,19 @@ jest.mock('../is-commit.constraint')
 
 const MockIsBranchConstraint = mocked(IsBranchConstraint)
 const MockIsCommitConstraint = mocked(IsCommitConstraint)
+const mockBranchValidate = MockIsBranchConstraint.prototype
+  .validate as jest.MockedFunction<
+  typeof MockIsBranchConstraint.prototype.validate
+>
+const mockCommitValidate = MockIsCommitConstraint.prototype
+  .validate as jest.MockedFunction<
+  typeof MockIsCommitConstraint.prototype.validate
+>
 
 describe('functional:constraints/IsTargetBranchConstraint', () => {
   const CONSTRAINT = TestSubject.options?.name as string
   const Subject = new TestSubject()
+  const dir = process.env.PWD
 
   describe('#validate', () => {
     const value = 'target-branch'
@@ -35,36 +44,53 @@ describe('functional:constraints/IsTargetBranchConstraint', () => {
       })
     })
 
+    describe('IsTargetBranchOptions.dir', () => {
+      const args = { constraints: [{ dir }], value: 'main' }
+
+      it(`should use ${dir} as .git directory`, async () => {
+        // Arrange
+        const mockBranchValidateCalls = mockBranchValidate.mock.calls
+        const mockCommitValidateCalls = mockCommitValidate.mock.calls
+
+        // Act
+        await Subject.validate(args.value, args as ValidationArguments)
+
+        // Expect
+        expect(mockBranchValidateCalls[0][1]?.constraints?.[0].dir).toBe(dir)
+        expect(mockCommitValidateCalls[0][1]?.constraints?.[0].dir).toBe(dir)
+      })
+    })
+
     describe('IsTargetBranchOptions.remote', () => {
-      const value = 'main'
-      const constraints = [{ remote: 'prod' }]
-      const args = { constraints: [...constraints], value }
+      const constraints = [{ dir, remote: 'prod' }]
+      const args = { constraints: [...constraints], value: 'next' }
 
       const mockBranchValidate = MockIsBranchConstraint.prototype.validate
 
-      it('should call IsBranchConstraint#validate', async () => {
+      it(`should check if ${args.value} is remote branch`, async () => {
         // Act
         await Subject.validate(args.value, args as ValidationArguments)
 
         // Expect
         expect(mockBranchValidate).toBeCalledTimes(1)
-        expect(mockBranchValidate).toBeCalledWith(value, { constraints })
+        expect(mockBranchValidate).toBeCalledWith(args.value, { constraints })
       })
     })
 
     describe('IsTargetBranchOptions.sha', () => {
-      const value = faker.git.commitSha()
-      const args = { constraints: [{ sha: true }], value }
+      const constraints = [{ dir }]
+      const args = {
+        constraints: [{ ...constraints[0], sha: true }],
+        value: faker.git.commitSha()
+      }
 
-      const mockCommitValidate = MockIsCommitConstraint.prototype.validate
-
-      it('should call IsCommitConstraint#validate', async () => {
+      it(`should check if ${args.value} is commit`, async () => {
         // Act
         await Subject.validate(args.value, args as ValidationArguments)
 
         // Expect
         expect(mockCommitValidate).toBeCalledTimes(1)
-        expect(mockCommitValidate).toBeCalledWith(args.value)
+        expect(mockCommitValidate).toBeCalledWith(args.value, { constraints })
       })
     })
   })

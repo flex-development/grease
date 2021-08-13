@@ -7,13 +7,11 @@ import {
   GREASER_NOTES_NULL,
   LINE_BREAK as BR
 } from '@grease/config/constants.config'
-import logger from '@grease/config/logger.config'
 import { NotesType } from '@grease/enums/notes-type.enum'
-import GreaseOptions from '@grease/models/grease-options.model'
+import type { IGreaseOptions } from '@grease/interfaces'
 import type { SemanticVersion } from '@grease/types'
 import changelogVersions from '@grease/utils/changelog-versions.util'
-import ch from 'chalk'
-import figures from 'figures'
+import log from '@grease/utils/log.util'
 import fs from 'fs'
 import indexOf from 'lodash/indexOf'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
@@ -35,13 +33,13 @@ import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
  * - `version` is not in the changelog content
  *
  * @async
- * @param {GreaseOptions} [options={}] - Application options
+ * @param {IGreaseOptions} [options={}] - Application options
  * @param {SemanticVersion | NullishString} [version] - Latest package version
  * @return {Promise<NullishString>} Promise containing release notes or null
  * @throws {Exception}
  */
 const Notes = async (
-  options: GreaseOptions = {},
+  options: IGreaseOptions = {},
   version: SemanticVersion | NullishString = null
 ): Promise<NullishString> => {
   // Skip lifecycle
@@ -64,10 +62,11 @@ const Notes = async (
   if (!options.infile || !version) return GREASER_NOTES_NULL
 
   // Log validation checkpoint
-  logger.checkpoint(
+  log(
+    options,
     'generating release notes from %s',
     [options.infile.toString()],
-    ch.yellow('!!')
+    'info'
   )
 
   // Get changelog content and versions (in descending order)
@@ -106,7 +105,7 @@ const Notes = async (
   notes = notes.substring(notes.indexOf(BR), notes.lastIndexOf(BR)).trim()
 
   // Log notes checkpoint if dry run is enabled
-  if (options.dryRun) logger.checkpoint(notes, [], ch.blue(figures.info))
+  if (options.dryRun) log(options, notes, [])
 
   // Run `postnotes` script
   runLifecycleScript(options, 'postnotes')

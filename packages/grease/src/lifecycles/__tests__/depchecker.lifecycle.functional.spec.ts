@@ -1,9 +1,8 @@
 import { ExceptionStatusCode } from '@flex-development/exceptions/enums'
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
-import logger from '@grease/config/logger.config'
 import { DependencyCommand } from '@grease/enums/dependency-command.enum'
-import type { ILogger } from '@grease/interfaces'
-import GreaseOptions from '@grease/models/grease-options.model'
+import type { IGreaseOptions } from '@grease/interfaces'
+import log from '@grease/utils/log.util'
 import indexOf from 'lodash/indexOf'
 import sh from 'shelljs'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
@@ -14,17 +13,17 @@ import TestSubject from '../depchecker.lifecycle'
  * @module grease/lifecycles/tests/functional/depchecker
  */
 
-jest.mock('@grease/config/logger.config')
+jest.mock('@grease/utils/log.util')
 
 const mockSH = sh as jest.Mocked<typeof sh>
-const mockLogger = logger as jest.Mocked<ILogger>
+const mockLog = log as jest.MockedFunction<typeof log>
 const mockRunLifecycleScript = runLifecycleScript as jest.MockedFunction<
   typeof runLifecycleScript
 >
 
 describe('functional:lifecycles/depchecker', () => {
   const mockShellString = mockSH.ShellString('command')
-  const options: GreaseOptions = { dryRun: true }
+  const options: IGreaseOptions = { dryRun: true }
 
   describe('executes lifecycle', () => {
     it('should call sh.which', () => {
@@ -96,7 +95,7 @@ describe('functional:lifecycles/depchecker', () => {
             TestSubject(options)
 
             // Expect
-            expect(mockLogger.checkpoint.mock.calls[i + 1][0]).toBe(command)
+            expect(mockLog.mock.calls[i + 1][1]).toBe(command)
           })
         })
       })
@@ -110,7 +109,7 @@ describe('functional:lifecycles/depchecker', () => {
 
       // Expect
       expect(mockRunLifecycleScript).not.toBeCalled()
-      expect(mockLogger.checkpoint).not.toBeCalled()
+      expect(mockLog).not.toBeCalled()
       expect(mockSH.which).not.toBeCalled()
     })
   })

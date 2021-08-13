@@ -6,7 +6,12 @@
 /**
  * Names of custom validation options for the `IsBranch` decorator.
  */
-export type IsBranchOption = 'remote'
+export type IsBranchOption = 'dir' | 'remote'
+
+/**
+ * Names of custom validation options for the `IsCommit` decorator.
+ */
+export type IsCommitOption = 'dir'
 
 /**
  * Names of custom validation options for the `IsPath` decorator.

@@ -1,10 +1,8 @@
 import { ExceptionStatusCode } from '@flex-development/exceptions/enums'
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
-import logger from '@grease/config/logger.config'
 import { DependencyCommand } from '@grease/enums/dependency-command.enum'
-import GreaseOptions from '@grease/models/grease-options.model'
-import ch from 'chalk'
-import figures from 'figures'
+import type { IGreaseOptions } from '@grease/interfaces'
+import log from '@grease/utils/log.util'
 import sh from 'shelljs'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
 
@@ -23,11 +21,11 @@ import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
  *
  * [1]: https://cli.github.com/manual
  *
- * @param {GreaseOptions} [options={}] - Application options
+ * @param {IGreaseOptions} [options={}] - Application options
  * @return {void} Nothing when complete
  * @throws {Exception}
  */
-const Depchecker = (options: GreaseOptions = {}): void => {
+const Depchecker = (options: IGreaseOptions = {}): void => {
   // Skip lifecycle
   if (options.skip?.depchecker) return
 
@@ -38,7 +36,7 @@ const Depchecker = (options: GreaseOptions = {}): void => {
   const commands = Object.keys(DependencyCommand)
 
   // Log checkpoint
-  logger.checkpoint('checking dependency commands', commands, ch.yellow('!!'))
+  log(options, 'checking dependency commands', commands, 'info')
 
   // Check if required dependencies are installed
   Object.values(DependencyCommand).forEach(command => {
@@ -46,7 +44,7 @@ const Depchecker = (options: GreaseOptions = {}): void => {
       throw new Exception(ExceptionStatusCode.NOT_FOUND, `${command} not found`)
     }
 
-    logger.checkpoint(command, [], ch.green(figures.tick))
+    log(options, command)
     return
   })
 

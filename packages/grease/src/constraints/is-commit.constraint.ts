@@ -1,4 +1,5 @@
 import { IsCommitMessage as Msg } from '@grease/enums/is-commit-message.enum'
+import type { IsCommitOptions } from '@grease/interfaces'
 import type { IConstraint, ValidatorConstraintOptions } from '@grease/types'
 import type { ValidationArguments } from 'class-validator'
 import {
@@ -35,6 +36,7 @@ export default class IsCommitConstraint implements IConstraint {
    *
    * @param {ValidationArguments} args - Message builder arguments
    * @param {any[]} args.constraints - Validator constraints
+   * @param {IsCommitOptions} args.constraints.0 - Validation options
    * @return {string} Default error message
    */
   defaultMessage(args: ValidationArguments): string {
@@ -49,6 +51,7 @@ export default class IsCommitConstraint implements IConstraint {
    *
    * @param {any} value - Value to test against constraint
    * @param {ValidationArguments} args - Message builder arguments
+   * @param {string} [args.constraints.0.dir=process.env.PWD] - `.git` directory
    * @return {Promise<boolean>} Boolean indicating if value is commit
    */
   async validate(
@@ -56,8 +59,12 @@ export default class IsCommitConstraint implements IConstraint {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     args: ValidationArguments = {} as ValidationArguments
   ): Promise<boolean> {
+    // Get validation options
+    const options = (args.constraints[0] || {}) as IsCommitOptions
+    const { dir = process.env.PWD } = options
+
     try {
-      await readCommit({ dir: process.cwd(), fs, oid: value })
+      await readCommit({ dir, fs, oid: value })
     } catch (error) {
       return false
     }

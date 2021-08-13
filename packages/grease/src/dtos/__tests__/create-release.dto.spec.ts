@@ -1,7 +1,7 @@
 import pkg from '@/grease/package.json'
 import cache from '@grease/config/cache.config'
 import { GREASER_TITLE_BIRTHDAY } from '@grease/config/constants.config'
-import type { ICreateReleaseDTO } from '@grease/interfaces'
+import type { ICreateReleaseDTO, IGreaseCache } from '@grease/interfaces'
 import type { GitSemverTagsOptions, SemanticVersion } from '@grease/types'
 import TAGS, {
   TAGS_OPTIONS_LERNA as TOL
@@ -9,7 +9,6 @@ import TAGS, {
 import type { Testcase } from '@tests/utils/types'
 import faker from 'faker'
 import join from 'lodash/join'
-import { mocked } from 'ts-jest/utils'
 import TestSubject from '../create-release.dto'
 
 /**
@@ -19,7 +18,7 @@ import TestSubject from '../create-release.dto'
 
 jest.mock('@grease/config/cache.config')
 
-const mockCache = mocked(cache, true)
+const mockCache = cache as jest.Mocked<IGreaseCache>
 
 describe('unit:dtos/CreateReleaseDTO', () => {
   describe('#toString', () => {
