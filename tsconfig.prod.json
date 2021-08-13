@@ -16,5 +16,6 @@
   },
   "exclude": ["**/__mocks__", "**/__tests__", "**/build", "**/node_modules"],
   "extends": "./tsconfig.json",
+  "files": [],
   "include": ["src"]
 }

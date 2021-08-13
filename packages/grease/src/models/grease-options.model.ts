@@ -107,7 +107,7 @@ export default class GreaseOptions implements IGreaseOptions {
   @IsOptional()
   releaseAs?: IGreaseOptions['releaseAs']
 
-  @IsPath({ each: true, gh: true })
+  @IsPath({ each: true, exists: false, gh: true })
   @IsOptional()
   releaseAssets?: IGreaseOptions['releaseAssets']
 

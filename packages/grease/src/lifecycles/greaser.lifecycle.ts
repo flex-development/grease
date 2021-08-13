@@ -3,6 +3,7 @@ import logger from '@grease/config/logger.config'
 import CreateReleaseDTO from '@grease/dtos/create-release.dto'
 import type { ICreateReleaseDTO } from '@grease/interfaces'
 import GreaseOptions from '@grease/models/grease-options.model'
+import validate from '@grease/utils/validate.util'
 import ch from 'chalk'
 import { classToPlain } from 'class-transformer'
 import sh from 'shelljs'
@@ -36,8 +37,11 @@ const Greaser = async (
   // Log release start checkpoint
   logger.checkpoint('starting github release...', [], ch.yellow('!!'))
 
+  // Validate release data
+  dto = await validate(CreateReleaseDTO, dto, false)
+
   // Get release command
-  const command = `${GH_RELEASE_CREATE} ${new CreateReleaseDTO(dto).toString()}`
+  const command = `${GH_RELEASE_CREATE} ${dto.toString()}`
 
   // Execute GitHub release
   if (!options.dryRun) sh.exec(command, { silent: options.silent })

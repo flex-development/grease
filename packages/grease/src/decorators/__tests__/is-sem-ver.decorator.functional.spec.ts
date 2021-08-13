@@ -4,7 +4,10 @@ import Validator from '@grease/constraints/is-sem-ver.constraint'
 import { IsSemVerMessage as Msg } from '@grease/enums/is-sem-ver-message.enum'
 import type { IsSemVerOptions } from '@grease/interfaces'
 import type { SemanticVersion } from '@grease/types'
-import { TAGS_OPTIONS_LERNA } from '@tests/fixtures/git-tags.fixture'
+import {
+  TAGS_OPTIONS_LERNA,
+  VERSION_DEV
+} from '@tests/fixtures/git-tags.fixture'
 import type {
   IsSemVerOption as Option,
   TestcaseDecorator
@@ -99,7 +102,7 @@ describe('functional:grease/decorators/IsSemVer', () => {
           expected: EXPECTED,
           option: 'options.git',
           options: { git: true },
-          value: '3.13.98'
+          value: VERSION_DEV
         },
         {
           code: 'CONFLICT',
@@ -183,7 +186,7 @@ describe('functional:grease/decorators/IsSemVer', () => {
           expected: EXPECTED,
           option: 'options.negit',
           options: { each: true, git: true, negit: true },
-          value: ['3.13.98-dev.640']
+          value: [VERSION_DEV]
         },
         {
           expected: EXPECTED,

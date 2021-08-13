@@ -10,6 +10,7 @@ export default {
   bold: { ...jest.fn(), red: jest.fn(), white: jest.fn() },
   dim: jest.fn(),
   green: jest.fn(),
+  inverse: jest.fn(),
   red: jest.fn(),
   white: jest.fn(),
   yellow: jest.fn()

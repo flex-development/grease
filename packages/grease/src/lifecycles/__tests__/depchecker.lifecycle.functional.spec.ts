@@ -4,7 +4,6 @@ import logger from '@grease/config/logger.config'
 import { DependencyCommand } from '@grease/enums/dependency-command.enum'
 import type { ILogger } from '@grease/interfaces'
 import GreaseOptions from '@grease/models/grease-options.model'
-import ch from 'chalk'
 import indexOf from 'lodash/indexOf'
 import sh from 'shelljs'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
@@ -17,7 +16,6 @@ import TestSubject from '../depchecker.lifecycle'
 
 jest.mock('@grease/config/logger.config')
 
-const mockCH = ch as jest.Mocked<typeof ch>
 const mockSH = sh as jest.Mocked<typeof sh>
 const mockLogger = logger as jest.Mocked<ILogger>
 const mockRunLifecycleScript = runLifecycleScript as jest.MockedFunction<

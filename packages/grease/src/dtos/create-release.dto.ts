@@ -1,7 +1,11 @@
 import type { ObjectPlain } from '@flex-development/tutils'
 import cache from '@grease/config/cache.config'
 import { GREASER_TITLE_BIRTHDAY } from '@grease/config/constants.config'
+import IsPath from '@grease/decorators/is-path.decorator'
+import IsSemVer from '@grease/decorators/is-sem-ver.decorator'
+import IsTargetBranch from '@grease/decorators/is-target-branch.decorator'
 import type { ICreateReleaseDTO } from '@grease/interfaces'
+import { IsBoolean, IsOptional, IsString } from 'class-validator'
 import join from 'lodash/join'
 import pick from 'lodash/pick'
 
@@ -18,15 +22,43 @@ import pick from 'lodash/pick'
  * @implements {ICreateReleaseDTO}
  */
 export default class CreateReleaseDTO implements ICreateReleaseDTO {
+  @IsBoolean()
+  @IsOptional()
   readonly draft?: ICreateReleaseDTO['draft']
+
+  @IsPath({ each: true, gh: true })
+  @IsOptional()
   readonly files?: ICreateReleaseDTO['files']
+
+  @IsString()
+  @IsOptional()
   readonly notes?: ICreateReleaseDTO['notes']
+
+  @IsPath()
+  @IsOptional()
   readonly notesFile?: ICreateReleaseDTO['notesFile']
+
+  @IsBoolean()
+  @IsOptional()
   readonly prerelease?: ICreateReleaseDTO['prerelease']
+
+  @IsString()
+  @IsOptional()
   readonly repo?: ICreateReleaseDTO['repo']
+
+  @IsString()
+  @IsOptional()
   readonly tagPrefix?: ICreateReleaseDTO['tagPrefix']
+
+  @IsTargetBranch({ sha: true })
+  @IsOptional()
   readonly target?: ICreateReleaseDTO['target']
+
+  @IsString()
+  @IsOptional()
   readonly title?: ICreateReleaseDTO['title']
+
+  @IsSemVer({ git: cache.git })
   readonly version: ICreateReleaseDTO['version']
 
   /**

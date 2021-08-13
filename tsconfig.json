@@ -35,5 +35,6 @@
     "strict": true,
     "target": "es2021"
   },
-  "exclude": ["**/build", "**/node_modules"]
+  "exclude": ["**/build", "**/node_modules"],
+  "files": ["typings/jest.d.ts"]
 }

@@ -1,6 +1,6 @@
 import pkg from '@/grease/package.json'
 import { IsSemVerCode as Code, IsSemVerMessage as Msg } from '@grease/enums'
-import TAGS from '@tests/fixtures/git-tags.fixture'
+import TAGS, { VERSION_TAG_DEV } from '@tests/fixtures/git-tags.fixture'
 import type {
   IsSemVerOption as Option,
   Testcase,
@@ -106,7 +106,6 @@ describe('unit:constraints/IsSemVerConstraint', () => {
       value: any
     }
 
-    const tag = 'v3.13.98'
     const version = 'x.x.x'
 
     const cases: Case[] = [
@@ -141,10 +140,10 @@ describe('unit:constraints/IsSemVerConstraint', () => {
         value: TAGS[4]
       },
       {
-        args: { constraints: [{ negit: true }], value: tag },
+        args: { constraints: [{ negit: true }], value: VERSION_TAG_DEV },
         expected: true,
         option: 'options.negit',
-        value: tag
+        value: VERSION_TAG_DEV
       },
       {
         args: {
