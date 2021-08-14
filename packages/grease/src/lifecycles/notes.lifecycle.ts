@@ -12,6 +12,7 @@ import type { IGreaseOptions } from '@grease/interfaces'
 import type { SemanticVersion } from '@grease/types'
 import changelogVersions from '@grease/utils/changelog-versions.util'
 import log from '@grease/utils/log.util'
+import ch from 'chalk'
 import fs from 'fs'
 import indexOf from 'lodash/indexOf'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
@@ -44,6 +45,7 @@ const Notes = async (
 ): Promise<NullishString> => {
   // Skip lifecycle
   if (options.skip?.notes || options.notesType === NotesType.NULL) {
+    log(options, 'skipping release notes', [], 'error')
     return GREASER_NOTES_NULL
   }
 
@@ -51,23 +53,35 @@ const Notes = async (
   runLifecycleScript(options, 'prenotes')
 
   // Generate blank notes
-  if (options.notesType === NotesType.BLANK) return GREASER_NOTES_BLANK
+  if (options.notesType === NotesType.BLANK) {
+    log(options, 'created blank release notes')
+    return GREASER_NOTES_BLANK
+  }
 
   // Generate birthday notes
   if (options.firstRelease || options.notesType === NotesType.BIRTHDAY) {
+    log(options, 'created birthday format release notes')
     return GREASER_NOTES_BIRTHDAY
   }
 
-  // Skip notes if no changelog path or versions config is missing
-  if (!options.infile || !version) return GREASER_NOTES_NULL
+  // Skip notes if no changelog is missing
+  if (!options.infile || !fs.existsSync(options.infile as fs.PathLike)) {
+    const args = [`${options.infile} does not exist`]
+
+    log(options, 'skipping release notes', args, 'error')
+    return GREASER_NOTES_NULL
+  }
+
+  // Skip notes if missing package version
+  if (!version) {
+    const args = ['package version is', version]
+
+    log(options, 'skipping release notes', args, 'error')
+    return GREASER_NOTES_NULL
+  }
 
   // Log validation checkpoint
-  log(
-    options,
-    'generating release notes from %s',
-    [options.infile.toString()],
-    'info'
-  )
+  log(options, 'creating release notes from %s', [options.infile], 'info')
 
   // Get changelog content and versions (in descending order)
   const content = fs.readFileSync(options.infile as fs.PathLike, 'utf8')
@@ -104,8 +118,13 @@ const Notes = async (
   // Format release notes
   notes = notes.substring(notes.indexOf(BR), notes.lastIndexOf(BR)).trim()
 
-  // Log notes checkpoint if dry run is enabled
-  if (options.dryRun) log(options, notes, [])
+  // Log notes checkpoint
+  log(options, 'created release notes')
+
+  // Log notes if dry run is enabled
+  if (options.dryRun && !options.silent) {
+    console.log(`\n---\n${ch.gray(notes)}\n---\n`)
+  }
 
   // Run `postnotes` script
   runLifecycleScript(options, 'postnotes')

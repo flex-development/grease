@@ -9,6 +9,7 @@ const mockChalk = {
   blue: jest.fn(),
   bold: jest.fn(),
   dim: jest.fn(),
+  gray: jest.fn(),
   green: jest.fn(),
   inverse: jest.fn(),
   red: jest.fn(),

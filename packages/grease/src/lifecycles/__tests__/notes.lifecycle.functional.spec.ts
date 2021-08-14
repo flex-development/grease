@@ -1,6 +1,8 @@
 import type { IGreaseOptions } from '@grease/interfaces'
 import log from '@grease/utils/log.util'
 import TAGS from '@tests/fixtures/git-tags.fixture'
+import type { RestoreConsole } from 'jest-mock-console'
+import mockConsole from 'jest-mock-console'
 import sh from 'shelljs'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
 import TestSubject from '../notes.lifecycle'
@@ -19,12 +21,18 @@ const mockRunLifecycleScript = runLifecycleScript as jest.MockedFunction<
 >
 
 describe('functional:lifecycles/notes', () => {
+  const restoreConsole: RestoreConsole = mockConsole()
+
   const options: IGreaseOptions = {
     dryRun: true,
     infile: '__tests__/__fixtures__/CHANGELOG.fixture.md'
   }
 
   const version = TAGS[1].replace('v', '')
+
+  afterAll(() => {
+    restoreConsole()
+  })
 
   describe('executes lifecycle', () => {
     beforeEach(async () => {
@@ -49,7 +57,7 @@ describe('functional:lifecycles/notes', () => {
 
       // Expect
       expect(mockRunLifecycleScript).not.toBeCalled()
-      expect(mockLog).not.toBeCalled()
+      expect(mockLog).toBeCalledTimes(1)
       expect(mockSH.exec).not.toBeCalled()
     })
   })

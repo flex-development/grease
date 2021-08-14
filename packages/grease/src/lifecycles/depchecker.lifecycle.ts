@@ -36,7 +36,7 @@ const Depchecker = (options: IGreaseOptions = {}): void => {
   const commands = Object.keys(DependencyCommand)
 
   // Log checkpoint
-  log(options, 'checking dependency commands', commands, 'info')
+  log(options, 'checking commands:', commands, 'info')
 
   // Check if required dependencies are installed
   Object.values(DependencyCommand).forEach(command => {
