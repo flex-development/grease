@@ -6,7 +6,6 @@
 module.exports = {
   commitAll: true,
   gitdir: process.env.PROJECT_CWD,
-  noVerify: true,
   releaseBranchWhitelist: ['main'],
   skipUnstable: false,
   types: [
