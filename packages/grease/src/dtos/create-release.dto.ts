@@ -47,10 +47,6 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
   @IsOptional()
   readonly repo?: ICreateReleaseDTO['repo']
 
-  @IsString()
-  @IsOptional()
-  readonly tagPrefix?: ICreateReleaseDTO['tagPrefix']
-
   @IsTargetBranch({ dir: cache.options.gitdir, sha: true })
   @IsOptional()
   readonly target?: ICreateReleaseDTO['target']
@@ -76,7 +72,6 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
       'notesFile',
       'prerelease',
       'repo',
-      'tagPrefix',
       'target',
       'title',
       'version'
@@ -103,14 +98,10 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
       notesFile = '',
       prerelease,
       repo = '',
-      tagPrefix = '',
       target = '',
       title = '',
-      version = ''
+      version: tag
     } = this
-
-    // Get release tag
-    const tag: string = `${tagPrefix}${version}`
 
     // Init command arguments array
     const args: string[] = [tag]
@@ -125,10 +116,12 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
     if (draft) args.push('--draft')
 
     // Add release title
-    if (version === '1.0.0' && (!title || !title.length)) {
+    if (tag.endsWith('1.0.0') && (!title || !title.length)) {
       args.push(`--title ${tag} ${GREASER_TITLE_BIRTHDAY}`)
     } else if (title && title.length) {
       args.push(`--title ${title}`)
+    } else {
+      args.push(`--title ${tag}`)
     }
 
     // Read release notes from file

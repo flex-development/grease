@@ -104,7 +104,6 @@ const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
       notesFile: options.notesFile,
       prerelease: !isEmpty(options.prerelease),
       repo: options.repo,
-      tagPrefix: options.tagPrefix,
       target: options.releaseTarget,
       title: options.releaseTitle,
       version: `${options.tagPrefix}${newVersion}` as SemanticVersionTag

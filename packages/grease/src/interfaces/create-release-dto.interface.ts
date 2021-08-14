@@ -44,13 +44,6 @@ export interface ICreateReleaseDTO {
   repo?: string
 
   /**
-   * Release tag prefix.
-   *
-   * @default 'v'
-   */
-  tagPrefix?: string
-
-  /**
    * Target branch or full commit SHA.
    *
    * @default 'main'
@@ -63,7 +56,7 @@ export interface ICreateReleaseDTO {
   title?: string
 
   /**
-   * Version being released.
+   * Release tag.
    */
   version: SemanticVersion | SemanticVersionTag
 }

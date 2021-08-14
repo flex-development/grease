@@ -2,10 +2,8 @@ import pkg from '@/grease/package.json'
 import cache from '@grease/config/cache.config'
 import { GREASER_TITLE_BIRTHDAY } from '@grease/config/constants.config'
 import type { ICreateReleaseDTO, IGreaseCache } from '@grease/interfaces'
-import type { GitSemverTagsOptions, SemanticVersion } from '@grease/types'
-import TAGS, {
-  TAGS_OPTIONS_LERNA as TOL
-} from '@tests/fixtures/git-tags.fixture'
+import type { GitSemverTagsOptions } from '@grease/types'
+import TAGS from '@tests/fixtures/git-tags.fixture'
 import type { Testcase } from '@tests/utils/types'
 import faker from 'faker'
 import join from 'lodash/join'
@@ -33,145 +31,131 @@ describe('unit:dtos/CreateReleaseDTO', () => {
     }
 
     const V1TAG = TAGS[TAGS.length - 1]
-    const V1 = V1TAG.replace('v', '') as SemanticVersion
     const files: string[] = ['CHANGELOG.md', 'LICENSE.md']
     const notes = faker.lorem.words(5)
     const notesFile = 'RELEASE_NOTES.md'
-    const tagPrefix = 'v'
     const target = 'main'
     const tag0 = TAGS[0]
-    const version0 = tag0.replace('v', '') as SemanticVersion
+    const repo = pkg.homepage.replace('https://', '')
+
+    const expected = `${tag0} --title ${tag0}`
 
     const cases: Case[] = [
       {
-        dto: { tagPrefix, version: version0 },
-        expected: tag0,
-        git: {},
-        property: 'release tag',
-        stringify: 'stringify'
-      },
-      {
-        dto: { tagPrefix: `${TOL.package}${TOL.tagPrefix}`, version: version0 },
-        expected: `${TOL.package}${TOL.tagPrefix}${version0}`,
-        git: TOL,
-        property: 'release tag (lerna-style)',
-        stringify: 'stringify'
-      },
-      {
-        dto: { files },
-        expected: join(files, ' '),
+        dto: { files, version: tag0 },
+        expected: `${tag0} ${join(files, ' ')} --title ${tag0}`,
         git: {},
         property: '#files',
         stringify: 'stringify'
       },
       {
-        dto: { files: [] },
-        expected: '',
+        dto: { files: [], version: tag0 },
+        expected,
         git: {},
         property: '#files',
         stringify: 'not stringify'
       },
       {
-        dto: { draft: true },
-        expected: '--draft',
+        dto: { draft: true, version: tag0 },
+        expected: `${tag0} --draft --title ${tag0}`,
         git: {},
         property: '#draft',
         stringify: 'stringify'
       },
       {
-        dto: { draft: false },
-        expected: '',
+        dto: { draft: false, version: tag0 },
+        expected,
         git: {},
         property: '#draft',
         stringify: 'not stringify'
       },
       {
-        dto: { notes },
-        expected: `--notes "${notes}"`,
+        dto: { notes, version: tag0 },
+        expected: `${expected} --notes "${notes}"`,
         git: {},
         property: '#notes',
         stringify: 'stringify'
       },
       {
-        dto: { notes: '' },
-        expected: '',
+        dto: { notes: '', version: tag0 },
+        expected,
         git: {},
         property: '#notes',
         stringify: 'not stringify'
       },
       {
-        dto: { notesFile },
-        expected: `--notes-file ${notesFile}`,
+        dto: { notesFile, version: tag0 },
+        expected: `${expected} --notes-file ${notesFile}`,
         git: {},
         property: '#notesFile',
         stringify: 'stringify'
       },
       {
-        dto: { notesFile: '' },
-        expected: '',
+        dto: { notesFile: '', version: tag0 },
+        expected,
         git: {},
         property: '#notesFile',
         stringify: 'not stringify'
       },
       {
-        dto: { prerelease: true },
-        expected: '--prerelease',
+        dto: { prerelease: true, version: tag0 },
+        expected: `${tag0} --prerelease --title ${tag0}`,
         git: {},
         property: '#prerelease',
         stringify: 'stringify'
       },
       {
-        dto: { prerelease: false },
-        expected: '',
+        dto: { prerelease: false, version: tag0 },
+        expected,
         git: {},
         property: '#prerelease',
         stringify: 'not stringify'
       },
       {
-        dto: { target },
-        expected: `--target ${target}`,
+        dto: { target, version: tag0 },
+        expected: `${expected} --target ${target}`,
         git: {},
         property: '#target',
         stringify: 'stringify'
       },
       {
-        dto: { target: '' },
-        expected: '',
+        dto: { target: '', version: tag0 },
+        expected,
         git: {},
         property: '#target',
         stringify: 'not stringify'
       },
       {
-        dto: { repo: pkg.homepage },
-        expected: `--repo ${pkg.homepage}`,
+        dto: { repo, version: tag0 },
+        expected: `${expected} --repo ${repo}`,
         git: {},
         property: '#repo',
         stringify: 'stringify'
       },
       {
-        dto: { repo: '' },
-        expected: '',
+        dto: { repo: '', version: tag0 },
+        expected,
         git: {},
         property: '#repo',
         stringify: 'not stringify'
       },
       {
-        dto: { tagPrefix, version: V1 },
+        dto: { version: V1TAG },
         expected: `${V1TAG} --title ${V1TAG} ${GREASER_TITLE_BIRTHDAY}`,
         git: {},
         property: 'title if #version satisfies 1.0.0',
         stringify: 'stringify'
       },
       {
-        dto: { tagPrefix, title: tag0, version: version0 },
-        expected: `${tag0} --title ${tag0}`,
+        dto: { title: tag0, version: tag0 },
+        expected,
         git: {},
         property: 'title if #version does not satisfy 1.0.0',
         stringify: 'stringify'
       },
       {
-        dto: { title: '' },
-        expected: '',
+        dto: { title: '', version: tag0 },
+        expected,
         git: {},
         property: '#title',
         stringify: 'not stringify'

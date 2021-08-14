@@ -18,14 +18,13 @@ export const GREASER_NOTES_BIRTHDAY = `## Overview
 \n
 <!-- Package overview -->
 \n
-\n
-\n
-\n
 ## Features
 \n
+\n
 -
 -
 -
+\n
 `
 
 /**
