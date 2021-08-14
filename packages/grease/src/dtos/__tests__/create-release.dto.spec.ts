@@ -87,7 +87,7 @@ describe('unit:dtos/CreateReleaseDTO', () => {
       },
       {
         dto: { notes },
-        expected: `--notes ${notes}`,
+        expected: `--notes "${notes}"`,
         git: {},
         property: '#notes',
         stringify: 'stringify'

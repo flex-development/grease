@@ -142,7 +142,7 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
     if (repo && repo.length) args.push(`--repo ${repo}`)
 
     // Add release notes
-    if (notes && notes.length) args.push(`--notes ${notes}`)
+    if (notes && notes.length) args.push(`--notes "${notes}"`)
 
     return join(args, ' ').trim()
   }
