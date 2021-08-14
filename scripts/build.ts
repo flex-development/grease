@@ -63,7 +63,7 @@ const args = yargs(hideBin(process.argv))
   })
   .alias('version', 'v')
   .alias('help', 'h')
-  .pkgConf('@flex-development/build-ts-pkg')
+  .pkgConf('build')
   .version('1.0.0')
   .wrap(98)
 

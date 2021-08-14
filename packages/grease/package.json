@@ -37,7 +37,8 @@
     "test": "bash ../../scripts/jest.sh",
     "build": "dotenv -c production ts-node ../../scripts/build",
     "prepare": "yarn build",
-    "prepack": "yarn prepare"
+    "prepack": "yarn prepare",
+    "release": "ts-node ./scripts/release"
   },
   "dependencies": {
     "@flex-development/exceptions": "2.0.1",

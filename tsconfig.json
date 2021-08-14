@@ -21,6 +21,7 @@
     "noUnusedParameters": false,
     "paths": {
       "@/*": ["packages/*"],
+      "@grease": ["packages/grease/src/index.ts"],
       "@grease/*": ["packages/grease/src/*"],
       "@tests/fixtures/*": ["__tests__/__fixtures__/*"],
       "@tests/*": ["__tests__/*"]

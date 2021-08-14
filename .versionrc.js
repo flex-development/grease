@@ -1,36 +1,25 @@
 /**
- * @file Conventional Changelog Configuration
- * @see https://github.com/conventional-changelog
+ * @file Changelog & Versioning Configuration
+ * @see https://github.com/flex-development/grease
  */
 
-const sections = {
-  build: ':hammer: Build',
-  chore: ':pencil2: Housekeeping',
-  chore: ':truck: Continuous Integration & Deployment',
-  docs: ':book: Documentation',
-  feat: ':sparkles: Features',
-  fix: ':bug: Fixes',
-  perf: ':zap: Performance Updates',
-  refactor: ':recycle: Code Improvements',
-  revert: ':rewind: Revert',
-  style: ':nail_care: Formatting & Structure',
-  test: ':robot: Testing'
-}
-
 module.exports = {
+  gitdir: process.env.PROJECT_CWD,
+  releaseBranchWhitelist: ['main'],
+  releaseCommitMessageFormat: 'release: {{currentTag}}',
+  skipUnstable: false,
   types: [
-    { type: 'feat', section: sections.feat },
-    { type: 'fix', section: sections.fix },
-    { type: 'revert', section: sections.revert },
-    { type: 'test', section: sections.test },
-    { type: 'docs', section: sections.docs },
-    { type: 'build', section: sections.build },
-    { type: 'refactor', section: sections.refactor },
-    { type: 'perf', section: sections.perf },
-    { type: 'style', section: sections.style },
-    { type: 'ci', section: sections.ci },
-    { type: 'chore', section: sections.chore },
+    { type: 'feat', section: ':sparkles: Features' },
+    { type: 'fix', section: ':bug: Fixes' },
+    { type: 'revert', section: ':rewind: Revert' },
+    { type: 'test', section: ':robot: Testing' },
+    { type: 'docs', section: ':book: Documentation' },
+    { type: 'build', section: ':hammer: Build' },
+    { type: 'refactor', section: ':recycle: Code Improvements' },
+    { type: 'perf', section: ':zap: Performance Updates' },
+    { type: 'style', section: ':nail_care: Formatting & Structure' },
+    { type: 'ci', section: ':truck: Continuous Integration & Deployment' },
+    { type: 'chore', section: ':pencil2: Housekeeping' },
     { type: 'wip', hidden: true }
-  ],
-  releaseCommitMessageFormat: 'chore(release): publish {{currentTag}}'
+  ]
 }
