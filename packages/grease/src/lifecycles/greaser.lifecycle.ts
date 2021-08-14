@@ -40,18 +40,20 @@ const Greaser = async (
   // Validate release data
   dto = await validate(CreateReleaseDTO, dto, false)
 
+  if (options.dryRun && !options.silent) {
+    const message = util.inspect(classToPlain(dto), false, null)
+    console.log(`\n${ch.gray(message)}\n`)
+  }
+
   // Get release command
   const command = `${GH_RELEASE_CREATE} ${dto.toString()}`
 
   // Execute GitHub release
   if (!options.dryRun) sh.exec(command, { silent: options.silent })
   else {
-    log(options, command)
+    log(options, GH_RELEASE_CREATE)
 
-    if (!options.silent) {
-      const message = util.inspect(classToPlain(dto), false, null)
-      console.log(`\n---\n${ch.gray(message)}\n---\n`)
-    }
+    if (!options.silent) console.log(`\n---\n${ch.gray(command)}\n---\n`)
   }
 
   // Run `postgreaser` script
