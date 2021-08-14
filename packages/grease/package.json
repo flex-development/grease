@@ -45,7 +45,7 @@
     "@flex-development/exceptions": "2.0.1",
     "@flex-development/tutils": "3.1.0",
     "@types/git-semver-tags": "4.1.1",
-    "@types/lodash": "4.14.171",
+    "@types/lodash": "4.14.172",
     "@types/semver": "7.3.8",
     "@types/shelljs": "0.8.9",
     "@types/standard-version": "7.0.1",
