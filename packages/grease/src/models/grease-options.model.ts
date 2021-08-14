@@ -174,4 +174,8 @@ export default class GreaseOptions implements IGreaseOptions {
   @IsString()
   @IsOptional()
   userUrlFormat?: IGreaseOptions['userUrlFormat']
+
+  @IsBoolean()
+  @IsOptional()
+  verify?: IGreaseOptions['verify']
 }

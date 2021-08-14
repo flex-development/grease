@@ -126,6 +126,13 @@ export interface IGreaseOptions
    *  ]
    */
   types?: Config.Type.Base[]
+
+  /**
+   * Bypass pre-commit or commit-msg git hooks during the commit phase.
+   *
+   * @default false
+   */
+  verify?: boolean
 }
 
 /**
@@ -160,6 +167,7 @@ export type GreaseOptionsDefaults = NonNullable<
     | 'tagPrefix'
     | 'types'
     | 'userUrlFormat'
+    | 'verify'
   >
 > &
   Pick<IGreaseOptions, 'gitdir'>
