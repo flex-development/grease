@@ -67,7 +67,7 @@ describe('functional:lifecycles/greaser', () => {
       { lifecycle: 'greaser' }
     ]
 
-    const name = 'should skip lifecycle if options.skip.$lifecycle === true'
+    const name = 'should skip lifecycle if options.skip.$lifecycle is true'
 
     it.each<Case>(cases)(name, testcase => {
       // Arrange

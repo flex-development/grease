@@ -4,5 +4,8 @@ declare module 'standard-version/lib/run-lifecycle-script' {
     IGreaseScripts as Scripts
   } from '@grease/interfaces'
 
-  export default function (args: Args, hook: keyof Scripts): string | undefined
+  export default function (
+    args: Args,
+    hook: keyof Scripts
+  ): Promise<string | undefined>
 }

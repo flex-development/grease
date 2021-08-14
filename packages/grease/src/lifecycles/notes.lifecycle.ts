@@ -50,7 +50,7 @@ const Notes = async (
   }
 
   // Run `prenotes` script
-  runLifecycleScript(options, 'prenotes')
+  await runLifecycleScript(options, 'prenotes')
 
   // Generate blank notes
   if (options.notesType === NotesType.BLANK) {
@@ -127,7 +127,7 @@ const Notes = async (
   }
 
   // Run `postnotes` script
-  runLifecycleScript(options, 'postnotes')
+  await runLifecycleScript(options, 'postnotes')
 
   return notes
 }

@@ -26,26 +26,26 @@ describe('functional:lifecycles/depchecker', () => {
   const options: IGreaseOptions = { dryRun: true }
 
   describe('executes lifecycle', () => {
-    it('should call sh.which', () => {
+    it('should call sh.which', async () => {
       // Arrange
       mockSH.which.mockReturnValue(mockShellString)
       const commands = Object.keys(DependencyCommand)
       const expected = commands.length
 
       // Act
-      TestSubject(options)
+      await TestSubject(options)
 
       // Expect
       expect(mockSH.which).toBeCalledTimes(expected)
       commands.forEach(command => expect(mockSH.which).toBeCalledWith(command))
     })
 
-    it('should run lifecycle scripts', () => {
+    it('should run lifecycle scripts', async () => {
       // Arrange
       mockSH.which.mockReturnValue(mockShellString)
 
       // Act
-      TestSubject(options)
+      await TestSubject(options)
 
       // Expect
       expect(mockRunLifecycleScript).toBeCalledTimes(2)
@@ -66,7 +66,7 @@ describe('functional:lifecycles/depchecker', () => {
       ]
 
       describe.each<Case>(cases)('$command', ({ command, i }) => {
-        it('should throw if not found', () => {
+        it('should throw if not found', async () => {
           // Arrange
           // @ts-expect-error 'null' is not assignable to type 'ShellString'
           mockSH.which.mockReturnValue(null)
@@ -74,7 +74,7 @@ describe('functional:lifecycles/depchecker', () => {
 
           // Act
           try {
-            TestSubject(options)
+            await TestSubject(options)
           } catch (error) {
             exception = error
           }
@@ -87,12 +87,12 @@ describe('functional:lifecycles/depchecker', () => {
         })
 
         describe('logs checkpoint', () => {
-          it('should log if found', () => {
+          it('should log if found', async () => {
             // Arrange
             mockSH.which.mockReturnValue(mockSH.ShellString(command))
 
             // Act
-            TestSubject(options)
+            await TestSubject(options)
 
             // Expect
             expect(mockLog.mock.calls[i + 1][1]).toBe(command)
@@ -103,9 +103,9 @@ describe('functional:lifecycles/depchecker', () => {
   })
 
   describe('skips lifecycle', () => {
-    it('should skip lifecycle if options.skip.depchecker === true', () => {
+    it('should skip lifecycle if options.skip.depchecker is true', async () => {
       // Act
-      TestSubject({ ...options, skip: { depchecker: true } })
+      await TestSubject({ ...options, skip: { depchecker: true } })
 
       // Expect
       expect(mockRunLifecycleScript).not.toBeCalled()

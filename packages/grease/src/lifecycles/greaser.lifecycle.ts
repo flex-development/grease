@@ -32,7 +32,7 @@ const Greaser = async (
   if (options.skip?.depchecker || options.skip?.greaser) return
 
   // Run `pregreaser` script
-  runLifecycleScript(options, 'pregreaser')
+  await runLifecycleScript(options, 'pregreaser')
 
   // Log release start checkpoint
   log(options, 'starting github release...', [], 'info')
@@ -57,7 +57,7 @@ const Greaser = async (
   }
 
   // Run `postgreaser` script
-  runLifecycleScript(options, 'postgreaser')
+  await runLifecycleScript(options, 'postgreaser')
 }
 
 export default Greaser

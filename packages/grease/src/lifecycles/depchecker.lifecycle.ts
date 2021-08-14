@@ -21,16 +21,17 @@ import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
  *
  * [1]: https://cli.github.com/manual
  *
+ * @async
  * @param {IGreaseOptions} [options={}] - Application options
- * @return {void} Nothing when complete
+ * @return {Promise<void>} Empty promise
  * @throws {Exception}
  */
-const Depchecker = (options: IGreaseOptions = {}): void => {
+const Depchecker = async (options: IGreaseOptions = {}): Promise<void> => {
   // Skip lifecycle
   if (options.skip?.depchecker) return
 
   // Run `predepchecker` script
-  runLifecycleScript(options, 'predepchecker')
+  await runLifecycleScript(options, 'predepchecker')
 
   // Dependency commands
   const commands = Object.keys(DependencyCommand)
@@ -49,7 +50,7 @@ const Depchecker = (options: IGreaseOptions = {}): void => {
   })
 
   // Run `postdepchecker` script
-  runLifecycleScript(options, 'postdepchecker')
+  await runLifecycleScript(options, 'postdepchecker')
 }
 
 export default Depchecker

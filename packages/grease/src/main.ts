@@ -39,6 +39,11 @@ import readPackageFiles from './utils/read-package-files.util'
 const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
   args = merge(defaults, args)
 
+  // Run prerelease script
+  if (typeof args.scripts.prerelease === 'string') {
+    await runLifecycleScript(args, 'prerelease')
+  }
+
   try {
     // Set application options
     const options = await cacheOptions(args)
@@ -69,9 +74,6 @@ const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
 
       throw new Exception(code, undefined, data, undefined)
     }
-
-    // Run prerelease script
-    runLifecycleScript(options, 'prerelease')
 
     // Read package files
     const { isPrivate, version } = await readPackageFiles(options)
@@ -109,7 +111,7 @@ const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
     })
 
     // Run postrelease script
-    runLifecycleScript(options, 'postrelease')
+    await runLifecycleScript(options, 'postrelease')
   } catch (error) {
     const {
       code = ExceptionStatusCode.INTERNAL_SERVER_ERROR,

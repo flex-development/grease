@@ -51,7 +51,7 @@ describe('functional:lifecycles/notes', () => {
   })
 
   describe('skips lifecycle', () => {
-    it('should skip lifecycle if options.skip.notes === true', async () => {
+    it('should skip lifecycle if options.skip.notes is true', async () => {
       // Act
       await TestSubject({ ...options, skip: { notes: true } }, version)
 
