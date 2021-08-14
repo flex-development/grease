@@ -10,7 +10,6 @@ import log from '@grease/utils/log.util'
 import readPackageFiles from '@grease/utils/read-package-files.util'
 import anymatch from 'anymatch'
 import { currentBranch } from 'isomorphic-git'
-import omit from 'lodash.omit'
 import merge from 'lodash/merge'
 import bump from 'standard-version/lib/lifecycles/bump'
 import changelog from 'standard-version/lib/lifecycles/changelog'
@@ -130,7 +129,7 @@ describe('functional:main', () => {
 
     it('should run lifecycle events', () => {
       // Arrange
-      const options_bump = omit(OPTIONS, ['scripts.prerelease'])
+      const options_bump = merge({}, OPTIONS, { scripts: { prerelease: null } })
 
       // Expect
       expect(mockBump).toBeCalledTimes(1)

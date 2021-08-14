@@ -77,7 +77,7 @@ const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
 
     // Run bump lifecycle to get new package version
     const newVersion = await bump(
-      merge({}, options, { scripts: { prerelease: undefined } }),
+      merge({}, options, { scripts: { prerelease: null } }),
       version
     )
 
