@@ -5,7 +5,7 @@ import IsPath from '@grease/decorators/is-path.decorator'
 import IsSemVer from '@grease/decorators/is-sem-ver.decorator'
 import IsTargetBranch from '@grease/decorators/is-target-branch.decorator'
 import type { ICreateReleaseDTO } from '@grease/interfaces'
-import { IsBoolean, IsOptional, IsString } from 'class-validator'
+import { IsBoolean, IsOptional, IsString, ValidateIf } from 'class-validator'
 import join from 'lodash/join'
 import pick from 'lodash/pick'
 
@@ -26,7 +26,7 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
   @IsOptional()
   readonly draft?: ICreateReleaseDTO['draft']
 
-  @IsPath({ each: true, gh: true })
+  @IsPath({ each: true, exists: false, gh: true })
   @IsOptional()
   readonly files?: ICreateReleaseDTO['files']
 
@@ -59,6 +59,7 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
   readonly title?: ICreateReleaseDTO['title']
 
   @IsSemVer({ git: cache.git })
+  @ValidateIf(() => cache.options.dryRun === false)
   readonly version: ICreateReleaseDTO['version']
 
   /**
