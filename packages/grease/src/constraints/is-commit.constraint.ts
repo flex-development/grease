@@ -51,7 +51,7 @@ export default class IsCommitConstraint implements IConstraint {
    *
    * @param {any} value - Value to test against constraint
    * @param {ValidationArguments} args - Message builder arguments
-   * @param {string} [args.constraints.0.dir=process.env.PWD] - `.git` directory
+   * @param {string} [args.constraints.0.dir=process.env.PROJECT_CWD] - `.git` directory
    * @return {Promise<boolean>} Boolean indicating if value is commit
    */
   async validate(
@@ -61,7 +61,7 @@ export default class IsCommitConstraint implements IConstraint {
   ): Promise<boolean> {
     // Get validation options
     const options = (args.constraints[0] || {}) as IsCommitOptions
-    const { dir = process.env.PWD } = options
+    const { dir = process.env.PROJECT_CWD } = options
 
     try {
       await readCommit({ dir, fs, oid: value })

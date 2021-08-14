@@ -65,7 +65,7 @@ export default class IsBranchConstraint implements IConstraint {
    * @param {ValidationArguments} args - Message builder arguments
    * @param {any[]} args.constraints - Validator constraints
    * @param {IsBranchOptions} args.constraints.0 - Validation options
-   * @param {string} [args.constraints.0.dir=process.env.PWD] - `.git` directory
+   * @param {string} [args.constraints.0.dir=process.env.PROJECT_CWD] - `.git` directory
    * @param {string} [args.constraints.0.remote] - Name of remote
    * @return {Promise<boolean>} Boolean indicating if value is branch
    */
@@ -84,7 +84,7 @@ export default class IsBranchConstraint implements IConstraint {
 
     // Get validation options
     const options = args.constraints[0] as IsBranchOptions
-    const { dir = process.env.PWD, remote } = options
+    const { dir = process.env.PROJECT_CWD, remote } = options
 
     // Get branches
     const branches = await listBranches({ dir, fs, remote })

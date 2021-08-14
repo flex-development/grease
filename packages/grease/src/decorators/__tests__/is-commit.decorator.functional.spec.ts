@@ -69,7 +69,7 @@ describe('functional:grease/decorators/IsCommit', () => {
           code: 'DOES_NOT_EXIST',
           expected: EXPECTED,
           option: 'options.dir',
-          options: { dir: process.env.PWD },
+          options: { dir: process.env.PROJECT_CWD },
           value: faker.git.commitSha()
         }
       ]
@@ -115,7 +115,7 @@ describe('functional:grease/decorators/IsCommit', () => {
         {
           expected: EXPECTED,
           option: 'options.dir',
-          options: { dir: process.env.PWD },
+          options: { dir: process.env.PROJECT_CWD },
           value: COMMITS[0]
         }
       ]

@@ -39,7 +39,7 @@ describe('functional:constraints/IsCommitConstraint', () => {
     const cases: Case[] = [
       {
         args: { value: COMMITS[1] },
-        dir: process.env.PWD as string,
+        dir: process.env.PROJECT_CWD as string,
         expected: 1,
         value: COMMITS[1]
       }

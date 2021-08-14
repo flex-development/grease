@@ -102,7 +102,7 @@ describe('unit:constraints/IsTargetBranchConstraint', () => {
       },
       {
         args: {
-          constraints: [{ dir: process.env.PWD }],
+          constraints: [{ dir: process.env.PROJECT_CWD }],
           value: BRANCHES.remote[1]
         },
         expected: true,

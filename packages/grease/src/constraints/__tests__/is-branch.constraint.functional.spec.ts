@@ -43,7 +43,7 @@ describe('functional:constraints/IsBranchConstraint', () => {
       const cases: Case[] = [
         {
           args: { value: BRANCHES.local[0] },
-          dir: process.env.PWD as string,
+          dir: process.env.PROJECT_CWD as string,
           expected: 1,
           value: BRANCHES.local[0]
         }
@@ -105,7 +105,7 @@ describe('functional:constraints/IsBranchConstraint', () => {
         expect(mockListBranches).toBeCalled()
         expect(mockListBranches).toBeCalledTimes(expected)
         expect(mockListBranches).toBeCalledWith({
-          dir: process.env.PWD,
+          dir: process.env.PROJECT_CWD,
           fs,
           remote: undefined
         })

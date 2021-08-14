@@ -14,7 +14,7 @@ export interface IsBranchOptions extends ValidationOptions {
   /**
    * `.git` directory.
    *
-   * @default process.env.PWD
+   * @default process.env.PROJECT_CWD
    */
   dir?: string
 

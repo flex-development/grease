@@ -128,7 +128,7 @@ describe('functional:grease/decorators/IsTargetBranch', () => {
         {
           expected: EXPECTED,
           option: 'options.dir',
-          options: { dir: process.env.PWD, each: true },
+          options: { dir: process.env.PROJECT_CWD, each: true },
           value: BRANCHES.local.slice(0, 2)
         },
         {

@@ -28,7 +28,7 @@ const mockCommitValidate = MockIsCommitConstraint.prototype
 describe('functional:constraints/IsTargetBranchConstraint', () => {
   const CONSTRAINT = TestSubject.options?.name as string
   const Subject = new TestSubject()
-  const dir = process.env.PWD
+  const dir = process.env.PROJECT_CWD
 
   describe('#validate', () => {
     const value = 'target-branch'

@@ -66,7 +66,10 @@ describe('unit:constraints/IsCommitConstraint', () => {
         value
       },
       {
-        args: { constraints: [{ dir: process.env.PWD }], value: COMMITS[1] },
+        args: {
+          constraints: [{ dir: process.env.PROJECT_CWD }],
+          value: COMMITS[1]
+        },
         expected: true,
         option: 'options.dir',
         value: COMMITS[1]

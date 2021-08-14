@@ -24,7 +24,7 @@ export interface IGreaseOptions
   /**
    * `.git` dir location.
    *
-   * @default process.env.PWD
+   * @default process.env.PROJECT_CWD
    */
   gitdir?: string
 

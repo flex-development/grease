@@ -68,7 +68,7 @@ describe('functional:grease/decorators/IsBranch', () => {
           code: 'LOCAL',
           expected: EXPECTED,
           option: 'options.dir',
-          options: { dir: process.env.PWD },
+          options: { dir: process.env.PROJECT_CWD },
           value: BRANCHES[404][0]
         },
         {
@@ -121,7 +121,7 @@ describe('functional:grease/decorators/IsBranch', () => {
         {
           expected: EXPECTED,
           option: 'options.dir',
-          options: { dir: process.env.PWD },
+          options: { dir: process.env.PROJECT_CWD },
           value: BRANCHES.local[1]
         },
         {

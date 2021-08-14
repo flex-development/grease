@@ -15,5 +15,5 @@ export enum IsTargetBranchMessage {
    * Value is a non-empty string, but is not the name of a remote branch or
    * commit SHA in the current repository.
    */
-  DOES_NOT_EXIST = '$property must be name of remote branch or commit sha'
+  DOES_NOT_EXIST = '$property must be git commit sha or name of remote branch'
 }
