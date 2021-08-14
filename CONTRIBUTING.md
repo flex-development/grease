@@ -16,8 +16,10 @@ project. This includes, but is not limited to:
 [Getting Started](#getting-started)  
 [Contributing Code](#contributing-code)  
 [Labels](#labels)  
-[Pull Requests](#pull-requests)  
-[Opening Issues](#opening-issues)
+[Opening Issues](#opening-issues)  
+[🚧 Pull Requests & Code Reviews](#pull-requests-&-code-reviews)  
+[Merge Strategies](#merge-strategies)  
+[🚧 Releasing](#releasing)
 
 ## Getting Started
 
@@ -43,10 +45,12 @@ People interacting with the `grease` project are grouped into 4 categories:
   - answering questions
 - **ticket**: [JIRA][1] issue
 
-### Environment Variables
+### Git Configuration
 
-All environment variables are documented in `package.json` of each project,
-under the `env.optional` and `env.required` fields.
+The examples in this guide contain references to custom Git aliases.
+
+Copy the [starter Git global configuration](.github/.gitconfig) to follow along
+fully, as well as begin extending your own workflow.
 
 ### Yarn
 
@@ -94,12 +98,39 @@ variables set), an error will be displayed in the terminal if any settings
 conflict with the project's Yarn configuration, or the Yarn 2 API. An error will
 also be displayed if you're missing any environment variables.
 
-### Git Configuration
+### Environment Variables
 
-The examples in this guide contain references to custom Git aliases.
+All environment variables are documented in `package.json` of each project,
+under the `env.optional` and `env.required` fields.
 
-Copy the [starter Git global configuration](.github/.gitconfig) to follow along
-fully, as well as begin extending your own workflow.
+#### `NODE_OPTIONS`
+
+Running a `ts-node` command? Conditionally require `tsconfig-paths/register` to
+run scripts that use path aliases:
+
+1. Open `~/.bash_profile`, `~/.zprofile`, **or** `~/.zshrc`
+2. Conditionally append `-r <path/to/import>`
+
+   ```zsh
+   if [ -f "$PWD/node_modules/tsconfig-paths/register.js" ]; then
+     export NODE_OPTIONS="$NODE_OPTIONS -r tsconfig-paths/register"
+   fi
+   ```
+
+3. Run your script:
+
+   ```zsh
+   ts-node scratchpad-with-path-aliases
+   ```
+
+   _instead of_
+
+   ```zsh
+   NODE_OPTIONS='-r tsconfig-paths/register' ts-node scratchpad-with-path-aliases
+   ```
+
+Note: Workspaces that require custom option must use an `.env.*` file to set
+`NODE_OPTIONS`.
 
 ## Contributing Code
 
@@ -248,7 +279,25 @@ prefix, eg: `status:`).
 
 A list of labels can be found in [`.github/labels.yml`](.github/labels.yml).
 
-## Pull Requests
+## Opening Issues
+
+Before opening an issue please make sure, you have:
+
+- read the documentation
+- searched open issues for an existing issue with the same topic
+- search closed issues for a solution or feedback
+
+If you haven't found a related open issue, or feel that a closed issue should be
+re-visited, please open a new issue. A well-written issue has the following
+traits:
+
+- follows an [issue template](.github/ISSUE_TEMPLATE)
+- is [labeled](#labels) appropriately
+- contains a well-written summary of the feature, bug, or problem statement
+- contains a minimal, inlined code example (if applicable)
+- includes links to prior discussion if you've found any
+
+## Pull Requests & Code Reviews
 
 When you're ready to have your changes reviewed, open a pull request against the
 `next` branch.
@@ -261,10 +310,6 @@ Every opened PR should:
 - be assigned to yourself
 - give maintainers push access so quick fixes can be pushed to your branch
 
-The [Continuous Integration workflow](workflows/continuous-integration.yml) will
-test your changes against coding standards, as well run all of the tests in this
-project.
-
 ### Pull Request URL Format
 
 ```zsh
@@ -272,6 +317,10 @@ https://github.com/flex-development/grease/compare/next...<branch>
 ```
 
 where `<branch>` is the name of the branch you'd like to merge into `next`.
+
+### Code Reviews
+
+**TODO**: Update documentation.
 
 ### Merge Strategies
 
@@ -294,23 +343,9 @@ merge: <TICKET-ID> (#pull-request-n)
 
 e.g: `merge: P010-1 (#1)`
 
-## Opening Issues
+## Releasing
 
-Before opening an issue please make sure, you have:
-
-- read the documentation
-- searched open issues for an existing issue with the same topic
-- search closed issues for a solution or feedback
-
-If you haven't found a related open issue, or feel that a closed issue should be
-re-visited, please open a new issue. A well-written issue has the following
-traits:
-
-- follows an [issue template](.github/ISSUE_TEMPLATE)
-- is [labeled](#labels) appropriately
-- contains a well-written summary of the feature, bug, or problem statement
-- contains a minimal, inlined code example (if applicable)
-- includes links to prior discussion if you've found any
+**TODO**: Update documentation.
 
 [1]: https://www.atlassian.com/software/jira
 [2]: https://yarnpkg.com/getting-started/migration
