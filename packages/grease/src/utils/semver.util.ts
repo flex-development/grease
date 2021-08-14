@@ -3,6 +3,7 @@ import Exception from '@flex-development/exceptions/exceptions/base.exception'
 import type {
   GitSemverTagsOptions,
   SemanticVersion,
+  SemanticVersionTag,
   SemVerOptions
 } from '@grease/types'
 import gitSemverTags from 'git-semver-tags'
@@ -61,52 +62,47 @@ export default {
    * @param {boolean} [options.skipUnstable] - Skip unstable tags (e.g:
    * `x.x.x-alpha.1`, `x.x.x-rc.2`)
    * @param {boolean} [reverse] - If `false`, return tags in ascending order
-   * @return {string[]} - Tags from current repository
+   * @return {Promise<SemanticVersionTag[]>} - Promise containing tags
    * @throws {Exception}
    */
-  tags(options: GitSemverTagsOptions = {}, reverse: boolean = true): string[] {
-    // Initialize tags array
-    let tags: string[] = []
+  tags(
+    options: GitSemverTagsOptions = {},
+    reverse: boolean = true
+  ): Promise<SemanticVersionTag[]> {
+    return new Promise((resolve, reject) => {
+      gitSemverTags(options, (error: Error, tags: string[]): void => {
+        if (error) {
+          const code = ExceptionStatusCode.BAD_REQUEST
+          const data = { options, reverse }
 
-    // Populate tags array
-    gitSemverTags(options, (error: Error, gtags: string[]): void => {
-      if (error) {
-        const { message, stack } = error
-        const data = { options, reverse }
+          return reject(new Exception(code, error.message, data, error.stack))
+        }
 
-        throw new Exception(
-          ExceptionStatusCode.BAD_REQUEST,
-          message,
-          data,
-          stack
-        )
-      }
+        // If no tags, don't bother doing anything else
+        if (!tags.length) return resolve(tags as SemanticVersionTag[])
 
-      tags = gtags
+        // Get options
+        const { package: package_name, lernaTags } = options
+        const tagPrefix = lernaTags ? `${package_name}@` : 'v'
+
+        // Ensure that the largest or smallest semver tag is at the head
+        tags.sort((tag1, tag2) => {
+          const version1 = lernaTags ? tag1.split(tagPrefix)[1] || tag1 : tag1
+          const version2 = lernaTags ? tag2.split(tagPrefix)[1] || tag2 : tag2
+
+          try {
+            return (reverse ? rcompare : compare)(version1, version2)
+          } catch ({ message, stack }) {
+            const code = ExceptionStatusCode.BAD_REQUEST
+            const data = { tag1, tag2, tagPrefix, version1, version2 }
+
+            throw new Exception(code, message, data, stack)
+          }
+        })
+
+        return resolve(tags as SemanticVersionTag[])
+      })
     })
-
-    // If no tags, don't bother doing anything else
-    if (!tags.length) return tags
-
-    // Get options
-    const { lernaTags, tagPrefix = lernaTags ? '@' : 'v' } = options
-
-    // Ensure that the largest or smallest semver tag is at the head
-    tags.sort((tag1, tag2) => {
-      const version1 = lernaTags ? tag1.split(tagPrefix)[1] || tag1 : tag1
-      const version2 = lernaTags ? tag2.split(tagPrefix)[1] || tag2 : tag2
-
-      try {
-        return (reverse ? rcompare : compare)(version1, version2)
-      } catch ({ message, stack }) {
-        const code = ExceptionStatusCode.BAD_REQUEST
-        const data = { tag1, tag2, tagPrefix, version1, version2 }
-
-        throw new Exception(code, message, data, stack)
-      }
-    })
-
-    return tags
   },
 
   valid

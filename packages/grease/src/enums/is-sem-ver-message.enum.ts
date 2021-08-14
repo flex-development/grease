@@ -43,5 +43,5 @@ export enum IsSemVerMessage {
   /**
    * Value is not valid SemVer tag.
    */
-  SEM_VER = '$property must be SemanticVersion: <major>.<minor>.<patch> | <major>.<minor>.<patch>-<unstable>.<number>'
+  SEM_VER = '$property must be SemanticVersion: <major>.<minor>.<patch> | <major>.<minor>.<patch>-<unstable>.<number> or SemanticVersionTag: <tag-prefix><SemanticVersion>'
 }

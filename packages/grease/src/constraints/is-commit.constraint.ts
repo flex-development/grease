@@ -49,9 +49,11 @@ export default class IsCommitConstraint implements IConstraint {
   /**
    * Checks if `value` is a commit in the current repository.
    *
+   * @async
    * @param {any} value - Value to test against constraint
    * @param {ValidationArguments} args - Message builder arguments
-   * @param {string} [args.constraints.0.dir=process.env.PROJECT_CWD] - `.git` directory
+   * @param {string} [args.constraints.0.dir=process.env.PROJECT_CWD] - `.git`
+   * directory
    * @return {Promise<boolean>} Boolean indicating if value is commit
    */
   async validate(

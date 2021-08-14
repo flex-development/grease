@@ -1,3 +1,4 @@
+import cache from '@grease/config/cache.config'
 import { GH_RELEASE_CREATE } from '@grease/config/constants.config'
 import CreateReleaseDTO from '@grease/dtos/create-release.dto'
 import type { ICreateReleaseDTO, IGreaseOptions } from '@grease/interfaces'
@@ -18,6 +19,7 @@ jest.mock('@grease/utils/log.util')
 jest.mock('@grease/utils/validate.util')
 
 const mockSH = sh as jest.Mocked<typeof sh>
+const mockCache = cache as jest.Mocked<typeof cache>
 const mockLog = log as jest.MockedFunction<typeof log>
 const mockRunLifecycleScript = runLifecycleScript as jest.MockedFunction<
   typeof runLifecycleScript
@@ -30,7 +32,10 @@ describe('functional:lifecycles/greaser', () => {
 
   describe('executes lifecycle', () => {
     beforeEach(async () => {
-      await TestSubject({}, dto)
+      // @ts-expect-error cannot assign to 'git' because it is read-only
+      mockCache.git = { tagPrefix: 'v' }
+
+      await TestSubject(options, dto)
     })
 
     it('should run lifecycle scripts', () => {

@@ -39,14 +39,20 @@ describe('functional:constraints/IsSemVerConstraint', () => {
         git: TAGS_OPTIONS_LERNA,
         value: version
       },
-      { call: 'call', calledWith: {}, expected: 1, git: true, value: version }
+      {
+        call: 'call',
+        calledWith: { tagPrefix: 'v' },
+        expected: 1,
+        git: true,
+        value: version
+      }
     ]
 
     const args = { constraints: [{}], value: version }
 
-    it('should format validation options', () => {
+    it('should format validation options', async () => {
       // Act
-      Subject.validate(args.value, args as ValidationArguments)
+      await Subject.validate(args.value, args as ValidationArguments)
 
       // Expect
       expect((args.constraints[0] as ObjectPlain).context).toMatchObject({
@@ -64,14 +70,14 @@ describe('functional:constraints/IsSemVerConstraint', () => {
 
       const name = 'should $call semver.clean if clean === $clean'
 
-      it.each<Case>(cases)(name, testcase => {
+      it.each<Case>(cases)(name, async testcase => {
         // Arrange
         const { clean, expected } = testcase
         const value = `v${pkg.version}`
         const args = { constraints: [{ clean }], value }
 
         // Act
-        Subject.validate(value, args as ValidationArguments)
+        await Subject.validate(value, args as ValidationArguments)
 
         // Expect
         expect(mockSemver.clean).toBeCalledTimes(expected)
@@ -88,13 +94,13 @@ describe('functional:constraints/IsSemVerConstraint', () => {
 
       const name = 'should $call semver.cmp if cmp === $cmp'
 
-      it.each<Case>(cases)(name, testcase => {
+      it.each<Case>(cases)(name, async testcase => {
         // Arrange
         const { cmp, expected } = testcase
         const args = { constraints: [{ cmp }], value: version }
 
         // Act
-        Subject.validate(args.value, args as ValidationArguments)
+        await Subject.validate(args.value, args as ValidationArguments)
 
         // Expect
         expect(mockSemver.cmp).toBeCalledTimes(expected)
@@ -119,13 +125,13 @@ describe('functional:constraints/IsSemVerConstraint', () => {
 
       const name = 'should $call semver.coerce if coerce === $coerce'
 
-      it.each<Case>(cases)(name, testcase => {
+      it.each<Case>(cases)(name, async testcase => {
         // Arrange
         const { calledWith, coerce, expected } = testcase
         const args = { constraints: [{ coerce }], value: version }
 
         // Act
-        Subject.validate(args.value, args as ValidationArguments)
+        await Subject.validate(args.value, args as ValidationArguments)
 
         // Expect
         expect(mockSemver.coerce).toBeCalledTimes(expected)
@@ -136,13 +142,13 @@ describe('functional:constraints/IsSemVerConstraint', () => {
     describe('IsSemVerOptions.git', () => {
       const name = 'should $call semver.tags if git === $git'
 
-      it.each<CaseGit>(CASES_GIT)(name, testcase => {
+      it.each<CaseGit>(CASES_GIT)(name, async testcase => {
         // Arrange
         const { calledWith, expected, git, value } = testcase
         const args = { constraints: [{ git }], value }
 
         // Act
-        Subject.validate(args.value, args as ValidationArguments)
+        await Subject.validate(args.value, args as ValidationArguments)
 
         // Expect
         expect(mockSemver.tags).toBeCalledTimes(expected)
@@ -153,13 +159,13 @@ describe('functional:constraints/IsSemVerConstraint', () => {
     describe('IsSemVerOptions.negit', () => {
       const name = 'should $call semver.tags if negit && git === $git'
 
-      it.each<CaseGit>(CASES_GIT)(name, testcase => {
+      it.each<CaseGit>(CASES_GIT)(name, async testcase => {
         // Arrange
         const { calledWith, expected, git, value } = testcase
         const args = { constraints: [{ git, negit: true }], value }
 
         // Act
-        Subject.validate(args.value, args as ValidationArguments)
+        await Subject.validate(args.value, args as ValidationArguments)
 
         // Expect
         expect(mockSemver.tags).toBeCalledTimes(expected)
@@ -181,13 +187,13 @@ describe('functional:constraints/IsSemVerConstraint', () => {
 
       const name = 'should $call semver.satisfies if satisfies === $satisfies'
 
-      it.each<Case>(cases)(name, testcase => {
+      it.each<Case>(cases)(name, async testcase => {
         // Arrange
         const { expected, satisfies } = testcase
         const args = { constraints: [{ satisfies }], value: version }
 
         // Act
-        Subject.validate(args.value, args as ValidationArguments)
+        await Subject.validate(args.value, args as ValidationArguments)
 
         // Expect
         expect(mockSemver.satisfies).toBeCalledTimes(expected)

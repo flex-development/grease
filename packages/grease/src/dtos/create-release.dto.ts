@@ -58,7 +58,7 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
   @IsOptional()
   readonly title?: ICreateReleaseDTO['title']
 
-  @IsSemVer({ git: cache.git })
+  @IsSemVer({ clean: true, git: () => cache.git })
   @ValidateIf(() => cache.options.dryRun === false)
   readonly version: ICreateReleaseDTO['version']
 

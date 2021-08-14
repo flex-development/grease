@@ -61,6 +61,7 @@ export default class IsBranchConstraint implements IConstraint {
    * If validation fails, the arguments context `args.constraints[0].context`,
    * will be modified.
    *
+   * @async
    * @param {any} value - Value to test against constraint
    * @param {ValidationArguments} args - Message builder arguments
    * @param {any[]} args.constraints - Validator constraints

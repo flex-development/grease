@@ -6,7 +6,6 @@ import type {
   IsSemVerOptionsConfigClean as CleanConfig,
   IsSemVerOptionsConfigCMP as CMPConfig,
   IsSemVerOptionsConfigSatisfies as SatisfiesConfig,
-  SemanticVersion,
   ValidatorConstraintOptions
 } from '@grease/types'
 import semver from '@grease/utils/semver.util'
@@ -37,7 +36,7 @@ export default class IsSemVerConstraint implements IConstraint {
    * @property {ValidatorConstraintOptions} options - Custom constraint options
    */
   static readonly options: ValidatorConstraintOptions = {
-    async: false,
+    async: true,
     name: 'isSemVer'
   }
 
@@ -91,6 +90,7 @@ export default class IsSemVerConstraint implements IConstraint {
    *
    * [1]: https://github.com/npm/node-semver
    *
+   * @async
    * @param {any} value - Value to test against constraint
    * @param {ValidationArguments} args - Message builder arguments
    * @param {any[]} args.constraints - Validator constraints
@@ -106,9 +106,10 @@ export default class IsSemVerConstraint implements IConstraint {
    * version tag, but **not** pushed to the current repository
    * @param {SatisfiesConfig} [args.constraints.0.satisfies] - Check if value
    * is semantic version and satisfies specified range
-   * @return {boolean} Boolean indicating if value is valid semantic version
+   * @return {Promise<boolean>} Promise containing boolean indicating if value
+   * is valid semantic version (with or without tag prefix)
    */
-  validate(value: any, args: ValidationArguments): value is SemanticVersion {
+  async validate(value: any, args: ValidationArguments): Promise<boolean> {
     // Get decorator constraint name and default args context
     const name = IsSemVerConstraint.options?.name as string
     const context = { [name]: { error: {} } }
@@ -126,13 +127,17 @@ export default class IsSemVerConstraint implements IConstraint {
       satisfies = [] as unknown as NonNullable<IsSemVerOptions['satisfies']>
     } = args.constraints[0] as IsSemVerOptions
 
+    // Format git-semver-tags options
+    let gopts = typeof git === 'boolean' ? { tagPrefix: 'v' } : git
+    gopts = typeof gopts === 'function' ? gopts() : gopts
+
     // Strinigify value
     let version = value?.toString() ?? ''
 
     // Remove tag prefix and any leading or trailing whitespaces
     if (clean === true || Array.isArray(clean)) {
       const [tagPrefix, options] = typeof clean === 'boolean' ? [] : clean
-      version = semver.clean(version, tagPrefix, options)
+      version = semver.clean(version, tagPrefix || gopts.tagPrefix, options)
     }
 
     // Coerce if possible
@@ -173,10 +178,10 @@ export default class IsSemVerConstraint implements IConstraint {
 
     // Perform Git tag search
     if (git || negit) {
-      const options = typeof git === 'boolean' ? {} : git
+      const options = gopts as GitSemverTagsOptions
 
-      const tags = semver.tags(options as GitSemverTagsOptions)
-      const tag = tags.find(tag => tag.match(version))
+      const tags = await semver.tags(options)
+      const tag = tags.find(tag => tag === `${options.tagPrefix}${version}`)
 
       if (!negit && !tag) {
         args.constraints[0].context[name].error.code = Code.DOES_NOT_EXIST

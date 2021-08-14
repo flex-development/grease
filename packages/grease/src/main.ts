@@ -17,6 +17,7 @@ import type { IGreaseOptions } from './interfaces'
 import depchecker from './lifecycles/depchecker.lifecycle'
 import greaser from './lifecycles/greaser.lifecycle'
 import notes from './lifecycles/notes.lifecycle'
+import type { SemanticVersionTag } from './types'
 import cacheOptions from './utils/cache-options.util'
 import log from './utils/log.util'
 import readPackageFiles from './utils/read-package-files.util'
@@ -104,7 +105,7 @@ const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
       tagPrefix: options.tagPrefix,
       target: options.releaseTarget,
       title: options.releaseTitle,
-      version: newVersion
+      version: `${options.tagPrefix}${newVersion}` as SemanticVersionTag
     })
 
     // Run postrelease script

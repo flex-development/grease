@@ -12,7 +12,8 @@ import type {
 export const TAGS_OPTIONS_LERNA: GitSemverTagsOptions = {
   lernaTags: true,
   package: 'foo-package',
-  tagPrefix: '@'
+  skipUnstable: false,
+  tagPrefix: 'foo-package@'
 }
 
 export const VERSION: SemanticVersion = '3.13.98-rc.6.40'

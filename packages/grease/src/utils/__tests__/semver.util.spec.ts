@@ -92,12 +92,15 @@ describe('unit:utils/semver', () => {
       }
     ]
 
-    it.each<Case>(cases)('tags($options, $reverse)', testcase => {
+    it.each<Case>(cases)('tags($options, $reverse)', async testcase => {
       // Arrange
       const { expected, options, reverse } = testcase
 
+      // Act
+      const result = await TestSubject.tags(options, reverse)
+
       // Act + Expect
-      expect(TestSubject.tags(options, reverse)).toIncludeSameMembers(expected)
+      expect(result).toIncludeSameMembers(expected)
     })
   })
 })

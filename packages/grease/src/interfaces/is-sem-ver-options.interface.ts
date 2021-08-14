@@ -36,7 +36,7 @@ export interface IsSemVerOptions extends ValidationOptions {
   /**
    * Check if $value is a semantic version tag pushed to the current repository.
    */
-  git?: GitSemverTagsOptions | boolean
+  git?: GitSemverTagsOptions | (() => GitSemverTagsOptions) | boolean
 
   /**
    * Check if $value is a semantic version tag, but **not** pushed to the

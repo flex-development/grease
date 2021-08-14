@@ -1,5 +1,9 @@
 import type { NullishString } from '@flex-development/tutils'
-import type { PathLike, SemanticVersion } from '@grease/types'
+import type {
+  PathLike,
+  SemanticVersion,
+  SemanticVersionTag
+} from '@grease/types'
 
 /**
  * @file Interfaces - ICreateReleaseDTO
@@ -61,5 +65,5 @@ export interface ICreateReleaseDTO {
   /**
    * Version being released.
    */
-  version: SemanticVersion
+  version: SemanticVersion | SemanticVersionTag
 }

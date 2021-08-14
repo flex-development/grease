@@ -134,13 +134,16 @@ describe('unit:constraints/IsSemVerConstraint', () => {
         value: TAGS[3]
       },
       {
-        args: { constraints: [{ git: true }], value: TAGS[4] },
+        args: { constraints: [{ clean: true, git: true }], value: TAGS[4] },
         expected: true,
         option: 'options.git',
         value: TAGS[4]
       },
       {
-        args: { constraints: [{ negit: true }], value: VERSION_TAG_DEV },
+        args: {
+          constraints: [{ clean: true, negit: true }],
+          value: VERSION_TAG_DEV
+        },
         expected: true,
         option: 'options.negit',
         value: VERSION_TAG_DEV
@@ -206,12 +209,12 @@ describe('unit:constraints/IsSemVerConstraint', () => {
 
     const name = 'should return $expected given $value and $option'
 
-    it.each<Case>(cases)(name, testcase => {
+    it.each<Case>(cases)(name, async testcase => {
       // Arrange
       const { args, expected, value } = testcase
 
       // Act
-      const result = Subject.validate(value, args as ValidationArguments)
+      const result = await Subject.validate(value, args as ValidationArguments)
 
       // Expect
       expect(result).toBe(expected)
