@@ -5,7 +5,6 @@ import grease from '@grease'
 import type { IGreaseOptions } from '@grease/interfaces'
 import log from '@grease/utils/log.util'
 import ch from 'chalk'
-import join from 'lodash/join'
 import merge from 'lodash/merge'
 import pick from 'lodash/pick'
 import sh from 'shelljs'
@@ -97,37 +96,16 @@ const name_no_scope: string = (name as string).split('/')[1]
 // Log workflow start
 log(argv, `starting release workflow: ${name}`, [], 'info')
 
-/**
- * PRERELEASE WORKFLOW
- *
- * 1. Run test suites
- * 2. Create release assets
- *
- * Note that [`grease`][1] will check if the current branch is included in the
- * release branch whitelist before any operations are performed.
- *
- * [1]: https://github.com/flex-development/grease
- */
-
-// Init prerelease commands
-const prerelease: string[] = []
-
-// 1. Run test suites
-prerelease.push('yarn test --no-cache')
-
-// 2. Create release assets
-prerelease.push(`yarn pack -o %s-%v.tgz${argv.dryRun ? ' -n' : ''}`)
-
 grease({
   ...argv,
   lernaPackage: name_no_scope,
-  noVerify: true,
   releaseAssets: [`${name?.replace('/', '-').replace('@', '')}-${version}.tgz`],
   releaseBranchWhitelist: branch_whitelist || argv.releaseBranchWhitelist,
+  releaseCommitMessageFormat: `chore(release): ${name}@{{currentTag}}`,
   scripts: {
     postrelease: 'rimraf ./*.tgz',
     posttag: `git push --follow-tags origin ${BRANCH} --no-verify`,
-    prerelease: join(prerelease, '; ')
+    prerelease: `yarn pack -o %s-%v.tgz${argv.dryRun ? ' -n' : ''}`
   },
   tagPrefix: `${name_no_scope}@`
 }).catch(error => sh.echo(ch.bold.red(util.inspect(error, false, null))))

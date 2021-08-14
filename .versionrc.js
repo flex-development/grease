@@ -4,9 +4,9 @@
  */
 
 module.exports = {
+  commitAll: true,
   gitdir: process.env.PROJECT_CWD,
   releaseBranchWhitelist: ['main'],
-  releaseCommitMessageFormat: 'release: {{currentTag}}',
   skipUnstable: false,
   types: [
     { type: 'feat', section: ':sparkles: Features' },
@@ -21,5 +21,6 @@ module.exports = {
     { type: 'ci', section: ':truck: Continuous Integration & Deployment' },
     { type: 'chore', section: ':pencil2: Housekeeping' },
     { type: 'wip', hidden: true }
-  ]
+  ],
+  verify: false
 }

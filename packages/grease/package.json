@@ -37,8 +37,7 @@
     "test": "bash ../../scripts/jest.sh",
     "build": "dotenv -c production ts-node ../../scripts/build",
     "prepare": "yarn build",
-    "prepack": "yarn prepare",
-    "prepublish": "yarn test",
+    "prepack": "yarn test --no-cache; yarn prepare",
     "release": "ts-node ./scripts/release"
   },
   "dependencies": {
