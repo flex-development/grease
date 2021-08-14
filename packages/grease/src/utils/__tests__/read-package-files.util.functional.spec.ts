@@ -2,7 +2,7 @@ import { ExceptionStatusCode } from '@flex-development/exceptions/enums'
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
 import merge from 'lodash/merge'
 import latestSemverTag from 'standard-version/lib/latest-semver-tag'
-import resolveUpdater from 'standard-version/lib/updaters'
+import { resolveUpdaterObjectFromArgument } from 'standard-version/lib/updaters'
 import testSubject from '../read-package-files.util'
 
 /**
@@ -13,7 +13,9 @@ import testSubject from '../read-package-files.util'
 const mockLatestSemverTag = latestSemverTag as jest.MockedFunction<
   typeof latestSemverTag
 >
-const mockResolveUpdater = merge as jest.MockedFunction<typeof resolveUpdater>
+const mockResolveUpdater = merge as jest.MockedFunction<
+  typeof resolveUpdaterObjectFromArgument
+>
 
 describe('functional:utils/readPackageFiles', () => {
   const packageFiles: string[] = ['package.json', 'bower.json', 'manifest.json']

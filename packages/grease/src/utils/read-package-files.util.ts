@@ -9,7 +9,7 @@ import type {
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
 import latestSemverTag from 'standard-version/lib/latest-semver-tag'
-import resolveUpdater from 'standard-version/lib/updaters'
+import { resolveUpdaterObjectFromArgument } from 'standard-version/lib/updaters'
 
 /**
  * @file Utility - readPackageFiles
@@ -39,7 +39,7 @@ const readPackageFiles = async (
 
   // Read each package file
   for (const file of packageFiles) {
-    const updater = resolveUpdater(file)
+    const updater = resolveUpdaterObjectFromArgument(file)
 
     // Do nothing if updater wasn't resolved
     if (!updater || !updater.updater) continue

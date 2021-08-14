@@ -91,24 +91,5 @@ describe('functional:utils/log', () => {
         expect(mockCH.bold[LogLevel[level]]).toBeCalledWith(figure)
       })
     })
-
-    describe('options.dryRun', () => {
-      it('should log warning message if options.dryRun === true', () => {
-        // Arrange
-        const options = { dryRun: true }
-
-        // Act
-        testSubject(options, 'warning message')
-
-        // Expect
-        expect(mockCheckpoint).toBeCalledTimes(1)
-        expect(mockCheckpoint).toBeCalledWith(
-          options,
-          mockCH.yellow(),
-          [],
-          mockCH.bold.green()
-        )
-      })
-    })
   })
 })

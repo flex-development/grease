@@ -35,7 +35,7 @@ const log = (
 
   return checkpoint(
     options,
-    ch[options.dryRun ? 'yellow' : 'white'](bold ? ch.bold(message) : message),
+    ch.white(bold ? ch.bold(message) : message),
     args,
     ch.bold[LogLevel[level]](figures[figure] || figure)
   )
