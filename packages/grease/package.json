@@ -38,6 +38,7 @@
     "build": "dotenv -c production ts-node ../../scripts/build",
     "prepare": "yarn build",
     "prepack": "yarn prepare",
+    "prepublish": "yarn test",
     "release": "ts-node ./scripts/release"
   },
   "dependencies": {
