@@ -117,11 +117,11 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
 
     // Add release title
     if (tag.endsWith('1.0.0') && (!title || !title.length)) {
-      args.push(`--title ${tag} ${GREASER_TITLE_BIRTHDAY}`)
+      args.push(`--title "${tag} ${GREASER_TITLE_BIRTHDAY}"`)
     } else if (title && title.length) {
-      args.push(`--title ${title}`)
+      args.push(`--title "${title}"`)
     } else {
-      args.push(`--title ${tag}`)
+      args.push(`--title "${tag}"`)
     }
 
     // Read release notes from file

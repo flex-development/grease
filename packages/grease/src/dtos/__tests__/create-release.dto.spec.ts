@@ -38,12 +38,12 @@ describe('unit:dtos/CreateReleaseDTO', () => {
     const tag0 = TAGS[0]
     const repo = pkg.homepage.replace('https://', '')
 
-    const expected = `${tag0} --title ${tag0}`
+    const expected = `${tag0} --title "${tag0}"`
 
     const cases: Case[] = [
       {
         dto: { files, version: tag0 },
-        expected: `${tag0} ${join(files, ' ')} --title ${tag0}`,
+        expected: `${tag0} ${join(files, ' ')} --title "${tag0}"`,
         git: {},
         property: '#files',
         stringify: 'stringify'
@@ -57,7 +57,7 @@ describe('unit:dtos/CreateReleaseDTO', () => {
       },
       {
         dto: { draft: true, version: tag0 },
-        expected: `${tag0} --draft --title ${tag0}`,
+        expected: `${tag0} --draft --title "${tag0}"`,
         git: {},
         property: '#draft',
         stringify: 'stringify'
@@ -99,7 +99,7 @@ describe('unit:dtos/CreateReleaseDTO', () => {
       },
       {
         dto: { prerelease: true, version: tag0 },
-        expected: `${tag0} --prerelease --title ${tag0}`,
+        expected: `${tag0} --prerelease --title "${tag0}"`,
         git: {},
         property: '#prerelease',
         stringify: 'stringify'
@@ -141,7 +141,7 @@ describe('unit:dtos/CreateReleaseDTO', () => {
       },
       {
         dto: { version: V1TAG },
-        expected: `${V1TAG} --title ${V1TAG} ${GREASER_TITLE_BIRTHDAY}`,
+        expected: `${V1TAG} --title "${V1TAG} ${GREASER_TITLE_BIRTHDAY}"`,
         git: {},
         property: 'title if #version satisfies 1.0.0',
         stringify: 'stringify'
