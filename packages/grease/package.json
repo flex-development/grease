@@ -27,7 +27,6 @@
   },
   "publishConfig": {
     "access": "public",
-    "branch_latest": "next",
     "directory": "./build",
     "registry": "https://npm.pkg.github.com"
   },
@@ -81,8 +80,7 @@
   },
   "env": {
     "optional": [
-      "DEBUG",
-      "DEBUG_COLORS"
+      "PROJECT_CWD"
     ],
     "required": []
   }
