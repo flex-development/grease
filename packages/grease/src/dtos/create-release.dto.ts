@@ -28,6 +28,7 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
 
   @IsPath({ each: true, exists: false, gh: true })
   @IsOptional()
+  @ValidateIf(() => cache.options.dryRun === false)
   readonly files?: ICreateReleaseDTO['files']
 
   @IsString()

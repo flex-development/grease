@@ -99,13 +99,13 @@ log(argv, `starting release workflow: ${name}`, [], 'info')
 grease({
   ...argv,
   lernaPackage: name_no_scope,
-  releaseAssets: [`${name?.replace('/', '-').replace('@', '')}-${version}.tgz`],
+  releaseAssets: [`${name?.replace('/', '-')}-${version}.tgz`],
   releaseBranchWhitelist: branch_whitelist || argv.releaseBranchWhitelist,
   releaseCommitMessageFormat: `chore(release): ${name}@{{currentTag}}`,
   scripts: {
+    postchangelog: `yarn pack -o %s-%v.tgz${argv.dryRun ? ' -n' : ''}`,
     postrelease: 'rimraf ./*.tgz',
-    posttag: `git push --follow-tags origin ${BRANCH} --no-verify`,
-    prerelease: `yarn pack -o %s-%v.tgz${argv.dryRun ? ' -n' : ''}`
+    posttag: `git push --follow-tags origin ${BRANCH} --no-verify`
   },
   tagPrefix: `${name_no_scope}@`
 }).catch(error => sh.echo(ch.bold.red(util.inspect(error, false, null))))
