@@ -9,7 +9,6 @@ import defaults from '@grease/config/defaults.config'
 class MockCache {
   git = {}
   options = defaults
-  setOptions = jest.fn()
 }
 
 export default new MockCache()

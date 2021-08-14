@@ -1,9 +1,6 @@
-import type { ObjectPlain } from '@flex-development/tutils'
 import TOKENS from '@grease/config/tokens.config'
 import type { IGreaseCache, IGreaseOptions } from '@grease/interfaces'
-import GreaseOptions from '@grease/models/grease-options.model'
 import type { GitSemverTagsOptions } from '@grease/types'
-import validate from '@grease/utils/validate.util'
 import { Service } from 'typedi'
 
 /**
@@ -41,19 +38,5 @@ export default class GreaseCache implements IGreaseCache {
       skipUnstable: this.options.skipUnstable,
       tagPrefix: this.options.tagPrefix
     }
-  }
-
-  /**
-   * Caches application options after validating.
-   *
-   * @async
-   * @param {IGreaseOptions | ObjectPlain} [args={}] - Application options
-   * @throws {ValidationException}
-   */
-  async setOptions(
-    args: IGreaseOptions | ObjectPlain
-  ): Promise<IGreaseOptions> {
-    this.options = await validate<IGreaseOptions>(GreaseOptions, args)
-    return this.options
   }
 }

@@ -11,13 +11,13 @@ import changelog from 'standard-version/lib/lifecycles/changelog'
 import commit from 'standard-version/lib/lifecycles/commit'
 import tag from 'standard-version/lib/lifecycles/tag'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
-import cache from './config/cache.config'
 import { RELEASE_PATTERN } from './config/constants.config'
 import defaults from './config/defaults.config'
 import type { IGreaseOptions } from './interfaces'
 import depchecker from './lifecycles/depchecker.lifecycle'
 import greaser from './lifecycles/greaser.lifecycle'
 import notes from './lifecycles/notes.lifecycle'
+import cacheOptions from './utils/cache-options.util'
 import log from './utils/log.util'
 import readPackageFiles from './utils/read-package-files.util'
 
@@ -40,7 +40,7 @@ const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
 
   try {
     // Set application options
-    const options = await cache.setOptions(args)
+    const options = await cacheOptions(args)
 
     // Check if current branch is whitelisted release branch
     if (Array.isArray(options.releaseBranchWhitelist)) {

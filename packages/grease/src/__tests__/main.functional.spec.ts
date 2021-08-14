@@ -1,12 +1,11 @@
 import { ExceptionStatusCode } from '@flex-development/exceptions/enums'
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
-import cache from '@grease/config/cache.config'
 import defaults from '@grease/config/defaults.config'
-import type { IGreaseCache } from '@grease/interfaces'
 import depchecker from '@grease/lifecycles/depchecker.lifecycle'
 import greaser from '@grease/lifecycles/greaser.lifecycle'
 import notes from '@grease/lifecycles/notes.lifecycle'
 import GreaseOptions from '@grease/models/grease-options.model'
+import cacheOptions from '@grease/utils/cache-options.util'
 import log from '@grease/utils/log.util'
 import readPackageFiles from '@grease/utils/read-package-files.util'
 import anymatch from 'anymatch'
@@ -25,16 +24,18 @@ import testSubject from '../main'
  * @module grease/tests/functional/main
  */
 
-jest.mock('@grease/config/cache.config')
 jest.mock('@grease/lifecycles/depchecker.lifecycle')
 jest.mock('@grease/lifecycles/greaser.lifecycle')
 jest.mock('@grease/lifecycles/notes.lifecycle')
+jest.mock('@grease/utils/cache-options.util')
 jest.mock('@grease/utils/log.util')
 jest.mock('@grease/utils/read-package-files.util')
 
 const mockAnymatch = anymatch as jest.MockedFunction<typeof anymatch>
 const mockBump = bump as jest.MockedFunction<typeof bump>
-const mockCache = cache as jest.Mocked<IGreaseCache>
+const mockCacheOptions = cacheOptions as jest.MockedFunction<
+  typeof cacheOptions
+>
 const mockChangelog = changelog as jest.MockedFunction<typeof changelog>
 const mockCommit = commit as jest.MockedFunction<typeof commit>
 const mockCurrentBranch = currentBranch as jest.MockedFunction<
@@ -59,8 +60,7 @@ describe('functional:main', () => {
   })
 
   beforeAll(() => {
-    mockCache.options = defaults
-    mockCache.setOptions.mockImplementation(async options => options)
+    mockCacheOptions.mockImplementation(async options => options)
   })
 
   it('should log and throw Exceptions', async () => {
@@ -97,8 +97,8 @@ describe('functional:main', () => {
     })
 
     it('should cache application options', () => {
-      expect(mockCache.setOptions).toBeCalledTimes(1)
-      expect(mockCache.setOptions).toBeCalledWith(OPTIONS)
+      expect(mockCacheOptions).toBeCalledTimes(1)
+      expect(mockCacheOptions).toBeCalledWith(OPTIONS)
     })
 
     it('should check release branch whitelist', () => {
