@@ -25,7 +25,8 @@
     "test": "bash scripts/jest.sh",
     "test:node": "yarn workspace @flex-development/grease test",
     "build:node": "yarn workspace @flex-development/grease build",
-    "release:node": "yarn workspace  @flex-development/grease release"
+    "release:node": "yarn workspace  @flex-development/grease release",
+    "publish:node": "yarn workspace @flex-development/grease npm publish --cwd build"
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.14.7",
