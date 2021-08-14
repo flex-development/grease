@@ -109,7 +109,7 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
     } = this
 
     // Get release tag
-    const tag: string = `${cache.git?.package ?? ''}${tagPrefix}${version}`
+    const tag: string = `${tagPrefix}${version}`
 
     // Init command arguments array
     const args: string[] = [tag]
@@ -117,25 +117,11 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
     // Add release asset files
     if (files && files.length) args.push(join(files, ' '))
 
-    // Save release as draft or publish
-    if (draft) args.push('--draft')
-
-    // Add release notes
-    if (notes && notes.length) args.push(`--notes ${notes}`)
-
-    // Read release notes from file
-    if (notesFile && notesFile.toString().length) {
-      args.push(`--notes-file ${notesFile}`)
-    }
-
     // Mark as prerelease
     if (prerelease) args.push('--prerelease')
 
-    // Target branch or commit sha
-    if (target && target.length) args.push(`--target ${target}`)
-
-    // Push release to different repository
-    if (repo && repo.length) args.push(`--repo ${repo}`)
+    // Save release as draft or publish
+    if (draft) args.push('--draft')
 
     // Add release title
     if (version === '1.0.0' && (!title || !title.length)) {
@@ -143,6 +129,20 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
     } else if (title && title.length) {
       args.push(`--title ${title}`)
     }
+
+    // Read release notes from file
+    if (notesFile && notesFile.toString().length) {
+      args.push(`--notes-file ${notesFile}`)
+    }
+
+    // Target branch or commit sha
+    if (target && target.length) args.push(`--target ${target}`)
+
+    // Push release to different repository
+    if (repo && repo.length) args.push(`--repo ${repo}`)
+
+    // Add release notes
+    if (notes && notes.length) args.push(`--notes ${notes}`)
 
     return join(args, ' ').trim()
   }

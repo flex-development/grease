@@ -51,7 +51,7 @@ describe('unit:dtos/CreateReleaseDTO', () => {
         stringify: 'stringify'
       },
       {
-        dto: { tagPrefix: TOL.tagPrefix, version: version0 },
+        dto: { tagPrefix: `${TOL.package}${TOL.tagPrefix}`, version: version0 },
         expected: `${TOL.package}${TOL.tagPrefix}${version0}`,
         git: TOL,
         property: 'release tag (lerna-style)',
