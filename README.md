@@ -40,7 +40,7 @@ birthday (first release) format, or skipping note generation entirely.
 4. Create a new `commit` including [`bumpFiles`][9] and updated `CHANGELOG`
 5. Create a new `tag` with the new version number
 6. Check if the [GitHub CLI][2] is installed
-7. Generate [release notes](src/grease/README.md#generating-release-notes)
+7. Generate [release notes](packages/grease/README.md#generating-release-notes)
 8. Create a new [GitHub release][11]
 
 ## Usage

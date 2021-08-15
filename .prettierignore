@@ -6,5 +6,6 @@ build/
 coverage/
 node_modules/
 
+**/CHANGELOG.md
 .env.*
 .env
