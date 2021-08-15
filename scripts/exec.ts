@@ -1,10 +1,11 @@
+import log from '@grease/utils/log.util'
 import sh from 'shelljs'
-import echo from './echo'
 
 /**
  * @file Shell Command Executor
  * @module scripts/exec
  */
+
 /**
  * Executes a shell command or logs the command that would be run.
  *
@@ -22,7 +23,7 @@ const exec = (
 
   command = command.trim()
 
-  if (dryRun) echo(command, false, 'yellow', '!')
+  if (dryRun) log({}, command, [], 'warning')
   else stdout = sh.exec(command, options).toString().replaceAll('\n', '')
 
   return stdout

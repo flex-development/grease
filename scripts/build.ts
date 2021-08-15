@@ -141,6 +141,10 @@ const build = (argv: BuildPackageOptions): void => {
     // Get copy of package.json
     const pkgjson = readPackage({ cwd: process.cwd(), normalize: false })
 
+    // Reset `publishConfig#directory`
+    if (!pkgjson.publishConfig) pkgjson.publishConfig = {}
+    pkgjson.publishConfig.directory = './'
+
     // Reset `main`, `module`, and `types`
     pkgjson.main = pkgjson.main?.replace(`${BUILD_DIR}/`, '')
     pkgjson.module = pkgjson.module?.replace(`${BUILD_DIR}/`, '')
