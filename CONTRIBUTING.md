@@ -17,7 +17,7 @@ project. This includes, but is not limited to:
 [Contributing Code](#contributing-code)  
 [Labels](#labels)  
 [Opening Issues](#opening-issues)  
-[🚧 Pull Requests & Code Reviews](#pull-requests-&-code-reviews)  
+[Pull Requests & Code Reviews](#pull-requests-&-code-reviews)  
 [Merge Strategies](#merge-strategies)  
 [🚧 Releasing](#releasing)
 
@@ -320,7 +320,11 @@ where `<branch>` is the name of the branch you'd like to merge into `next`.
 
 ### Code Reviews
 
-**TODO**: Update documentation.
+All pull requests are subject to code reviews before being merged into `next`
+and `main`. During code reviews, code-style and documentation will be reviewed.
+
+If any changes are requested, those changes will need to be implemented and
+approved before the pull request is merged.
 
 ### Merge Strategies
 
