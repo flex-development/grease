@@ -1,0 +1,49 @@
+# Continuous Deployment
+#
+# References:
+#
+# - https://docs.github.com/en/actions/guides/building-and-testing-nodejs
+# - https://jestjs.io/docs/cli#--ci
+
+---
+name: Continuous Deployment
+on:
+  release:
+    types: [published]
+jobs:
+  continuous-deployment:
+    runs-on: ubuntu-latest
+    env:
+      PAT_GPR: ${{ secrets.PAT_GPR }}
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          always-auth: true
+          cache: 'yarn'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@flex-development'
+      - name: Install dependencies
+        run: yarn
+        env:
+          NODE_AUTH_TOKEN: ${PAT_GPR}
+      - name: Run test suites
+        run: TERM=xterm-256color yarn test --ci
+      - name: Setup .npmrc file [GPR]
+        uses: actions/setup-node@v2
+        with:
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@flex-development'
+      - name: Get release version
+        uses: actions/github-script@v4
+        id: v
+        with:
+          script: |
+            core.setOutput('v', github.event.release.tag_name.split('@')[1])
+      - name: Publish @flex-development/${{ github.event.release.tag_name }}
+        if: ${{ startsWith(github.event.release.tag_name, 'grease@') }}
+        run: npm publish packages/grease/build --tag ${{ steps.v.outputs.v }}
+        env:
+          NODE_AUTH_TOKEN: ${PAT_GPR}

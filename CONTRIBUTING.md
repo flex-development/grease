@@ -349,7 +349,34 @@ e.g: `merge: P010-1 (#1)`
 
 ## Releasing
 
-**TODO**: Update documentation.
+This repository is configured to release a new version for a workspace when a
+Github Release is published. Any member with push access can create a release.
+
+> Note: Publishing is executed via the
+> [Continuous Deployment](./.github/workflows/continous-deployment.yml)
+> workflow. This is so invalid or malicious versions cannot be released by any
+> maintainer without merging those changes into `main` first.
+
+Before cutting a new release, the following steps must be completed:
+
+- create a new `release/*` branch
+  - where `*` is `<package.json#name-no-scope>@<version>`. e.g: `grease@1.1.0`
+- decide what version bump this release needs (major, minor, patch)
+  - versioning
+    - `yarn release:node` (determines [bumps based on commits][17])
+    - `yarn release:node --release-as major`
+    - `yarn release:node --release-as minor`
+    - `yarn release:node --release-as patch`
+  - a new release will be drafted
+- a new pull request is opened from `next` into `main`
+  - the PR should be titled `release: <tag-prefix>@<x>.<x>.<x>`
+  - after review, **create a merge commit**: `release: <tag-prefix>@<x>.<x>.<x>`
+- after the PR is merged, a maintainer will publish the drafted released to
+  trigger the Continuous Deployment workflow
+- the maintainer who merged the release PR should wait and see if the workflow
+  successfully publishes the workspace project(s) to the GitHub Package Registry
+- all issues labelled `status:merged` released under `<tag-prefix>@<x>.<x>.<x>`
+  should be closed and have the label `status:released` added
 
 [1]: https://www.atlassian.com/software/jira
 [2]: https://yarnpkg.com/getting-started/migration
@@ -366,3 +393,6 @@ e.g: `merge: P010-1 (#1)`
 [13]: https://jestjs.io
 [14]: https://jestjs.io/docs/api#describeskipname-fn
 [15]: https://jestjs.io/docs/api#testskipname-fn
+[16]:
+  https://docs.github.com/en/actions/reference/events-that-trigger-workflows#release
+[17]: https://www.conventionalcommits.org/en/v1.0.0

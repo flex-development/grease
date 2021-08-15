@@ -80,6 +80,10 @@
   description: No action to be taken or missing information
   color: e7034b
 
+- name: status:merged
+  description: Merged into next, but not into main (or released)
+  color: e7034b
+
 - name: status:needs-triage
   description: Needs verification and minimal reproduction
   color: e7034b

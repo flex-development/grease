@@ -6,7 +6,7 @@
 module.exports = {
   commitAll: true,
   gitdir: process.env.PROJECT_CWD,
-  releaseBranchWhitelist: ['main'],
+  releaseBranchWhitelist: ['release/*'],
   skipUnstable: false,
   types: [
     { type: 'feat', section: ':sparkles: Features' },
