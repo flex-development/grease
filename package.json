@@ -87,7 +87,8 @@
       "DEBUG_COLORS"
     ],
     "required": [
-      "PAT_GPR"
+      "NPM_TOKEN_FLDV",
+      "PAT_GPR_FLDV"
     ]
   },
   "private": true,
