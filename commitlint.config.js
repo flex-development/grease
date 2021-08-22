@@ -53,7 +53,8 @@ module.exports = {
         'release',
         'scripts',
         'tests',
-        'typescript'
+        'typescript',
+        'workflows'
       ]
 
       const scopes_package = ['cli', 'node']

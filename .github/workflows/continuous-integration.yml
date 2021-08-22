@@ -2,8 +2,9 @@
 #
 # References:
 #
+# - https://github.com/actions/checkout
 # - https://docs.github.com/en/actions/guides/building-and-testing-nodejs
-# - https://jestjs.io/docs/cli#--ci
+# - https://github.com/actions/setup-node
 
 ---
 name: Continuous Integration
@@ -12,7 +13,8 @@ jobs:
   continuous-integration:
     runs-on: ubuntu-latest
     env:
-      PAT_GPR: ${{ secrets.PAT_GPR }}
+      NPM_TOKEN_FLDV: ${{ secrets.NPM_TOKEN_FLDV }}
+      PAT_GPR_FLDV: ${{ secrets.PAT_GPR_FLDV }}
     strategy:
       matrix:
         node: ['15', '16']
@@ -32,12 +34,10 @@ jobs:
       - name: Install dependencies
         run: yarn
         env:
-          NODE_AUTH_TOKEN: ${PAT_GPR}
+          NODE_AUTH_TOKEN: ${PAT_GPR_FLDV}
       - name: Check code formatting
         run: yarn check:format
       - name: Check code style
         run: yarn check:style
-      - name: Run test suites
-        run: TERM=xterm-256color yarn test --ci
       - name: Build Node.js program
         run: yarn build:node
