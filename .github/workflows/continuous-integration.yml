@@ -7,7 +7,7 @@
 # - https://github.com/actions/setup-node
 
 ---
-name: Continuous Integration
+name: continuous-integration
 on: [pull_request]
 jobs:
   continuous-integration:

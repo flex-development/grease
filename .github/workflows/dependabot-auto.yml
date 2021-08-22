@@ -8,7 +8,7 @@
 # - https://github.com/ahmadnassri/action-dependabot-auto-merge/issues/60#issuecomment-806027389
 
 ---
-name: Dependabot Auto
+name: dependabot-auto
 on: pull_request_target
 jobs:
   dependabot:
