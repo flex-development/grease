@@ -10,7 +10,7 @@
     "standard-version",
     "typescript"
   ],
-  "homepage": "https://github.com/flex-development/grease",
+  "homepage": "https://github.com/flex-development/grease/tree/next/packages/grease",
   "repository": {
     "type": "git",
     "url": "git://github.com/flex-development/grease.git",
