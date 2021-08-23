@@ -136,7 +136,7 @@ const options: IGreaseOptions = {
   })(),
   releaseAssets: ['./*.tgz'],
   releaseBranchWhitelist: ['release/*'],
-  releaseCommitMessageFormat: `release: ${$name}{{currentTag}}`,
+  releaseCommitMessageFormat: `release: ${$name}@{{currentTag}}`,
   scripts: {
     postchangelog: `yarn pack -o %s-%v.tgz${argv.dryRun ? ' -n' : ''}`,
     postcommit: 'git pnv',

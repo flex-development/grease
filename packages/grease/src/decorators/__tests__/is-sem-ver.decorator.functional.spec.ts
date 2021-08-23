@@ -23,7 +23,7 @@ import TestSubject from '../is-sem-ver.decorator'
 const MockValidateBy = ValidateBy as jest.MockedFunction<typeof ValidateBy>
 
 describe('functional:grease/decorators/IsSemVer', () => {
-  const version = pkg.version as SemanticVersion
+  const version: SemanticVersion = '1.0.0'
 
   describe('decorator logic', () => {
     const options: IsSemVerOptions = {
