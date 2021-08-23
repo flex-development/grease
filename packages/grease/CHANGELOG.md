@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/flex-development/grease/compare/grease@1.0.0...grease@1.0.1) (2021-08-23)
+
+
+### :pencil2: Housekeeping
+
+* update release workflow ([3affb38](https://github.com/flex-development/grease/commit/3affb38bb20dd46d938c5ea8f4625ddf658d855e))
+
+
+### :bug: Fixes
+
+* **node:** `CreateReleaseDTO#version` failure when `options.skip.tag` is `true` ([e8ede43](https://github.com/flex-development/grease/commit/e8ede4365c7194e3f73d05413fdcbc2fecd037b7))
+
 ## 1.0.0 (2021-08-15)
 
 
