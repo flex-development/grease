@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.2](https://github.com/flex-development/grease/compare/grease@1.0.1...grease@1.0.2) (2021-08-23)
+
+
+### :book: Documentation
+
+* **node:** update installation instructions ([32699c2](https://github.com/flex-development/grease/commit/32699c2a6bc05a06699c84bddb40f2b4fb191972))
+* **node:** update `package.json#homepage` ([6630524](https://github.com/flex-development/grease/commit/6630524c727da612482c1d2f0e152c44b3b1ee42))
+
+
 ### [1.0.1](https://github.com/flex-development/grease/compare/grease@1.0.0...grease@1.0.1) (2021-08-23)
 
 
