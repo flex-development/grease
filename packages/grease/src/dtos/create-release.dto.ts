@@ -1,5 +1,5 @@
 import type { ObjectPlain } from '@flex-development/tutils'
-import cache from '@grease/config/cache.config'
+import $c from '@grease/config/cache.config'
 import { GREASER_TITLE_BIRTHDAY } from '@grease/config/constants.config'
 import IsPath from '@grease/decorators/is-path.decorator'
 import IsSemVer from '@grease/decorators/is-sem-ver.decorator'
@@ -28,7 +28,7 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
 
   @IsPath({ each: true, exists: false, gh: true })
   @IsOptional()
-  @ValidateIf(() => cache.options.dryRun === false)
+  @ValidateIf(() => $c.options.dryRun === false)
   readonly files?: ICreateReleaseDTO['files']
 
   @IsString()
@@ -47,7 +47,7 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
   @IsOptional()
   readonly repo?: ICreateReleaseDTO['repo']
 
-  @IsTargetBranch({ dir: cache.options.gitdir, sha: true })
+  @IsTargetBranch({ dir: $c.options.gitdir, sha: true })
   @IsOptional()
   readonly target?: ICreateReleaseDTO['target']
 
@@ -55,8 +55,8 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
   @IsOptional()
   readonly title?: ICreateReleaseDTO['title']
 
-  @IsSemVer({ clean: true, git: () => cache.git })
-  @ValidateIf(() => cache.options.dryRun === false)
+  @IsSemVer({ clean: true, git: () => $c.git })
+  @ValidateIf(() => !$c.options.dryRun && !$c.options.skip?.tag)
   readonly version: ICreateReleaseDTO['version']
 
   /**
