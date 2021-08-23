@@ -25,50 +25,19 @@ birthday (first release) format, or skipping note generation entirely.
 
 ## Installation
 
-1. Authenticate with [GitHub Package Registry][8] (GPR)
-
-   **NPM**
-
-   ```properties
-   //registry.npmjs.org/:_authToken=$PAT_GPR
-   @flex-development:registry=https://npm.pkg.github.com/
-   ```
-
-   **Yarn 1**
-
-   ```properties
-   //registry.yarnpkg.com/:_authToken=$PAT_GPR
-   @flex-development:registry=https://npm.pkg.github.com/
-   ```
-
-   **Yarn 2**
-
-   ```yml
-   npmScopes:
-     flex-development:
-       npmAlwaysAuth: true
-       npmAuthToken: '${PAT_GPR}'
-       npmRegistryServer: 'https://npm.pkg.github.com'
-   ```
-
-   where `$PAT_GPR` is [GitHub Personal Access Token][9] with at least the
-   `read:packages` scope.
-
-2. Add project to `dependencies`
-
-   ```zsh
-   yarn add @flex-development/grease # or npm i @flex-development/grease
-   ```
+```zsh
+yarn add -D @flex-development/grease # or npm i -D @flex-development/grease
+```
 
 ## Usage
 
 ### Configuration
 
-[Configuration options][10] are passed via the [`main`](src/main) method.
+[Configuration options][8] are passed via the [`main`](src/main) method.
 
 Options can be used to configure both `grease` and `standard-version`. Refer to
-the [`standard-version` docs][5] and [conventional-changelog-config-spec][11]
-for details on options specific to `standard-version`.
+the [`standard-version` docs][5] and [conventional-changelog-config-spec][9] for
+details on options specific to `standard-version`.
 
 ### Lifecycle Scripts
 
@@ -334,8 +303,6 @@ grease({
 [6]: https://git-scm.com
 [7]:
   https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/git-semver-tags#readme
-[8]: https://github.com/features/packages
-[9]: https://github.com/settings/tokens/new
-[10]: src/interfaces/grease-options.interface.ts
-[11]:
+[8]: src/interfaces/grease-options.interface.ts
+[9]:
   https://github.com/conventional-changelog/conventional-changelog-config-spec
