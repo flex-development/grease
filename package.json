@@ -43,6 +43,7 @@
     "@typescript-eslint/parser": "4.28.0",
     "@zerollup/ts-transform-paths": "1.7.18",
     "chalk-cli": "4.1.0",
+    "copyfiles": "2.4.1",
     "dotenv-cli": "4.0.0",
     "eslint": "7.29.0",
     "eslint-config-prettier": "8.3.0",
@@ -88,7 +89,8 @@
     ],
     "required": [
       "NPM_TOKEN_FLDV",
-      "PAT_GPR_FLDV"
+      "PAT_GPR_FLDV",
+      "PROJECT_CWD"
     ]
   },
   "private": true,

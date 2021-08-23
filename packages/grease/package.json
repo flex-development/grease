@@ -37,7 +37,7 @@
     "build": "dotenv -c production ts-node ../../scripts/build",
     "prepare": "yarn build",
     "prepack": "yarn prepare",
-    "release": "ts-node ./scripts/release"
+    "release": "dotenv -c production ts-node ../../scripts/release"
   },
   "dependencies": {
     "@flex-development/exceptions": "2.0.1",
@@ -79,9 +79,7 @@
     "yarn": "3.0.0-rc.2"
   },
   "env": {
-    "optional": [
-      "PROJECT_CWD"
-    ],
+    "optional": [],
     "required": []
   }
 }

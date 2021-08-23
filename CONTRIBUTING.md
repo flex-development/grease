@@ -19,7 +19,7 @@ project. This includes, but is not limited to:
 [Opening Issues](#opening-issues)  
 [Pull Requests & Code Reviews](#pull-requests-&-code-reviews)  
 [Merge Strategies](#merge-strategies)  
-[🚧 Releasing](#releasing)
+[Releasing](#releasing)
 
 ## Getting Started
 
@@ -349,34 +349,45 @@ e.g: `merge: P010-1 (#1)`
 
 ## Releasing
 
-This repository is configured to release a new version for a workspace when a
-Github Release is published. Any member with push access can create a release.
+This repository is configured to publish packages and releases when a
+`release/*` branch is merged.
 
 > Note: Publishing is executed via the
 > [Continuous Deployment](./.github/workflows/continous-deployment.yml)
-> workflow. This is so invalid or malicious versions cannot be released by any
-> maintainer without merging those changes into `main` first.
+> workflow. This is so invalid or malicious versions cannot be release without
+> merging those changes into `next` first.
 
-Before cutting a new release, the following steps must be completed:
+Before releasing, the following steps must be completed:
 
-- create a new `release/*` branch
-  - where `*` is `<package.json#name-no-scope>@<version>`. e.g: `grease@1.1.0`
-- decide what version bump this release needs (major, minor, patch)
-  - versioning
-    - `yarn release:node` (determines [bumps based on commits][17])
-    - `yarn release:node --release-as major`
-    - `yarn release:node --release-as minor`
-    - `yarn release:node --release-as patch`
-  - a new release will be drafted
-- a new pull request is opened from `next` into `main`
-  - the PR should be titled `release: <tag-prefix>@<x>.<x>.<x>`
-  - after review, **create a merge commit**: `release: <tag-prefix>@<x>.<x>.<x>`
-- after the PR is merged, a maintainer will publish the drafted released to
-  trigger the Continuous Deployment workflow
-- the maintainer who merged the release PR should wait and see if the workflow
-  successfully publishes the workspace project(s) to the GitHub Package Registry
-- all issues labelled `status:merged` released under `<tag-prefix>@<x>.<x>.<x>`
-  should be closed and have the label `status:released` added
+1. Schedule a code freeze
+2. Create a new `release/*` branch
+   - where `*` is `<package.json#name-no-scope>@<package.json#version>`
+     - e.g: `grease@1.1.0`
+   - branch naming conventions **must be followed exactly**. the branch name is
+     used to create distribution tags, locate drafted releases, and generate the
+     correct workspace publish command
+3. Decide what version bump the release needs (major, minor, patch)
+   - versioning
+     - `yarn release:node` (determines [bumps based on commits][16])
+     - `yarn release:node --first-release`
+     - `yarn release:node --release-as major`
+     - `yarn release:node --release-as minor`
+     - `yarn release:node --release-as patch`
+   - a new release will be drafted
+4. Open a new pull request from `release/*` into `next`
+   - title the PR `release: <package.json#name>@<package.json#version>`
+     - e.g: `release: @flex-development/grease@1.1.0`
+   - after review, merge the PR with a merge commit
+     - `merge: release <package.json#name>@<package.json#version>`
+       - e.g: `merge: release @flex-development/grease@1.1.0`
+   - once the PR is merged, the deployment workflow will be triggered
+   - the maintainer who is approved the PR should check to make sure the
+     workflow completes all jobs as expected. if successful, the workflow will:
+     - publish package to the [GitHub Package Registry][17] and [NPM][18]
+     - update the production branch (merge branch `next` into `main`)
+     - publish the drafted release
+     - close issues with the `status:merged` label
+     - add the `status:released` label to newly closed issues
 
 [1]: https://www.atlassian.com/software/jira
 [2]: https://yarnpkg.com/getting-started/migration
@@ -393,6 +404,6 @@ Before cutting a new release, the following steps must be completed:
 [13]: https://jestjs.io
 [14]: https://jestjs.io/docs/api#describeskipname-fn
 [15]: https://jestjs.io/docs/api#testskipname-fn
-[16]:
-  https://docs.github.com/en/actions/reference/events-that-trigger-workflows#release
-[17]: https://www.conventionalcommits.org/en/v1.0.0
+[16]: https://www.conventionalcommits.org/en/v1.0.0
+[17]: https://github.com/features/packages
+[18]: https://www.npmjs.com

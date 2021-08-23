@@ -1,6 +1,6 @@
+import log from '@grease/utils/log.util'
 import type { ReplaceInFileConfig, ReplaceResult } from 'replace-in-file'
 import replace from 'replace-in-file'
-import echo from './echo'
 
 /**
  * @file Scripts - Fix Node Module Import Paths
@@ -36,10 +36,10 @@ const fixNodeModulePaths = (): ReplaceResult[] => {
   try {
     results = replace.sync(OPTIONS)
   } catch (error) {
-    echo(error.message, true, 'red', 'cross')
+    log({}, error.message, [], 'error')
   }
 
-  echo('fix import paths')
+  log({}, 'fix import paths')
   return results
 }
 
