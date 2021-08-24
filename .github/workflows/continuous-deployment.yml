@@ -30,6 +30,7 @@ jobs:
     outputs:
       build_command: ${{ steps.build_command.outputs.command }}
       publish_command: ${{ steps.publish_command.outputs.command }}
+      scope: ${{ steps.build_command.outputs.scope }}
       tag: ${{ steps.release.outputs.tag }}
       workspace: ${{ steps.release.outputs.workspace }}
     steps:
@@ -59,11 +60,16 @@ jobs:
           script: |
             const { workspace } = process.env
 
+            let command
             let scope
 
             if (workspace === 'grease') scope = 'node'
 
-            core.setOutput('command', `yarn build:${scope}`)
+            if (scope) command = `yarn build:${scope}`
+            else command = 'echo \"No build command\" && exit 0'
+
+            core.setOutput('command', command)
+            core.setOutput('scope', scope)
       - id: publish_command
         name: Get publish command
         uses: actions/github-script@v4
