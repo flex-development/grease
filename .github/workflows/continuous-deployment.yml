@@ -48,7 +48,6 @@ jobs:
 
             const { 0: workspace } = tag.split('@')
 
-
             core.exportVariable('tag', tag)
             core.exportVariable('workspace', workspace)
             core.setOutput('tag', tag)
@@ -158,6 +157,8 @@ jobs:
       - id: publish
         name: Publish GitHub release
         uses: actions/github-script@v4
+        env:
+          tag: ${{ needs.get-deployment-details.outputs.tag }}
         with:
           script: |
             const endpoint = 'GET /repos/{owner}/{repo}/releases'
