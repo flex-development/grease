@@ -2,7 +2,7 @@
 name: Feature
 about: Suggest new project feature
 title: '👀  '
-labels: type:feature
+labels: 'type:feat,flag:needs-discussion'
 assignees: ''
 ---
 
