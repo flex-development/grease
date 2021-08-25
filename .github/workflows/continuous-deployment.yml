@@ -122,7 +122,7 @@ jobs:
         name: Publish package [GPR]
         run: ${{ needs.get-deployment-details.outputs.publish_command }}
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.PAT_GPR_FLDV }}
+          NODE_AUTH_TOKEN: ${{ secrets.PAT_GPR_FLDV_ADMIN }}
       - id: setup-npmrc-npm
         name: Setup .npmrc file [NPM]
         uses: actions/setup-node@v2
