@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 
 import log from '@grease/utils/log.util'
+import ch from 'chalk'
 import { copyFileSync, existsSync, writeFileSync } from 'fs-extra'
 import { join } from 'path'
-import { sync as readPackage } from 'read-pkg'
+import sh from 'shelljs'
 import { hideBin } from 'yargs/helpers'
 import yargs from 'yargs/yargs'
 import fixNodeModulePaths from './fix-node-module-paths'
 import exec from './utils/exec'
-import { $name } from './utils/pkg-get'
+import pkg, { $name } from './utils/pkg-get'
 
 /**
  * @file Scripts - Package Build Workflow
@@ -16,6 +17,16 @@ import { $name } from './utils/pkg-get'
  */
 
 export type BuildPackageOptions = {
+  /**
+   * Files to include in build. Files that are always included (if present):
+   *
+   * `CHANGELOG.md`
+   * `LICENSE.md`
+   * `package.json`
+   * `README.md`
+   */
+  assets?: string[]
+
   /**
    * See the commands that running `build` would run.
    */
@@ -28,19 +39,24 @@ export type BuildPackageOptions = {
 }
 
 /**
+ * @property {string[]} BUILD_ASSETS - Distribution files
+ */
+const BUILD_ASSETS: string[] = ['CHANGELOG.md', 'LICENSE.md', 'README.md']
+
+/**
  * @property {string} BUILD_DIR - Build directory
  */
 const BUILD_DIR: string = 'build'
 
 /**
- * @property {string[]} BUILD_FILES - Distribution files
- */
-const BUILD_FILES: string[] = ['CHANGELOG.md', 'LICENSE.md', 'README.md']
-
-/**
  * @property {string[]} BUILD_FORMATS - Module build formats
  */
 const BUILD_FORMATS: BuildPackageOptions['formats'] = ['cjs', 'esm']
+
+/**
+ * @property {string} BUILD_PATH - Path to build directory
+ */
+const BUILD_PATH: string = join(process.cwd(), BUILD_DIR)
 
 /**
  * @property {string} TSCONFIG_PROD - Base production config file
@@ -53,6 +69,12 @@ const TSCONFIG_PROD: string = 'tsconfig.prod.json'
  */
 const args = yargs(hideBin(process.argv))
   .usage('$0 [options]')
+  .option('assets', {
+    alias: 'a',
+    array: true,
+    default: [],
+    description: 'files to include in build'
+  })
   .option('dry-run', {
     alias: 'd',
     boolean: true,
@@ -78,7 +100,7 @@ const args = yargs(hideBin(process.argv))
 const argv: BuildPackageOptions = args.argv as BuildPackageOptions
 
 // Log workflow start
-log(argv, `starting build workflow`, [$name, `[dry=${argv.dryRun}]`], 'info')
+log(argv, 'starting build workflow', [$name, `[dry=${argv.dryRun}]`], 'info')
 
 // Remove stale build directory
 exec(`rimraf ${BUILD_DIR}`, argv.dryRun)
@@ -121,39 +143,8 @@ if (!HAS_TSCONFIG && !argv.dryRun) exec(`rimraf ${TSCONFIG_PROD}`, argv.dryRun)
 // Fix node module import paths
 fixNodeModulePaths()
 
-// Create package.json in $BUILD_DIR
-if (!argv.dryRun) {
-  // Get copy of package.json
-  const pkgjson = readPackage({ cwd: process.cwd(), normalize: false })
-
-  // Reset `publishConfig#directory`
-  if (!pkgjson.publishConfig) pkgjson.publishConfig = {}
-  pkgjson.publishConfig.directory = './'
-
-  // Reset `main`, `module`, and `types`
-  pkgjson.main = pkgjson.main?.replace(`${BUILD_DIR}/`, '')
-  pkgjson.module = pkgjson.module?.replace(`${BUILD_DIR}/`, '')
-  pkgjson.types = pkgjson.types?.replace(`${BUILD_DIR}/`, '')
-
-  // Remove `devDependencies` `files`, and `scripts` from package.json
-  Reflect.deleteProperty(pkgjson, 'devDependencies')
-  Reflect.deleteProperty(pkgjson, 'files')
-  Reflect.deleteProperty(pkgjson, 'scripts')
-
-  // Add `_id` field
-  pkgjson._id = `${pkgjson.name}@${pkgjson.version}`
-
-  // Create package.json file
-  writeFileSync(
-    join(process.cwd(), BUILD_DIR, 'package.json'),
-    JSON.stringify(pkgjson, null, 2)
-  )
-}
-
-log(argv, `create ${BUILD_DIR}/package.json`)
-
-// Copy distribution files
-BUILD_FILES.forEach(file => {
+// Copy build assets
+BUILD_ASSETS.concat(argv?.assets ?? []).forEach(file => {
   if (existsSync(join(process.cwd(), file))) {
     exec(`copyfiles ${file} ${BUILD_DIR}`, argv.dryRun)
     log(argv, `create ${BUILD_DIR}/${file}`)
@@ -162,5 +153,32 @@ BUILD_FILES.forEach(file => {
   }
 })
 
+// Get copy of package.json
+const pkgjson = pkg()
+
+// Reset `publishConfig#directory`
+if (!pkgjson.publishConfig) pkgjson.publishConfig = {}
+pkgjson.publishConfig.directory = './'
+
+// Reset `main`, `module`, and `types`
+pkgjson.main = pkgjson.main?.replace(`${BUILD_DIR}/`, '')
+pkgjson.module = pkgjson.module?.replace(`${BUILD_DIR}/`, '')
+pkgjson.types = pkgjson.types?.replace(`${BUILD_DIR}/`, '')
+
+// Remove `devDependencies` `files`, and `scripts` from package.json
+Reflect.deleteProperty(pkgjson, 'devDependencies')
+Reflect.deleteProperty(pkgjson, 'files')
+Reflect.deleteProperty(pkgjson, 'scripts')
+
+// Stringify package.json data
+const pkgjson_string = JSON.stringify(pkgjson, null, 2)
+
+// Create package.json in build directory
+if (!argv.dryRun) writeFileSync(`${BUILD_PATH}/package.json`, pkgjson_string)
+log(argv, `create ${BUILD_DIR}/package.json`)
+if (argv.dryRun) sh.echo(ch.gray(`\n---\n${pkgjson_string}\n---\n`))
+
+log(argv, `create ${BUILD_DIR}/package.json`)
+
 // Log workflow end
-log(argv, `build workflow complete`, [$name], 'info')
+log(argv, 'build workflow complete', [$name], 'info')
