@@ -381,8 +381,8 @@ Before releasing, the following steps must be completed:
      - `merge: release <package.json#name>@<package.json#version>`
        - e.g: `merge: release @flex-development/grease@1.1.0`
    - once the PR is merged, the deployment workflow will be triggered
-   - the maintainer who is approved the PR should check to make sure the
-     workflow completes all jobs as expected. if successful, the workflow will:
+   - the maintainer who approved the PR should check to make sure the workflow
+     completes all jobs as expected. if successful, the workflow will:
      - publish package to the [GitHub Package Registry][17] and [NPM][18]
      - update the production branch (merge branch `next` into `main`)
      - publish the drafted release
