@@ -21,6 +21,7 @@ module.exports = merge(rootConfig, {
           {
             ...RULES_SPELLCHECKER[1],
             skipWords: RULES_SPELLCHECKER[1].skipWords.concat([
+              'autogeneration',
               'depchecker',
               'dto',
               'dtos',
