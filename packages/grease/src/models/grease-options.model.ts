@@ -107,6 +107,18 @@ export default class GreaseOptions implements IGreaseOptions {
 
   @IsString()
   @IsOptional()
+  prereleaseDelimiter?: IGreaseOptions['prereleaseDelimiter']
+
+  @IsString({ each: true })
+  @IsOptional()
+  prereleaseMap?: IGreaseOptions['prereleaseMap']
+
+  @IsBoolean()
+  @IsOptional()
+  prereleaseSkip?: IGreaseOptions['prereleaseSkip']
+
+  @IsString()
+  @IsOptional()
   preset?: IGreaseOptions['preset']
 
   @IsString()

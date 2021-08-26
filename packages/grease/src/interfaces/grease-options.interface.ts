@@ -1,3 +1,4 @@
+import type { DistTagOptions } from '@flex-development/dtag/interfaces'
 import { NotesType } from '@grease/enums/notes-type.enum'
 import type {
   GitSemverTagsOptions,
@@ -53,6 +54,48 @@ export interface IGreaseOptions
    * @default NotesType.CHANGELOG
    */
   notesType?: NotesType
+
+  /**
+   * Create a prerelease with optional tag id (e.g: `alpha`,`beta`, `dev`).
+   *
+   * This value can be autodetected by `grease` assuming that the intended value
+   * is included within a project version number or release tag (e.g
+   * `3.13.98-dev.640` where `dev` is the intended value).
+   *
+   * Passing a string value will override the autodetected value.
+   *
+   * To disable autodetection, set `prereleaseSkip` to `true`.
+   *
+   * [1]: https://docs.npmjs.com/cli/v7/commands/npm-dist-tag
+   */
+  prerelease?: StandardVersionOptions['prerelease']
+
+  /**
+   * Prerelease delimiter (e.g `-` before `alpha` in `foo-pkg@26.0.0-alpha.13`).
+   *
+   * @see https://github.com/flex-development/dtag/tree/next/packages/dtag#options
+   *
+   * @default '-'
+   */
+  prereleaseDelimiter?: DistTagOptions['delimiter']
+
+  /**
+   * `prerelease` tag id map. If a tag id is found within a project version
+   * number and `prereleaseMap` is a non-empty object, the value of `prerelease`
+   * will be plucked from `prereleaseMap`.
+   *
+   * @see https://github.com/flex-development/dtag/tree/next/packages/dtag#options
+   *
+   * @default {}
+   */
+  prereleaseMap?: Map<string, string>
+
+  /**
+   * Skip distribution tag lookup.
+   *
+   * @see https://github.com/flex-development/dtag/tree/next/packages/dtag
+   */
+  prereleaseSkip?: DistTagOptions['skip']
 
   /**
    * GitHub release asset paths.
@@ -138,36 +181,37 @@ export interface IGreaseOptions
 /**
  * Default `grease` options.
  */
-export type GreaseOptionsDefaults = NonNullable<
-  Pick<
-    IGreaseOptions,
-    | 'bumpFiles'
-    | 'commitAll'
-    | 'commitUrlFormat'
-    | 'compareUrlFormat'
-    | 'dryRun'
-    | 'firstRelease'
-    | 'gitTagFallback'
-    | 'header'
-    | 'infile'
-    | 'issuePrefixes'
-    | 'issueUrlFormat'
-    | 'noVerify'
-    | 'notesType'
-    | 'packageFiles'
-    | 'preMajor'
-    | 'preset'
-    | 'releaseCommitMessageFormat'
-    | 'releaseDraft'
-    | 'releaseTarget'
-    | 'scripts'
-    | 'sign'
-    | 'silent'
-    | 'skip'
-    | 'tagPrefix'
-    | 'types'
-    | 'userUrlFormat'
-    | 'verify'
+export type GreaseOptionsDefaults = {
+  bumpFiles: NonNullable<IGreaseOptions['bumpFiles']>
+  commitAll: NonNullable<IGreaseOptions['commitAll']>
+  commitUrlFormat: NonNullable<IGreaseOptions['commitUrlFormat']>
+  compareUrlFormat: NonNullable<IGreaseOptions['compareUrlFormat']>
+  dryRun: NonNullable<IGreaseOptions['dryRun']>
+  firstRelease: NonNullable<IGreaseOptions['firstRelease']>
+  gitTagFallback: NonNullable<IGreaseOptions['gitTagFallback']>
+  gitdir: NonNullable<IGreaseOptions['gitdir']>
+  header: NonNullable<IGreaseOptions['header']>
+  infile: NonNullable<IGreaseOptions['infile']>
+  issuePrefixes: NonNullable<IGreaseOptions['issuePrefixes']>
+  issueUrlFormat: NonNullable<IGreaseOptions['issueUrlFormat']>
+  noVerify: NonNullable<IGreaseOptions['noVerify']>
+  notesType: NonNullable<IGreaseOptions['notesType']>
+  packageFiles: NonNullable<IGreaseOptions['packageFiles']>
+  preMajor: NonNullable<IGreaseOptions['preMajor']>
+  prereleaseDelimiter: NonNullable<IGreaseOptions['prereleaseDelimiter']>
+  prereleaseMap: NonNullable<IGreaseOptions['prereleaseMap']>
+  preset: NonNullable<IGreaseOptions['preset']>
+  releaseCommitMessageFormat: NonNullable<
+    IGreaseOptions['releaseCommitMessageFormat']
   >
-> &
-  Pick<IGreaseOptions, 'gitdir'>
+  releaseDraft: NonNullable<IGreaseOptions['releaseDraft']>
+  releaseTarget: NonNullable<IGreaseOptions['releaseTarget']>
+  scripts: NonNullable<IGreaseOptions['scripts']>
+  sign: NonNullable<IGreaseOptions['sign']>
+  silent: NonNullable<IGreaseOptions['silent']>
+  skip: NonNullable<IGreaseOptions['skip']>
+  tagPrefix: NonNullable<IGreaseOptions['tagPrefix']>
+  types: NonNullable<IGreaseOptions['types']>
+  userUrlFormat: NonNullable<IGreaseOptions['userUrlFormat']>
+  verify: NonNullable<IGreaseOptions['verify']>
+}
