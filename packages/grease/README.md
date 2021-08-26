@@ -39,6 +39,119 @@ Options can be used to configure both `grease` and `standard-version`. Refer to
 the [`standard-version` docs][5] and [conventional-changelog-config-spec][9] for
 details on options specific to `standard-version`.
 
+### Prereleases
+
+Use the `prerelease` option to generate prereleases:
+
+Suppose the last version of your code is `1.0.0`, and your code to be committed
+has patched changes. Run:
+
+```typescript
+import grease from '@flex-development/grease'
+import log from '@flex-development/grease/utils/log.util'
+import ch from 'chalk'
+import sh from 'shelljs'
+import util from 'util'
+
+grease({
+  prerelease: ''
+}).catch(error => {
+  if (error.stderr) return
+  else sh.echo(ch.bold.red(util.inspect(error, false, null)))
+})
+```
+
+This will tag your version as: `1.0.1-0`.
+
+If you want to name the prerelease, specify the name:
+
+```typescript
+import grease from '@flex-development/grease'
+import log from '@flex-development/grease/utils/log.util'
+import ch from 'chalk'
+import sh from 'shelljs'
+import util from 'util'
+
+grease({
+  prerelease: 'alpha'
+}).catch(error => {
+  if (error.stderr) return
+  else sh.echo(ch.bold.red(util.inspect(error, false, null)))
+})
+```
+
+This will tag the version as: `1.0.1-alpha.0`.
+
+#### Auto Detection
+
+Assuming the value of `prerelease` is included in a package version (e.g
+`3.13.98-dev.640`), `grease` can autodetect the value.
+
+Suppose the last version of your code is `foo-package@2.0.0-alpha`, and your
+code to be committed has patched changes. Run:
+
+```typescript
+import grease from '@flex-development/grease'
+import log from '@flex-development/grease/utils/log.util'
+import ch from 'chalk'
+import sh from 'shelljs'
+import util from 'util'
+
+grease({
+  lernaPackage: 'foo-package',
+  tagPrefix: 'foo-package@'
+}).catch(error => {
+  if (error.stderr) return
+  else sh.echo(ch.bold.red(util.inspect(error, false, null)))
+})
+```
+
+This will tag the version as: `2.0.1-alpha.0`.
+
+In cases where the `prerelease` value found is not the one intended (e.g
+`3.0.0-rc`), use `prereleaseMap` to interpolate values.
+
+Suppose the last version of your code is `foo-package@3.0.0-rc`, and your code
+to be committed has patched changes. Run:
+
+```typescript
+import grease from '@flex-development/grease'
+import log from '@flex-development/grease/utils/log.util'
+import ch from 'chalk'
+import sh from 'shelljs'
+import util from 'util'
+
+grease({
+  lernaPackage: 'foo-package',
+  prereleaseMap: new Map([['rc', 'beta']]),
+  tagPrefix: 'foo-package@'
+}).catch(error => {
+  if (error.stderr) return
+  else sh.echo(ch.bold.red(util.inspect(error, false, null)))
+})
+```
+
+This will tag the version as: `3.0.1-beta.0`.
+
+To opt-of of auto detection, use `prereleaseSkip`:
+
+```typescript
+import grease from '@flex-development/grease'
+import log from '@flex-development/grease/utils/log.util'
+import ch from 'chalk'
+import sh from 'shelljs'
+import util from 'util'
+
+grease({
+  lernaPackage: 'foo-package',
+  prereleaseSkip: true,
+  tagPrefix: 'foo-package@'
+}).catch(error => {
+  if (error.stderr) return
+  else sh.echo(ch.bold.red(util.inspect(error, false, null)))
+})
+```
+
 ### Lifecycle Scripts
 
 `grease` supports lifecycle scripts. These allow you to execute your own
@@ -71,7 +184,10 @@ grease({
     postrelease: 'rimraf ./*.tgz'
   },
   verify: false
-}).catch(error => sh.echo(ch.bold.red(util.inspect(error, false, null))))
+}).catch(error => {
+  if (error.stderr) return
+  else sh.echo(ch.bold.red(util.inspect(error, false, null)))
+})
 ```
 
 ### Skipping Lifecycle Events
@@ -88,7 +204,10 @@ import util from 'util'
 
 grease({
   skip: { greaser: true }
-}).catch(error => sh.echo(ch.bold.red(util.inspect(error, false, null))))
+}).catch(error => {
+  if (error.stderr) return
+  else sh.echo(ch.bold.red(util.inspect(error, false, null)))
+})
 ```
 
 **Note**: Skipping the `depchecker` lifecycle will force `grease` to skip the
@@ -113,7 +232,10 @@ import util from 'util'
 grease({
   firstRelease: true,
   verify: false
-}).catch(error => sh.echo(ch.bold.red(util.inspect(error, false, null))))
+}).catch(error => {
+  if (error.stderr) return
+  else sh.echo(ch.bold.red(util.inspect(error, false, null)))
+})
 ```
 
 _**or**_
@@ -129,7 +251,10 @@ import util from 'util'
 grease({
   notesType: NotesType.BIRTHDAY,
   verify: false
-}).catch(error => sh.echo(ch.bold.red(util.inspect(error, false, null))))
+}).catch(error => {
+  if (error.stderr) return
+  else sh.echo(ch.bold.red(util.inspect(error, false, null)))
+})
 ```
 
 #### Blank Notes
@@ -145,7 +270,10 @@ import util from 'util'
 grease({
   notesType: NotesType.BLANK,
   verify: false
-}).catch(error => sh.echo(ch.bold.red(util.inspect(error, false, null))))
+}).catch(error => {
+  if (error.stderr) return
+  else sh.echo(ch.bold.red(util.inspect(error, false, null)))
+})
 ```
 
 #### Skipped Notes
@@ -164,21 +292,23 @@ import util from 'util'
 grease({
   notesType: NotesType.NULL,
   verify: false
-}).catch(error => sh.echo(ch.bold.red(util.inspect(error, false, null))))
+}).catch(error => {
+  if (error.stderr) return
+  else sh.echo(ch.bold.red(util.inspect(error, false, null)))
+})
 ```
 
 ### Creating GitHub Releases
 
 `grease` uses the [GitHub CLI][2] to create new GitHub releases. Below is the
-[workflow script](scripts/release.ts) `grease` uses to draft new releases:
+[workflow script](../../scripts/release.ts) `grease` uses to draft new releases:
 
 ```typescript
 #!/usr/bin/env node
 
-import type { ObjectPlain } from '@flex-development/tutils'
-import grease from '@grease'
-import type { IGreaseOptions } from '@grease/interfaces'
-import log from '@grease/utils/log.util'
+import grease from '@flex-development/grease'
+import type { IGreaseOptions } from '@flex-development/grease/interfaces'
+import log from '@flex-development/grease/utils/log.util'
 import ch from 'chalk'
 import merge from 'lodash/merge'
 import pick from 'lodash/pick'
@@ -186,21 +316,58 @@ import sh from 'shelljs'
 import util from 'util'
 import { hideBin } from 'yargs/helpers'
 import yargs from 'yargs/yargs'
-import defaults from '../../../.versionrc'
-import exec from '../../../scripts/exec'
-import pkg from '../package.json'
+import { $name, $name_no_scope, $version } from './utils/pkg-get'
 
 /**
- * @file Scripts - Package Release
- * @module packages/grease/scripts/release
+ * @file Scripts - Release Workflow
+ * @module scripts/release
  */
 
 export type ReleaseOptions = {
+  /**
+   * Commit all staged changes, not just release files.
+   *
+   * @default true
+   */
   commitAll?: IGreaseOptions['commitAll']
+
+  /**
+   * See the commands that running release would run.
+   *
+   * @default false
+   */
   dryRun?: IGreaseOptions['dryRun']
+
+  /**
+   * Is this the first release?
+   *
+   * @default false
+   */
   firstRelease?: IGreaseOptions['firstRelease']
+
+  /**
+   * Create a prerelease with optional tag id (e.g: `alpha`,`beta`, `dev`).
+   */
   prerelease?: IGreaseOptions['prerelease']
+
+  /**
+   * Specify release type (like `npm version <major|minor|patch>`).
+   */
   releaseAs?: IGreaseOptions['releaseAs']
+
+  /**
+   * Save GitHub release as a draft instead of publishing it.
+   *
+   * @default true
+   */
+  releaseDraft?: IGreaseOptions['releaseDraft']
+
+  /**
+   * Map of steps in the release process that should be skipped.
+   *
+   * @default true
+   */
+  skip?: IGreaseOptions['skip']
 }
 
 /**
@@ -212,22 +379,19 @@ const args = yargs(hideBin(process.argv))
   .option('commit-all', {
     alias: 'a',
     default: true,
-    describe: 'commit all staged changes, not just files affected by grease',
+    describe: 'commit all staged changes, not just release files',
     type: 'boolean'
   })
   .option('dry-run', {
-    describe: 'see the commands that running grease would run',
+    default: false,
+    describe: 'see the commands that running release would run',
     type: 'boolean'
   })
   .option('first-release', {
     alias: 'f',
+    default: false,
     describe: 'is this the first release?',
     type: 'boolean'
-  })
-  .option('prerelease', {
-    alias: 'p',
-    describe: 'make prerelease with optional value to specify tag id',
-    string: true
   })
   .option('release-as', {
     alias: 'r',
@@ -235,55 +399,87 @@ const args = yargs(hideBin(process.argv))
     requiresArg: true,
     string: true
   })
+  .option('release-draft', {
+    default: true,
+    describe: 'release as a draft instead of publishing it',
+    type: 'boolean'
+  })
+  .option('skip', {
+    describe: 'map of steps in the release process that should be skipped'
+  })
   .alias('help', 'h')
   .pkgConf('release')
   .wrap(98)
 
 /**
- * @property {string} BRANCH - Name of current branch
+ * @property {IGreaseOptions & ReleaseOptions} argv - Command line arguments
  */
-const BRANCH = exec('git rev-parse --abbrev-ref HEAD', false, { silent: true })
-
-/**
- * @property {IGreaseOptions} argv - Command line arguments
- */
-const argv: IGreaseOptions = merge(
-  {},
-  defaults,
-  pick(args.argv as IGreaseOptions, [
+const argv: IGreaseOptions & ReleaseOptions = pick(
+  args.argv as IGreaseOptions & ReleaseOptions,
+  [
     'commitAll',
     'dryRun',
     'firstRelease',
     'prerelease',
-    'releaseAs'
-  ])
+    'releaseAs',
+    'releaseDraft',
+    'skip'
+  ]
 )
 
-// Spread `package.json` data
-const { name, publishConfig = {}, version } = pkg
-const { branch_whitelist } = publishConfig as ObjectPlain
-
 /**
- * @property {string} name_no_scope - Package name without scope
+ * @property {IGreaseOptions} options - `grease` options
  */
-const name_no_scope: string = (name as string).split('/')[1]
-
-// Log workflow start
-log(argv, `starting release workflow: ${name}`, [], 'info')
-
-grease({
-  ...argv,
-  lernaPackage: name_no_scope,
-  releaseAssets: [`${name?.replace('/', '-')}-${version}.tgz`],
-  releaseBranchWhitelist: branch_whitelist || argv.releaseBranchWhitelist,
-  releaseCommitMessageFormat: `chore(release): ${name}@{{currentTag}}`,
+const options: IGreaseOptions = {
+  commitAll: true,
+  gitTagFallback: false,
+  gitdir: process.env.PROJECT_CWD,
+  lernaPackage: $name_no_scope,
+  path: process.cwd(),
+  prerelease: ((): string | undefined => {
+    const tag = $version.split('-')[1]
+    return !tag ? undefined : tag.includes('.') ? tag.split('.')[0] : tag
+  })(),
+  releaseAssets: ['./*.tgz'],
+  releaseBranchWhitelist: ['release/*'],
+  releaseCommitMessageFormat: `release: ${$name}@{{currentTag}}`,
   scripts: {
     postchangelog: `yarn pack -o %s-%v.tgz${argv.dryRun ? ' -n' : ''}`,
-    postrelease: 'rimraf ./*.tgz',
-    posttag: `git push --follow-tags origin ${BRANCH} --no-verify`
+    postcommit: 'git pnv',
+    postgreaser: 'rimraf ./*.tgz',
+    prerelease: 'yarn test --no-cache'
   },
-  tagPrefix: `${name_no_scope}@`
-}).catch(error => sh.echo(ch.bold.red(util.inspect(error, false, null))))
+  // `continuous-deployment` workflow will create new tag
+  skip: { tag: true },
+  skipUnstable: false,
+  tagPrefix: `${$name_no_scope}@`,
+  types: [
+    /* eslint-disable sort-keys */
+    { type: 'feat', section: ':sparkles: Features' },
+    { type: 'fix', section: ':bug: Fixes' },
+    { type: 'revert', section: ':rewind: Revert' },
+    { type: 'test', section: ':robot: Testing' },
+    { type: 'docs', section: ':book: Documentation' },
+    { type: 'build', section: ':hammer: Build' },
+    { type: 'refactor', section: ':recycle: Code Improvements' },
+    { type: 'perf', section: ':zap: Performance Updates' },
+    { type: 'style', section: ':nail_care: Formatting & Structure' },
+    { type: 'ci', section: ':truck: Continuous Integration & Deployment' },
+    { type: 'chore', section: ':pencil2: Housekeeping' },
+    { type: 'wip', hidden: true }
+    /* eslint-enable sort-keys */
+  ],
+  verify: false
+}
+
+// Log workflow start
+log(argv, 'starting release workflow', [$name, `[dry=${argv.dryRun}]`], 'info')
+
+// Run release workflow
+grease(merge({}, options, argv)).catch(error => {
+  if (error.stderr) return
+  else sh.echo(ch.bold.red(util.inspect(error, false, null)))
+})
 ```
 
 ## Built With
