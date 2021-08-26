@@ -1,12 +1,14 @@
 {
   "name": "@flex-development/grease",
   "description": "Package release workflow tool",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "keywords": [
     "bitbucket",
+    "changelog",
     "github cli",
     "github release",
     "release notes",
+    "release notes generator",
     "standard-version",
     "typescript"
   ],
@@ -64,7 +66,9 @@
   },
   "devDependencies": {
     "@types/node": "16.4.13",
+    "copyfiles": "2.4.1",
     "dotenv-cli": "4.0.0",
+    "ts-node": "10.1.0",
     "ttypescript": "1.5.12"
   },
   "peerDependencies": {

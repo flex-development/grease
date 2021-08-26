@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/flex-development/grease/compare/grease@1.0.2...grease@1.1.0) (2021-08-26)
+
+
+### :recycle: Code Improvements
+
+* **node-typescript:** update `SemanticVersionUnstable` definition ([66538cb](https://github.com/flex-development/grease/commit/66538cb6ba9811da0f3f69843aa0d410416fb770))
+* **node-typescript:** update `SemanticVersionTag` definition ([549bf6d](https://github.com/flex-development/grease/commit/549bf6d3c6b4a6a60645eb0180950c1f517340e5))
+* **node:** update `grease` options ([1c4c898](https://github.com/flex-development/grease/commit/1c4c8986e11470f2da069c6f0a42a29b948cae3b))
+
+
+### :hammer: Build
+
+* **node:** install `@flex-development/dtag@1.0.0` ([17d4afd](https://github.com/flex-development/grease/commit/17d4afd9ebd9e8fe5c6f7d30d295ccc6ae25b616))
+
+
+### :sparkles: Features
+
+* **node:** `utils/getPrerelease` ([541a880](https://github.com/flex-development/grease/commit/541a8804f72e13fb8be543d74e32a7bfe9045d34))
+* **node:** autodetect `prerelease` ([ea6c990](https://github.com/flex-development/grease/commit/ea6c990ba3b0098b705e01d00302440b9df7dab8))
+
+
+### :truck: Continuous Integration & Deployment
+
+* **workflows:** use `yarn workspace` command ([79f0edf](https://github.com/flex-development/grease/commit/79f0edfa22e3c5ed3606fe1c13e1f41e50fbb30a))
+
+
+### :pencil2: Housekeeping
+
+* **node:** update package keywords ([8da62a3](https://github.com/flex-development/grease/commit/8da62a3a80c421c1998e1b8934c03f309cc90dd1))
+* **scripts:** update `build` script ([005e1c1](https://github.com/flex-development/grease/commit/005e1c1932bda4df1b07cd3f21fb8a79a69f9635))
+
 ### [1.0.2](https://github.com/flex-development/grease/compare/grease@1.0.1...grease@1.0.2) (2021-08-23)
 
 

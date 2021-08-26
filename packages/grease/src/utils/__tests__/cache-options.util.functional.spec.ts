@@ -26,6 +26,6 @@ describe('functional:utils/cacheOptions', () => {
 
   it('should validate application options', () => {
     expect(mockValidate).toBeCalledTimes(1)
-    expect(mockValidate).toBeCalledWith(GreaseOptions, options)
+    expect(mockValidate).toBeCalledWith(GreaseOptions, options, false)
   })
 })
