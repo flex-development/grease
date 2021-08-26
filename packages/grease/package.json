@@ -4,9 +4,11 @@
   "version": "1.0.2",
   "keywords": [
     "bitbucket",
+    "changelog",
     "github cli",
     "github release",
     "release notes",
+    "release notes generator",
     "standard-version",
     "typescript"
   ],
