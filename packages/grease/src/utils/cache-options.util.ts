@@ -22,7 +22,7 @@ const cacheOptions = async (
 ): Promise<IGreaseOptions> => {
   const cache = Container.get<IGreaseCache>(TOKENS.GreaseCache)
 
-  cache.options = await validate<IGreaseOptions>(GreaseOptions, args)
+  cache.options = await validate<IGreaseOptions>(GreaseOptions, args, false)
 
   return cache.options
 }
