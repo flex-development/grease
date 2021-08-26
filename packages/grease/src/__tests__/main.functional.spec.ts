@@ -6,6 +6,7 @@ import greaser from '@grease/lifecycles/greaser.lifecycle'
 import notes from '@grease/lifecycles/notes.lifecycle'
 import GreaseOptions from '@grease/models/grease-options.model'
 import cacheOptions from '@grease/utils/cache-options.util'
+import getPrerelease from '@grease/utils/get-prerelease.util'
 import log from '@grease/utils/log.util'
 import readPackageFiles from '@grease/utils/read-package-files.util'
 import anymatch from 'anymatch'
@@ -27,6 +28,7 @@ jest.mock('@grease/lifecycles/depchecker.lifecycle')
 jest.mock('@grease/lifecycles/greaser.lifecycle')
 jest.mock('@grease/lifecycles/notes.lifecycle')
 jest.mock('@grease/utils/cache-options.util')
+jest.mock('@grease/utils/get-prerelease.util')
 jest.mock('@grease/utils/log.util')
 jest.mock('@grease/utils/read-package-files.util')
 
@@ -41,6 +43,9 @@ const mockCurrentBranch = currentBranch as jest.MockedFunction<
   typeof currentBranch
 >
 const mockDepchecker = depchecker as jest.MockedFunction<typeof depchecker>
+const mockGetPrerelease = getPrerelease as jest.MockedFunction<
+  typeof getPrerelease
+>
 const mockGreaser = greaser as jest.MockedFunction<typeof greaser>
 const mockLog = log as jest.MockedFunction<typeof log>
 const mockNotes = notes as jest.MockedFunction<typeof notes>
@@ -54,9 +59,17 @@ const mockTag = tag as jest.MockedFunction<typeof tag>
 
 describe('functional:main', () => {
   const OPTIONS: GreaseOptions = merge({}, defaults, {
+    prerelease: undefined,
+    prereleaseMap: new Map([['rc', 'next']]),
     releaseBranchWhitelist: ['BRANCH'],
-    scripts: { prerelease: 'bash scripts/release-assets' }
+    scripts: { prerelease: 'bash scripts/release-assets' },
+    tagPrefix: 'foo-pkg@'
   })
+
+  const $OPTS = {
+    ...OPTIONS,
+    prereleaseMap: new Map(Object.entries(OPTIONS.prereleaseMap || {}))
+  }
 
   beforeAll(() => {
     mockCacheOptions.mockImplementation(async options => options)
@@ -70,7 +83,7 @@ describe('functional:main', () => {
 
     // Act
     try {
-      await testSubject(OPTIONS)
+      await testSubject($OPTS)
     } catch (error) {
       exception = error
     }
@@ -79,7 +92,7 @@ describe('functional:main', () => {
     expect(mockLog).toBeCalledTimes(1)
     expect(exception).toMatchObject({
       code: ExceptionStatusCode.CONFLICT,
-      data: { releaseBranchWhitelist: OPTIONS.releaseBranchWhitelist },
+      data: { releaseBranchWhitelist: $OPTS.releaseBranchWhitelist },
       errors: { branch },
       message: `${branch} not included in release branch whitelist`
     })
@@ -89,15 +102,15 @@ describe('functional:main', () => {
     beforeEach(async () => {
       mockBump.mockImplementationOnce(async () => '2.0.0')
       mockCurrentBranch.mockImplementation(async () => {
-        return OPTIONS.releaseBranchWhitelist?.[0] as string
+        return $OPTS.releaseBranchWhitelist?.[0] as string
       })
 
-      await testSubject(OPTIONS)
+      await testSubject($OPTS)
     })
 
     it('should cache application options', () => {
       expect(mockCacheOptions).toBeCalledTimes(1)
-      expect(mockCacheOptions).toBeCalledWith(OPTIONS)
+      expect(mockCacheOptions).toBeCalledWith($OPTS)
     })
 
     it('should check release branch whitelist', () => {
@@ -109,43 +122,48 @@ describe('functional:main', () => {
 
       expect(mockAnymatch).toBeCalledTimes(1)
       expect(mockAnymatch).toBeCalledWith(
-        OPTIONS.releaseBranchWhitelist,
+        $OPTS.releaseBranchWhitelist,
         expect.anything()
       )
     })
 
     it('should run prerelease and postrelease scripts', () => {
       expect(mockRunLifecycleScript).toBeCalledTimes(2)
-      expect(mockRunLifecycleScript).toBeCalledWith(OPTIONS, 'prerelease')
+      expect(mockRunLifecycleScript).toBeCalledWith($OPTS, 'prerelease')
       expect(mockRunLifecycleScript.mock.calls[0][1]).toBe('prerelease')
-      expect(mockRunLifecycleScript).toBeCalledWith(OPTIONS, 'postrelease')
+      expect(mockRunLifecycleScript).toBeCalledWith($OPTS, 'postrelease')
       expect(mockRunLifecycleScript.mock.calls[1][1]).toBe('postrelease')
     })
 
     it('should read package files', () => {
       expect(mockReadPackageFiles).toBeCalledTimes(1)
-      expect(mockReadPackageFiles).toBeCalledWith(OPTIONS)
+      expect(mockReadPackageFiles).toBeCalledWith($OPTS)
+    })
+
+    it('should set prerelease', () => {
+      expect(mockGetPrerelease).toBeCalledTimes(1)
+      expect(mockGetPrerelease).toBeCalledWith($OPTS, expect.anything())
     })
 
     it('should run lifecycle events', () => {
       // Arrange
-      const options_bump = merge({}, OPTIONS, { scripts: { prerelease: null } })
+      const options_bump = merge({}, $OPTS, { scripts: { prerelease: null } })
 
       // Expect
       expect(mockBump).toBeCalledTimes(1)
       expect(mockBump).toBeCalledWith(options_bump, expect.anything())
       expect(mockChangelog).toBeCalledTimes(1)
-      expect(mockChangelog).toBeCalledWith(OPTIONS, expect.anything())
+      expect(mockChangelog).toBeCalledWith($OPTS, expect.anything())
       expect(mockCommit).toBeCalledTimes(1)
-      expect(mockCommit).toBeCalledWith(OPTIONS, expect.anything())
+      expect(mockCommit).toBeCalledWith($OPTS, expect.anything())
       expect(mockDepchecker).toBeCalledTimes(1)
-      expect(mockDepchecker).toBeCalledWith(OPTIONS)
+      expect(mockDepchecker).toBeCalledWith($OPTS)
       expect(mockGreaser).toBeCalledTimes(1)
-      expect(mockGreaser).toBeCalledWith(OPTIONS, expect.anything())
+      expect(mockGreaser).toBeCalledWith($OPTS, expect.anything())
       expect(mockNotes).toBeCalledTimes(1)
-      expect(mockNotes).toBeCalledWith(OPTIONS, expect.anything())
+      expect(mockNotes).toBeCalledWith($OPTS, expect.anything())
       expect(mockTag).toBeCalledTimes(1)
-      expect(mockTag).toBeCalledWith(expect.anything(), false, OPTIONS)
+      expect(mockTag).toBeCalledWith(expect.anything(), false, $OPTS)
     })
   })
 })
