@@ -20,7 +20,7 @@ on:
         description: release tag
         required: true
 jobs:
-  get-deployment-details:
+  deployment-info:
     name: Get deployment details
     if: |
       github.event.inputs.tag ||
@@ -28,11 +28,10 @@ jobs:
       && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     outputs:
-      build_command: ${{ steps.build_command.outputs.command }}
       publish_command: ${{ steps.publish_command.outputs.command }}
-      scope: ${{ steps.build_command.outputs.scope }}
       tag: ${{ steps.release.outputs.tag }}
       workspace: ${{ steps.release.outputs.workspace }}
+      workspace_no_scope: ${{ steps.release.outputs.workspace_no_scope }}
     steps:
       - id: release
         name: Get release details
@@ -46,37 +45,23 @@ jobs:
               tag = context.payload.pull_request.head.ref.split('release/')[1]
             }
 
-            const { 0: workspace } = tag.split('@')
+            const { 0: workspace_no_scope } = tag.split('@')
+            const workspace = `@flex-development/${workspace_no_scope}`
 
             core.exportVariable('tag', tag)
             core.exportVariable('workspace', workspace)
+            core.exportVariable('workspace_no_scope', workspace_no_scope)
             core.setOutput('tag', tag)
             core.setOutput('workspace', workspace)
-      - id: build_command
-        name: Get build command
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const { workspace } = process.env
-
-            let command
-            let scope
-
-            if (workspace === 'grease') scope = 'node'
-
-            if (scope) command = `yarn build:${scope}`
-            else command = 'echo \"No build command\" && exit 0'
-
-            core.setOutput('command', command)
-            core.setOutput('scope', scope)
+            core.setOutput('workspace_no_scope', workspace_no_scope)
       - id: publish_command
         name: Get publish command
         uses: actions/github-script@v4
         with:
           script: |
-            const { tag, workspace } = process.env
+            const { tag, workspace_no_scope } = process.env
 
-            const folder = `./packages/${workspace}/build`
+            const folder = `./packages/${workspace_no_scope}/build`
 
             let dtag = tag.split('@')[1].split('-')[1] || ''
             if (dtag && dtag.includes('.')) dtag = dtag.split('.')[0]
@@ -88,7 +73,7 @@ jobs:
             )
   publish-package:
     name: Publish package to GPR & NPM
-    needs: get-deployment-details
+    needs: deployment-info
     runs-on: ubuntu-latest
     env:
       NPM_TOKEN_FLDV: ${{ secrets.NPM_TOKEN_FLDV }}
@@ -115,12 +100,12 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.PAT_GPR_FLDV }}
       - id: build
         name: Build project
-        run: ${{ needs.get-deployment-details.outputs.build_command }}
+        run: yarn workspace ${{ needs.deployment-info.outputs.workspace }} build
         env:
           NODE_OPTIONS: -r tsconfig-paths/register
       - id: publish-to-gpr
         name: Publish package [GPR]
-        run: ${{ needs.get-deployment-details.outputs.publish_command }}
+        run: ${{ needs.deployment-info.outputs.publish_command }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PAT_GPR_FLDV_ADMIN }}
       - id: setup-npmrc-npm
@@ -133,7 +118,7 @@ jobs:
           scope: '@flex-development'
       - id: publish-to-npm
         name: Publish package [NPM]
-        run: ${{ needs.get-deployment-details.outputs.publish_command }}
+        run: ${{ needs.deployment-info.outputs.publish_command }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_FLDV }}
   update-production-branch:
@@ -154,14 +139,14 @@ jobs:
           source_repo: ${{ github.repository }}
   publish-release:
     name: Publish GitHub Release
-    needs: [get-deployment-details, update-production-branch]
+    needs: [deployment-info, update-production-branch]
     runs-on: ubuntu-latest
     steps:
       - id: publish
         name: Publish GitHub release
         uses: actions/github-script@v4
         env:
-          tag: ${{ needs.get-deployment-details.outputs.tag }}
+          tag: ${{ needs.deployment-info.outputs.tag }}
         with:
           script: |
             const endpoint = 'GET /repos/{owner}/{repo}/releases'
