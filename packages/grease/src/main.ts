@@ -19,6 +19,7 @@ import greaser from './lifecycles/greaser.lifecycle'
 import notes from './lifecycles/notes.lifecycle'
 import type { SemanticVersionTag } from './types'
 import cacheOptions from './utils/cache-options.util'
+import getPrerelease from './utils/get-prerelease.util'
 import log from './utils/log.util'
 import readPackageFiles from './utils/read-package-files.util'
 
@@ -37,7 +38,7 @@ import readPackageFiles from './utils/read-package-files.util'
  * @return {Promise<void>} Empty promise when complete
  */
 const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
-  args = merge(defaults, args)
+  args = merge({}, defaults, args)
 
   // Run prerelease script
   if (typeof args.scripts.prerelease === 'string') {
@@ -77,6 +78,9 @@ const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
 
     // Read package files
     const { isPrivate, version } = await readPackageFiles(options)
+
+    // Set prerelease option
+    options.prerelease = getPrerelease(options, version)
 
     // Run bump lifecycle to get new package version
     const newVersion = await bump(
