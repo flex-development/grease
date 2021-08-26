@@ -644,6 +644,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@flex-development/dtag@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@flex-development/dtag@npm:1.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40flex-development%2Fdtag%2F1.0.0%2F2dadc14814c6a35919c867b60089e6dca7d3124e8608416a8a3258b93fa3be9f"
+  dependencies:
+    "@flex-development/tutils": 3.1.0
+    lodash.merge: 4.6.2
+  checksum: c3e84188a9173775b77b87f1d9871ea0b9f11cd3865228360d35d7ad1bf4352d1a5d6d5042a93e629232fe822061fffd3cae960e610893e6163b6bf3bcda4e3f
+  languageName: node
+  linkType: hard
+
 "@flex-development/exceptions@npm:2.0.1":
   version: 2.0.1
   resolution: "@flex-development/exceptions@npm:2.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40flex-development%2Fexceptions%2F2.0.1%2F008a7848fd33bf966cbc98c45188e78a74274140aa6d71460cd770be213a47ae"
@@ -660,6 +670,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@flex-development/grease@workspace:packages/grease"
   dependencies:
+    "@flex-development/dtag": 1.0.0
     "@flex-development/exceptions": 2.0.1
     "@flex-development/tutils": 3.1.0
     "@types/git-semver-tags": 4.1.1
@@ -6819,7 +6830,7 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"lodash.merge@npm:^4.6.2":
+"lodash.merge@npm:4.6.2, lodash.merge@npm:^4.6.2":
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
   checksum: ad580b4bdbb7ca1f7abf7e1bce63a9a0b98e370cf40194b03380a46b4ed799c9573029599caebc1b14e3f24b111aef72b96674a56cfa105e0f5ac70546cdc005

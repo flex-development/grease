@@ -21,6 +21,10 @@
     "noUnusedParameters": false,
     "paths": {
       "@/*": ["packages/*"],
+      "@flex-development/dtag": [
+        "node_modules/@flex-development/dtag/cjs/index"
+      ],
+      "@flex-development/dtag/*": ["node_modules/@flex-development/dtag/cjs/*"],
       "@grease": ["packages/grease/src/index.ts"],
       "@grease/*": ["packages/grease/src/*"],
       "@tests/fixtures/*": ["__tests__/__fixtures__/*"],
