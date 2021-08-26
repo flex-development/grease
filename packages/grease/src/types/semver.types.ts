@@ -48,7 +48,9 @@ export type SemanticVersion = SemanticVersionStable | SemanticVersionUnstable
 /**
  * Semantic version (stable and unstable) with tag prefix string schema.
  */
-export type SemanticVersionTag = `${string | ''}${SemanticVersion}`
+export type SemanticVersionTag =
+  | `${string | ''}${SemanticVersion}`
+  | `${string}@${SemanticVersion}`
 
 // Rename `git-semver-tag` and `semver` type definitions
 export type {
