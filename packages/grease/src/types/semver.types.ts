@@ -37,7 +37,8 @@ export type SemanticVersionStable = `${number}.${number}.${number}`
  * Unstable semantic version string schema.
  */
 export type SemanticVersionUnstable =
-  `${SemanticVersionStable}-${string}.${number}`
+  | `${SemanticVersionStable}-${string}`
+  | `${SemanticVersionStable}-${string}.${number}`
 
 /**
  * Semantic version (stable and unstable) string schema.
