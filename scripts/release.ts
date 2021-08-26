@@ -141,7 +141,7 @@ const options: IGreaseOptions = {
     postchangelog: `yarn pack -o %s-%v.tgz${argv.dryRun ? ' -n' : ''}`,
     postcommit: 'git pnv',
     postgreaser: 'rimraf ./*.tgz',
-    prerelease: 'git rebase origin/next; yarn test --no-cache; git pnv'
+    prerelease: 'yarn test --no-cache'
   },
   // `continuous-deployment` workflow will create new tag
   skip: { tag: true },
@@ -167,9 +167,10 @@ const options: IGreaseOptions = {
 }
 
 // Log workflow start
-log(argv, `starting release workflow`, [$name, `[dry=${argv.dryRun}]`], 'info')
+log(argv, 'starting release workflow', [$name, `[dry=${argv.dryRun}]`], 'info')
 
 // Run release workflow
 grease(merge({}, options, argv)).catch(error => {
-  sh.echo(ch.bold.red(util.inspect(error, false, null)))
+  if (error.stderr) return
+  else sh.echo(ch.bold.red(util.inspect(error, false, null)))
 })
