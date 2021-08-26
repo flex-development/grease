@@ -141,7 +141,7 @@ const options: IGreaseOptions = {
     postchangelog: `yarn pack -o %s-%v.tgz${argv.dryRun ? ' -n' : ''}`,
     postcommit: 'git pnv',
     postgreaser: 'rimraf ./*.tgz',
-    prerelease: 'yarn test --no-cache'
+    prerelease: 'yarn workspace @flex-development/p010 test --no-cache'
   },
   // `continuous-deployment` workflow will create new tag
   skip: { tag: true },
