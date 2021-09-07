@@ -44,7 +44,7 @@
   "dependencies": {
     "@flex-development/dtag": "1.0.0",
     "@flex-development/exceptions": "2.0.1",
-    "@flex-development/tutils": "3.1.0",
+    "@flex-development/tutils": "3.1.5",
     "@types/git-semver-tags": "4.1.1",
     "@types/lodash": "4.14.172",
     "@types/semver": "7.3.8",
