@@ -127,13 +127,13 @@ To prevent `yarn bootstrap` errors, you'll need to conditionally require the
 4. Run your script:
 
    ```zsh
-   yarn build:node
+   yarn build:grease
    ```
 
    _instead of_
 
    ```zsh
-   NODE_OPTIONS='-r tsconfig-paths/register' yarn build:node
+   NODE_OPTIONS='-r tsconfig-paths/register' yarn build:grease
    ```
 
 ## Contributing Code
@@ -372,11 +372,11 @@ Before releasing, the following steps must be completed:
      correct workspace publish command
 3. Decide what version bump the release needs (major, minor, patch)
    - versioning
-     - `yarn release:node` (determines [bumps based on commits][16])
-     - `yarn release:node --first-release`
-     - `yarn release:node --release-as major`
-     - `yarn release:node --release-as minor`
-     - `yarn release:node --release-as patch`
+     - `yarn release:grease` (determines [bumps based on commits][16])
+     - `yarn release:grease --first-release`
+     - `yarn release:grease --release-as major`
+     - `yarn release:grease --release-as minor`
+     - `yarn release:grease --release-as patch`
    - a new release will be drafted
 4. Open a new pull request from `release/*` into `next`
    - title the PR `release: <package.json#name>@<package.json#version>`

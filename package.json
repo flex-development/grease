@@ -23,9 +23,9 @@
     "fix:format": "prettier --write .",
     "fix:style": "yarn check:style --fix --cache",
     "test": "bash scripts/jest.sh",
-    "test:node": "yarn workspace @flex-development/grease test",
-    "build:node": "yarn workspace @flex-development/grease build",
-    "release:node": "yarn workspace  @flex-development/grease release"
+    "test:grease": "yarn workspace @flex-development/grease test",
+    "build:grease": "yarn workspace @flex-development/grease build",
+    "release:grease": "yarn workspace @flex-development/grease release"
   },
   "devDependencies": {
     "@babel/core": "7.15.4",

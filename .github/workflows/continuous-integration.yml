@@ -40,6 +40,6 @@ jobs:
       - name: Check code style
         run: yarn check:style
       - name: Build Node.js program
-        run: yarn build:node
+        run: yarn build:grease
         env:
           NODE_OPTIONS: -r tsconfig-paths/register

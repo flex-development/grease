@@ -1,5 +1,6 @@
-const { Rule, RuleConfigTuple } = require('@commitlint/types')
-const { Record } = require('typescript')
+const { RuleConfigTuple } = require('@commitlint/types')
+const { lstatSync, readdirSync } = require('fs')
+const { resolve } = require('path')
 
 /**
  * @file Commitlint Configuration
@@ -9,30 +10,29 @@ const { Record } = require('typescript')
 
 module.exports = {
   /**
-   * @property {boolean} defaultIgnores - If true, enable default ignore rules
+   * Enable default ignore rules.
    */
   defaultIgnores: true,
 
   /**
-   * @property {Array<string>} extends - IDs of commitlint configurations
+   * IDs of commitlint configurations.
    */
   extends: ['@commitlint/config-conventional'],
 
   /**
-   * @property {string} formatter - Name of formatter package
+   * Name of formatter package.
    */
   formatter: '@commitlint/format',
 
   /**
    * Functions that return true if commitlint should ignore the given message.
-   *
-   * @param {string} commit - The commit message
-   * @return {boolean} `true` if commitlint should ignore message
    */
   ignores: [],
 
   /**
-   * @property {Record<string, Rule>} rules - Rules to test commits against
+   * Rules to test commits against.
+   *
+   * @see https://commitlint.js.org/#/reference-rules
    */
   rules: {
     /**
@@ -41,31 +41,61 @@ module.exports = {
     'scope-case': [2, 'always', 'kebab-case'],
 
     /**
-     * Rules for valid commit scopes.
+     * Returns the rules for valid commit scopes.
      *
      * @return {RuleConfigTuple} Scope rules
      */
     'scope-enum': () => {
+      /**
+       * Returns an array containing Yarn workspace directory names.
+       *
+       * @return {string[]} Array containing workspace directory names
+       */
+      const workspaceDirectories = () => {
+        // Yarn project names
+        const projects = ['packages']
+
+        // Init array of workspace directory names
+        const workspaces = []
+
+        // Get subdirectories
+        projects.forEach(project => {
+          // Get path to Yarn project directory
+          const path = resolve(__dirname, project)
+
+          // Add subdirectories under Yarn project directory
+          readdirSync(path).forEach(workspace => {
+            if (!lstatSync(resolve(path, workspace)).isDirectory()) return
+            return workspaces.push(workspace)
+          })
+        })
+
+        // Return workspace directory names
+        return workspaces
+      }
+
       const scopes = [
         'deploy',
         'deps',
         'deps-dev',
+        'deps-peer',
         'release',
         'scripts',
         'tests',
         'typescript',
-        'workflows'
+        'yarn'
       ]
 
-      const scopes_package = ['cli', 'node']
+      const workspaces = workspaceDirectories()
 
       return [
         2,
         'always',
         [
           ...scopes,
-          ...scopes_package,
-          ...scopes_package.map(ps => scopes.map(s => `${ps}-${s}`)).flat()
+          ...workspaces,
+          ...workspaces.map(d => scopes.map(s => `${d}-${s}`)).flat(),
+          'workflows'
         ]
       ]
     },

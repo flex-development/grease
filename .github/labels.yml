@@ -130,12 +130,8 @@
   description: Application cache
   color: 74cefc
 
-- name: scope:cli
-  description: CLI application
-  color: 74cefc
-
-- name: scope:deploy
-  description: Package deployment tasks
+- name: scope:deploy-release
+  description: Package deployment and release tasks
   color: 74cefc
 
 - name: scope:deps
@@ -146,12 +142,12 @@
   description: Lifecycle functions
   color: 74cefc
 
-- name: scope:node
+- name: scope:grease
   description: Node.js program
   color: 74cefc
 
-- name: scope:release
-  description: Package release tasks
+- name: scope:grease-cli
+  description: CLI application
   color: 74cefc
 
 - name: scope:scripts
