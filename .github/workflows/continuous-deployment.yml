@@ -28,10 +28,10 @@ jobs:
       && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     outputs:
-      publish_command: ${{ steps.publish_command.outputs.command }}
+      directory: ${{ steps.release.outputs.directory }}
+      publish_args: ${{ steps.publish_args.outputs.args }}
       tag: ${{ steps.release.outputs.tag }}
       workspace: ${{ steps.release.outputs.workspace }}
-      workspace_no_scope: ${{ steps.release.outputs.workspace_no_scope }}
     steps:
       - id: release
         name: Get release details
@@ -45,32 +45,27 @@ jobs:
               tag = context.payload.pull_request.head.ref.split('release/')[1]
             }
 
-            const { 0: workspace_no_scope } = tag.split('@')
-            const workspace = `@flex-development/${workspace_no_scope}`
+            const { 0: workspace_no_scope, 1: version } = tag.split('@')
+
+            const workspace = `@${context.repo.owner}/${workspace_no_scope}`
 
             core.exportVariable('tag', tag)
+            core.exportVariable('version', version)
             core.exportVariable('workspace', workspace)
-            core.exportVariable('workspace_no_scope', workspace_no_scope)
+
+            core.setOutput('directory', `packages/${workspace_no_scope}`)
             core.setOutput('tag', tag)
             core.setOutput('workspace', workspace)
-            core.setOutput('workspace_no_scope', workspace_no_scope)
-      - id: publish_command
-        name: Get publish command
+      - id: publish_args
+        name: Get publish arguments
         uses: actions/github-script@v4
         with:
           script: |
-            const { tag, workspace_no_scope } = process.env
+            const dtag = require('@flex-development/dtag')
 
-            const folder = `./packages/${workspace_no_scope}/build`
+            const { version } = process.env
 
-            let dtag = tag.split('@')[1].split('-')[1] || ''
-            if (dtag && dtag.includes('.')) dtag = dtag.split('.')[0]
-            if (dtag) dtag = `--tag ${dtag}`
-
-            core.setOutput(
-              'command', 
-              `npm publish ${folder} --access public ${dtag}`.trim()
-            )
+            core.setOutput('args', `--tag ${dtag({ version }) || ''}`.trim())
   publish-package:
     name: Publish package to GPR & NPM
     needs: deployment-info
@@ -105,7 +100,8 @@ jobs:
           NODE_OPTIONS: -r tsconfig-paths/register
       - id: publish-to-gpr
         name: Publish package [GPR]
-        run: ${{ needs.deployment-info.outputs.publish_command }}
+        working-directory: ${{ needs.deployment-info.outputs.directory }}
+        run: yarn publish ${{ needs.deployment-info.outputs.publish_args }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PAT_GPR_FLDV_ADMIN }}
       - id: setup-npmrc-npm
@@ -118,7 +114,8 @@ jobs:
           scope: '@flex-development'
       - id: publish-to-npm
         name: Publish package [NPM]
-        run: ${{ needs.deployment-info.outputs.publish_command }}
+        working-directory: ${{ needs.deployment-info.outputs.directory }}
+        run: npm publish ${{ needs.deployment-info.outputs.publish_args }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_FLDV }}
   update-production-branch:
@@ -187,19 +184,14 @@ jobs:
             const opts = github.issues.listForRepo(context.repo)
             const issues = await github.paginate(opts)
 
-            Promise.all(issues.map(async issue => {
-              if (issue.labels) {
-                const names = issue.labels.map(label => label.name)
-
-                const label_add = 'status:released'
-                const label_check = 'status:merged'
-
-                if (!name.includes(label_add) && names.includes(label_check)) {
+            Promise.all(issues.map(async ({ labels, number }) => {
+              return labels && labels.map(({ name }) => {
+                if (name === 'status:merged') {
                   return await github.issues.addLabels({
                     ...context.repo,
-                    issue_number: issue.number,
-                    labels: [label_add]
+                    issue_number: number,
+                    labels: ['status:released']
                   })
                 }
-              }
+              })
             }))

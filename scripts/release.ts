@@ -4,8 +4,8 @@ import grease from '@grease'
 import type { IGreaseOptions } from '@grease/interfaces'
 import log from '@grease/utils/log.util'
 import ch from 'chalk'
-import merge from 'lodash/merge'
-import pick from 'lodash/pick'
+import merge from 'lodash.merge'
+import pick from 'lodash.pick'
 import sh from 'shelljs'
 import util from 'util'
 import { hideBin } from 'yargs/helpers'
@@ -140,8 +140,8 @@ const options: IGreaseOptions = {
   scripts: {
     postchangelog: `yarn pack -o %s-%v.tgz${argv.dryRun ? ' -n' : ''}`,
     postcommit: 'git pnv',
-    postgreaser: 'rimraf ./*.tgz',
-    prerelease: 'yarn workspace @flex-development/p010 test --no-cache'
+    postgreaser: 'rimraf ./cjs && rimraf ./esm && rimraf ./*.tgz',
+    prerelease: `yarn workspace ${$name} test --no-cache`
   },
   // `continuous-deployment` workflow will create new tag
   skip: { tag: true },

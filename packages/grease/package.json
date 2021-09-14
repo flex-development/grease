@@ -29,11 +29,18 @@
   },
   "publishConfig": {
     "access": "public",
-    "directory": "./build"
+    "directory": "./"
   },
-  "main": "./build/cjs/index.js",
-  "module": "./build/esm/index.js",
-  "types": "./build/esm/index.d.ts",
+  "files": [
+    "cjs",
+    "esm",
+    ".env",
+    ".env.production",
+    "CHANGELOG.md"
+  ],
+  "main": "./cjs/index.js",
+  "module": "./esm/index.js",
+  "types": "./esm/index.d.ts",
   "scripts": {
     "test": "bash ../../scripts/jest.sh",
     "build": "dotenv -c production -- ts-node ../../scripts/build",

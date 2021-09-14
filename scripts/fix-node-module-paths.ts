@@ -14,7 +14,7 @@ import replace from 'replace-in-file'
  * @property {ReplaceInFileConfig} OPTIONS - Replacement options
  */
 const OPTIONS: ReplaceInFileConfig = {
-  files: 'build/**/*',
+  files: ['./cjs/**/*', './esm/**/*'],
   from: new RegExp('(../.*)?(node_modules/)', 'g'),
   to: ''
 }
@@ -36,7 +36,7 @@ const fixNodeModulePaths = (): ReplaceResult[] => {
   try {
     results = replace.sync(OPTIONS)
   } catch (error) {
-    log({}, error.message, [], 'error')
+    log({}, (error as Error).message, [], 'error')
   }
 
   log({}, 'fix import paths')

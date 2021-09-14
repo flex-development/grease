@@ -3,9 +3,16 @@
 
 .yarn/
 build/
+cjs/
 coverage/
+esm/
 node_modules/
 
 **/CHANGELOG.md
+.eslintignore
 .env.*
 .env
+.gitignore
+.gitkeep
+.prettierignore
+yarn.lock

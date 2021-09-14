@@ -715,6 +715,8 @@ __metadata:
     "@types/faker": 5.5.6
     "@types/fs-extra": 9.0.11
     "@types/jest": 26.0.23
+    "@types/lodash.merge": 4.6.6
+    "@types/lodash.pick": 4.4.6
     "@types/mvdan-sh": 0.5.0
     "@types/node": 15.12.5
     "@types/rimraf": 2.0.4
@@ -742,6 +744,8 @@ __metadata:
     jest-extended: 0.11.5
     jest-mock-console: 1.1.0
     lint-staged: 11.0.0
+    lodash.merge: 4.6.2
+    lodash.pick: 4.4.0
     mkdirp: 0.5.5
     npm: 7.19.0
     npm-run-all: 4.1.5
@@ -1468,12 +1472,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash.merge@npm:4.6.6":
+  version: 4.6.6
+  resolution: "@types/lodash.merge@npm:4.6.6"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 62ec56f14b3077f7174497856e9b277db811943cd11b1d67d2a8e51a1803bd49319e8aaf62e745c696af972354a575dbb8a85d3aecf4ae774caf062dc31ac46e
+  languageName: node
+  linkType: hard
+
 "@types/lodash.omit@npm:latest":
   version: 4.5.6
   resolution: "@types/lodash.omit@npm:4.5.6"
   dependencies:
     "@types/lodash": "*"
   checksum: ad28ecad31cb08cbdd52a24d3557150bc935da3b0b164a36393330e0fb5dbd09485fb85a3d5ea74ee3f91671d88dd55663887cfad88c5b83ce0f9ca16ed9fc11
+  languageName: node
+  linkType: hard
+
+"@types/lodash.pick@npm:4.4.6":
+  version: 4.4.6
+  resolution: "@types/lodash.pick@npm:4.4.6"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: c53b5efc8bf69583aecd823ecb23ee489d44cc741246f69b0add0756dde2a53f94c86139bf77a95222ccdc992eee63dfb1be41f4f03ab18266fbb085d7ba30de
   languageName: node
   linkType: hard
 
@@ -6843,6 +6865,13 @@ fsevents@^2.3.2:
   version: 4.5.0
   resolution: "lodash.omit@npm:4.5.0"
   checksum: 434645e49fe84ab315719bd5a9a3a585a0f624aa4160bc09157dd041a414bcc287c15840365c1379476a3f3eda41fbe838976c3f7bdecbbf4c5478e86c471a30
+  languageName: node
+  linkType: hard
+
+"lodash.pick@npm:4.4.0":
+  version: 4.4.0
+  resolution: "lodash.pick@npm:4.4.0"
+  checksum: 2c36cab7da6b999a20bd3373b40e31a3ef81fa264f34a6979c852c5bc8ac039379686b27380f0cb8e3781610844fafec6949c6fbbebc059c98f8fa8570e3675f
   languageName: node
   linkType: hard
 

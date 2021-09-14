@@ -3,5 +3,8 @@
 
 .yarn/
 build/
+cjs/
 coverage/
+esm/
 node_modules/
+

@@ -126,6 +126,7 @@ const RULES = {
         'cmp',
         'commitlint',
         'copyfiles',
+        'dotenv',
         'enum',
         'esm',
         'formatter',

@@ -75,6 +75,7 @@ coverage/
 ### TypeScript ###
 # TypeScript cache
 *.tsbuildinfo
+packages/**/tsconfig.prod.*
 
 ### ESLint ###
 # Optional eslint cache
@@ -82,4 +83,6 @@ coverage/
 
 # Builds & Distributions
 build/
+cjs/
+esm/
 *.zip
