@@ -93,12 +93,16 @@
   "env": {
     "optional": [
       "DEBUG",
-      "DEBUG_COLORS"
+      "DEBUG_COLORS",
+      "NODE_ENV",
+      "TS_NODE_PROJECT"
     ],
     "required": [
+      "NODE_OPTIONS",
       "NPM_TOKEN_FLDV",
       "PAT_GPR_FLDV",
-      "PROJECT_CWD"
+      "PROJECT_CWD",
+      "PWD"
     ]
   },
   "packageManager": "yarn@3.0.2",

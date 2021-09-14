@@ -101,14 +101,19 @@ also be displayed if you're missing any environment variables.
 ### Environment Variables
 
 All environment variables are documented in `package.json` of each project,
-under the `env.optional` and `env.required` fields.
+under the `env` field.
 
 #### `NODE_OPTIONS`
 
-Running a `ts-node` command? Conditionally require `tsconfig-paths/register` to
-run scripts that use path aliases:
+The `NODE_OPTIONS` environment variable is required when running any script that
+includes [TypeScript path aliases](./tsconfig.json) (e.g: scripts from the root
+[`scripts`](./scripts) directory).
+
+To prevent `yarn bootstrap` errors, you'll need to conditionally require the
+`tsconfig-paths/register` module:
 
 1. Open `~/.bash_profile`, `~/.zprofile`, **or** `~/.zshrc`
+
 2. Conditionally append `-r <path/to/import>`
 
    ```zsh
@@ -117,20 +122,19 @@ run scripts that use path aliases:
    fi
    ```
 
-3. Run your script:
+3. Restart your shell
+
+4. Run your script:
 
    ```zsh
-   ts-node scratchpad-with-path-aliases
+   yarn build:node
    ```
 
    _instead of_
 
    ```zsh
-   NODE_OPTIONS='-r tsconfig-paths/register' ts-node scratchpad-with-path-aliases
+   NODE_OPTIONS='-r tsconfig-paths/register' yarn build:node
    ```
-
-Note: Workspaces that require custom option must use an `.env.*` file to set
-`NODE_OPTIONS`.
 
 ## Contributing Code
 

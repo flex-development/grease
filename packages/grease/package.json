@@ -92,7 +92,9 @@
     "yarn": "3.0.2"
   },
   "env": {
-    "optional": [],
+    "optional": [
+      "NODE_ENV"
+    ],
     "required": []
   },
   "packageManager": "yarn@3.0.2"
