@@ -81,7 +81,8 @@
   },
   "engines": {
     "node": ">=15.0.0",
-    "yarn": "3.0.0-rc.2"
+    "npm": "use-yarn",
+    "yarn": "3.0.2"
   },
   "resolutions": {
     "read-pkg": "5.2.0"
@@ -97,6 +98,7 @@
       "PROJECT_CWD"
     ]
   },
+  "packageManager": "yarn@3.0.2",
   "private": true,
   "workspaces": [
     "packages/*"

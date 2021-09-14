@@ -88,10 +88,12 @@
   },
   "engines": {
     "node": ">=15.0.0",
-    "yarn": "3.0.0-rc.2"
+    "npm": "use-yarn",
+    "yarn": "3.0.2"
   },
   "env": {
     "optional": [],
     "required": []
-  }
+  },
+  "packageManager": "yarn@3.0.2"
 }
