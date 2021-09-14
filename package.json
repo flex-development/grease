@@ -14,7 +14,9 @@
     "url": "https://flexdevelopment.llc"
   },
   "scripts": {
-    "clean": "rimraf node_modules",
+    "clean:modules": "rimraf ./node_modules packages/*/node_modules",
+    "clean:yarn": "rimraf .yarn/cache .yarn/*.gz",
+    "clean": "yarn clean:yarn && yarn clean:modules",
     "prepare": "yarn workspaces foreach -itv run prepare",
     "postinstall": "husky-run install",
     "bootstrap": "yarn; yarn prepare",
