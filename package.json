@@ -21,6 +21,7 @@
     "postinstall": "husky-run install",
     "bootstrap": "yarn; yarn prepare",
     "check:format": "prettier --check .",
+    "check:install": "yarn dlx @yarnpkg/doctor .",
     "check:style": "eslint . --ext md,js,ts",
     "fix:format": "prettier --write .",
     "fix:style": "yarn check:style --fix --cache",
