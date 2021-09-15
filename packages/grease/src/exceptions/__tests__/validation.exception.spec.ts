@@ -1,6 +1,6 @@
 import { ExceptionStatusCode } from '@flex-development/exceptions/enums'
-import ERROR from '@tests/fixtures/error.fixture'
-import VALIDATION_ERRORS from '@tests/fixtures/validation-errors.fixture'
+import ERROR from '@grease/tests/fixtures/error.fixture'
+import VALIDATION_ERRORS from '@grease/tests/fixtures/validation-errors.fixture'
 import TestSubject from '../validation.exception'
 
 /**

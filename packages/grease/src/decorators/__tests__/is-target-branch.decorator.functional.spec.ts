@@ -2,12 +2,12 @@ import type { OneOrMany } from '@flex-development/tutils'
 import Validator from '@grease/constraints/is-target-branch.constraint'
 import { IsTargetBranchMessage as Msg } from '@grease/enums'
 import type { IsTargetBranchOptions } from '@grease/interfaces'
-import BRANCHES from '@tests/fixtures/git-branches.fixture'
-import COMMITS from '@tests/fixtures/git-commit-shas.fixture'
+import BRANCHES from '@grease/tests/fixtures/git-branches.fixture'
+import COMMITS from '@grease/tests/fixtures/git-commit-shas.fixture'
 import type {
   IsTargetBranchOption as Option,
   TestcaseDecorator
-} from '@tests/utils/types'
+} from '@grease/tests/utils/types'
 import { validate, ValidateBy } from 'class-validator'
 import TestSubject from '../is-target-branch.decorator'
 

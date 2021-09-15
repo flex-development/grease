@@ -92,7 +92,9 @@ export default {
 
           try {
             return (reverse ? rcompare : compare)(version1, version2)
-          } catch ({ message, stack }) {
+          } catch (error) {
+            const { message, stack } = error as Error
+
             const code = ExceptionStatusCode.BAD_REQUEST
             const data = { tag1, tag2, tagPrefix, version1, version2 }
 

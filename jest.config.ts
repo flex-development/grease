@@ -1,6 +1,6 @@
 import type { Config } from '@jest/types'
-import merge from 'lodash/merge'
-import omit from 'lodash/omit'
+import merge from 'lodash.merge'
+import omit from 'lodash.omit'
 import baseConfig from './jest.config.base'
 import pkg from './package.json'
 

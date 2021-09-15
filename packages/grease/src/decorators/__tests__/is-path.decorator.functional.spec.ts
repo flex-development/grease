@@ -2,11 +2,11 @@ import type { OneOrMany } from '@flex-development/tutils'
 import Validator from '@grease/constraints/is-path.constraint'
 import { IsPathMessage as Msg } from '@grease/enums/is-path-message.enum'
 import type { IsPathOptions } from '@grease/interfaces'
-import type { PathLike } from '@grease/types'
 import type {
   IsPathOption as Option,
   TestcaseDecorator
-} from '@tests/utils/types'
+} from '@grease/tests/utils/types'
+import type { PathLike } from '@grease/types'
 import { validate, ValidateBy } from 'class-validator'
 import TestSubject from '../is-path.decorator'
 

@@ -1,11 +1,11 @@
 import pkg from '@/grease/package.json'
 import { IsSemVerCode as Code, IsSemVerMessage as Msg } from '@grease/enums'
-import TAGS, { VERSION_TAG_DEV } from '@tests/fixtures/git-tags.fixture'
+import TAGS, { VERSION_TAG_DEV } from '@grease/tests/fixtures/git-tags.fixture'
 import type {
   IsSemVerOption as Option,
-  Testcase,
   TestcaseDecorator
-} from '@tests/utils/types'
+} from '@grease/tests/utils/types'
+import type { Testcase } from '@tests/utils/types'
 import type { ValidationArguments } from 'class-validator'
 import TestSubject from '../is-sem-ver.constraint'
 

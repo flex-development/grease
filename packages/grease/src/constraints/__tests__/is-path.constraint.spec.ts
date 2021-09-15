@@ -1,10 +1,10 @@
 import { IsPathCode as Code, IsPathMessage as Msg } from '@grease/enums'
-import { stringifyType } from '@tests/utils'
 import type {
   IsPathOption as Option,
-  Testcase,
   TestcaseDecorator
-} from '@tests/utils/types'
+} from '@grease/tests/utils/types'
+import { stringifyType } from '@tests/utils'
+import type { Testcase } from '@tests/utils/types'
 import type { ValidationArguments } from 'class-validator'
 import TestSubject from '../is-path.constraint'
 

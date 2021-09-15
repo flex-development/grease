@@ -1,6 +1,7 @@
 import log from '@grease/utils/log.util'
 import type { ReplaceInFileConfig, ReplaceResult } from 'replace-in-file'
 import replace from 'replace-in-file'
+import NODE_MODULES from './nm-string'
 
 /**
  * @file Scripts - Fix Node Module Import Paths
@@ -15,7 +16,7 @@ import replace from 'replace-in-file'
  */
 const OPTIONS: ReplaceInFileConfig = {
   files: ['./cjs/**/*', './esm/**/*'],
-  from: new RegExp('(../.*)?(node_modules/)', 'g'),
+  from: new RegExp(`(../.*)?(${NODE_MODULES}/)`, 'g'),
   to: ''
 }
 

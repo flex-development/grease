@@ -1,10 +1,10 @@
 import { IsBranchMessage as Msg } from '@grease/enums/is-branch-message.enum'
-import BRANCHES from '@tests/fixtures/git-branches.fixture'
+import BRANCHES from '@grease/tests/fixtures/git-branches.fixture'
 import type {
   IsBranchOption as Option,
-  Testcase,
   TestcaseDecorator
-} from '@tests/utils/types'
+} from '@grease/tests/utils/types'
+import type { Testcase } from '@tests/utils/types'
 import type { ValidationArguments } from 'class-validator'
 import TestSubject from '../is-branch.constraint'
 

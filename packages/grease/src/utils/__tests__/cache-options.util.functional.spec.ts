@@ -1,7 +1,7 @@
 import type { IGreaseOptions } from '@grease/interfaces'
 import GreaseOptions from '@grease/models/grease-options.model'
+import { TAGS_OPTIONS_LERNA } from '@grease/tests/fixtures/git-tags.fixture'
 import validate from '@grease/utils/validate.util'
-import { TAGS_OPTIONS_LERNA } from '@tests/fixtures/git-tags.fixture'
 import testSubject from '../cache-options.util'
 
 /**

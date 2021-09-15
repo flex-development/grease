@@ -22,7 +22,7 @@ describe('unit:utils/validate', () => {
       try {
         await testSubject(Model, {})
       } catch (error) {
-        exception = error
+        exception = error as Exception
       }
 
       // Expect

@@ -1,4 +1,4 @@
-import { mockGitTags } from '@tests/utils'
+import { mockGitTags } from '@grease/tests/utils'
 
 /**
  * @file User Module Mock - semver

@@ -1,10 +1,10 @@
 import { IsCommitMessage as Msg } from '@grease/enums/is-commit-message.enum'
-import COMMITS from '@tests/fixtures/git-commit-shas.fixture'
+import COMMITS from '@grease/tests/fixtures/git-commit-shas.fixture'
 import type {
   IsCommitOption as Option,
-  Testcase,
   TestcaseDecorator
-} from '@tests/utils/types'
+} from '@grease/tests/utils/types'
+import type { Testcase } from '@tests/utils/types'
 import type { ValidationArguments } from 'class-validator'
 import TestSubject from '../is-commit.constraint'
 

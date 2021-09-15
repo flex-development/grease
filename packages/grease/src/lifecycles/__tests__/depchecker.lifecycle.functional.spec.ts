@@ -76,7 +76,7 @@ describe('functional:lifecycles/depchecker', () => {
           try {
             await TestSubject(options)
           } catch (error) {
-            exception = error
+            exception = error as Exception
           }
 
           // Expect

@@ -1,5 +1,5 @@
 import type { ObjectPlain } from '@flex-development/tutils'
-import BRANCHES from '@tests/fixtures/git-branches.fixture'
+import BRANCHES from '@grease/tests/fixtures/git-branches.fixture'
 import type { Testcase } from '@tests/utils/types'
 import type { ValidationArguments } from 'class-validator'
 import fs from 'fs'

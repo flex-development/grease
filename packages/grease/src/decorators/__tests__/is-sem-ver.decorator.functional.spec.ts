@@ -3,15 +3,15 @@ import type { OneOrMany } from '@flex-development/tutils'
 import Validator from '@grease/constraints/is-sem-ver.constraint'
 import { IsSemVerMessage as Msg } from '@grease/enums/is-sem-ver-message.enum'
 import type { IsSemVerOptions } from '@grease/interfaces'
-import type { SemanticVersion } from '@grease/types'
 import {
   TAGS_OPTIONS_LERNA,
   VERSION_DEV
-} from '@tests/fixtures/git-tags.fixture'
+} from '@grease/tests/fixtures/git-tags.fixture'
 import type {
   IsSemVerOption as Option,
   TestcaseDecorator
-} from '@tests/utils/types'
+} from '@grease/tests/utils/types'
+import type { SemanticVersion } from '@grease/types'
 import { validate, ValidateBy } from 'class-validator'
 import TestSubject from '../is-sem-ver.decorator'
 

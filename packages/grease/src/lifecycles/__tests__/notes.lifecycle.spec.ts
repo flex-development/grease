@@ -8,9 +8,13 @@ import {
 } from '@grease/config/constants.config'
 import { NotesType } from '@grease/enums/notes-type.enum'
 import type { IGreaseOptions } from '@grease/interfaces'
+import {
+  RELEASE_NOTES,
+  VERSIONS
+} from '@grease/tests/fixtures/changelog.fixture'
+import INFILE from '@grease/tests/fixtures/infile.fixture'
 import type { SemanticVersion } from '@grease/types'
 import changelogVersions from '@grease/utils/changelog-versions.util'
-import { RELEASE_NOTES, VERSIONS } from '@tests/fixtures/changelog.fixture'
 import type { Testcase } from '@tests/utils/types'
 import { mocked } from 'ts-jest/utils'
 import TestSubject from '../notes.lifecycle'
@@ -26,7 +30,7 @@ const mockChangelogVersions = mocked(changelogVersions)
 
 describe('unit:lifecycles/notes', () => {
   const options: IGreaseOptions = {
-    infile: '__tests__/__fixtures__/CHANGELOG.fixture.md',
+    infile: INFILE,
     notesType: NotesType.CHANGELOG
   }
 
@@ -108,7 +112,7 @@ describe('unit:lifecycles/notes', () => {
       try {
         await TestSubject(options, VERSIONS[VERSIONS.length - 2])
       } catch (error) {
-        exception = error
+        exception = error as Exception
       }
 
       // Expect
@@ -131,7 +135,7 @@ describe('unit:lifecycles/notes', () => {
       try {
         await TestSubject(options, version)
       } catch (error) {
-        exception = error
+        exception = error as Exception
       }
 
       // Expect

@@ -1,6 +1,7 @@
 import type { IGreaseOptions } from '@grease/interfaces'
+import TAGS from '@grease/tests/fixtures/git-tags.fixture'
+import INFILE from '@grease/tests/fixtures/infile.fixture'
 import log from '@grease/utils/log.util'
-import TAGS from '@tests/fixtures/git-tags.fixture'
 import type { RestoreConsole } from 'jest-mock-console'
 import mockConsole from 'jest-mock-console'
 import sh from 'shelljs'
@@ -25,7 +26,7 @@ describe('functional:lifecycles/notes', () => {
 
   const options: IGreaseOptions = {
     dryRun: true,
-    infile: '__tests__/__fixtures__/CHANGELOG.fixture.md'
+    infile: INFILE
   }
 
   const version = TAGS[1].replace('v', '')

@@ -2,11 +2,11 @@ import type { OneOrMany } from '@flex-development/tutils'
 import Validator from '@grease/constraints/is-branch.constraint'
 import { IsBranchMessage as Msg } from '@grease/enums/is-branch-message.enum'
 import type { IsBranchOptions } from '@grease/interfaces'
-import BRANCHES from '@tests/fixtures/git-branches.fixture'
+import BRANCHES from '@grease/tests/fixtures/git-branches.fixture'
 import type {
   IsBranchOption as Option,
   TestcaseDecorator
-} from '@tests/utils/types'
+} from '@grease/tests/utils/types'
 import { validate, ValidateBy } from 'class-validator'
 import TestSubject from '../is-branch.decorator'
 

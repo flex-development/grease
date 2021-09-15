@@ -1,4 +1,4 @@
-import { VERSIONS } from '@tests/fixtures/changelog.fixture'
+import { VERSIONS } from '@grease/tests/fixtures/changelog.fixture'
 
 /**
  * @file User Module Mock - readPackageFiles

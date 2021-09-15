@@ -1,6 +1,7 @@
 import type { Config } from '@jest/types'
 import { jsWithTsESM as preset } from 'ts-jest/presets'
 import { pathsToModuleNameMapper } from 'ts-jest/utils'
+import NODE_MODULES from './scripts/nm-string'
 import { compilerOptions } from './tsconfig.json'
 
 /**
@@ -17,19 +18,20 @@ const config: Config.InitialOptions = {
   clearMocks: true,
   globals: {
     'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.test.json'
+      tsconfig: '<rootDir>/tsconfig.test.json',
+      useESM: true
     }
   },
-  moduleDirectories: ['node_modules'],
+  moduleDirectories: [NODE_MODULES],
   moduleFileExtensions: ['node', 'js', 'json', 'ts'],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix }),
-  prettierPath: `${prefix}/node_modules/prettier`,
+  prettierPath: `<rootDir>/${NODE_MODULES}/prettier`,
   rootDir: '../..',
-  roots: [`${prefix}/__mocks__`, `${prefix}/packages`],
-  setupFiles: [`${prefix}/__tests__/config/setup.ts`],
+  roots: ['<rootDir>/__mocks__', '<rootDir>/packages'],
+  setupFiles: ['<rootDir>/__tests__/config/setup.ts'],
   setupFilesAfterEnv: [
     'jest-mock-console/dist/setupTestFramework.js',
-    `${prefix}/__tests__/config/setupAfterEnv.ts`
+    '<rootDir>/__tests__/config/setupAfterEnv.ts'
   ],
   testRegex: `(/__tests__/)(spec/(${TYPE}))?(.*)(${TYPE})?.spec.ts$`,
   verbose: true

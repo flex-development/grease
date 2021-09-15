@@ -22,7 +22,7 @@ describe('unit:utils/validateSync', () => {
       try {
         testSubject(Model, {})
       } catch (error) {
-        exception = error
+        exception = error as Exception
       }
 
       // Expect

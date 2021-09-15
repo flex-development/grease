@@ -1,4 +1,4 @@
-import COMMITS from '@tests/fixtures/git-commit-shas.fixture'
+import COMMITS from '@grease/tests/fixtures/git-commit-shas.fixture'
 import type { Testcase } from '@tests/utils/types'
 import type { ValidationArguments } from 'class-validator'
 import fs from 'fs'

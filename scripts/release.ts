@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import grease from '@grease'
+import grease from '@grease/index'
 import type { IGreaseOptions } from '@grease/interfaces'
 import log from '@grease/utils/log.util'
 import ch from 'chalk'
@@ -10,7 +10,7 @@ import sh from 'shelljs'
 import util from 'util'
 import { hideBin } from 'yargs/helpers'
 import yargs from 'yargs/yargs'
-import { $name, $name_no_scope, $version } from './utils/pkg-get'
+import { $name, $name_no_scope } from './utils/pkg-get'
 
 /**
  * @file Scripts - Release Workflow
@@ -129,11 +129,7 @@ const options: IGreaseOptions = {
   gitTagFallback: false,
   gitdir: process.env.PROJECT_CWD,
   lernaPackage: $name_no_scope,
-  path: process.cwd(),
-  prerelease: ((): string | undefined => {
-    const tag = $version.split('-')[1]
-    return !tag ? undefined : tag.includes('.') ? tag.split('.')[0] : tag
-  })(),
+  path: process.env.INIT_CWD,
   releaseAssets: ['./*.tgz'],
   releaseBranchWhitelist: ['release/*'],
   releaseCommitMessageFormat: `release: ${$name}@{{currentTag}}`,

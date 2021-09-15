@@ -1,6 +1,6 @@
 import type { IGreaseOptions } from '@grease/interfaces'
+import { TAGS_OPTIONS_LERNA } from '@grease/tests/fixtures/git-tags.fixture'
 import type { GitSemverTagsOptions } from '@grease/types'
-import { TAGS_OPTIONS_LERNA } from '@tests/fixtures/git-tags.fixture'
 import type { Testcase } from '@tests/utils/types'
 import TestSubject from '../grease-cache.service'
 

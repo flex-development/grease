@@ -1,11 +1,11 @@
 import { IsTargetBranchMessage as Msg } from '@grease/enums'
-import BRANCHES from '@tests/fixtures/git-branches.fixture'
-import COMMITS from '@tests/fixtures/git-commit-shas.fixture'
+import BRANCHES from '@grease/tests/fixtures/git-branches.fixture'
+import COMMITS from '@grease/tests/fixtures/git-commit-shas.fixture'
 import type {
   IsTargetBranchOption as Option,
-  Testcase,
   TestcaseDecorator
-} from '@tests/utils/types'
+} from '@grease/tests/utils/types'
+import type { Testcase } from '@tests/utils/types'
 import type { ValidationArguments } from 'class-validator'
 import faker from 'faker'
 import TestSubject from '../is-target-branch.constraint'

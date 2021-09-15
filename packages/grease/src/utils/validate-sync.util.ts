@@ -48,9 +48,10 @@ function validateSync<T extends ObjectPlain = ObjectPlain>(
     value = transformAndValidateSync(Model, value, options)
     if (plain) value = classToPlain(value, options.transformer)
   } catch (error) {
+    const err = error as Error
     const model = new Model().constructor.name
 
-    throw new ValidationException(model, error, merge(data, { target: value }))
+    throw new ValidationException(model, err, merge(data, { target: value }))
   }
 
   return value

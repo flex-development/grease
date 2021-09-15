@@ -58,7 +58,7 @@ describe('functional:utils/readPackageFiles', () => {
     try {
       await testSubject({})
     } catch (error) {
-      exception = error
+      exception = error as Exception
     }
 
     // Expect

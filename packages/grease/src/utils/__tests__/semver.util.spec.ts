@@ -1,11 +1,12 @@
 import pkg from '@/grease/package.json'
+import { TAGS_OPTIONS_LERNA } from '@grease/tests/fixtures/git-tags.fixture'
+import { mockGitTags } from '@grease/tests/utils'
 import type {
   GitSemverTagsOptions,
   SemanticVersion,
   SemVerOptions
 } from '@grease/types'
-import { TAGS_OPTIONS_LERNA } from '@tests/fixtures/git-tags.fixture'
-import { mockGitTags, stringCompare } from '@tests/utils'
+import { stringCompare } from '@tests/utils'
 import type { Testcase } from '@tests/utils/types'
 import TestSubject from '../semver.util'
 

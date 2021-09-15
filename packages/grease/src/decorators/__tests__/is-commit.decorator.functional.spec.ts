@@ -1,11 +1,11 @@
 import type { OneOrMany } from '@flex-development/tutils'
 import Validator from '@grease/constraints/is-commit.constraint'
 import { IsCommitMessage as Msg } from '@grease/enums/is-commit-message.enum'
-import COMMITS from '@tests/fixtures/git-commit-shas.fixture'
+import COMMITS from '@grease/tests/fixtures/git-commit-shas.fixture'
 import type {
   IsCommitOption as Option,
   TestcaseDecorator
-} from '@tests/utils/types'
+} from '@grease/tests/utils/types'
 import { validate, ValidateBy } from 'class-validator'
 import faker from 'faker'
 import { IsCommitOptions } from '../../interfaces'

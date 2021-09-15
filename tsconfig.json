@@ -26,6 +26,8 @@
       ],
       "@flex-development/dtag/*": ["node_modules/@flex-development/dtag/cjs/*"],
       "@grease": ["packages/grease/src/index.ts"],
+      "@grease/tests/fixtures/*": ["packages/grease/__tests__/__fixtures__/*"],
+      "@grease/tests/*": ["packages/grease/__tests__/*"],
       "@grease/*": ["packages/grease/src/*"],
       "@tests/fixtures/*": ["__tests__/__fixtures__/*"],
       "@tests/*": ["__tests__/*"]

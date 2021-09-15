@@ -85,7 +85,7 @@ describe('functional:main', () => {
     try {
       await testSubject($OPTS)
     } catch (error) {
-      exception = error
+      exception = error as Exception
     }
 
     // Expect
