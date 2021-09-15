@@ -30,7 +30,7 @@ jobs:
           cache: 'yarn'
           node-version: ${{ matrix.node }}
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@flex-development'
+          scope: '@${{ github.repository_owner }}'
       - name: Install dependencies
         run: yarn
         env:

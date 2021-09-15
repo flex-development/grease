@@ -87,7 +87,7 @@ jobs:
           cache: yarn
           node-version: 16
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@flex-development'
+          scope: '@${{ github.repository_owner }}'
       - id: dependencies
         name: Install dependencies
         run: yarn --immutable
@@ -111,7 +111,7 @@ jobs:
           cache: yarn
           node-version: 16
           registry-url: 'https://registry.npmjs.org'
-          scope: '@flex-development'
+          scope: '@${{ github.repository_owner }}'
       - id: publish-to-npm
         name: Publish package [NPM]
         working-directory: ${{ needs.deployment-info.outputs.directory }}
