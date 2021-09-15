@@ -156,6 +156,7 @@ module.exports = {
           'ver',
           'wip',
           'workspace',
+          'workspaces',
           'yargs',
           'zsh'
         ],

@@ -1,7 +1,3 @@
-const { RuleConfigTuple } = require('@commitlint/types')
-const { lstatSync, readdirSync } = require('fs')
-const { resolve } = require('path')
-
 /**
  * @file Commitlint Configuration
  * @see https://commitlint.js.org/#/guides-local-setup
@@ -41,40 +37,12 @@ module.exports = {
     'scope-case': [2, 'always', 'kebab-case'],
 
     /**
-     * Returns the rules for valid commit scopes.
-     *
-     * @return {RuleConfigTuple} Scope rules
+     * Commit scopes.
      */
-    'scope-enum': () => {
-      /**
-       * Returns an array containing Yarn workspace directory names.
-       *
-       * @return {string[]} Array containing workspace directory names
-       */
-      const workspaceDirectories = () => {
-        // Yarn project names
-        const projects = ['packages']
-
-        // Init array of workspace directory names
-        const workspaces = []
-
-        // Get subdirectories
-        projects.forEach(project => {
-          // Get path to Yarn project directory
-          const path = resolve(__dirname, project)
-
-          // Add subdirectories under Yarn project directory
-          readdirSync(path).forEach(workspace => {
-            if (!lstatSync(resolve(path, workspace)).isDirectory()) return
-            return workspaces.push(workspace)
-          })
-        })
-
-        // Return workspace directory names
-        return workspaces
-      }
-
-      const scopes = [
+    'scope-enum': [
+      2,
+      'always',
+      [
         'deploy',
         'deps',
         'deps-dev',
@@ -83,22 +51,11 @@ module.exports = {
         'scripts',
         'tests',
         'typescript',
-        'yarn'
+        'workflows',
+        'yarn',
+        ...require('./scripts/workspaces')()
       ]
-
-      const workspaces = workspaceDirectories()
-
-      return [
-        2,
-        'always',
-        [
-          ...scopes,
-          ...workspaces,
-          ...workspaces.map(d => scopes.map(s => `${d}-${s}`)).flat(),
-          'workflows'
-        ]
-      ]
-    },
+    ],
 
     /**
      * Commit message subject casing.

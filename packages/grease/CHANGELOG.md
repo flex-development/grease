@@ -7,8 +7,8 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### :recycle: Code Improvements
 
-* **grease-typescript:** update `SemanticVersionUnstable` definition ([66538cb](https://github.com/flex-development/grease/commit/66538cb6ba9811da0f3f69843aa0d410416fb770))
-* **grease-typescript:** update `SemanticVersionTag` definition ([549bf6d](https://github.com/flex-development/grease/commit/549bf6d3c6b4a6a60645eb0180950c1f517340e5))
+* **typescript:** update `SemanticVersionUnstable` definition ([66538cb](https://github.com/flex-development/grease/commit/66538cb6ba9811da0f3f69843aa0d410416fb770))
+* **typescript:** update `SemanticVersionTag` definition ([549bf6d](https://github.com/flex-development/grease/commit/549bf6d3c6b4a6a60645eb0180950c1f517340e5))
 * **grease:** update `grease` options ([1c4c898](https://github.com/flex-development/grease/commit/1c4c8986e11470f2da069c6f0a42a29b948cae3b))
 
 
@@ -94,10 +94,10 @@ All notable changes to this project will be documented in this file. See [standa
 * `yarn set version 3.0.1` ([d3e9f8a](https://github.com/flex-development/grease/commit/d3e9f8ae00bdddd11f64849cfe9a20ec7bb872c0))
 * add `publish:node` script ([3bbf8be](https://github.com/flex-development/grease/commit/3bbf8be104c85f30ee0674af96b252761a170018))
 * add `scope:cache` label ([3d88b50](https://github.com/flex-development/grease/commit/3d88b50c95996d3b8794219b4ef2025645066fc5))
-* **grease-release:** allow users to download package from github ([796873b](https://github.com/flex-development/grease/commit/796873b1343c11eaabd68a7a7eeb50759ff56314))
-* **grease-scripts:** add release workflow script ([d15c166](https://github.com/flex-development/grease/commit/d15c166d75c60208b690e4d829c4d6065d2c62d3))
-* **grease-scripts:** update release workflow ([eb097c0](https://github.com/flex-development/grease/commit/eb097c0979a136892b6d2ac20d82c4ae5895be10))
-* **grease-scripts:** update release workflow ([78a4b6a](https://github.com/flex-development/grease/commit/78a4b6ab20dfd8f1f37fd87e1287370e97cc23c7))
+* **release:** allow users to download package from github ([796873b](https://github.com/flex-development/grease/commit/796873b1343c11eaabd68a7a7eeb50759ff56314))
+* **scripts:** add release workflow script ([d15c166](https://github.com/flex-development/grease/commit/d15c166d75c60208b690e4d829c4d6065d2c62d3))
+* **scripts:** update release workflow ([eb097c0](https://github.com/flex-development/grease/commit/eb097c0979a136892b6d2ac20d82c4ae5895be10))
+* **scripts:** update release workflow ([78a4b6a](https://github.com/flex-development/grease/commit/78a4b6ab20dfd8f1f37fd87e1287370e97cc23c7))
 * **grease:** add `prepublish` script ([92c75a1](https://github.com/flex-development/grease/commit/92c75a157935246168ac8314c722dd24bf60dcd5))
 * **grease:** update `package.json#publishConfig` ([800d232](https://github.com/flex-development/grease/commit/800d2329212633c3974a9ec1b5bf33fda929fc34))
 * P010-1 initial commit ([2f29aa3](https://github.com/flex-development/grease/commit/2f29aa3698cf31043389f43502b7423c2dd106af))
