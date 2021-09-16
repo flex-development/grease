@@ -701,6 +701,7 @@ __metadata:
   dependencies:
     "@flex-development/dtag": 1.0.0
     "@flex-development/exceptions": 2.0.1
+    "@flex-development/log": 2.0.0
     "@flex-development/tutils": 3.1.7
     "@grease/config": "link:src/config"
     "@grease/constraints": "link:src/constraints"
@@ -760,6 +761,23 @@ __metadata:
       optional: true
   languageName: unknown
   linkType: soft
+
+"@flex-development/log@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@flex-development/log@npm:2.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40flex-development%2Flog%2F2.0.0%2F0e6330ecc99fa30ff815ab462b78b6cf97e1387f2a8510f66935252ef844000f"
+  dependencies:
+    "@flex-development/tutils": 3.1.7
+    "@types/chalk": 2.2.0
+    chalk: 4.1.2
+    figures: 3.2.0
+    lodash.merge: 4.6.2
+  peerDependencies:
+    "@types/shelljs": ">=0.8.9"
+    shelljs: ">=0.8.4"
+    typescript: ">=2.7"
+  checksum: 4fb2247158220b3484a7274b78eacff66a48bad4011fa9bcc15a731a9f76c61a63ad9c7cf944c6ab8d97ed63f55409b73046b40b6077238d9cd839938f16bae6
+  languageName: node
+  linkType: hard
 
 "@flex-development/p010@workspace:.":
   version: 0.0.0-use.local
@@ -832,15 +850,6 @@ __metadata:
     yargs: 17.1.1
   languageName: unknown
   linkType: soft
-
-"@flex-development/tutils@npm:3.1.0":
-  version: 3.1.0
-  resolution: "@flex-development/tutils@npm:3.1.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40flex-development%2Ftutils%2F3.1.0%2F788b7cc6c7b75c158692cbf43f4dba4bbba0f43a231538ff927620a06fc7c522"
-  peerDependencies:
-    typescript: 4.2.4
-  checksum: a915f3b46567646a179cab185827ef8c93563089ac1dbf1ef55ca8191efbfd54c0513c37d0e6d2e6f48d9f0b72561d38456bcf878a3137f9359b825c74a9e086
-  languageName: node
-  linkType: hard
 
 "@flex-development/tutils@npm:3.1.7":
   version: 3.1.7
@@ -1770,6 +1779,15 @@ __metadata:
   dependencies:
     "@babel/types": ^7.3.0
   checksum: a797ea09c72307569e3ee08aa3900ca744ce3091114084f2dc59b67a45ee7d01df7865252790dbfa787a7915ce892cdc820c9b920f3683292765fc656b08dc63
+  languageName: node
+  linkType: hard
+
+"@types/chalk@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@types/chalk@npm:2.2.0"
+  dependencies:
+    chalk: "*"
+  checksum: 846437590d0bf0026d8c2f454e5d91a486becfabde61c0441025e791a0fed75304e143717bc4d025569394dcce5a32f2c53d97253d0c735ac1abae63f1b25c3e
   languageName: node
   linkType: hard
 

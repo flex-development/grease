@@ -7,6 +7,12 @@
         "node_modules/@flex-development/dtag/esm/index"
       ],
       "@flex-development/dtag/*": ["node_modules/@flex-development/dtag/esm/*"],
+      "@flex-development/log": [
+        "packages/grease/node_modules/@flex-development/log/esm/index"
+      ],
+      "@flex-development/log/*": [
+        "packages/grease/node_modules/@flex-development/log/esm/*"
+      ],
       "@grease": ["packages/grease/src/index.ts"],
       "@grease/*": ["packages/grease/src/*"],
       "lodash/*": ["node_modules/lodash-es/*"]

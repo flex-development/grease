@@ -25,6 +25,12 @@
         "node_modules/@flex-development/dtag/cjs/index"
       ],
       "@flex-development/dtag/*": ["node_modules/@flex-development/dtag/cjs/*"],
+      "@flex-development/log": [
+        "packages/grease/node_modules/@flex-development/log/cjs/index"
+      ],
+      "@flex-development/log/*": [
+        "packages/grease/node_modules/@flex-development/log/cjs/*"
+      ],
       "@grease": ["packages/grease/src/index.ts"],
       "@grease/tests/fixtures/*": ["packages/grease/__tests__/__fixtures__/*"],
       "@grease/tests/*": ["packages/grease/__tests__/*"],
