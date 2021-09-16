@@ -1,6 +1,6 @@
 /**
- * @file User Module Mock - log
- * @module config/mocks/log
+ * @file User Module Mock - logger
+ * @module config/mocks/logger
  * @see https://jestjs.io/docs/next/manual-mocks#mocking-user-modules
  */
 

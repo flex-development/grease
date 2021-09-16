@@ -1,5 +1,6 @@
 import { ExceptionStatusCode } from '@flex-development/exceptions/enums'
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
+import { LogLevel } from '@flex-development/log/enums/log-level.enum'
 import type { ObjectPlain } from '@flex-development/tutils'
 import anymatch from 'anymatch'
 import fs from 'fs'
@@ -20,7 +21,7 @@ import notes from './lifecycles/notes.lifecycle'
 import type { SemanticVersionTag } from './types'
 import cacheOptions from './utils/cache-options.util'
 import getPrerelease from './utils/get-prerelease.util'
-import log from './utils/log.util'
+import logger from './utils/logger.util'
 import readPackageFiles from './utils/read-package-files.util'
 
 /**
@@ -124,7 +125,7 @@ const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
       stack
     } = error as Exception
 
-    log(args, message, [], 'error', true)
+    logger(args, message, [], LogLevel.ERROR, true)
 
     throw new Exception(code, message, { ...data, errors }, stack).toJSON()
   }

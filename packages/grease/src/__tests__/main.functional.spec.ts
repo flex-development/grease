@@ -7,7 +7,7 @@ import notes from '@grease/lifecycles/notes.lifecycle'
 import GreaseOptions from '@grease/models/grease-options.model'
 import cacheOptions from '@grease/utils/cache-options.util'
 import getPrerelease from '@grease/utils/get-prerelease.util'
-import log from '@grease/utils/log.util'
+import logger from '@grease/utils/logger.util'
 import readPackageFiles from '@grease/utils/read-package-files.util'
 import anymatch from 'anymatch'
 import { currentBranch } from 'isomorphic-git'
@@ -29,7 +29,7 @@ jest.mock('@grease/lifecycles/greaser.lifecycle')
 jest.mock('@grease/lifecycles/notes.lifecycle')
 jest.mock('@grease/utils/cache-options.util')
 jest.mock('@grease/utils/get-prerelease.util')
-jest.mock('@grease/utils/log.util')
+jest.mock('@grease/utils/logger.util')
 jest.mock('@grease/utils/read-package-files.util')
 
 const mockAnymatch = anymatch as jest.MockedFunction<typeof anymatch>
@@ -47,7 +47,7 @@ const mockGetPrerelease = getPrerelease as jest.MockedFunction<
   typeof getPrerelease
 >
 const mockGreaser = greaser as jest.MockedFunction<typeof greaser>
-const mockLog = log as jest.MockedFunction<typeof log>
+const mockLogger = logger as jest.MockedFunction<typeof logger>
 const mockNotes = notes as jest.MockedFunction<typeof notes>
 const mockReadPackageFiles = readPackageFiles as jest.MockedFunction<
   typeof readPackageFiles
@@ -89,7 +89,7 @@ describe('functional:main', () => {
     }
 
     // Expect
-    expect(mockLog).toBeCalledTimes(1)
+    expect(mockLogger).toBeCalledTimes(1)
     expect(exception).toMatchObject({
       code: ExceptionStatusCode.CONFLICT,
       data: { releaseBranchWhitelist: $OPTS.releaseBranchWhitelist },

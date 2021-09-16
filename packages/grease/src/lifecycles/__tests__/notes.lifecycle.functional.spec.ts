@@ -1,7 +1,7 @@
 import type { IGreaseOptions } from '@grease/interfaces'
 import TAGS from '@grease/tests/fixtures/git-tags.fixture'
 import INFILE from '@grease/tests/fixtures/infile.fixture'
-import log from '@grease/utils/log.util'
+import logger from '@grease/utils/logger.util'
 import type { RestoreConsole } from 'jest-mock-console'
 import mockConsole from 'jest-mock-console'
 import sh from 'shelljs'
@@ -13,10 +13,10 @@ import TestSubject from '../notes.lifecycle'
  * @module grease/lifecycles/tests/functional/notes
  */
 
-jest.mock('@grease/utils/log.util')
+jest.mock('@grease/utils/logger.util')
 
 const mockSH = sh as jest.Mocked<typeof sh>
-const mockLog = log as jest.MockedFunction<typeof log>
+const mockLogger = logger as jest.MockedFunction<typeof logger>
 const mockRunLifecycleScript = runLifecycleScript as jest.MockedFunction<
   typeof runLifecycleScript
 >
@@ -47,7 +47,7 @@ describe('functional:lifecycles/notes', () => {
     })
 
     it('should log checkpoints', () => {
-      expect(mockLog).toBeCalledTimes(2)
+      expect(mockLogger).toBeCalledTimes(3)
     })
   })
 
@@ -58,7 +58,7 @@ describe('functional:lifecycles/notes', () => {
 
       // Expect
       expect(mockRunLifecycleScript).not.toBeCalled()
-      expect(mockLog).toBeCalledTimes(1)
+      expect(mockLogger).toBeCalledTimes(1)
       expect(mockSH.exec).not.toBeCalled()
     })
   })

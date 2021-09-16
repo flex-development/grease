@@ -3,7 +3,7 @@ import { GH_RELEASE_CREATE } from '@grease/config/constants.config'
 import CreateReleaseDTO from '@grease/dtos/create-release.dto'
 import type { ICreateReleaseDTO, IGreaseOptions } from '@grease/interfaces'
 import { VERSION } from '@grease/tests/fixtures/git-tags.fixture'
-import log from '@grease/utils/log.util'
+import logger from '@grease/utils/logger.util'
 import validate from '@grease/utils/validate.util'
 import sh from 'shelljs'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
@@ -15,12 +15,12 @@ import TestSubject from '../greaser.lifecycle'
  */
 
 jest.mock('@grease/config/cache.config')
-jest.mock('@grease/utils/log.util')
+jest.mock('@grease/utils/logger.util')
 jest.mock('@grease/utils/validate.util')
 
 const mockSH = sh as jest.Mocked<typeof sh>
 const mockCache = cache as jest.Mocked<typeof cache>
-const mockLog = log as jest.MockedFunction<typeof log>
+const mockLogger = logger as jest.MockedFunction<typeof logger>
 const mockRunLifecycleScript = runLifecycleScript as jest.MockedFunction<
   typeof runLifecycleScript
 >
@@ -45,7 +45,7 @@ describe('functional:lifecycles/greaser', () => {
     })
 
     it('should log checkpoints', () => {
-      expect(mockLog).toBeCalledTimes(1)
+      expect(mockLogger).toBeCalledTimes(1)
     })
 
     it('should validate release data', () => {
@@ -78,7 +78,7 @@ describe('functional:lifecycles/greaser', () => {
 
       // Expect
       expect(mockRunLifecycleScript).not.toBeCalled()
-      expect(mockLog).not.toBeCalled()
+      expect(mockLogger).not.toBeCalled()
       expect(mockSH.which).not.toBeCalled()
     })
   })

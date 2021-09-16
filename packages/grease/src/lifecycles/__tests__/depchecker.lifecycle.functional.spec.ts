@@ -2,7 +2,7 @@ import { ExceptionStatusCode } from '@flex-development/exceptions/enums'
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
 import { DependencyCommand } from '@grease/enums/dependency-command.enum'
 import type { IGreaseOptions } from '@grease/interfaces'
-import log from '@grease/utils/log.util'
+import logger from '@grease/utils/logger.util'
 import indexOf from 'lodash/indexOf'
 import sh from 'shelljs'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
@@ -13,10 +13,10 @@ import TestSubject from '../depchecker.lifecycle'
  * @module grease/lifecycles/tests/functional/depchecker
  */
 
-jest.mock('@grease/utils/log.util')
+jest.mock('@grease/utils/logger.util')
 
 const mockSH = sh as jest.Mocked<typeof sh>
-const mockLog = log as jest.MockedFunction<typeof log>
+const mockLogger = logger as jest.MockedFunction<typeof logger>
 const mockRunLifecycleScript = runLifecycleScript as jest.MockedFunction<
   typeof runLifecycleScript
 >
@@ -95,7 +95,7 @@ describe('functional:lifecycles/depchecker', () => {
             await TestSubject(options)
 
             // Expect
-            expect(mockLog.mock.calls[i + 1][1]).toBe(command)
+            expect(mockLogger.mock.calls[i + 1][1]).toBe(command)
           })
         })
       })
@@ -109,7 +109,7 @@ describe('functional:lifecycles/depchecker', () => {
 
       // Expect
       expect(mockRunLifecycleScript).not.toBeCalled()
-      expect(mockLog).not.toBeCalled()
+      expect(mockLogger).not.toBeCalled()
       expect(mockSH.which).not.toBeCalled()
     })
   })

@@ -1,8 +1,9 @@
 import { ExceptionStatusCode } from '@flex-development/exceptions/enums'
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
+import { LogLevel } from '@flex-development/log/enums/log-level.enum'
 import { DependencyCommand } from '@grease/enums/dependency-command.enum'
 import type { IGreaseOptions } from '@grease/interfaces'
-import log from '@grease/utils/log.util'
+import logger from '@grease/utils/logger.util'
 import sh from 'shelljs'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
 
@@ -37,7 +38,7 @@ const Depchecker = async (options: IGreaseOptions = {}): Promise<void> => {
   const commands = Object.keys(DependencyCommand)
 
   // Log checkpoint
-  log(options, 'checking commands:', commands, 'info')
+  logger(options, 'checking commands:', commands, LogLevel.INFO)
 
   // Check if required dependencies are installed
   Object.values(DependencyCommand).forEach(command => {
@@ -45,7 +46,7 @@ const Depchecker = async (options: IGreaseOptions = {}): Promise<void> => {
       throw new Exception(ExceptionStatusCode.NOT_FOUND, `${command} not found`)
     }
 
-    log(options, command)
+    logger(options, command)
     return
   })
 

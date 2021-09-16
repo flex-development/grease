@@ -1,5 +1,6 @@
 import { ExceptionStatusCode } from '@flex-development/exceptions/enums'
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
+import { LogLevel } from '@flex-development/log/enums/log-level.enum'
 import type { NullishString } from '@flex-development/tutils'
 import {
   GREASER_NOTES_BIRTHDAY,
@@ -11,7 +12,7 @@ import { NotesType } from '@grease/enums/notes-type.enum'
 import type { IGreaseOptions } from '@grease/interfaces'
 import type { SemanticVersion } from '@grease/types'
 import changelogVersions from '@grease/utils/changelog-versions.util'
-import log from '@grease/utils/log.util'
+import logger from '@grease/utils/logger.util'
 import ch from 'chalk'
 import fs from 'fs'
 import indexOf from 'lodash/indexOf'
@@ -45,7 +46,7 @@ const Notes = async (
 ): Promise<NullishString> => {
   // Skip lifecycle
   if (options.skip?.notes || options.notesType === NotesType.NULL) {
-    log(options, 'skipping release notes', [], 'error')
+    logger(options, 'skipping release notes', [], LogLevel.ERROR)
     return GREASER_NOTES_NULL
   }
 
@@ -54,13 +55,13 @@ const Notes = async (
 
   // Generate blank notes
   if (options.notesType === NotesType.BLANK) {
-    log(options, 'created blank release notes')
+    logger(options, 'created blank release notes')
     return GREASER_NOTES_BLANK
   }
 
   // Generate birthday notes
   if (options.firstRelease || options.notesType === NotesType.BIRTHDAY) {
-    log(options, 'created birthday format release notes')
+    logger(options, 'created birthday format release notes')
     return GREASER_NOTES_BIRTHDAY
   }
 
@@ -68,7 +69,7 @@ const Notes = async (
   if (!options.infile || !fs.existsSync(options.infile as fs.PathLike)) {
     const args = [`${options.infile} does not exist`]
 
-    log(options, 'skipping release notes', args, 'error')
+    logger(options, 'skipping release notes', args, LogLevel.ERROR)
     return GREASER_NOTES_NULL
   }
 
@@ -76,12 +77,17 @@ const Notes = async (
   if (!version) {
     const args = ['package version is', version]
 
-    log(options, 'skipping release notes', args, 'error')
+    logger(options, 'skipping release notes', args, LogLevel.ERROR)
     return GREASER_NOTES_NULL
   }
 
   // Log validation checkpoint
-  log(options, 'creating release notes from %s', [options.infile], 'info')
+  logger(
+    options,
+    'creating release notes from %s',
+    [options.infile],
+    LogLevel.INFO
+  )
 
   // Get changelog content and versions (in descending order)
   const content = fs.readFileSync(options.infile as fs.PathLike, 'utf8')
@@ -119,11 +125,11 @@ const Notes = async (
   notes = notes.substring(notes.indexOf(BR), notes.lastIndexOf(BR)).trim()
 
   // Log notes checkpoint
-  log(options, 'created release notes')
+  logger(options, 'created release notes')
 
   // Log notes if dry run is enabled
   if (options.dryRun && !options.silent) {
-    console.log(`\n---\n${ch.gray(notes)}\n---\n`)
+    logger(options, `\n---\n${ch.gray(notes)}\n---\n`, [], LogLevel.DEBUG)
   }
 
   // Run `postnotes` script

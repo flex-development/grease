@@ -1,7 +1,8 @@
+import { LogLevel } from '@flex-development/log/enums/log-level.enum'
 import { GH_RELEASE_CREATE } from '@grease/config/constants.config'
 import CreateReleaseDTO from '@grease/dtos/create-release.dto'
 import type { ICreateReleaseDTO, IGreaseOptions } from '@grease/interfaces'
-import log from '@grease/utils/log.util'
+import logger from '@grease/utils/logger.util'
 import validate from '@grease/utils/validate.util'
 import ch from 'chalk'
 import { classToPlain } from 'class-transformer'
@@ -35,7 +36,7 @@ const Greaser = async (
   await runLifecycleScript(options, 'pregreaser')
 
   // Log release start checkpoint
-  log(options, 'starting github release...', [], 'info')
+  logger(options, 'starting github release...', [], LogLevel.INFO)
 
   // Validate release data
   dto = await validate(CreateReleaseDTO, dto, false)
@@ -51,9 +52,11 @@ const Greaser = async (
   // Execute GitHub release
   if (!options.dryRun) sh.exec(command, { silent: options.silent })
   else {
-    log(options, GH_RELEASE_CREATE)
+    logger(options, GH_RELEASE_CREATE)
 
-    if (!options.silent) console.log(`\n---\n${ch.gray(command)}\n---\n`)
+    if (!options.silent) {
+      logger(options, `\n---\n${ch.gray(command)}\n---\n`, [], LogLevel.DEBUG)
+    }
   }
 
   // Run `postgreaser` script
