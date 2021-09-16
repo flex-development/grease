@@ -77,7 +77,7 @@
   color: 74cefc
 
 - name: scope:validation
-  description: Decorators, constraints, and other validation logic
+  description: Decorators, constraints, models, and other validation logic
   color: 74cefc
 
 # Status labels
