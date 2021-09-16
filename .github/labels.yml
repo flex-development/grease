@@ -40,6 +40,10 @@
   description: CI/CD
   color: 74cefc
 
+- name: scope:config
+  description: Configuration
+  color: 74cefc
+
 - name: scope:deploy-release
   description: Package deployment and release tasks
   color: 74cefc
@@ -62,6 +66,10 @@
 
 - name: scope:scripts
   description: Project scripts (not source code)
+  color: 74cefc
+
+- name: scope:standard-version
+  description: standard-version library
   color: 74cefc
 
 - name: scope:tests
