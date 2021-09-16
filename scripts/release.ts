@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
+import { LogLevel } from '@flex-development/log/enums/log-level.enum'
 import grease from '@grease/index'
 import type { IGreaseOptions } from '@grease/interfaces'
-import log from '@grease/utils/log.util'
+import logger from '@grease/utils/logger.util'
 import ch from 'chalk'
 import merge from 'lodash.merge'
 import pick from 'lodash.pick'
@@ -163,7 +164,12 @@ const options: IGreaseOptions = {
 }
 
 // Log workflow start
-log(argv, 'starting release workflow', [$name, `[dry=${argv.dryRun}]`], 'info')
+logger(
+  argv,
+  'starting release workflow',
+  [$name, `[dry=${argv.dryRun}]`],
+  LogLevel.INFO
+)
 
 // Run release workflow
 grease(merge({}, options, argv)).catch(error => {

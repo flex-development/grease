@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
-import log from '@grease/utils/log.util'
+import { LogLevel } from '@flex-development/log/enums/log-level.enum'
+import logger from '@grease/utils/logger.util'
 import { copyFileSync, existsSync } from 'fs-extra'
 import { join } from 'path'
 import sh from 'shelljs'
@@ -83,12 +84,17 @@ const args = yargs(hideBin(process.argv))
 const argv: BuildPackageOptions = args.argv as BuildPackageOptions
 
 // Log workflow start
-log(argv, 'starting build workflow', [$name, `[dry=${argv.dryRun}]`], 'info')
+logger(
+  argv,
+  'starting build workflow',
+  [$name, `[dry=${argv.dryRun}]`],
+  LogLevel.INFO
+)
 
 try {
   // Set environment variables
   exec(`dotenv -c ${argv.env} -- true`, argv.dryRun)
-  log(argv, `set ${argv.env} environment variables`)
+  logger(argv, `set ${argv.env} environment variables`)
 
   // Check if base TypeScript config file already exists
   const HAS_TSCONFIG = existsSync(join(process.cwd(), TSCONFIG_PROD))
@@ -106,7 +112,7 @@ try {
 
     // Remove stale directory
     exec(`rimraf ${format} directory`, argv.dryRun)
-    log(argv, `remove stale ${format} directory`)
+    logger(argv, `remove stale ${format} directory`)
 
     // Check if config file already exists
     const has_tsconfig = existsSync(tsconfig_path)
@@ -118,7 +124,7 @@ try {
 
     // Run build command
     if (exec(`ttsc -p ${tsconfig}`, argv.dryRun) || argv.dryRun) {
-      log(argv, `create ${format}`)
+      logger(argv, `create ${format}`)
     }
 
     // Remove config file
@@ -134,9 +140,9 @@ try {
 } catch (error) {
   const exception = error as Exception
 
-  log(argv, exception.message, [], 'error')
+  logger(argv, exception.message, [], LogLevel.ERROR)
   sh.exit(exception.data.code)
 }
 
 // Log workflow end
-log(argv, 'build workflow complete', [$name], 'info')
+logger(argv, 'build workflow complete', [$name], LogLevel.INFO)
