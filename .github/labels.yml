@@ -52,6 +52,10 @@
   description: Dependency updates
   color: 74cefc
 
+- name: scope:gh
+  description: GitHub CLI
+  color: 74cefc
+
 - name: scope:grease
   description: Node.js program
   color: 74cefc
@@ -66,6 +70,10 @@
 
 - name: scope:scripts
   description: Project scripts (not source code)
+  color: 74cefc
+
+- name: scope:shell
+  description: Shell integration
   color: 74cefc
 
 - name: scope:standard-version
