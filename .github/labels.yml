@@ -68,6 +68,10 @@
   description: Lifecycle functions
   color: 74cefc
 
+- name: scope:providers
+  description: Factories, helpers, plugins, repositories, and services
+  color: 74cefc
+
 - name: scope:scripts
   description: Project scripts (not source code)
   color: 74cefc
