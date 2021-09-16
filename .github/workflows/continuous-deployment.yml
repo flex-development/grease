@@ -185,8 +185,8 @@ jobs:
             const opts = github.issues.listForRepo(context.repo)
             const issues = await github.paginate(opts)
 
-            Promise.all(issues.map(async ({ labels, number }) => {
-              return labels && labels.map(({ name }) => {
+            issues.map(({ labels, number }) => {
+              return labels && Promise.all(labels.map(async ({ name }) => {
                 if (name === 'status:merged') {
                   return await github.issues.addLabels({
                     ...context.repo,
@@ -194,5 +194,5 @@ jobs:
                     labels: ['status:released']
                   })
                 }
-              })
-            }))
+              }))
+            })
