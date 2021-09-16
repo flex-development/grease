@@ -6,44 +6,79 @@
   description: Good for first-time contributors
   color: 586069
 
-# Type labels
-# Types of issues, pull requests, and discussions.
+# Flag labels
+# Indicates additional work is needed.
 
-- name: type:build
-  description: Build system or external dependencies
-  color: 0052cc
+- name: flag:breaking-change
+  description: Contains changes that require major version bump
+  color: fbca04
 
-- name: type:chore
-  description: Housekeeping tasks / changes that don't impact external users
-  color: 0052cc
+- name: flag:duplicate
+  description: Issue, pull request, or discussion already exists
+  color: fbca04
 
-- name: type:discussion
-  description: Discussion topic
-  color: 0052cc
+- name: flag:needs-discussion
+  description: Discussion required before implementation
+  color: fbca04
 
-- name: type:docs
-  description: Improvements or additions to documentation
-  color: 0052cc
+- name: flag:needs-docs
+  description: Missing documentation or needs existing documentation update
+  color: fbca04
 
-- name: type:feat
-  description: New feature or request
-  color: 0052cc
+- name: flag:needs-refactor
+  description: Code improvements required before being merged
+  color: fbca04
 
-- name: type:fix
-  description: Something isn't working
-  color: 0052cc
+# Scope labels
+# Project-specific groups for issues, pull requests, and discussions.
 
-- name: type:perf
-  description: Performance updates
-  color: 0052cc
+- name: scope:cache
+  description: Application cache
+  color: 74cefc
 
-- name: type:question
-  description: Questions
-  color: 0052cc
+- name: scope:ci
+  description: CI/CD
+  color: 74cefc
 
-- name: type:refactor
-  description: Code improvements
-  color: 0052ccx
+- name: scope:deploy-release
+  description: Package deployment and release tasks
+  color: 74cefc
+
+- name: scope:deps
+  description: Dependency updates
+  color: 74cefc
+
+- name: scope:grease
+  description: Node.js program
+  color: 74cefc
+
+- name: scope:grease-cli
+  description: CLI application
+  color: 74cefc
+
+- name: scope:lifecycles
+  description: Lifecycle functions
+  color: 74cefc
+
+- name: scope:scripts
+  description: Project scripts (not source code)
+  color: 74cefc
+
+- name: scope:tests
+  description: Testing
+  color: 74cefc
+
+- name: scope:typescript
+  description: TypeScript support (enums, interfaces, types)
+  color: 74cefc
+
+- name: scope:utils
+  description: Utilities
+  color: 74cefc
+
+- name: scope:validation
+  description: Decorators, constraints, and other validation logic
+  color: 74cefc
 
 # Status labels
 # Current state of an issue, pull request, or discussion.
@@ -100,76 +135,41 @@
   description: Work in progress
   color: e7034b
 
-# Flag labels
-# Indicates additional work is needed.
+# Type labels
+# Types of issues, pull requests, and discussions.
 
-- name: flag:breaking-change
-  description: Contains changes that require major version bump
-  color: fbca04
+- name: type:build
+  description: Build system or external dependencies
+  color: 0052cc
 
-- name: flag:duplicate
-  description: Issue, pull request, or discussion already exists
-  color: fbca04
+- name: type:chore
+  description: Housekeeping tasks / changes that don't impact external users
+  color: 0052cc
 
-- name: flag:needs-discussion
-  description: Discussion required before implementation
-  color: fbca04
+- name: type:discussion
+  description: Discussion topic
+  color: 0052cc
 
-- name: flag:needs-docs
-  description: Missing documentation or needs existing documentation update
-  color: fbca04
+- name: type:docs
+  description: Improvements or additions to documentation
+  color: 0052cc
 
-- name: flag:needs-refactor
-  description: Code improvements required before being merged
-  color: fbca04
+- name: type:feat
+  description: New feature or request
+  color: 0052cc
 
-# Scope labels
-# Project-specific groups for issues, pull requests, and discussions.
+- name: type:fix
+  description: Something isn't working
+  color: 0052cc
 
-- name: scope:cache
-  description: Application cache
-  color: 74cefc
+- name: type:perf
+  description: Performance updates
+  color: 0052cc
 
-- name: scope:ci
-  description: CI/CD
-  color: 74cefc
+- name: type:question
+  description: Questions
+  color: 0052cc
 
-- name: scope:deploy-release
-  description: Package deployment and release tasks
-  color: 74cefc
-
-- name: scope:deps
-  description: Dependency updates
-  color: 74cefc
-
-- name: scope:lifecycles
-  description: Lifecycle functions
-  color: 74cefc
-
-- name: scope:grease
-  description: Node.js program
-  color: 74cefc
-
-- name: scope:grease-cli
-  description: CLI application
-  color: 74cefc
-
-- name: scope:scripts
-  description: Project scripts (not source code)
-  color: 74cefc
-
-- name: scope:tests
-  description: Testing
-  color: 74cefc
-
-- name: scope:typescript
-  description: TypeScript support (enums, interfaces, types)
-  color: 74cefc
-
-- name: scope:utils
-  description: Utilities
-  color: 74cefc
-
-- name: scope:validation
-  description: Decorators, constraints, and other validation logic
-  color: 74cefc
+- name: type:refactor
+  description: Code improvements
+  color: 0052ccx
