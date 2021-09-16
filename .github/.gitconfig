@@ -1,37 +1,37 @@
 # Git Configuration
 # See: http://michaelwales.com/articles/make-gitconfig-work-for-you/
 
-# General Aliases
+# Git Helpers
 [alias]
-# Git Add & Commit - All in one step
+# Git add and commit - all in one step
 ac = "!f() { git add .; git cm \"$@\"; }; f"
 
 # Add new git remote
 ar = "!f() { git remote add \"$0\" \"$1\"; }; f"
 
-# Checkout and push new branch to origin
-b = "!f() { git checkout -b \"$@\"; git puo \"$@\"; }; f"
+# Execute git branch command
+b = "!f() { git branch $@; }; f"
 
 # Delete a branch locally
-bdel= "!f() { git branch -D $@; }; f"
+bdel= "!f() { git b -D $@; }; f"
 
 # Delete a branch remotely
 bdelr= "!f() { git push origin --delete $@ --no-verify; }; f"
 
-# Git Commit with message
-cm = "!f() { git commit -m \"$@\"; }; f"
-
 # Checkout branch
 ch = "!f() { git checkout $@; }; f"
+
+# Checkout and push new branch to origin
+chb = "!f() { git ch -b \"$@\"; git puo \"$@\"; }; f"
 
 # Checkout branch and pull latest version
 chp = "!f() { git ch $@; git pull; }; f"
 
-# Create new local repo, perform initial commit, and push to Github
-launch = "!f() { git local; git rao $@; git puo next; }; f"
+# Commit with message
+cm = "!f() { git commit -m \"$@\"; }; f"
 
-# Start a new local repository and perform initial commit
-local = "!f() { git init; git add -A; git chore \"initial commit\"; git branch -M next; }; f"
+# Create new local repo, perform initial commit, and push
+launch = "!f() { git init; git chore \"first commit\"; git b -M next; git rao $1; git puo next; }; f"
 
 # Tell Git to start tracking branch and push to origin
 puo = "!f() { git push -u origin $@ --no-verify; }; f"
@@ -40,7 +40,10 @@ puo = "!f() { git push -u origin $@ --no-verify; }; f"
 rao = "!f() { git remote add origin $@; }; f"
 
 # Remove local .git directory
-restart = "!f() { rm -rf .git; echo \"Removed .git directory.\"; }; f"
+restart = "!f() { rm -rf .git; echo \"removed .git directory.\"; }; f"
+
+# Undo last commit
+ulc = "!f() { git reset HEAD~1 --soft; }; f"
 
 # Conventional Commits
 # See: https://www.conventionalcommits.org/
@@ -84,20 +87,20 @@ wip = "!f() { git ac \"wip: $@\"; }; f"
 
 # Branch Naming Conventions Aliases
 [alias]
-# Create a new feature branch and push upstream
-feat = "!f() { git b feat/$@; }; f"
-
 # Create a new bugfix branch and push upstream
-bugfix = "!f() { git b bugfix/$@; }; f"
+chbb = "!f() { git chb bugfix/$@; }; f"
 
 # Create a new hotfix branch and push upstream
-hotfix = "!f() { git b hotfix/$@; }; f"
+chbh = "!f() { git chb hotfix/$@; }; f"
+
+# Create a new feature branch and push upstream
+chbf = "!f() { git chb feat/$@; }; f"
 
 # Create a new release branch and push upstream
-release = "!f() { git b release/$@; }; f"
+chbr = "!f() { git chb release/$@; }; f"
 
 # Create a new support branch and push upstream
-support = "!f() { git b support/$@; }; f"
+chbs = "!f() { git chb support/$@; }; f"
 
 # Helper Aliases
 [alias]
@@ -122,8 +125,8 @@ pnv = "!f() { git push --no-verify; }; f"
 autocrlf = input
 ignorecase = false
 
-[credential]
-helper = osxkeychain
+[init]
+defaultBranch = next
 
 [gitflow "prefix"]
 feature = feat/
@@ -132,14 +135,14 @@ release = release/
 support = support/
 versiontag = v
 
+[pull]
+rebase = true
+
 [url "git@bitbucket.org:"]
 insteadOf = bb:
 
-[url "https://github.com/"]
+[url "git@github.com:"]
 insteadOf = gh:
 
 [url "https://gist.github.com/"]
 insteadOf = gist:
-
-[init]
-defaultBranch = next
