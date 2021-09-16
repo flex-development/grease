@@ -61,11 +61,12 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
-            const dtag = require('@flex-development/dtag')
+            let dtag = process.env.version.split('-')[1] || ''
 
-            const { version } = process.env
+            if (dtag && dtag.includes('.')) dtag = dtag.split('.')[0]
+            if (dtag) dtag = `--tag ${dtag}`
 
-            core.setOutput('args', `--tag ${dtag({ version }) || ''}`.trim())
+            core.setOutput('args', dtag.trim())
   publish-package:
     name: Publish package to GPR & NPM
     needs: deployment-info
