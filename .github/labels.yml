@@ -130,6 +130,10 @@
   description: Application cache
   color: 74cefc
 
+- name: scope:ci
+  description: CI/CD
+  color: 74cefc
+
 - name: scope:deploy-release
   description: Package deployment and release tasks
   color: 74cefc
