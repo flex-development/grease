@@ -17,6 +17,8 @@ module.exports = {
         ...RULES_SPELLCHECKER[1],
         skipWords: RULES_SPELLCHECKER[1].skipWords.concat([
           'autogeneration',
+          'boop',
+          'cmd',
           'depchecker',
           'dtag',
           'dto',
@@ -27,6 +29,7 @@ module.exports = {
           'gitdir',
           'infile',
           'lifecycles',
+          'lookups',
           'msg',
           'namespace',
           'nullish',
@@ -59,6 +62,17 @@ module.exports = {
       files: ['src/services/logger.service.ts'],
       rules: {
         'prefer-spread': 0
+      }
+    },
+    {
+      files: ['src/typings/shell-quote/index.d.ts'],
+      rules: {
+        'jsdoc/no-undefined-types': [
+          1,
+          {
+            definedTypes: ['Env', 'ParseOptions', 'ParsedShellCommand']
+          }
+        ]
       }
     }
   ])
