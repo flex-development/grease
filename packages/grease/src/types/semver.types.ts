@@ -17,7 +17,7 @@ export type IsSemVerOptionsClean = [string] | [string, SemVerOptions] | []
 /**
  * `IsSemVerOptions.cmp` configuration.
  */
-export type IsSemVerOptionsConfigCMP =
+export type IsSemVerOptionsCMP =
   | [SemVerOperator, SemanticVersion]
   | [SemVerOperator, SemanticVersion, SemVerOptions | boolean | undefined]
 
