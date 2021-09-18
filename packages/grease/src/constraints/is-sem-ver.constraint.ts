@@ -5,7 +5,7 @@ import type {
   IConstraint,
   IsSemVerOptionsClean as CleanConfig,
   IsSemVerOptionsCMP as CMPConfig,
-  IsSemVerOptionsConfigSatisfies as SatisfiesConfig,
+  IsSemVerOptionsSatisfies as SatisfiesConfig,
   ValidatorConstraintOptions
 } from '@grease/types'
 import semver from '@grease/utils/semver.util'

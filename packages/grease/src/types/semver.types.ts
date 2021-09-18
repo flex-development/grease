@@ -24,7 +24,7 @@ export type IsSemVerOptionsCMP =
 /**
  * `IsSemVerOptions.satisfies` configuration.
  */
-export type IsSemVerOptionsConfigSatisfies =
+export type IsSemVerOptionsSatisfies =
   | [Range | string]
   | [Range | string, SemVerOptions | boolean | undefined]
 
