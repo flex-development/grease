@@ -724,7 +724,7 @@ __metadata:
     "@types/git-semver-tags": 4.1.1
     "@types/jest": 27.0.1
     "@types/lodash": 4.14.172
-    "@types/node": 16.9.1
+    "@types/node": 16.9.2
     "@types/semver": 7.3.8
     "@types/shelljs": 0.8.9
     "@types/standard-version": 7.0.1
@@ -1986,7 +1986,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:16.9.1, @types/node@npm:>= 8":
+"@types/node@npm:*, @types/node@npm:>= 8":
   version: 16.9.1
   resolution: "@types/node@npm:16.9.1"
   checksum: 41afcf183a22d59323a0199dd7e0f46591247f45fc08a4434edb26d56dc279ae4fdb80f37989ddd7a0f45e3857c4933e6e82057ede09c5a829f77e373e680375
