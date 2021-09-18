@@ -728,7 +728,6 @@ __metadata:
     "@types/semver": 7.3.8
     "@types/shelljs": 0.8.9
     "@types/standard-version": 7.0.1
-    "@types/yargs-unparser": 2.0.1
     "@zerollup/ts-transform-paths": 1.7.18
     anymatch: 3.1.2
     chalk: 4.1.2
@@ -2106,13 +2105,6 @@ __metadata:
   version: 20.2.1
   resolution: "@types/yargs-parser@npm:20.2.1"
   checksum: 1d039e64494a7a61ddd278349a3dc60b19f99ff0517425696e796f794e4252452b9d62178e69755ad03f439f9dc0c8c3d7b3a1201b3a24e134bac1a09fa11eaa
-  languageName: node
-  linkType: hard
-
-"@types/yargs-unparser@npm:2.0.1":
-  version: 2.0.1
-  resolution: "@types/yargs-unparser@npm:2.0.1"
-  checksum: 487da23fec6749efc888f1540a30ff229572e680fe2b8a440c974283ab51a093490ba8fefc8f478f68dc4416a226ccac9f7ed0e60c2e5dc4695a57a40b3fdf65
   languageName: node
   linkType: hard
 
