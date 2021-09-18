@@ -1,4 +1,4 @@
-import type { TVODefaults } from '@grease/types'
+import type { SemanticVersion, TVODefaults } from '@grease/types'
 
 /**
  * @file Configuration - Constant Values
@@ -51,6 +51,12 @@ export const LINE_BREAK = '\n'
  * @property {string} RELEASE_PATTERN - `CHANGELOG` release heading pattern
  */
 export const RELEASE_PATTERN = /(^#+ \[?[0-9]+\.[0-9]+\.[0-9]+|<a name=)/gm
+
+/**
+ * @property {SemanticVersion} DEFAULT_VERSION - Package version placeholder
+ * Forces NOT_FOUND Exception or ValidationException
+ */
+export const DEFAULT_VERSION = 'x.x.x' as unknown as SemanticVersion
 
 /**
  * @property {TVODefaults} TVO_DEFAULTS - `class-transformer-validator` options

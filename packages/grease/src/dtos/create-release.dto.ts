@@ -1,6 +1,9 @@
 import type { ObjectPlain } from '@flex-development/tutils'
 import $c from '@grease/config/cache.config'
-import { GREASER_TITLE_BIRTHDAY } from '@grease/config/constants.config'
+import {
+  DEFAULT_VERSION,
+  GREASER_TITLE_BIRTHDAY
+} from '@grease/config/constants.config'
 import IsPath from '@grease/decorators/is-path.decorator'
 import IsSemVer from '@grease/decorators/is-sem-ver.decorator'
 import IsTargetBranch from '@grease/decorators/is-target-branch.decorator'
@@ -8,6 +11,7 @@ import type { ICreateReleaseDTO } from '@grease/interfaces'
 import { IsBoolean, IsOptional, IsString, ValidateIf } from 'class-validator'
 import join from 'lodash/join'
 import pick from 'lodash/pick'
+import { quote } from 'shell-quote'
 
 /**
  * @file Data Transfer Objects - CreateReleaseDTO
@@ -22,6 +26,22 @@ import pick from 'lodash/pick'
  * @implements {ICreateReleaseDTO}
  */
 export default class CreateReleaseDTO implements ICreateReleaseDTO {
+  /**
+   * @static
+   * @property {(keyof ICreateReleaseDTO)[]} PROPS - `CreateReleaseDTO` props
+   */
+  static PROPS: (keyof ICreateReleaseDTO)[] = [
+    'draft',
+    'files',
+    'notes',
+    'notesFile',
+    'prerelease',
+    'repo',
+    'target',
+    'title',
+    'version'
+  ]
+
   @IsBoolean()
   @IsOptional()
   readonly draft?: ICreateReleaseDTO['draft']
@@ -62,22 +82,25 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
   /**
    * Creates a new GitHub release data transfer object.
    *
+   * @see https://cli.github.com/manual/gh_release_create
+   *
    * @param {ICreateReleaseDTO | ObjectPlain} [data={}] - Data to create release
    */
   constructor(data: ICreateReleaseDTO | ObjectPlain = {}) {
-    const keys: (keyof ICreateReleaseDTO)[] = [
-      'draft',
-      'files',
-      'notes',
-      'notesFile',
-      'prerelease',
-      'repo',
-      'target',
-      'title',
-      'version'
-    ]
+    // Pick dto properties
+    const dto: ICreateReleaseDTO = pick(data, CreateReleaseDTO.PROPS)
 
-    Object.assign(this, pick(data, keys))
+    // Force validation error if version is missing (skip possible `Cannot read
+    // property 'endsWith' of undefined` error)
+    if (!dto.version) dto.version = DEFAULT_VERSION
+
+    // Update release title
+    if (!dto.title && dto.version.endsWith('1.0.0')) {
+      dto.title = `${dto.version} ${GREASER_TITLE_BIRTHDAY}`
+    } else if (!dto.title) dto.title = dto.version
+
+    // Validate and assign properties
+    Object.assign(this, dto)
   }
 
   /**
@@ -85,59 +108,53 @@ export default class CreateReleaseDTO implements ICreateReleaseDTO {
    *
    * [1]: https://cli.github.com/manual/gh_release_create
    *
-   * @todo Handle lerna tags
-   *
    * @return {string} `gh release create` arguments
    */
   toString(): string {
-    // Spread data
-    const {
-      draft = false,
-      files = [],
-      notes = '',
-      notesFile = '',
-      prerelease,
-      repo = '',
-      target = '',
-      title = '',
-      version: tag
-    } = this
+    return join(this.toStringArgs(), ' ')
+  }
 
-    // Init command arguments array
-    const args: string[] = [tag]
+  /**
+   * Converts the DTO into a [`gh release create`][1] string arguments array.
+   *
+   * [1]: https://cli.github.com/manual/gh_release_create
+   *
+   * @return {string[]} `gh release create` arguments as array
+   */
+  toStringArgs(): string[] {
+    return [
+      // Release tag
+      this.version,
 
-    // Add release asset files
-    if (files && files.length) args.push(join(files, ' '))
+      // Release asset files
+      ...(() => {
+        const files = this.files?.map(file => {
+          return file.toString().includes('#') ? `'${file}'` : file.toString()
+        })
 
-    // Mark as prerelease
-    if (prerelease) args.push('--prerelease')
+        return files?.flat() ?? []
+      })(),
 
-    // Save release as draft or publish
-    if (draft) args.push('--draft')
+      // Create draft release?
+      this.draft ? '--draft' : '',
 
-    // Add release title
-    if (tag.endsWith('1.0.0') && (!title || !title.length)) {
-      args.push(`--title "${tag} ${GREASER_TITLE_BIRTHDAY}"`)
-    } else if (title && title.length) {
-      args.push(`--title "${title}"`)
-    } else {
-      args.push(`--title "${tag}"`)
-    }
+      // Create prerelease?
+      this.prerelease ? '--prerelease' : '',
 
-    // Read release notes from file
-    if (notesFile && notesFile.toString().length) {
-      args.push(`--notes-file ${notesFile}`)
-    }
+      // Select another repository using `[HOST/]OWNER/REPO` format
+      this.repo ? `--repo ${this.repo}` : '',
 
-    // Target branch or commit sha
-    if (target && target.length) args.push(`--target ${target}`)
+      // Target branch or commit sha
+      this.target ? `--target ${this.target}` : '',
 
-    // Push release to different repository
-    if (repo && repo.length) args.push(`--repo ${repo}`)
+      // Release title
+      this.title ? `--title ${quote([this.title])}` : '',
 
-    // Add release notes
-    if (notes && notes.length) args.push(`--notes "${notes}"`)
+      // Release notes file
+      this.notesFile ? `--notes-file ${this.notesFile}` : '',
 
-    return join(args, ' ').trim()
+      // Release notes
+      this.notes ? `--notes ${quote([this.notes])}` : ''
+    ].filter(Boolean)
   }
 }

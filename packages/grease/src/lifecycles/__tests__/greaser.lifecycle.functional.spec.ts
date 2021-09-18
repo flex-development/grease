@@ -1,8 +1,8 @@
 import cache from '@grease/config/cache.config'
 import { GH_RELEASE_CREATE } from '@grease/config/constants.config'
 import CreateReleaseDTO from '@grease/dtos/create-release.dto'
-import type { ICreateReleaseDTO, IGreaseOptions } from '@grease/interfaces'
-import { VERSION } from '@grease/tests/fixtures/git-tags.fixture'
+import type { IGreaseOptions } from '@grease/interfaces'
+import DTO from '@grease/tests/fixtures/create-release-dto.fixture'
 import logger from '@grease/utils/logger.util'
 import validate from '@grease/utils/validate.util'
 import sh from 'shelljs'
@@ -28,14 +28,13 @@ const mockValidate = validate as jest.MockedFunction<typeof validate>
 
 describe('functional:lifecycles/greaser', () => {
   const options: IGreaseOptions = {}
-  const dto: ICreateReleaseDTO = { version: VERSION }
 
   describe('executes lifecycle', () => {
     beforeEach(async () => {
       // @ts-expect-error cannot assign to 'git' because it is read-only
       mockCache.git = { tagPrefix: 'v' }
 
-      await TestSubject(options, dto)
+      await TestSubject(options, DTO)
     })
 
     it('should run lifecycle scripts', () => {
@@ -49,6 +48,10 @@ describe('functional:lifecycles/greaser', () => {
     })
 
     it('should validate release data', () => {
+      // Arrange
+      const dto = new CreateReleaseDTO(DTO)
+
+      // Expect
       expect(mockValidate).toBeCalledTimes(1)
       expect(mockValidate).toBeCalledWith(CreateReleaseDTO, dto, false)
     })
@@ -74,7 +77,7 @@ describe('functional:lifecycles/greaser', () => {
       const { lifecycle } = testcase
 
       // Act
-      TestSubject({ skip: { [lifecycle]: true } }, dto)
+      TestSubject({ skip: { [lifecycle]: true } }, DTO)
 
       // Expect
       expect(mockRunLifecycleScript).not.toBeCalled()

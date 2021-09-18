@@ -1,12 +1,8 @@
-import pkg from '@/grease/package.json'
-import cache from '@grease/config/cache.config'
+import type { Path, PathValue } from '@flex-development/tutils'
 import { GREASER_TITLE_BIRTHDAY } from '@grease/config/constants.config'
-import type { ICreateReleaseDTO, IGreaseCache } from '@grease/interfaces'
-import TAGS from '@grease/tests/fixtures/git-tags.fixture'
-import type { GitSemverTagsOptions } from '@grease/types'
+import type { ICreateReleaseDTO } from '@grease/interfaces'
+import DTO from '@grease/tests/fixtures/create-release-dto.fixture'
 import type { Testcase } from '@tests/utils/types'
-import faker from 'faker'
-import join from 'lodash/join'
 import TestSubject from '../create-release.dto'
 
 /**
@@ -14,163 +10,111 @@ import TestSubject from '../create-release.dto'
  * @module grease/dtos/tests/unit/CreateRelease
  */
 
-jest.mock('@grease/config/cache.config')
-
-const mockCache = cache as jest.Mocked<IGreaseCache>
-
 describe('unit:dtos/CreateReleaseDTO', () => {
-  describe('#toString', () => {
-    type Case = Testcase<string> & {
-      dto: Partial<ICreateReleaseDTO>
-      git: GitSemverTagsOptions
-      property:
-        | `#${keyof ICreateReleaseDTO}`
-        | `release tag${' (lerna-style)' | ''}`
-        | `title if #version ${'satisfies' | 'does not satisfy'} 1.0.0`
-      stringify: 'stringify' | 'not stringify'
-    }
-
-    const V1TAG = TAGS[TAGS.length - 1]
-    const files: string[] = ['CHANGELOG.md', 'LICENSE.md']
-    const notes = faker.lorem.words(5)
-    const notesFile = 'RELEASE_NOTES.md'
-    const target = 'main'
-    const tag0 = TAGS[0]
-    const repo = pkg.homepage.replace('https://', '')
-
-    const expected = `${tag0} --title "${tag0}"`
-
-    const cases: Case[] = [
-      {
-        dto: { files, version: tag0 },
-        expected: `${tag0} ${join(files, ' ')} --title "${tag0}"`,
-        git: {},
-        property: '#files',
-        stringify: 'stringify'
-      },
-      {
-        dto: { files: [], version: tag0 },
-        expected,
-        git: {},
-        property: '#files',
-        stringify: 'not stringify'
-      },
-      {
-        dto: { draft: true, version: tag0 },
-        expected: `${tag0} --draft --title "${tag0}"`,
-        git: {},
-        property: '#draft',
-        stringify: 'stringify'
-      },
-      {
-        dto: { draft: false, version: tag0 },
-        expected,
-        git: {},
-        property: '#draft',
-        stringify: 'not stringify'
-      },
-      {
-        dto: { notes, version: tag0 },
-        expected: `${expected} --notes "${notes}"`,
-        git: {},
-        property: '#notes',
-        stringify: 'stringify'
-      },
-      {
-        dto: { notes: '', version: tag0 },
-        expected,
-        git: {},
-        property: '#notes',
-        stringify: 'not stringify'
-      },
-      {
-        dto: { notesFile, version: tag0 },
-        expected: `${expected} --notes-file ${notesFile}`,
-        git: {},
-        property: '#notesFile',
-        stringify: 'stringify'
-      },
-      {
-        dto: { notesFile: '', version: tag0 },
-        expected,
-        git: {},
-        property: '#notesFile',
-        stringify: 'not stringify'
-      },
-      {
-        dto: { prerelease: true, version: tag0 },
-        expected: `${tag0} --prerelease --title "${tag0}"`,
-        git: {},
-        property: '#prerelease',
-        stringify: 'stringify'
-      },
-      {
-        dto: { prerelease: false, version: tag0 },
-        expected,
-        git: {},
-        property: '#prerelease',
-        stringify: 'not stringify'
-      },
-      {
-        dto: { target, version: tag0 },
-        expected: `${expected} --target ${target}`,
-        git: {},
-        property: '#target',
-        stringify: 'stringify'
-      },
-      {
-        dto: { target: '', version: tag0 },
-        expected,
-        git: {},
-        property: '#target',
-        stringify: 'not stringify'
-      },
-      {
-        dto: { repo, version: tag0 },
-        expected: `${expected} --repo ${repo}`,
-        git: {},
-        property: '#repo',
-        stringify: 'stringify'
-      },
-      {
-        dto: { repo: '', version: tag0 },
-        expected,
-        git: {},
-        property: '#repo',
-        stringify: 'not stringify'
-      },
-      {
-        dto: { version: V1TAG },
-        expected: `${V1TAG} --title "${V1TAG} ${GREASER_TITLE_BIRTHDAY}"`,
-        git: {},
-        property: 'title if #version satisfies 1.0.0',
-        stringify: 'stringify'
-      },
-      {
-        dto: { title: tag0, version: tag0 },
-        expected,
-        git: {},
-        property: 'title if #version does not satisfy 1.0.0',
-        stringify: 'stringify'
-      },
-      {
-        dto: { title: '', version: tag0 },
-        expected,
-        git: {},
-        property: '#title',
-        stringify: 'not stringify'
+  describe('#constructor', () => {
+    describe('#title', () => {
+      type Case = Testcase<NonNullable<ICreateReleaseDTO['title']>> & {
+        state: string
+        title: ICreateReleaseDTO['title']
+        version: ICreateReleaseDTO['version']
       }
-    ]
 
-    it.each<Case>(cases)('should $stringify $property', testcase => {
-      // Arrange
-      const { dto, expected, git } = testcase
+      const version1: ICreateReleaseDTO['version'] = 'v1.0.0'
+      const version2: ICreateReleaseDTO['version'] = 'v2.0.0'
 
-      // @ts-expect-error read-only property - mocking
-      mockCache.git = git
+      const cases: Case[] = [
+        {
+          expected: `${version1} ${GREASER_TITLE_BIRTHDAY}`,
+          state: `!data.title && data.version === ${version1}`,
+          title: '',
+          version: version1
+        },
+        {
+          expected: version2,
+          state: `!data.title && data.version === ${version2}`,
+          title: undefined,
+          version: version2
+        },
+        {
+          expected: `${version2} 😄`,
+          state: `data.title && data.version === ${version2}`,
+          title: `${version2} 😄`,
+          version: version2
+        }
+      ]
 
-      // Act + Expect
-      expect(Object.assign(new TestSubject(), dto).toString()).toBe(expected)
+      it.each<Case>(cases)('should be $expected if $state', testcase => {
+        // Arrange
+        const { expected, title, version } = testcase
+
+        // Act + Expect
+        expect(new TestSubject({ title, version }).title).toBe(expected)
+      })
+    })
+  })
+
+  describe('#toStringArgs', () => {
+    it('should return string[] where each string is non-empty', () => {
+      // Act
+      const result = new TestSubject(DTO).toStringArgs()
+
+      // Expect
+      result.forEach(value => {
+        expect(value).toBeString()
+        expect(value.length).not.toBe(0)
+      })
+    })
+
+    describe('arguments', () => {
+      type Case = Testcase<string[]> & {
+        prop: keyof ICreateReleaseDTO
+        value: PathValue<ICreateReleaseDTO, Path<ICreateReleaseDTO>>
+      }
+
+      const cases: Case[] = [
+        { expected: ['--draft'], prop: 'draft', value: DTO.draft },
+        {
+          expected: [`${DTO.files?.[0]}`, `'${DTO.files?.[1]}'`],
+          prop: 'files',
+          value: DTO.files
+        },
+        {
+          expected: [`--notes '${DTO.notes}'`],
+          prop: 'notes',
+          value: DTO.notes
+        },
+        {
+          expected: ['--notes-file ./NOTES.md'],
+          prop: 'notesFile',
+          value: './NOTES.md'
+        },
+        { expected: ['--prerelease'], prop: 'prerelease', value: true },
+        { expected: [`--repo ${DTO.repo}`], prop: 'repo', value: DTO.repo },
+        {
+          expected: [`--target ${DTO.target}`],
+          prop: 'target',
+          value: DTO.target
+        },
+        {
+          expected: [`--title ${DTO.version}`],
+          prop: 'title',
+          value: DTO.title
+        },
+        { expected: [DTO.version], prop: 'version', value: DTO.version }
+      ]
+
+      it.each<Case>(cases)('should include $prop argument', testcase => {
+        // Arrange
+        const { expected, prop, value } = testcase
+        const data = { [prop]: value }
+        if (prop !== 'version') data.version = DTO.version
+
+        // Act
+        const result = new TestSubject(data).toStringArgs()
+
+        // Expect
+        expect(result).toIncludeAllMembers(expected)
+      })
     })
   })
 })

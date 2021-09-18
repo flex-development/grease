@@ -16,6 +16,8 @@ import INFILE from '@grease/tests/fixtures/infile.fixture'
 import type { SemanticVersion } from '@grease/types'
 import changelogVersions from '@grease/utils/changelog-versions.util'
 import type { Testcase } from '@tests/utils/types'
+import type { RestoreConsole } from 'jest-mock-console'
+import mockConsole from 'jest-mock-console'
 import { mocked } from 'ts-jest/utils'
 import TestSubject from '../notes.lifecycle'
 
@@ -29,10 +31,16 @@ jest.mock('@grease/utils/changelog-versions.util')
 const mockChangelogVersions = mocked(changelogVersions)
 
 describe('unit:lifecycles/notes', () => {
+  const restoreConsole: RestoreConsole = mockConsole()
+
   const options: IGreaseOptions = {
     infile: INFILE,
     notesType: NotesType.CHANGELOG
   }
+
+  afterAll(() => {
+    restoreConsole()
+  })
 
   describe('returns', () => {
     type Case = Testcase<NullishString> & {
