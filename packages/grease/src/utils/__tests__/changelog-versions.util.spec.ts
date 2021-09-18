@@ -1,5 +1,6 @@
 import type { NullishString } from '@flex-development/tutils'
-import CHANGELOG, { VERSIONS } from '@grease/tests/fixtures/changelog.fixture'
+import VERSIONS from '@grease/tests/fixtures/changelog-versions.fixture'
+import CHANGELOG from '@grease/tests/fixtures/changelog.fixture'
 import type { SemanticVersion } from '@grease/types'
 import type { Testcase } from '@tests/utils/types'
 import testSubject from '../changelog-versions.util'

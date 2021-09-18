@@ -39,7 +39,7 @@ const Greaser = async (
   logger(options, 'starting github release...', [], LogLevel.INFO)
 
   // Validate release data
-  dto = await validate(CreateReleaseDTO, dto, false)
+  dto = await validate(CreateReleaseDTO, new CreateReleaseDTO(dto), false)
 
   if (options.dryRun && !options.silent) {
     const message = util.inspect(classToPlain(dto), false, null)

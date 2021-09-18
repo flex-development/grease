@@ -8,10 +8,8 @@ import {
 } from '@grease/config/constants.config'
 import { NotesType } from '@grease/enums/notes-type.enum'
 import type { IGreaseOptions } from '@grease/interfaces'
-import {
-  RELEASE_NOTES,
-  VERSIONS
-} from '@grease/tests/fixtures/changelog.fixture'
+import VERSIONS from '@grease/tests/fixtures/changelog-versions.fixture'
+import DTO from '@grease/tests/fixtures/create-release-dto.fixture'
 import INFILE from '@grease/tests/fixtures/infile.fixture'
 import type { SemanticVersion } from '@grease/types'
 import changelogVersions from '@grease/utils/changelog-versions.util'
@@ -82,7 +80,7 @@ describe('unit:lifecycles/notes', () => {
         version: '7.7.7'
       },
       {
-        expected: RELEASE_NOTES['2.0.0'],
+        expected: DTO.notes as string,
         expected_string: 'changelog notes',
         options,
         state: 'options.notesType === NotesType.CHANGELOG',
