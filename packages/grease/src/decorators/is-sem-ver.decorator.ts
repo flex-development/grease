@@ -5,7 +5,7 @@ import type {
   GitSemverTagsOptions,
   IsSemVerOptionsClean as CleanConfig,
   IsSemVerOptionsCMP as CMPConfig,
-  IsSemVerOptionsConfigSatisfies as SatisfiesConfig,
+  IsSemVerOptionsSatisfies as SatisfiesConfig,
   ValidationMessage
 } from '@grease/types'
 import type { ValidateByOptions } from 'class-validator'

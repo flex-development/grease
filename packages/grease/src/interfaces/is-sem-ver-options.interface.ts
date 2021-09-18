@@ -2,7 +2,7 @@ import type {
   GitSemverTagsOptions,
   IsSemVerOptionsClean,
   IsSemVerOptionsCMP,
-  IsSemVerOptionsConfigSatisfies
+  IsSemVerOptionsSatisfies
 } from '@grease/types'
 import type { ValidationOptions } from 'class-validator'
 import type { CoerceOptions } from 'semver'
@@ -47,5 +47,5 @@ export interface IsSemVerOptions extends ValidationOptions {
   /**
    * Check if $value satisfies specified range.
    */
-  satisfies?: IsSemVerOptionsConfigSatisfies | []
+  satisfies?: IsSemVerOptionsSatisfies | []
 }
