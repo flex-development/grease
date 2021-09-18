@@ -4,7 +4,7 @@ import type {
   GitSemverTagsOptions,
   IConstraint,
   IsSemVerOptionsClean as CleanConfig,
-  IsSemVerOptionsConfigCMP as CMPConfig,
+  IsSemVerOptionsCMP as CMPConfig,
   IsSemVerOptionsConfigSatisfies as SatisfiesConfig,
   ValidatorConstraintOptions
 } from '@grease/types'

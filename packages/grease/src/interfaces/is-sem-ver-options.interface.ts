@@ -1,7 +1,7 @@
 import type {
   GitSemverTagsOptions,
   IsSemVerOptionsClean,
-  IsSemVerOptionsConfigCMP,
+  IsSemVerOptionsCMP,
   IsSemVerOptionsConfigSatisfies
 } from '@grease/types'
 import type { ValidationOptions } from 'class-validator'
@@ -26,7 +26,7 @@ export interface IsSemVerOptions extends ValidationOptions {
   /**
    * Compare $value to another semantic version.
    */
-  cmp?: IsSemVerOptionsConfigCMP | []
+  cmp?: IsSemVerOptionsCMP | []
 
   /**
    * Coerce $value to a semantic version if possible.

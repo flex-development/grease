@@ -4,7 +4,7 @@ import type { IsSemVerOptions } from '@grease/interfaces'
 import type {
   GitSemverTagsOptions,
   IsSemVerOptionsClean as CleanConfig,
-  IsSemVerOptionsConfigCMP as CMPConfig,
+  IsSemVerOptionsCMP as CMPConfig,
   IsSemVerOptionsConfigSatisfies as SatisfiesConfig,
   ValidationMessage
 } from '@grease/types'
