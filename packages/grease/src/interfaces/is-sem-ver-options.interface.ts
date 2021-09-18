@@ -1,6 +1,6 @@
 import type {
   GitSemverTagsOptions,
-  IsSemVerOptionsConfigClean,
+  IsSemVerOptionsClean,
   IsSemVerOptionsConfigCMP,
   IsSemVerOptionsConfigSatisfies
 } from '@grease/types'
@@ -21,7 +21,7 @@ export interface IsSemVerOptions extends ValidationOptions {
   /**
    * Remove tag prefix and any leading or trailing whitespaces from $value.
    */
-  clean?: IsSemVerOptionsConfigClean | boolean
+  clean?: IsSemVerOptionsClean | boolean
 
   /**
    * Compare $value to another semantic version.

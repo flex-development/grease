@@ -3,7 +3,7 @@ import validator from '@grease/constraints/is-sem-ver.constraint'
 import type { IsSemVerOptions } from '@grease/interfaces'
 import type {
   GitSemverTagsOptions,
-  IsSemVerOptionsConfigClean as CleanConfig,
+  IsSemVerOptionsClean as CleanConfig,
   IsSemVerOptionsConfigCMP as CMPConfig,
   IsSemVerOptionsConfigSatisfies as SatisfiesConfig,
   ValidationMessage

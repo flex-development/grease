@@ -3,7 +3,7 @@ import type { IsSemVerOptions } from '@grease/interfaces'
 import type {
   GitSemverTagsOptions,
   IConstraint,
-  IsSemVerOptionsConfigClean as CleanConfig,
+  IsSemVerOptionsClean as CleanConfig,
   IsSemVerOptionsConfigCMP as CMPConfig,
   IsSemVerOptionsConfigSatisfies as SatisfiesConfig,
   ValidatorConstraintOptions
