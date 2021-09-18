@@ -38,6 +38,7 @@
     "@commitlint/format": "13.1.0",
     "@commitlint/types": "13.1.0",
     "@flex-development/exceptions": "2.0.1",
+    "@flex-development/log": "2.0.0",
     "@grease/index": "link:packages/grease/src/index.ts",
     "@grease/interfaces": "link:packages/grease/src/interfaces",
     "@grease/utils": "link:packages/grease/src/utils",
