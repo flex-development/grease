@@ -1,6 +1,6 @@
 import DTO from '@grease/tests/fixtures/create-release-dto.fixture'
-import join from 'lodash/join'
-import pick from 'lodash/pick'
+import join from 'lodash.join'
+import pick from 'lodash.pick'
 import TestSubject from '../create-release.dto'
 
 /**

@@ -13,7 +13,7 @@ import {
   ValidatorConstraint as Constraint
 } from 'class-validator'
 import { existsSync } from 'fs'
-import merge from 'lodash/merge'
+import merge from 'lodash.merge'
 import { join } from 'path'
 
 /**

@@ -8,7 +8,7 @@ import {
 } from 'class-validator'
 import fs from 'fs'
 import { listBranches } from 'isomorphic-git'
-import merge from 'lodash/merge'
+import merge from 'lodash.merge'
 
 /**
  * @file Decorator Constraints - IsBranchConstraint

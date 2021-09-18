@@ -1,6 +1,6 @@
 import { ExceptionStatusCode } from '@flex-development/exceptions/enums'
 import Exception from '@flex-development/exceptions/exceptions/base.exception'
-import merge from 'lodash/merge'
+import merge from 'lodash.merge'
 import latestSemverTag from 'standard-version/lib/latest-semver-tag'
 import { resolveUpdaterObjectFromArgument } from 'standard-version/lib/updaters'
 import testSubject from '../read-package-files.util'

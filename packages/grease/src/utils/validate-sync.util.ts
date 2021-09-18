@@ -7,7 +7,7 @@ import type {
   TransformValidationOptions
 } from 'class-transformer-validator'
 import { transformAndValidateSync } from 'class-transformer-validator'
-import merge from 'lodash/merge'
+import merge from 'lodash.merge'
 
 /**
  * @file Utility - validateSync

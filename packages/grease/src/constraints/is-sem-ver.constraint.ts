@@ -14,8 +14,8 @@ import {
   buildMessage,
   ValidatorConstraint as Constraint
 } from 'class-validator'
-import isPlainObject from 'lodash/isPlainObject'
-import merge from 'lodash/merge'
+import isPlainObject from 'lodash.isplainobject'
+import merge from 'lodash.merge'
 import type { CoerceOptions } from 'semver'
 
 /**

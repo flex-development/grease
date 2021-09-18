@@ -1,7 +1,7 @@
 import DEFAULTS_DTAG from '@flex-development/dtag/config/defaults.config'
 import { NotesType } from '@grease/enums/notes-type.enum'
 import type { GreaseOptionsDefaults } from '@grease/interfaces'
-import merge from 'lodash/merge'
+import merge from 'lodash.merge'
 import DEFAULTS_STANDARD_VERSION from 'standard-version/defaults'
 
 /**

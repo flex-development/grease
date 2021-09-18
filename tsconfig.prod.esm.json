@@ -14,8 +14,7 @@
         "packages/grease/node_modules/@flex-development/log/esm/*"
       ],
       "@grease": ["packages/grease/src/index.ts"],
-      "@grease/*": ["packages/grease/src/*"],
-      "lodash/*": ["node_modules/lodash-es/*"]
+      "@grease/*": ["packages/grease/src/*"]
     },
     "target": "esnext"
   },

@@ -15,7 +15,7 @@ import changelogVersions from '@grease/utils/changelog-versions.util'
 import logger from '@grease/utils/logger.util'
 import ch from 'chalk'
 import fs from 'fs'
-import indexOf from 'lodash/indexOf'
+import indexOf from 'lodash.indexof'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
 
 /**

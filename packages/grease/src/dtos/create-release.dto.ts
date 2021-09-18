@@ -9,8 +9,8 @@ import IsSemVer from '@grease/decorators/is-sem-ver.decorator'
 import IsTargetBranch from '@grease/decorators/is-target-branch.decorator'
 import type { ICreateReleaseDTO } from '@grease/interfaces'
 import { IsBoolean, IsOptional, IsString, ValidateIf } from 'class-validator'
-import join from 'lodash/join'
-import pick from 'lodash/pick'
+import join from 'lodash.join'
+import pick from 'lodash.pick'
 import { quote } from 'shell-quote'
 
 /**

@@ -4,7 +4,7 @@ import { classToPlain } from 'class-transformer'
 import type { TransformValidationOptions } from 'class-transformer-validator'
 import { transformAndValidateSync } from 'class-transformer-validator'
 import { IsString } from 'class-validator'
-import merge from 'lodash/merge'
+import merge from 'lodash.merge'
 import { mocked } from 'ts-jest/utils'
 import testSubject from '../validate-sync.util'
 

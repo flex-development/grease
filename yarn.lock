@@ -723,7 +723,13 @@ __metadata:
     "@types/faker": 5.5.6
     "@types/git-semver-tags": 4.1.1
     "@types/jest": 27.0.1
-    "@types/lodash": 4.14.172
+    "@types/lodash.indexof": 4.0.6
+    "@types/lodash.isempty": 4.4.6
+    "@types/lodash.isplainobject": 4.0.6
+    "@types/lodash.join": 4.0.6
+    "@types/lodash.merge": 4.6.6
+    "@types/lodash.omit": 4.5.6
+    "@types/lodash.pick": 4.4.6
     "@types/node": 16.9.2
     "@types/semver": 7.3.8
     "@types/shelljs": 0.8.9
@@ -743,8 +749,13 @@ __metadata:
     isomorphic-git: 1.9.2
     jest: 27.1.0
     jest-mock-console: 1.1.0
-    lodash: 4.17.21
-    lodash-es: 4.17.21
+    lodash.indexof: 4.0.5
+    lodash.isempty: 4.4.0
+    lodash.isplainobject: 4.0.6
+    lodash.join: 4.0.1
+    lodash.merge: 4.6.2
+    lodash.omit: 4.5.0
+    lodash.pick: 4.4.0
     reflect-metadata: 0.1.13
     semver: 7.3.5
     shell-quote: 1.7.2
@@ -1909,7 +1920,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash.isplainobject@npm:latest":
+"@types/lodash.indexof@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@types/lodash.indexof@npm:4.0.6"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: e2863c61d2f30fd083263a1cd245ff2527c8ec1b81e77cab9bd21c5ea4ed5ef5173d651c86fb2b537c02255c242d7c656a6c275d2061bac21e33d93c694e6699
+  languageName: node
+  linkType: hard
+
+"@types/lodash.isempty@npm:4.4.6":
+  version: 4.4.6
+  resolution: "@types/lodash.isempty@npm:4.4.6"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 6364a6821841f7ba57d740f0ab254e15cc07ed46739e5d37f293b5a1203b0e710c463fdc5ec9fd6f0432ba5c5f3e67e0590e2322c8065e28275d6736bf663b0f
+  languageName: node
+  linkType: hard
+
+"@types/lodash.isplainobject@npm:4.0.6, @types/lodash.isplainobject@npm:latest":
   version: 4.0.6
   resolution: "@types/lodash.isplainobject@npm:4.0.6"
   dependencies:
@@ -1954,7 +1983,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:*, @types/lodash@npm:4.14.172":
+"@types/lodash@npm:*":
   version: 4.14.172
   resolution: "@types/lodash@npm:4.14.172"
   checksum: 5fc51ea40d7e455bd1c760bcc60c9e81f82d85988666d4d4969bd8311367c63bbf1fe2be48755ba87836710e45fff94014ec164ebe6ccaa72815014981152434
@@ -7429,13 +7458,6 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"lodash-es@npm:4.17.21":
-  version: 4.17.21
-  resolution: "lodash-es@npm:4.17.21"
-  checksum: 05cbffad6e2adbb331a4e16fbd826e7faee403a1a04873b82b42c0f22090f280839f85b95393f487c1303c8a3d2a010048bf06151a6cbe03eee4d388fb0a12d2
-  languageName: node
-  linkType: hard
-
 "lodash.chunk@npm:^4.2.0":
   version: 4.2.0
   resolution: "lodash.chunk@npm:4.2.0"
@@ -7464,10 +7486,24 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
+"lodash.indexof@npm:4.0.5":
+  version: 4.0.5
+  resolution: "lodash.indexof@npm:4.0.5"
+  checksum: 4f3ead786c2941f18f1ef250459bcc6182ac00f04e76a2b94d3933349c879cd4b79444d59b0de835ad93d7b01626c1bc8ee55d7776879f099c0617d896a29f28
+  languageName: node
+  linkType: hard
+
 "lodash.isboolean@npm:^3.0.3":
   version: 3.0.3
   resolution: "lodash.isboolean@npm:3.0.3"
   checksum: b70068b4a8b8837912b54052557b21fc4774174e3512ed3c5b94621e5aff5eb6c68089d0a386b7e801d679cd105d2e35417978a5e99071750aa2ed90bffd0250
+  languageName: node
+  linkType: hard
+
+"lodash.isempty@npm:4.4.0":
+  version: 4.4.0
+  resolution: "lodash.isempty@npm:4.4.0"
+  checksum: a8118f23f7ed72a1dbd176bf27f297d1e71aa1926288449cb8f7cef99ba1bc7527eab52fe7899ab080fa1dc150aba6e4a6367bf49fa4e0b78da1ecc095f8d8c5
   languageName: node
   linkType: hard
 
@@ -7492,7 +7528,7 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"lodash.isplainobject@npm:^4.0.6, lodash.isplainobject@npm:latest":
+"lodash.isplainobject@npm:4.0.6, lodash.isplainobject@npm:^4.0.6, lodash.isplainobject@npm:latest":
   version: 4.0.6
   resolution: "lodash.isplainobject@npm:4.0.6"
   checksum: 29c6351f281e0d9a1d58f1a4c8f4400924b4c79f18dfc4613624d7d54784df07efaff97c1ff2659f3e085ecf4fff493300adc4837553104cef2634110b0d5337
@@ -7562,7 +7598,7 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"lodash@npm:4.17.21, lodash@npm:4.x, lodash@npm:^4.17.15, lodash@npm:^4.17.19, lodash@npm:^4.17.21, lodash@npm:^4.7.0":
+"lodash@npm:4.x, lodash@npm:^4.17.15, lodash@npm:^4.17.19, lodash@npm:^4.17.21, lodash@npm:^4.7.0":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7

@@ -13,7 +13,7 @@ import {
   buildMessage,
   ValidatorConstraint as Constraint
 } from 'class-validator'
-import merge from 'lodash/merge'
+import merge from 'lodash.merge'
 import IsBranchConstraint from './is-branch.constraint'
 import IsCommitConstraint from './is-commit.constraint'
 
