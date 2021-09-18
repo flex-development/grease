@@ -746,7 +746,7 @@ __metadata:
     faker: 5.5.3
     figures: 3.2.0
     git-semver-tags: 4.1.1
-    isomorphic-git: 1.9.2
+    isomorphic-git: 1.10.0
     jest: 27.1.0
     jest-mock-console: 1.1.0
     lodash.indexof: 4.0.5
@@ -6216,9 +6216,9 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"isomorphic-git@npm:1.9.2":
-  version: 1.9.2
-  resolution: "isomorphic-git@npm:1.9.2"
+"isomorphic-git@npm:1.10.0":
+  version: 1.10.0
+  resolution: "isomorphic-git@npm:1.10.0"
   dependencies:
     async-lock: ^1.1.0
     clean-git-ref: ^2.0.1
@@ -6233,7 +6233,7 @@ fsevents@^2.3.2:
     simple-get: ^3.0.2
   bin:
     isogit: cli.cjs
-  checksum: a502b7e29d8b92387f8b08740b669b63adc46fa2fdaa0da0ec4226c503a06af0737eae79a704a37e087e33e30b075b260cd338ae51579ec36433e8cf0f76e738
+  checksum: 313261ccd5aa1f57ec79c73c25ba25d23e9ef0e4d6a984c1b069d538d4bf2b37f8f6c0d56d522c4fb979787d4cba728233f564335c352f045947b7952ad095f8
   languageName: node
   linkType: hard
 
