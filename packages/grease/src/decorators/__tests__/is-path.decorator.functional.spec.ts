@@ -2,6 +2,7 @@ import type { OneOrMany } from '@flex-development/tutils'
 import Validator from '@grease/constraints/is-path.constraint'
 import { IsPathMessage as Msg } from '@grease/enums/is-path-message.enum'
 import type { IsPathOptions } from '@grease/interfaces'
+import DTO from '@grease/tests/fixtures/create-release-dto.fixture'
 import type {
   IsPathOption as Option,
   TestcaseDecorator
@@ -119,8 +120,6 @@ describe('functional:grease/decorators/IsPath', () => {
 
       const EXPECTED = 0
 
-      const path_asset = 'README.md#My display label'
-
       const cases: CasePass[] = [
         {
           expected: EXPECTED,
@@ -144,7 +143,7 @@ describe('functional:grease/decorators/IsPath', () => {
           expected: EXPECTED,
           option: 'options.gh',
           options: { gh: true },
-          value: path_asset
+          value: DTO.files?.[1] as PathLike
         }
       ]
 
