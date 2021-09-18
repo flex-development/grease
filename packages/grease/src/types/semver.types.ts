@@ -12,7 +12,7 @@ import type {
 /**
  * `IsSemVerOptions.clean` configuration.
  */
-export type IsSemVerOptionsConfigClean = [string] | [string, SemVerOptions] | []
+export type IsSemVerOptionsClean = [string] | [string, SemVerOptions] | []
 
 /**
  * `IsSemVerOptions.cmp` configuration.
