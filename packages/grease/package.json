@@ -110,10 +110,14 @@
   },
   "peerDependencies": {
     "@types/node": ">=15",
+    "@types/shelljs": "0.8.9",
     "typescript": ">=2.7"
   },
   "peerDependenciesMeta": {
     "@types/node": {
+      "optional": true
+    },
+    "@types/shelljs": {
       "optional": true
     },
     "typescript": {
