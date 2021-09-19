@@ -22,9 +22,11 @@
     "paths": {
       "@/*": ["packages/*"],
       "@flex-development/dtag": [
-        "node_modules/@flex-development/dtag/cjs/index"
+        "packages/grease/node_modules/@flex-development/dtag/cjs/index"
       ],
-      "@flex-development/dtag/*": ["node_modules/@flex-development/dtag/cjs/*"],
+      "@flex-development/dtag/*": [
+        "packages/grease/node_modules/@flex-development/dtag/cjs/*"
+      ],
       "@flex-development/log": [
         "packages/grease/node_modules/@flex-development/log/cjs/index"
       ],

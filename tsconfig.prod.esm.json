@@ -4,9 +4,11 @@
     "outDir": "./esm",
     "paths": {
       "@flex-development/dtag": [
-        "node_modules/@flex-development/dtag/esm/index"
+        "packages/grease/node_modules/@flex-development/dtag/esm/index"
       ],
-      "@flex-development/dtag/*": ["node_modules/@flex-development/dtag/esm/*"],
+      "@flex-development/dtag/*": [
+        "packages/grease/node_modules/@flex-development/dtag/esm/*"
+      ],
       "@flex-development/log": [
         "packages/grease/node_modules/@flex-development/log/esm/index"
       ],

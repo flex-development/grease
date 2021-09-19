@@ -35,6 +35,7 @@ const config: Config.InitialOptions = {
     '<rootDir>/__tests__/config/setupAfterEnv.ts'
   ],
   testRegex: `(/__tests__/)(spec/(${TYPE}))?(.*)(${TYPE})?.spec.ts$`,
+  testRunner: 'jest-jasmine2',
   verbose: true
 }
 

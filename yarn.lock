@@ -850,6 +850,7 @@ __metadata:
     jest: 27.1.0
     jest-extended: 0.11.5
     jest-github-reporter: 1.0.2
+    jest-mock-console: 1.1.0
     lint-staged: 11.0.0
     lodash.join: 4.0.1
     lodash.merge: 4.6.2
