@@ -757,6 +757,7 @@ __metadata:
     lodash.omit: 4.5.0
     lodash.pick: 4.4.0
     reflect-metadata: 0.1.13
+    rimraf: 3.0.2
     semver: 7.3.5
     shell-quote: 1.7.2
     shelljs: 0.8.4
