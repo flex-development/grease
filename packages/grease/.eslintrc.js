@@ -44,6 +44,7 @@ module.exports = {
           'repo',
           'stringified',
           'strinigify',
+          'unsectioned',
           'updaters',
           'utf8',
           'versioning'
@@ -56,6 +57,12 @@ module.exports = {
       files: ['**/*.spec.ts'],
       rules: {
         'no-empty': 0
+      }
+    },
+    {
+      files: ['__tests__/__fixtures__/types.fixture.ts'],
+      rules: {
+        'sort-keys': 0
       }
     },
     {
