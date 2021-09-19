@@ -2,6 +2,69 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/flex-development/grease/compare/grease@1.1.0...grease@2.0.0) (2021-09-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* **typescript:** `IsSemVerOptionsConfigSatisfies` -> `IsSemVerOptionsSatisfies`
+* **typescript:** `IsSemVerOptionsConfigCMP` -> `IsSemVerOptionsCMP`
+* **typescript:** `IsSemVerOptionsConfigClean` -> `IsSemVerOptionsClean`
+
+### :pencil2: Housekeeping
+
+* add eslint base config ([8de32f3](https://github.com/flex-development/grease/commit/8de32f3e4dd32c7f1cea85c9943b7ec88a1d7153))
+* refine commit scopes ([ae15022](https://github.com/flex-development/grease/commit/ae15022381725668a773ab09c5c38b784e7cd83d))
+* run `yarn set version berry` ([f94a4e1](https://github.com/flex-development/grease/commit/f94a4e162dbc3de7038b1bdb79573e25427baa5d))
+* **typescript:** add typings for `shell-quote@1.7.2` ([70156cb](https://github.com/flex-development/grease/commit/70156cb7751374830f5c74d5b3c9d9f58c4b3e6a))
+* update environment variables ([3f55036](https://github.com/flex-development/grease/commit/3f55036bf343aa8a3079294d3ebb4158cb4068e4))
+* use yarn workspace based commit scopes ([889322b](https://github.com/flex-development/grease/commit/889322b2d5224a58dbde522f81cc3177da981c86))
+
+
+### :sparkles: Features
+
+* `utils/getOptions` ([dd4c3a0](https://github.com/flex-development/grease/commit/dd4c3a0bd50ac4f31c1b9ce78bd9df57b7a63bec))
+* **typescript:** add `CommitType` ([70393c6](https://github.com/flex-development/grease/commit/70393c67a860e16cbe04f374fd57dbb7a672ea17))
+
+
+### :robot: Testing
+
+* **grease:** update changelog fixtures ([aabe44f](https://github.com/flex-development/grease/commit/aabe44fca6f2bf24060724cda5548793b58b080e))
+* **grease:** use `DTO` fixture in `IsPath` functional test ([5150d51](https://github.com/flex-development/grease/commit/5150d511e12fed11779c647ceb6e5d671f322e8e))
+* use `OPTIONS` fixture in `cacheOptions` functional test ([b8c5c26](https://github.com/flex-development/grease/commit/b8c5c2662f2ee786945bc7c6f113212829c1f4ce))
+
+
+### :recycle: Code Improvements
+
+* `types` directory architecture ([990f9dd](https://github.com/flex-development/grease/commit/990f9dd9cdb277eea407b25d633531bafa1fa00f))
+* **grease:** `CreateReleaseDTO#toString` ([0347d26](https://github.com/flex-development/grease/commit/0347d262a903f14692469da75974557dfced1f38))
+* **grease:** integrate `@flex-development/log@2.0.0` ([787ac1d](https://github.com/flex-development/grease/commit/787ac1db313ca8ee3e0cab961aee2ab91b19531b))
+* integrate `getOptions` into `main` ([d178829](https://github.com/flex-development/grease/commit/d17882988913b61abcb23d72e7b889b2f829e7b4))
+* **typescript:** `IsSemVerOptionsConfigClean` -> `IsSemVerOptionsClean` ([b420f94](https://github.com/flex-development/grease/commit/b420f94efe3856e2454fba3b0a506fc75fe26434))
+* **typescript:** `IsSemVerOptionsConfigCMP` -> `IsSemVerOptionsCMP` ([a99d89d](https://github.com/flex-development/grease/commit/a99d89de1eea744dad789bb295e72eba958e08bb))
+* **typescript:** `IsSemVerOptionsConfigSatisfies` -> `IsSemVerOptionsSatisfies` ([3d2ddc9](https://github.com/flex-development/grease/commit/3d2ddc99d21b8a6073e9b2e9c8d2f516d89a3cf7))
+
+
+### :hammer: Build
+
+* **deps-dev:** add `@types/rimraf@3.0.2` ([0728879](https://github.com/flex-development/grease/commit/072887991b2c591fd719375987f31797ff6edf52))
+* **deps-dev:** add `jest-extended@0.11.5` ([7268756](https://github.com/flex-development/grease/commit/726875681564692f1c65b4ff958dffeb47bba06d))
+* **deps-dev:** add `rimraf@3.0.2` ([ec913bc](https://github.com/flex-development/grease/commit/ec913bc1d4583c0757965d6c27a987c9c4450916))
+* **deps-dev:** drop `@types/yargs-unparser@2.0.1` ([e6adbfa](https://github.com/flex-development/grease/commit/e6adbfa7692dfdf0c4eae0b5085bbf6699e99c82))
+* **deps-dev:** move `@types/lodash@4.14.172` to `devDependencies` ([4cebed3](https://github.com/flex-development/grease/commit/4cebed3e1c724fc848761b7e4a3226facf1d8737))
+* **deps-dev:** move `@types/shelljs@0.8.9` to `devDependencies` ([283bc29](https://github.com/flex-development/grease/commit/283bc29413db865a35026d1c446c091525571e3b))
+* **deps-dev:** use `@types/faker@5.5.8` ([ca4fb8e](https://github.com/flex-development/grease/commit/ca4fb8e7de0adfdaa3f0d3843898f1dcff7e3c90))
+* **deps-dev:** use `@types/node@16.9.2` ([c0c1cd1](https://github.com/flex-development/grease/commit/c0c1cd1cabb25e8e21c662fcb1d839eb29eb582a))
+* **deps-peer:** add `@types/node>=15` ([5ca3485](https://github.com/flex-development/grease/commit/5ca3485335012d0eb6660619a3e51456068bb8c0))
+* **deps-peer:** add `@types/shelljs@0.8.9` ([60e82ea](https://github.com/flex-development/grease/commit/60e82ea33ea184c4751289cbdc449b0300e7f0fd))
+* **deps:** add `@flex-development/log@2.0.0` ([1bc20c4](https://github.com/flex-development/grease/commit/1bc20c4f8701510ec604ece4ca5dce211296ec45))
+* **deps:** add `shell-quote@1.7.2` ([6e72cd6](https://github.com/flex-development/grease/commit/6e72cd6782d057ef797d9b5d555edb702ed8828c))
+* **deps:** use `isomorphic-git@1.10.0` ([3284bf4](https://github.com/flex-development/grease/commit/3284bf43ac5dd660374a629d1a872d56f74943dc))
+* **deps:** use `lodash.*` deps ([4a9dc84](https://github.com/flex-development/grease/commit/4a9dc841d2e78259a1646da37904e91d368fcafb))
+* run local integrity check ([0ab9086](https://github.com/flex-development/grease/commit/0ab9086048c10b77f041eb85819ee2a4c1cfddab))
+* update build output ([3d97289](https://github.com/flex-development/grease/commit/3d972890cfa69e9f9622a54dc5371930d7079131))
+* **yarn:** set `nmHoistingLimits` to `dependencies` ([bf7978f](https://github.com/flex-development/grease/commit/bf7978f06406a2c02f530a1eafe7f550722c70a7))
+
 ## [1.1.0](https://github.com/flex-development/grease/compare/grease@1.0.2...grease@1.1.0) (2021-08-26)
 
 
