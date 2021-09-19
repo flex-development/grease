@@ -3,6 +3,7 @@
  * @module grease/interfaces
  */
 
+export type { IChangelogPreset } from './changelog-preset.interface'
 export type { ICreateReleaseDTO } from './create-release-dto.interface'
 export type { IGreaseCache } from './grease-cache.interface'
 export type {
