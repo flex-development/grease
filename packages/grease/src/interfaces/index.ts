@@ -4,6 +4,7 @@
  */
 
 export type { IChangelogPreset } from './changelog-preset.interface'
+export type { ICommitType } from './commit-type.interface'
 export type { ICreateReleaseDTO } from './create-release-dto.interface'
 export type { IGreaseCache } from './grease-cache.interface'
 export type {

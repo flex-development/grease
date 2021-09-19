@@ -13,7 +13,6 @@ export type {
   Options as SemVerOptions
 } from 'semver'
 export type { Options as StandardVersionOptions } from 'standard-version'
-export type { CommitType } from './CommitType'
 export type { IsSemVerOptionsClean } from './IsSemVerOptionsClean'
 export type { IsSemVerOptionsCMP } from './IsSemVerOptionsCMP'
 export type { IsSemVerOptionsSatisfies } from './IsSemVerOptionsSatisfies'

@@ -1,5 +1,5 @@
-import type { CommitType } from '@grease/types'
 import type { Config } from 'conventional-changelog-config-spec'
+import type { ICommitType } from './commit-type.interface'
 
 /**
  * @file Interfaces - IChangelogPreset
@@ -35,5 +35,5 @@ export interface IChangelogPreset extends Omit<Config, 'types'> {
    *    { type: 'test', hidden: true }
    *  ]
    */
-  types?: CommitType[]
+  types?: ICommitType[]
 }

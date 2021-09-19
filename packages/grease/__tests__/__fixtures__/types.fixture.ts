@@ -1,4 +1,4 @@
-import type { CommitType } from '@grease/types'
+import type { ICommitType } from '@grease/interfaces'
 
 /**
  * @file Workspace Test Fixture - IGreaseOptions.types
@@ -21,4 +21,4 @@ export default [
   },
   { type: 'chore', section: ':pencil2: Housekeeping' },
   { type: 'wip', hidden: true }
-] as CommitType[]
+] as ICommitType[]

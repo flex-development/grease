@@ -1,7 +1,6 @@
 import type { ObjectPlain } from '@flex-development/tutils'
 import defaults from '@grease/config/defaults.config'
-import type { IGreaseOptions } from '@grease/interfaces'
-import type { CommitType } from '@grease/types'
+import type { ICommitType, IGreaseOptions } from '@grease/interfaces'
 import merge from 'lodash.merge'
 
 /**
@@ -34,7 +33,7 @@ const getOptions = (
   return merge({}, defaults, args, {
     // Assume that any commit type without a section property should be hidden
     // See https://github.com/flex-development/grease/issues/26
-    types: args.types?.map((t: CommitType) => ({ ...t, hidden: !t.section }))
+    types: args.types?.map((t: ICommitType) => ({ ...t, hidden: !t.section }))
   })
 }
 
