@@ -3,9 +3,10 @@ import { NotesType } from '@grease/enums/notes-type.enum'
 import type {
   GitSemverTagsOptions,
   PathLike,
+  Preset,
   StandardVersionOptions
 } from '@grease/types'
-import type { Config } from 'conventional-changelog-config-spec'
+import type { IChangelogPreset } from './changelog-preset.interface'
 import type { ICreateReleaseDTO } from './create-release-dto.interface'
 import type { IGreaseScripts } from './grease-scripts.interface'
 import type { IGreaseSkip } from './grease-skip.interface'
@@ -18,10 +19,10 @@ import type { IGreaseSkip } from './grease-skip.interface'
 /**
  * `grease` options interface.
  *
- * @extends StandardVersionOptions
+ * @extends {Omit<StandardVersionOptions, 'infile' | 'preset' | 'types'>}
  */
 export interface IGreaseOptions
-  extends Omit<StandardVersionOptions, 'infile' | 'types'> {
+  extends Omit<StandardVersionOptions, 'infile' | 'preset' | 'types'> {
   /**
    * `.git` dir location.
    *
@@ -98,6 +99,13 @@ export interface IGreaseOptions
   prereleaseSkip?: DistTagOptions['skip']
 
   /**
+   * Custom [Conventional Changelog][1] preset or name of custom preset.
+   *
+   * [1]: https://github.com/conventional-changelog/conventional-changelog
+   */
+  preset?: Preset
+
+  /**
    * GitHub release asset paths.
    */
   releaseAssets?: ICreateReleaseDTO['files']
@@ -168,7 +176,7 @@ export interface IGreaseOptions
    *    { type: 'test', hidden: true }
    *  ]
    */
-  types?: Config.Type.Base[]
+  types?: IChangelogPreset['types']
 
   /**
    * Bypass pre-commit or commit-msg git hooks during the commit phase.
