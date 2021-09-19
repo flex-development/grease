@@ -102,7 +102,7 @@ jobs:
       - id: publish-to-gpr
         name: Publish package [GPR]
         working-directory: ${{ needs.deployment-info.outputs.directory }}
-        run: yarn publish ${{ needs.deployment-info.outputs.publish_args }}
+        run: npm publish ${{ needs.deployment-info.outputs.publish_args }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PAT_GPR_FLDV_ADMIN }}
       - id: setup-npmrc-npm
