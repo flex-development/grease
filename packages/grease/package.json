@@ -106,6 +106,7 @@
     "@types/lodash.omit": "4.5.6",
     "@types/lodash.pick": "4.4.6",
     "@types/node": "16.9.2",
+    "@types/rimraf": "3.0.2",
     "@types/shelljs": "0.8.9",
     "@zerollup/ts-transform-paths": "1.7.18",
     "copyfiles": "2.4.1",
