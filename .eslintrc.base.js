@@ -139,6 +139,7 @@ module.exports = {
           'nullish',
           'perf',
           'pnv',
+          'prepack',
           'prerelease',
           'readonly',
           'rebase',

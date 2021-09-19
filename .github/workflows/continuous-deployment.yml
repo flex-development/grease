@@ -28,6 +28,7 @@ jobs:
       && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     outputs:
+      build_args: ${{ steps.build_args.outputs.args }}
       directory: ${{ steps.release.outputs.directory }}
       publish_args: ${{ steps.publish_args.outputs.args }}
       tag: ${{ steps.release.outputs.tag }}
@@ -56,17 +57,25 @@ jobs:
             core.setOutput('directory', `packages/${workspace_no_scope}`)
             core.setOutput('tag', tag)
             core.setOutput('workspace', workspace)
+      - id: build_args
+        name: Get build arguments
+        uses: actions/github-script@v4
+        with:
+          script: core.setOutput('args', `${process.env.workspace} build -t`)
       - id: publish_args
         name: Get publish arguments
         uses: actions/github-script@v4
         with:
           script: |
-            let dtag = process.env.version.split('-')[1] || ''
+            const workspace = process.env.workspace
+            const version = process.env.version
 
-            if (dtag && dtag.includes('.')) dtag = dtag.split('.')[0]
-            if (dtag) dtag = `--tag ${dtag}`
+            let tag = process.env.version.split('-')[1] || ''
 
-            core.setOutput('args', dtag.trim())
+            if (tag && tag.includes('.')) tag = tag.split('.')[0]
+            if (tag) tag = `--tag ${tag}`
+
+            core.setOutput('args', `${workspace}-${version}.tgz ${tag}`.trim())
   publish-package:
     name: Publish package to GPR & NPM
     needs: deployment-info
@@ -96,9 +105,14 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.PAT_GPR_FLDV }}
       - id: build
         name: Build project
-        run: yarn workspace ${{ needs.deployment-info.outputs.workspace }} build
+        run: yarn workspace ${{ needs.deployment-info.outputs.build_args }}
         env:
           NODE_ENV: production
+          NODE_OPTIONS: -r tsconfig-paths/register
+      - id: disable-prepack-script
+        name: Disable prepack script
+        run: ts-node ./scripts/prepack-disable
+        env:
           NODE_OPTIONS: -r tsconfig-paths/register
       - id: publish-to-gpr
         name: Publish package [GPR]
@@ -123,6 +137,11 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_FLDV }}
           NODE_ENV: production
+          NODE_OPTIONS: -r tsconfig-paths/register
+      - id: renable-prepack-script
+        name: Renable prepack script
+        run: ts-node ./scripts/prepack-enable
+        env:
           NODE_OPTIONS: -r tsconfig-paths/register
   update-production-branch:
     name: Update production branch
