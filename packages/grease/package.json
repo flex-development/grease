@@ -52,6 +52,7 @@
     "@flex-development/exceptions": "2.0.1",
     "@flex-development/log": "2.0.0",
     "@flex-development/tutils": "3.1.7",
+    "@types/conventional-changelog-config-spec": "2.1.1",
     "@types/git-semver-tags": "4.1.1",
     "@types/semver": "7.3.8",
     "@types/standard-version": "7.0.1",
