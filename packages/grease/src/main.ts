@@ -13,13 +13,13 @@ import commit from 'standard-version/lib/lifecycles/commit'
 import tag from 'standard-version/lib/lifecycles/tag'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
 import { RELEASE_PATTERN } from './config/constants.config'
-import defaults from './config/defaults.config'
 import type { IGreaseOptions } from './interfaces'
 import depchecker from './lifecycles/depchecker.lifecycle'
 import greaser from './lifecycles/greaser.lifecycle'
 import notes from './lifecycles/notes.lifecycle'
 import type { SemanticVersionTag } from './types'
 import cacheOptions from './utils/cache-options.util'
+import getOptions from './utils/get-options.util'
 import getPrerelease from './utils/get-prerelease.util'
 import logger from './utils/logger.util'
 import readPackageFiles from './utils/read-package-files.util'
@@ -35,20 +35,21 @@ import readPackageFiles from './utils/read-package-files.util'
  * [1]: https://github.com/conventional-changelog/standard-version
  *
  * @async
- * @param {IGreaseOptions | ObjectPlain} [args={}] - Application options
+ * @param {IGreaseOptions | ObjectPlain} [args={}] - Application arguments
  * @return {Promise<void>} Empty promise when complete
  */
 const main = async (args: IGreaseOptions | ObjectPlain = {}): Promise<void> => {
-  args = merge({}, defaults, args)
+  // Merge user options with defaults
+  let options = getOptions(args)
 
   // Run prerelease script
-  if (typeof args.scripts.prerelease === 'string') {
-    await runLifecycleScript(args, 'prerelease')
+  if (typeof options?.scripts?.prerelease === 'string') {
+    await runLifecycleScript(options, 'prerelease')
   }
 
   try {
     // Set application options
-    const options = await cacheOptions(args)
+    options = await cacheOptions(options)
 
     // Check if current branch is whitelisted release branch
     if (Array.isArray(options.releaseBranchWhitelist)) {
