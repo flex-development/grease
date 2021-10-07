@@ -1,18 +1,19 @@
-import type { Config } from '@jest/types'
-import baseConfig from '../../jest.config.base'
-import pkg from './package.json'
+const { Config } = require('@jest/types')
+const baseConfig = require('../../jest.config.base.cjs')
+const { name, repository } = require('./package.json')
 
 /**
  * @file Jest Configuration - Workspace
- * @see https://jestjs.io/docs/configuration
+ * @see https://jestjs.io/docs/next/configuration
  * @see https://orlandobayo.com/blog/monorepo-testing-using-jest
  */
 
-const ROOT = `<rootDir>/${pkg.repository.directory}`
+const ROOT = `<rootDir>/${repository.directory}`
 
-const config: Config.InitialOptions = {
+/** @type {Config.InitialOptions} */
+const config = {
   ...baseConfig,
-  displayName: pkg.name.split('/')[1],
+  displayName: name.split('/')[1],
   globals: {
     'ts-jest': {
       tsconfig: `${ROOT}/tsconfig.json`
@@ -23,4 +24,4 @@ const config: Config.InitialOptions = {
   setupFilesAfterEnv: [`${ROOT}/__tests__/config/setupAfterEnv.ts`]
 }
 
-export default config
+module.exports = config

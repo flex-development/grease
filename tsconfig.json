@@ -52,13 +52,5 @@
   },
   "exclude": ["**/build", "**/cjs", "**/esm", "**/node_modules"],
   "files": ["typings/jest.d.ts"],
-  "include": [
-    "__mocks__",
-    "__tests__",
-    "packages",
-    "scripts",
-    "typings",
-    "*.js",
-    "*.ts"
-  ]
+  "include": ["**/*.cjs", "**/.*.cjs", "**/*.mjs", "**/*.ts", "**/.*.ts"]
 }

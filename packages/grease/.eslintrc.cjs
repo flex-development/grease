@@ -1,4 +1,4 @@
-const baseConfig = require('../../.eslintrc.base')
+const baseConfig = require('../../.eslintrc.base.cjs')
 
 /**
  * @file ESLint Configuration
@@ -9,7 +9,7 @@ const RULES_SPELLCHECKER = baseConfig.rules['spellcheck/spell-checker']
 
 module.exports = {
   root: true,
-  extends: ['../../.eslintrc.base'],
+  extends: ['../../.eslintrc.base.cjs'],
   rules: {
     'spellcheck/spell-checker': [
       RULES_SPELLCHECKER[0],

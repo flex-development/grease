@@ -5,5 +5,5 @@
 
 module.exports = {
   root: true,
-  extends: ['./.eslintrc.base']
+  extends: ['./.eslintrc.base.cjs']
 }

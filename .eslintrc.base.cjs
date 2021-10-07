@@ -1,5 +1,3 @@
-const prettierConfig = require('./.prettierrc')
-
 /**
  * @file ESLint Configuration - Base
  * @see https://eslint.org/docs/user-guide/configuring
@@ -7,7 +5,7 @@ const prettierConfig = require('./.prettierrc')
 
 module.exports = {
   env: {
-    es2017: true,
+    es2020: true,
     node: true
   },
   extends: [
@@ -25,6 +23,7 @@ module.exports = {
       impliedStrict: true,
       jsx: false
     },
+    extraFileExtensions: ['.cjs', '.mjs'],
     project: ['./packages/**/tsconfig.json', './tsconfig.json'],
     sourceType: 'module',
     tsconfigRootDir: __dirname,
@@ -91,7 +90,7 @@ module.exports = {
     ],
     'no-ex-assign': 0,
     'prefer-arrow-callback': 2,
-    'prettier/prettier': [2, prettierConfig],
+    'prettier/prettier': [2, require('./.prettierrc.cjs')],
     'sort-keys': [
       1,
       'asc',
@@ -167,35 +166,21 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/.eslintrc.*'],
+      files: ['**/*.cjs', '**/*.md/*.js'],
       rules: {
-        'spellcheck/spell-checker': 0
+        '@typescript-eslint/no-var-requires': 0
       }
     },
     {
-      files: ['**/.eslintrc.*', '**/webpack.*'],
-      rules: {
-        'sort-keys': 0
+      files: ['**/*.cjs', '**/*.mjs'],
+      parser: `${__dirname}/node_modules/@babel/eslint-parser/lib/index.cjs`,
+      parserOptions: {
+        requireConfigFile: false
       }
-    },
-    {
-      files: ['**/*.md'],
-      processor: 'markdown/markdown'
     },
     {
       files: ['**/*.md/*.ts'],
       parser: require.resolve('@typescript-eslint/parser')
-    },
-    {
-      files: ['**/*.js', '**/*.md/*.js'],
-      parser: `${__dirname}/node_modules/@babel/eslint-parser/lib/index.cjs`,
-      parserOptions: {
-        requireConfigFile: false
-      },
-      rules: {
-        '@typescript-eslint/explicit-module-boundary-types': 0,
-        '@typescript-eslint/no-var-requires': 0
-      }
     },
     {
       files: ['**/*.spec.ts'],
@@ -208,7 +193,19 @@ module.exports = {
       },
       rules: {
         'jest/no-disabled-tests': 0,
-        'jest/valid-title': 0,
+        'jest/valid-title': 0
+      }
+    },
+    {
+      files: ['**/.eslintrc.*'],
+      rules: {
+        'spellcheck/spell-checker': 0,
+        'sort-keys': 0
+      }
+    },
+    {
+      files: ['**/__mocks__/**', '**/scripts/**', '**/__tests__/**'],
+      rules: {
         'tree-shaking/no-side-effects-in-initialization': 0
       }
     },
@@ -218,28 +215,6 @@ module.exports = {
         '@typescript-eslint/ban-types': 0,
         '@typescript-eslint/triple-slash-reference': 0
       }
-    },
-    {
-      files: ['**/*interface.ts'],
-      rules: {
-        'jsdoc/check-indentation': 0
-      }
-    },
-    {
-      files: [
-        '**/__mocks__/**',
-        '**/__tests__/**',
-        '**/scripts/**',
-        '**/.eslintrc.*',
-        '**/babel.*',
-        'commitlint.*',
-        'jest.*',
-        'lint-staged.*',
-        'webpack.*'
-      ],
-      rules: {
-        'tree-shaking/no-side-effects-in-initialization': 0
-      }
     }
   ],
   settings: {
@@ -248,12 +223,10 @@ module.exports = {
     },
     'import/resolver': {
       [require.resolve('eslint-import-resolver-node')]: {
-        extensions: ['.ts'],
-        moduleDirectory: ['node_modules', 'packages/*/src']
+        extensions: ['.ts']
       },
       [require.resolve('eslint-import-resolver-typescript')]: {
-        alwaysTryTypes: true,
-        project: ['./packages/*/tsconfig.json', './tsconfig.json']
+        alwaysTryTypes: true
       }
     },
     jsdoc: {

@@ -1,20 +1,23 @@
-import type { Config } from '@jest/types'
-import { jsWithTsESM as preset } from 'ts-jest/presets'
-import { pathsToModuleNameMapper } from 'ts-jest/utils'
-import NODE_MODULES from './scripts/nm-string'
-import { compilerOptions } from './tsconfig.json'
+const { Config } = require('@jest/types')
+const { parse } = require('comment-json')
+const fs = require('fs-extra')
+const { pathsToModuleNameMapper } = require('ts-jest/utils')
 
 /**
  * @file Jest Configuration - Base
- * @see https://jestjs.io/docs/configuration
- * @see https://orlandobayo.com/blog/monorepo-testing-using-jest
+ * @see https://jestjs.io/docs/next/configuration
+ * @see https://orlandobayo.com/blog/monorepo-testing-using-jest/
  */
 
+const TSCONFIG = `${process.env.PROJECT_CWD}/tsconfig.json`
+const { compilerOptions } = parse(fs.readFileSync(TSCONFIG).toString())
+
+const NODE_MODULES = process.env.NODE_MODULES
 const TYPE = 'e2e|functional|integration'
 const prefix = '<rootDir>'
 
-const config: Config.InitialOptions = {
-  ...preset,
+/** @type {Config.InitialOptions} */
+const config = {
   clearMocks: true,
   globals: {
     'ts-jest': {
@@ -23,10 +26,12 @@ const config: Config.InitialOptions = {
     }
   },
   moduleDirectories: [NODE_MODULES],
-  moduleFileExtensions: ['node', 'js', 'json', 'ts'],
+  moduleFileExtensions: ['cjs', 'js', 'json', 'mjs', 'node', 'ts'],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix }),
+  preset: 'ts-jest/presets/js-with-ts-esm',
   prettierPath: `<rootDir>/${NODE_MODULES}/prettier`,
   reporters: ['default', 'jest-github-reporter'],
+  resolver: '<rootDir>/tools/loaders/package-resolver.cjs',
   rootDir: '../..',
   roots: ['<rootDir>/__mocks__', '<rootDir>/packages'],
   setupFiles: ['<rootDir>/__tests__/config/setup.ts'],
@@ -36,7 +41,8 @@ const config: Config.InitialOptions = {
   ],
   testRegex: `(/__tests__/)(spec/(${TYPE}))?(.*)(${TYPE})?.spec.ts$`,
   testRunner: 'jest-jasmine2',
+  transformIgnorePatterns: [],
   verbose: true
 }
 
-export default config
+module.exports = config

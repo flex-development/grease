@@ -1,0 +1,7 @@
+{
+  "eslint.options": {
+    "configFile": "./.eslintrc.cjs",
+    "extensions": [".cjs", ".md", ".mjs", ".ts"]
+  },
+  "prettier.configPath": "./.prettierrc.cjs"
+}
