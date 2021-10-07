@@ -257,6 +257,12 @@ module.exports = {
       }
     },
     {
+      files: ['**/*.md'],
+      extends: ['plugin:markdownlint/recommended'],
+      parser: require.resolve('eslint-plugin-markdownlint/parser'),
+      processor: 'markdown/markdown'
+    },
+    {
       files: ['**/*.md/*.ts'],
       parser: require.resolve('@typescript-eslint/parser')
     },
