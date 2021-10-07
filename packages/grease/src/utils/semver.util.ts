@@ -79,7 +79,7 @@ export default {
         }
 
         // If no tags, don't bother doing anything else
-        if (!tags.length) return resolve(tags as SemanticVersionTag[])
+        if (tags.length === 0) return resolve(tags as SemanticVersionTag[])
 
         // Get options
         const { package: package_name, lernaTags } = options

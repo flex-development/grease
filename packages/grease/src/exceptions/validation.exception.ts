@@ -53,7 +53,7 @@ export default class ValidationException extends Exception {
       this.errors = (classToPlain(error) || []) as ValidationError[]
       this.message = `${model} validation failure`
 
-      if (this.errors.length) {
+      if (this.errors.length > 0) {
         const props = (this.errors as ValidationError[]).map(e => e.property)
         this.message += `: [${props}]`
       }

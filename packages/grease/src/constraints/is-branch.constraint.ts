@@ -92,7 +92,7 @@ export default class IsBranchConstraint implements IConstraint {
 
     // Check if value is the name of a branch in the current repo
     if (!branches.filter(branch => branch !== '.DS_Store').includes(value)) {
-      const code = remote && remote.length ? 'REMOTE' : 'LOCAL'
+      const code = remote && remote.length > 0 ? 'REMOTE' : 'LOCAL'
 
       args.constraints[0].context[name].error.code = code
       return false

@@ -32,11 +32,11 @@ describe('functional:utils/readPackageFiles', () => {
     // Act
     try {
       await testSubject({ packageFiles })
-    } catch (error) {}
+    } catch {}
 
     // Expect
     expect(mockResolveUpdater).toBeCalledTimes(packageFiles.length)
-    packageFiles.forEach(f => expect(mockResolveUpdater).toBeCalledWith(f))
+    for (const f of packageFiles) expect(mockResolveUpdater).toBeCalledWith(f)
   })
 
   it('should fallback to latest git semver tag', async () => {

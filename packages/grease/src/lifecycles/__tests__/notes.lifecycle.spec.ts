@@ -116,7 +116,7 @@ describe('unit:lifecycles/notes', () => {
 
       // Act
       try {
-        await TestSubject(options, VERSIONS[VERSIONS.length - 2])
+        await TestSubject(options, VERSIONS.at(-2))
       } catch (error) {
         exception = error as Exception
       }
@@ -133,7 +133,7 @@ describe('unit:lifecycles/notes', () => {
     it('should throw if version is not found in options.infile', async () => {
       // Arrange
       const versions = VERSIONS.slice(1, 3)
-      const version = VERSIONS[VERSIONS.length - 3]
+      const version = VERSIONS.at(-3)
       let exception = {} as Exception
       mockChangelogVersions.mockReturnValue(versions)
 

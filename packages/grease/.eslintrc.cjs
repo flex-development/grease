@@ -15,7 +15,8 @@ module.exports = {
       RULES_SPELLCHECKER[0],
       {
         ...RULES_SPELLCHECKER[1],
-        skipWords: RULES_SPELLCHECKER[1].skipWords.concat([
+        skipWords: [
+          ...RULES_SPELLCHECKER[1].skipWords,
           'autogeneration',
           'boop',
           'cmd',
@@ -48,11 +49,12 @@ module.exports = {
           'updaters',
           'utf8',
           'versioning'
-        ])
+        ]
       }
     ]
   },
-  overrides: baseConfig.overrides.concat([
+  overrides: [
+    ...baseConfig.overrides,
     {
       files: ['**/*.spec.ts'],
       rules: {
@@ -60,9 +62,21 @@ module.exports = {
       }
     },
     {
+      files: ['__mocks__/git-semver-tags.ts'],
+      rules: {
+        'unicorn/no-unsafe-regex': 0
+      }
+    },
+    {
       files: ['__tests__/__fixtures__/types.fixture.ts'],
       rules: {
         'sort-keys': 0
+      }
+    },
+    {
+      files: ['src/utils/changelog-versions.util.ts'],
+      rules: {
+        'unicorn/consistent-function-scoping': 0
       }
     },
     {
@@ -82,5 +96,5 @@ module.exports = {
         ]
       }
     }
-  ])
+  ]
 }

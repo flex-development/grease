@@ -34,7 +34,8 @@ module.exports = {
     'jsdoc',
     'markdown',
     'spellcheck',
-    'tree-shaking'
+    'tree-shaking',
+    'unicorn'
   ],
   rules: {
     '@typescript-eslint/ban-ts-ignore': 0,
@@ -162,9 +163,80 @@ module.exports = {
         ],
         strings: true
       }
-    ]
+    ],
+    'unicorn/consistent-function-scoping': 2,
+    'unicorn/custom-error-definition': 2,
+    'unicorn/import-index': 2,
+    'unicorn/import-style': [
+      2,
+      {
+        styles: {
+          fs: { default: true, named: true },
+          shelljs: { default: true }
+        }
+      }
+    ],
+    'unicorn/explicit-length-check': 2,
+    'unicorn/new-for-builtins': 2,
+    'unicorn/no-abusive-eslint-disable': 2,
+    'unicorn/no-array-callback-reference': 2,
+    'unicorn/no-array-for-each': 2,
+    'unicorn/no-array-method-this-argument': 2,
+    'unicorn/no-array-push-push': 2,
+    'unicorn/no-array-reduce': 2,
+    'unicorn/no-for-loop': 2,
+    'unicorn/no-instanceof-array': 2,
+    'unicorn/no-lonely-if': 2,
+    'unicorn/no-new-array': 2,
+    'unicorn/no-new-buffer': 2,
+    'unicorn/no-object-as-default-parameter': 2,
+    'unicorn/no-this-assignment': 2,
+    'unicorn/no-unsafe-regex': 2,
+    'unicorn/no-unused-properties': 2,
+    'unicorn/no-useless-fallback-in-spread': 2,
+    'unicorn/no-useless-length-check': 2,
+    'unicorn/no-useless-spread': 2,
+    'unicorn/no-useless-undefined': 2,
+    'unicorn/no-zero-fractions': 2,
+    'unicorn/number-literal-case': 2,
+    'unicorn/numeric-separators-style': 2,
+    'unicorn/prefer-array-find': 2,
+    'unicorn/prefer-array-flat-map': 2,
+    'unicorn/prefer-array-index-of': 2,
+    'unicorn/prefer-array-some': 2,
+    'unicorn/prefer-at': 2,
+    'unicorn/prefer-default-parameters': 2,
+    'unicorn/prefer-includes': 2,
+    'unicorn/prefer-module': 2,
+    'unicorn/prefer-number-properties': 2,
+    'unicorn/prefer-object-from-entries': [
+      2,
+      {
+        functions: ['fromPairs']
+      }
+    ],
+    'unicorn/prefer-object-has-own': 2,
+    'unicorn/prefer-optional-catch-binding': 2,
+    'unicorn/prefer-prototype-methods': 2,
+    'unicorn/prefer-regexp-test': 2,
+    'unicorn/prefer-set-has': 2,
+    'unicorn/prefer-spread': 2,
+    'unicorn/prefer-string-replace-all': 2,
+    'unicorn/prefer-string-slice': 2,
+    'unicorn/prefer-string-starts-ends-with': 2,
+    'unicorn/prefer-string-trim-start-end': 2,
+    'unicorn/prefer-switch': 2,
+    'unicorn/prefer-ternary': 2,
+    'unicorn/prefer-type-error': 2,
+    'unicorn/throw-new-error': 2
   },
   overrides: [
+    {
+      files: ['**/*.cjs'],
+      rules: {
+        'unicorn/prefer-module': 0
+      }
+    },
     {
       files: ['**/*.cjs', '**/*.md/*.js'],
       rules: {
@@ -176,6 +248,12 @@ module.exports = {
       parser: `${__dirname}/node_modules/@babel/eslint-parser/lib/index.cjs`,
       parserOptions: {
         requireConfigFile: false
+      }
+    },
+    {
+      files: ['**/*.interface.ts', '**/*.type.ts'],
+      rules: {
+        'jsdoc/check-indentation': 0
       }
     },
     {
@@ -193,7 +271,11 @@ module.exports = {
       },
       rules: {
         'jest/no-disabled-tests': 0,
-        'jest/valid-title': 0
+        'jest/valid-title': 0,
+        'unicorn/new-for-builtins': 0,
+        'unicorn/no-array-for-each': 0,
+        'unicorn/no-array-reduce': 0,
+        'unicorn/prefer-module': 0
       }
     },
     {
@@ -204,7 +286,14 @@ module.exports = {
       }
     },
     {
-      files: ['**/__mocks__/**', '**/scripts/**', '**/__tests__/**'],
+      files: ['**/__mocks__/**', '**/__tests__/**'],
+      rules: {
+        'unicorn/consistent-function-scoping': 0,
+        'unicorn/prefer-module': 0
+      }
+    },
+    {
+      files: ['**/__mocks__/**', '**/__tests__/**', '**/scripts/**'],
       rules: {
         'tree-shaking/no-side-effects-in-initialization': 0
       }

@@ -30,8 +30,8 @@ export default (opts: Options, callback: Callback): void => {
   const tags: string[] = []
   const unstableTagTest = /.+-\w+\.\d+$/
 
-  mockGitTags(opts).forEach(tag => {
-    if (skipUnstable && unstableTagTest.test(tag)) return
+  for (const tag of mockGitTags(opts)) {
+    if (skipUnstable && unstableTagTest.test(tag)) continue
 
     if (lernaTags && isLernaTag(tag, pkg)) {
       tags.push(tag)
@@ -42,7 +42,7 @@ export default (opts: Options, callback: Callback): void => {
     } else if (semver.valid(tag)) {
       tags.push(tag)
     }
-  })
+  }
 
   callback(null, tags)
 }

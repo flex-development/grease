@@ -8,7 +8,7 @@ import ch from 'chalk'
 import { classToPlain } from 'class-transformer'
 import sh from 'shelljs'
 import runLifecycleScript from 'standard-version/lib/run-lifecycle-script'
-import util from 'util'
+import { inspect } from 'util'
 
 /**
  * @file Lifecycles - greaser
@@ -42,7 +42,7 @@ const Greaser = async (
   dto = await validate(CreateReleaseDTO, new CreateReleaseDTO(dto), false)
 
   if (options.dryRun && !options.silent) {
-    const message = util.inspect(classToPlain(dto), false, null)
+    const message = inspect(classToPlain(dto), false, null)
     console.log(`\n${ch.gray(message)}\n`)
   }
 

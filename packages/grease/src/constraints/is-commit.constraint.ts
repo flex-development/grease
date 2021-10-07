@@ -67,7 +67,7 @@ export default class IsCommitConstraint implements IConstraint {
 
     try {
       await readCommit({ dir, fs, oid: value })
-    } catch (error) {
+    } catch {
       return false
     }
 

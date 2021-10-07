@@ -165,7 +165,7 @@ export default class IsSemVerConstraint implements IConstraint {
     }
 
     // Check range
-    if (satisfies.length >= 1) {
+    if (satisfies.length > 0) {
       const [range, options] = satisfies as SatisfiesConfig
 
       const satisfied = semver.satisfies(version, range, options)

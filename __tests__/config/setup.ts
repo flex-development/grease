@@ -7,4 +7,4 @@ import 'reflect-metadata'
  */
 
 // Async callbacks must be invoked within 10 seconds
-jest.setTimeout(10000)
+jest.setTimeout(10_000)

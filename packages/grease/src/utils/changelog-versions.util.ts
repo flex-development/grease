@@ -18,7 +18,7 @@ import semver from '@grease/utils/semver.util'
  */
 const changelogVersions = (changelog: NullishString = null): string[] => {
   // If no content, or empty string, do nothing
-  if (!changelog || !changelog.trim().length) return []
+  if (!changelog || changelog.trim().length === 0) return []
 
   // Match changelog content against heading pattern
   const headings = changelog.match(RELEASE_PATTERN)

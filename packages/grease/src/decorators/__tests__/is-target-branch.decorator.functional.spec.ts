@@ -123,7 +123,7 @@ describe('functional:grease/decorators/IsTargetBranch', () => {
         {
           expected: EXPECTED,
           option: 'no options',
-          value: BRANCHES.remote[BRANCHES.remote.length - 1]
+          value: BRANCHES.remote.at(-1) as string
         },
         {
           expected: EXPECTED,

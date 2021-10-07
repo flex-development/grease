@@ -17,8 +17,8 @@ const mockChalk = {
   yellow: jest.fn()
 }
 
-Object.keys(mockChalk).forEach(key => {
+for (const key of Object.keys(mockChalk)) {
   mockChalk.bold[key] = jest.fn(mockChalk[key])
-})
+}
 
 export default mockChalk

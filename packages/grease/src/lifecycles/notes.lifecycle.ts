@@ -94,7 +94,7 @@ const Notes = async (
   const versions = changelogVersions(content)
 
   // Throw error if no versions found in changelog content
-  if (!versions.length) {
+  if (versions.length === 0) {
     const data = { errors: { infile: options.infile }, versions }
     const message = `No package versions found in ${options.infile}`
 
@@ -116,13 +116,13 @@ const Notes = async (
 
   // Generate release notes
   let notes = content
-    .substring(content.indexOf(`[${version}]`), content.indexOf(prev_heading))
+    .slice(content.indexOf(`[${version}]`), content.indexOf(prev_heading))
     .replaceAll('###', '##')
     .replaceAll('* ', '- ')
     .replaceAll(':*-', ':**')
 
   // Format release notes
-  notes = notes.substring(notes.indexOf(BR), notes.lastIndexOf(BR)).trim()
+  notes = notes.slice(notes.indexOf(BR), notes.lastIndexOf(BR)).trim()
 
   // Log notes checkpoint
   logger(options, 'created release notes')

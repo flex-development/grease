@@ -12,8 +12,8 @@ const config = {
   [Injectable.GreaseCache]: new GreaseCache()
 }
 
-Object.keys(config).forEach(key => {
+for (const key of Object.keys(config)) {
   if (!Container.has(TOKENS[key])) Container.set(TOKENS[key], config[key])
-})
+}
 
 export default Container

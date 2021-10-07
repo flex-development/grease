@@ -14,7 +14,7 @@ import {
 } from 'class-validator'
 import { existsSync } from 'fs'
 import merge from 'lodash.merge'
-import { join } from 'path'
+import path from 'path'
 
 /**
  * @file Decorator Constraints - IsPathConstraint
@@ -123,7 +123,7 @@ export default class IsPathConstraint implements IConstraint {
       value = gh ? value.split('#')[0] : value
 
       // Prefix path with `process.cwd()`
-      if (cwd) value = join(process.cwd(), `${value}`)
+      if (cwd) value = path.join(process.cwd(), `${value}`)
     }
 
     // Check for path existence

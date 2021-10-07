@@ -30,7 +30,7 @@ export default class GreaseCache implements IGreaseCache {
    * @return {GitSemverTagsOptions} `git-semver-tags` options
    */
   get git(): GitSemverTagsOptions {
-    if (!Object.keys(this.options).length) return {}
+    if (Object.keys(this.options).length === 0) return {}
 
     return {
       lernaTags: typeof this.options.lernaPackage === 'string',

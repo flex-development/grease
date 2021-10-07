@@ -4,7 +4,7 @@ import Exception from '@flex-development/exceptions/exceptions/base.exception'
 import { LogLevel } from '@flex-development/log/enums/log-level.enum'
 import logger from '@grease/utils/logger.util'
 import { copyFileSync, existsSync } from 'fs-extra'
-import { join } from 'path'
+import path from 'path'
 import sh from 'shelljs'
 import { hideBin } from 'yargs/helpers'
 import yargs from 'yargs/yargs'
@@ -190,18 +190,18 @@ try {
   logger(argv, `set ${argv.env} environment variables`)
 
   // Check if base TypeScript config file already exists
-  const HAS_TSCONFIG = existsSync(join(process.cwd(), TSCONFIG_PROD))
+  const HAS_TSCONFIG = existsSync(path.join(process.cwd(), TSCONFIG_PROD))
 
   // Copy base TypeScript config file if base does not exist
   if (!HAS_TSCONFIG && !argv.dryRun) {
-    copyFileSync(join('..', '..', TSCONFIG_PROD), TSCONFIG_PROD)
+    copyFileSync(path.join('..', '..', TSCONFIG_PROD), TSCONFIG_PROD)
   }
 
   // Build project with ttypescript - https://github.com/cevek/ttypescript
-  argv.formats?.forEach(format => {
+  for (const format of argv.formats ?? []) {
     // Get tsconfig config file and path
     const tsconfig: string = `tsconfig.prod.${format}.json`
-    const tsconfig_path: string = join(process.cwd(), tsconfig)
+    const tsconfig_path: string = path.join(process.cwd(), tsconfig)
 
     // Remove stale directory
     exec(`rimraf ${format} directory`, argv.dryRun)
@@ -212,7 +212,7 @@ try {
 
     // Copy config file if base does not exist
     if (!has_tsconfig && !argv.dryRun) {
-      copyFileSync(join('..', '..', tsconfig), tsconfig)
+      copyFileSync(path.join('..', '..', tsconfig), tsconfig)
     }
 
     // Run build command
@@ -222,7 +222,7 @@ try {
 
     // Remove config file
     if (!HAS_TSCONFIG) exec(`rimraf ${tsconfig}`, argv.dryRun)
-  })
+  }
 
   // Remove base TypeScript config file
   if (!HAS_TSCONFIG && !argv.dryRun)

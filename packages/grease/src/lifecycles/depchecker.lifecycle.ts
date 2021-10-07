@@ -41,14 +41,13 @@ const Depchecker = async (options: IGreaseOptions = {}): Promise<void> => {
   logger(options, 'checking commands:', commands, LogLevel.INFO)
 
   // Check if required dependencies are installed
-  Object.values(DependencyCommand).forEach(command => {
+  for (const command of Object.values(DependencyCommand)) {
     if (!sh.which(command)) {
       throw new Exception(ExceptionStatusCode.NOT_FOUND, `${command} not found`)
     }
 
     logger(options, command)
-    return
-  })
+  }
 
   // Run `postdepchecker` script
   await runLifecycleScript(options, 'postdepchecker')
