@@ -1,8 +1,8 @@
-import pkg from '@/grease/package.json'
 import type { OneOrMany } from '@flex-development/tutils'
 import Validator from '@grease/constraints/is-sem-ver.constraint'
 import { IsSemVerMessage as Msg } from '@grease/enums/is-sem-ver-message.enum'
 import type { IsSemVerOptions } from '@grease/interfaces'
+import pkg from '@grease/package.json'
 import {
   TAGS_OPTIONS_LERNA,
   VERSION_DEV

@@ -1,4 +1,4 @@
-import pkg from '@/grease/package.json'
+import pkg from '@grease/package.json'
 import { TAGS_OPTIONS_LERNA } from '@grease/tests/fixtures/git-tags.fixture'
 import { mockGitTags } from '@grease/tests/utils'
 import type {
