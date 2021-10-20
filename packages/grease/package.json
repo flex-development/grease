@@ -53,7 +53,7 @@
     "@flex-development/log": "2.0.0",
     "@flex-development/tutils": "3.1.7",
     "@types/git-semver-tags": "4.1.1",
-    "@types/semver": "7.3.8",
+    "@types/semver": "7.3.9",
     "@types/standard-version": "7.0.1",
     "anymatch": "3.1.2",
     "chalk": "4.1.2",
