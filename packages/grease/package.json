@@ -51,7 +51,7 @@
     "@flex-development/dtag": "1.0.0",
     "@flex-development/exceptions": "2.0.1",
     "@flex-development/log": "2.0.0",
-    "@flex-development/tutils": "3.1.7",
+    "@flex-development/tutils": "4.5.0",
     "@types/git-semver-tags": "4.1.1",
     "@types/semver": "7.3.8",
     "@types/standard-version": "7.0.1",
@@ -138,7 +138,7 @@
     }
   },
   "resolutions": {
-    "@flex-development/tutils": "3.1.7"
+    "@flex-development/tutils": "4.5.0"
   },
   "engines": {
     "node": ">=15.0.0",
