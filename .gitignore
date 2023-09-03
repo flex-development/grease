@@ -1,88 +1,76 @@
-### macOS ###
-# General
-.DS_*
-.AppleDouble
-.LSOverride
+# macOS
+# ------------------------------------------------------------------------------
+**/._*
+**/.DS_*
 
-# Thumbnails
-._*
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-
-### Node ###
-# Logs
-logs
+# Node
+# ------------------------------------------------------------------------------
+**/node_modules/
 *.log
+*.pid
+*.pid.lock
+*.seed
+*.tgz
+*.zip
+.npm
+.yarn-integrity
+logs
 npm-debug.log*
+pids
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
+!**/__fixtures__/**/node_modules/
 
-# Diagnostic reports (https://nodejs.org/api/report.html)
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Dependency directories
-node_modules/
-jspm_packages/
-
-# Optional npm cache directory
-.npm
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# Yarn v2 (Not using Zero-Installs)
-# See: https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+# Yarn 2 (Not using Zero-Installs)
+# https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+# ------------------------------------------------------------------------------
+.pnp.*
 .yarn/*
-!.yarn/patches
-!.yarn/releases
 !.yarn/plugins
+!.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-.pnp.*
 
-### Environment ###
-# Environment variables
-.env*.local
+# Environment
+# ------------------------------------------------------------------------------
+**/.env
+**/.env*.local
+**/.env.repo
 
-### Jest ###
-coverage/
-**/__tests__/results.json
-
-### TypeScript ###
-# TypeScript cache
+# TypeScript
+# ------------------------------------------------------------------------------
 *.tsbuildinfo
-packages/**/tsconfig.prod.*
 
-### ESLint ###
-# Optional eslint cache
-.eslintcache
+# Testing
+# ------------------------------------------------------------------------------
+**/*config.*.timestamp*
+**/__tests__/report.json
+**/coverage/
+**/tsconfig*temp.json
+*.lcov
+codecov
 
-# Builds & Distributions
-build/
-cjs/
-esm/
-*.zip
+# ESLint
+# ------------------------------------------------------------------------------
+**/.eslintcache
+
+# Builds
+# ------------------------------------------------------------------------------
+**/.temp/
+**/dist/
+!**/__fixtures__/**/*.log
+!**/__fixtures__/**/dist/
+!**/typings/**/dist/
+
+# Releases
+# ------------------------------------------------------------------------------
+**/RELEASE_NOTES.md
+
+# Vercel
+# ------------------------------------------------------------------------------
+**/.vercel/
+
+# Misc
+# ------------------------------------------------------------------------------
+**/scratch.*
