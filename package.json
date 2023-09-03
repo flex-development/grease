@@ -128,7 +128,7 @@
     "chai": "5.0.0-alpha.1",
     "chai-each": "0.0.1",
     "cross-env": "7.0.3",
-    "cspell": "7.2.0",
+    "cspell": "7.3.2",
     "dprint": "0.40.2",
     "editorconfig": "2.0.0",
     "esbuild": "0.19.2",
