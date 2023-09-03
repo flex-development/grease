@@ -1,64 +1,60 @@
 {
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "allowJs": true,
     "allowUnreachableCode": false,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "./",
-    "checkJs": true,
-    "downlevelIteration": true,
+    "alwaysStrict": false,
+    "baseUrl": ".",
+    "checkJs": false,
+    "customConditions": ["import", "node", "default"],
+    "declaration": false,
+    "declarationMap": false,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
+    "exactOptionalPropertyTypes": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["dom", "esnext"],
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "lib": ["es2022"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "newLine": "lf",
     "noEmit": true,
+    "noErrorTruncation": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
     "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUncheckedIndexedAccess": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
+    "outDir": "dist",
     "paths": {
-      "@/*": ["packages/*"],
-      "@flex-development/dtag": [
-        "packages/grease/node_modules/@flex-development/dtag/cjs/index"
-      ],
-      "@flex-development/dtag/*": [
-        "packages/grease/node_modules/@flex-development/dtag/cjs/*"
-      ],
-      "@flex-development/log": [
-        "packages/grease/node_modules/@flex-development/log/cjs/index"
-      ],
-      "@flex-development/log/*": [
-        "packages/grease/node_modules/@flex-development/log/cjs/*"
-      ],
-      "@grease": ["packages/grease/src/index.ts"],
-      "@grease/tests/fixtures/*": ["packages/grease/__tests__/__fixtures__/*"],
-      "@grease/tests/*": ["packages/grease/__tests__/*"],
-      "@grease/*": ["packages/grease/src/*"],
-      "@tests/fixtures/*": ["__tests__/__fixtures__/*"],
-      "@tests/*": ["__tests__/*"]
+      "#fixtures/*": ["__fixtures__/*"],
+      "#pkg": ["package.json"],
+      "#src": ["src/index"],
+      "#src/*": ["src/*"],
+      "#tests/*": ["__tests__/*"]
     },
     "preserveConstEnums": true,
+    "preserveSymlinks": false,
     "pretty": true,
     "resolveJsonModule": true,
-    "rootDir": "./",
-    "sourceMap": false,
-    "strictPropertyInitialization": false,
-    "suppressImplicitAnyIndexErrors": true,
+    "resolvePackageJsonExports": true,
+    "resolvePackageJsonImports": true,
+    "rootDir": ".",
+    "skipDefaultLibCheck": false,
+    "skipLibCheck": true,
+    "sourceMap": true,
     "strict": true,
-    "target": "es2018"
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "useUnknownInCatchVariables": true,
+    "verbatimModuleSyntax": true
   },
-  "exclude": ["**/build", "**/cjs", "**/esm", "**/node_modules"],
-  "files": ["typings/jest.d.ts"],
-  "include": [
-    "__mocks__",
-    "__tests__",
-    "packages",
-    "scripts",
-    "typings",
-    "*.js",
-    "*.ts"
-  ]
+  "exclude": ["**/coverage", "**/dist", "**/node_modules"],
+  "include": ["**/**.mjs", "**/**.mts", "**/**.ts"],
+  "references": [{ "path": "./tsconfig.cjs.json" }]
 }

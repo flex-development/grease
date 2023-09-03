@@ -2,74 +2,54 @@
 #
 # References:
 #
+# - https://docs.github.com/actions/learn-github-actions/contexts
+# - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#pull_request
+# - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#push
+# - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch
+# - https://docs.github.com/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request
+# - https://docs.github.com/webhooks-and-events/webhooks/webhook-events-and-payloads#push
+# - https://docs.github.com/webhooks-and-events/webhooks/webhook-events-and-payloads#workflow_dispatch
 # - https://github.com/actions/checkout
-# - https://github.com/actions/setup-node
-# - https://github.com/actions/cache/tree/v2.1.6
+# - https://yarnpkg.com/cli/dedupe
 
 ---
 name: integrity
 on:
   pull_request:
+    paths:
+      - .github/workflows/integrity.yml
+      - .yarnrc.yml
+      - yarn.lock
     types:
       - opened
       - reopened
       - synchronize
-    paths:
-      - .github/workflows/**
-      - .yarnrc.yml
-      - yarn.lock
   push:
     branches:
       - main
-      - next
     paths:
-      - .github/workflows/**
+      - .github/workflows/integrity.yml
       - .yarnrc.yml
       - yarn.lock
+  workflow_dispatch:
+permissions:
+  packages: read
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
 jobs:
-  check:
+  integrity:
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
-    env:
-      NPM_TOKEN_FLDV: ${{ secrets.NPM_TOKEN_FLDV }}
-      PAT_GPR_FLDV: ${{ secrets.PAT_GPR_FLDV }}
-    strategy:
-      matrix:
-        node: ['15', '16']
     steps:
       - id: checkout
-        name: Checkout branch
-        uses: actions/checkout@v2
-      - id: node
-        name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        name: Checkout ${{ github.head_ref || github.ref_name }}
+        uses: actions/checkout@v3.6.0
         with:
-          node-version: ${{ matrix.node }}
-          scope: '@${{ github.repository_owner }}'
-      # Why not using setup-node 2.2+ cache option (yet)?
-      # See https://github.com/belgattitude/nextjs-monorepo-example/pull/369
-      - id: yarn-cache-dir-path
-        name: Get yarn cache directory path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-      # Use to check for cache-hit: steps.yarn-cache.outputs.cache-hit != 'true'
-      - id: yarn-cache
-        name: Restore yarn cache
-        uses: actions/cache@v2.1.6
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: |
-            yarn-cache-folder-os-${{ runner.os }}-node-${{ env.node-version
-            }}-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
-          restore-keys: |
-            yarn-cache-folder-os-${{ runner.os }}-node-${{ env.node-version }}-
-            yarn-cache-folder-os-${{ runner.os }}-
-      - id: install
-        name: Install dependencies
-        run: yarn install --immutable
-        env:
-          NODE_AUTH_TOKEN: ${PAT_GPR_FLDV}
+          persist-credentials: false
+          ref: ${{ github.head_ref || github.ref }}
       - id: dedupe-check
-        name: Check for duplicate dependencies in lock file
+        name: Check for duplicate dependencies in lockfile
         run: yarn dedupe --check
-      - id: dependency-graph
-        name: Check dependency graph
-        run: yarn check:install

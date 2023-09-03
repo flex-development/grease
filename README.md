@@ -1,74 +1,60 @@
 # :gear: grease
 
+[![github release](https://img.shields.io/github/v/release/flex-development/grease.svg?include_prereleases&sort=semver)](https://github.com/flex-development/grease/releases/latest)
+[![npm](https://img.shields.io/npm/v/@flex-development/grease.svg)](https://npmjs.com/package/@flex-development/grease)
+[![module type: esm](https://img.shields.io/badge/module%20type-esm-brightgreen)](https://github.com/voxpelli/badges-cjs-esm)
+[![license](https://img.shields.io/github/license/flex-development/grease.svg)](LICENSE.md)
+[![conventional commits](https://img.shields.io/badge/-conventional%20commits-fe5196?logo=conventional-commits&logoColor=ffffff)](https://conventionalcommits.org/)
+[![typescript](https://img.shields.io/badge/-typescript-3178c6?logo=typescript&logoColor=ffffff)](https://typescriptlang.org/)
+[![vitest](https://img.shields.io/badge/-vitest-6e9f18?style=flat&logo=vitest&logoColor=ffffff)](https://vitest.dev/)
+[![yarn](https://img.shields.io/badge/-yarn-2c8ebb?style=flat&logo=yarn&logoColor=ffffff)](https://yarnpkg.com/)
+
 Package release workflow tool for Node.js and CLI environments
 
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
-[![TypeScript](https://badgen.net/badge/-/typescript?icon=typescript&label)](https://www.typescriptlang.org/)
-[![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
+## Contents
 
-## Overview
+- [What is this?](#what-is-this)
+- [Install](#install)
+- [Use](#use)
+- [Types](#types)
+- [Contribute](#contribute)
 
-[Getting Started](#getting-started)  
-[Installation](#installation)  
-[Usage](#usage)  
-[Built With](#built-with)  
-[Contributing](CONTRIBUTING.md)
+## What is this?
 
-## Getting Started
+**TODO**: package overview
 
-`grease` is a package release workflow tool for CLI and Node.js environments.
+## Install
 
-Built on top of the [`standard-version`][4] library, it helps maintainers create
-releases and upload release assets via the [GitHub CLI][2].
+This package is [ESM only][1].
 
-Release notes can be generated using the `CHANGELOG` entry for the most recent
-semver tag. Maintainers also have the option of generating blank notes, notes in
-birthday (first release) format, or skipping note generation entirely.
+```sh
+yarn add -D @flex-development/grease
+```
 
-### How It Works
+From Git:
 
-1. Follow the [Conventional Commits Specification][8] in your repository
-2. When ready to release, run `grease` or `grease(options: IGreaseOptions)`
+```sh
+yarn add -D @flex-development/grease@flex-development/grease
+```
 
-`grease` will then do the following:
+<blockquote>
+  <small>
+    See <a href='https://yarnpkg.com/protocol/git'>Git Protocol | Yarn</a>
+    &nbsp;for details on requesting a specific branch, commit, or tag.
+  </small>
+</blockquote>
 
-1. Retrieve the current package version by looking at [`packageFiles`][9],
-   falling back to the last `git tag` (if enabled)
-2. `bump` the version in [`bumpFiles`][9] based on your commits
-3. Generate a commit-based `changelog` (uses [conventional-changelog][10] under
-   the hood)
-4. Create a new `commit` including [`bumpFiles`][9] and updated `CHANGELOG`
-5. Create a new `tag` with the new version number
-6. Check if the [GitHub CLI][2] is installed
-7. Generate [release notes](packages/grease/README.md#generating-release-notes)
-8. Create a new [GitHub release][11]
+## Use
 
-## Usage
+**TODO**: usage docs
 
-This project is organized as a monorepo. For detailed usage instructions, see
-one of the project workspaces below:
+## Types
 
-- [@flex-development/grease](packages/grease/README.md#usage)
+This package is fully typed with [TypeScript][2].
 
-## Built With
+## Contribute
 
-- [chalk][1] - Terminal string styling
-- [cli][2] - GitHub CLI
-- [shelljs][3] - Unix shell commands for Node.js
-- [standard-version][4] - [semver][5] versioning and CHANGELOG utility powered
-  by [Conventional Commits][6]
-- [yargs][7] - Optstring parser for Node.js
+See [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
-[1]: https://github.com/chalk/chalk
-[2]: https://cli.github.com/manual
-[3]: https://github.com/shelljs/shelljs
-[4]: https://github.com/conventional-changelog/standard-version
-[5]: https://git-scm.com
-[6]:
-  https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/git-semver-tags#readme
-[7]: https://github.com/yargs/yargs
-[8]: https://www.conventionalcommits.org/en/v1.0.0
-[9]:
-  https://github.com/conventional-changelog/standard-version#bumpfiles-packagefiles-and-updaters
-[10]: https://github.com/conventional-changelog/conventional-changelog
-[11]: https://cli.github.com/manual/gh_release_create
+[1]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+[2]: https://www.typescriptlang.org

@@ -1,149 +1,131 @@
 # Contributing Guide
 
-This document aims to describe the workflows and rules used for developing this
-project. This includes, but is not limited to:
+This document aims to describe the workflows and rules used for developing this project.
+
+This includes, but is not limited to:
 
 - how to contribute code (coding standards, testing, documenting source code)
 - how pull requests are handled
 - how to file bug reports
 
-> **Note:** This general guide is referenced in every workspace-specific guide.
-> Please read both guides before contributing to any workspace to prevent
-> duplicated work and misunderstandings.
-
-## Overview
-
-[Getting Started](#getting-started)  
-[Contributing Code](#contributing-code)  
-[Labels](#labels)  
-[Opening Issues](#opening-issues)  
-[Pull Requests & Code Reviews](#pull-requests-&-code-reviews)  
-[Merge Strategies](#merge-strategies)  
-[Releasing](#releasing)
-
 ## Getting Started
 
-### Terminology
+Follow the steps below to setup your local development environment:
 
-People interacting with the `grease` project are grouped into 4 categories:
+1. Clone repository
 
-- **owner**: `flex-development` organization owners with full admin rights
-- **maintainer**: owners and people added to the organization who actively
-  contribute to projects and have direct push access
-- **contributor**: someone who has helped improve any projects, but does not
-  have direct push access
-- **user**: developers who use any `flex-development` projects and may or may
-  not participate in discussions regarding a given project
+   ```sh
+   git clone https://github.com/flex-development/grease
+   cd grease
+   ```
 
-#### Additional Terminology
+2. Install binaries with [Homebrew][1]
 
-- **contribution**:
-  - new features
-  - engaging in discussions for new feature requests
-  - documentation **fixes**
-  - bug reports with reproducible steps
-  - answering questions
-- **ticket**: [JIRA][1] issue
+   ```sh
+   brew bundle --file ./Brewfile
+   ```
 
-### Git Configuration
+3. Set node version
 
-The examples in this guide contain references to custom Git aliases.
+   ```sh
+   nvm use
+   ```
 
-Copy the [starter Git global configuration](.github/.gitconfig) to follow along
-fully, as well as begin extending your own workflow.
+4. [Configure commit signing][2]
 
-### Yarn
+5. Update `~/.gitconfig`
 
-This project uses Yarn 2 (`v3.0.0-rc.2`). The Yarn configuration for this
-project can be found in [`.yarnrc.yml`](.yarnrc.yml). If you're already using
-Yarn globally, see the [Yarn 2 Migration docs][2].
+   ```sh
+   git config --global commit.gpgsign true
+   git config --global user.email <email>
+   git config --global user.name <name>
+   git config --global user.username <username>
+   ```
 
-[Yarn Workspaces][3] is used to _efficiently_ interact with the monorepo. It
-allows multiple projects to live together in the same repository AND reference
-each other without using `yarn link`.
+   See [`.gitconfig`](.github/.gitconfig) for a global Git config example.
 
-- **Project**: Directory tree containing workspaces, often the repository itself
-- **Workspace**: Named package under the [`packages/`](packages/) directory,
-  where the workspace name is `package.json#name`
-- **Worktree**: Name given to packages that list their own child workspaces. A
-  project contains one or more worktrees, which may themselves contain any
-  number of workspaces
+6. Install dependencies
 
-### GitHub Packages
+   ```sh
+   yarn
+   ```
 
-Some workspaces depend on scoped packages (e.g: `@flex-development`). Some of
-those packages are published to the [GitHub Package Registry][4], but **_not to
-NPM_**. A GitHub Personal Access Token is required for [installation][5].
+   **Note**: This project uses [Yarn 2][3]. Consult [`.yarnrc.yml`](.yarnrc.yml) for an overview of configuration
+   options and required environment variables. Furthermore, if you already have a global Yarn configuration, or any
+   `YARN_*` environment variables set, an error will be thrown if any settings conflict with the project's Yarn
+   configuration, or the Yarn 2 API. Missing environment variables will also yield an error.
 
-Scopes, their registry servers, and required environment variables are defined
-in [`.yarnrc.yml`](.yarnrc.yml) under the `npmScopes` field.
+7. [ZSH][4] setup
 
-Before [cloning and installing the project](#clone-&-install), you'll need to
-add the `PAT_GPR` variable to your shell:
+8. Update `$ZDOTDIR/.zprofile`:
 
-1. Retrieve `PAT_GPR` from a project maintainer
-2. Open `~/.bash_profile`, `~/.zprofile`, `~/.zshenv`, **or** `~/.zshrc`
-3. Save file and re-launch shell
+   ```sh
+   # PATH
+   # 1. local node_modules
+   [ -d $PWD/node_modules/.bin ] && export PATH=$PWD/node_modules/.bin:$PATH
 
-### Clone & Install
+   # DOTENV ZSH PLUGIN
+   # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/dotenv
+   export ZSH_DOTENV_FILE=.env.zsh
 
-```zsh
-git clone https://github.com/flex-development/grease
-cd grease
-yarn bootstrap
-```
+   # GIT
+   # https://gist.github.com/troyfontaine/18c9146295168ee9ca2b30c00bd1b41e
+   export GIT_EMAIL=$(git config user.email)
+   export GIT_NAME=$(git config user.name)
+   export GIT_USERNAME=$(git config user.username)
+   export GPG_TTY=$(tty)
 
-Note that if you have a global Yarn configuration (or any `YARN_*` environment
-variables set), an error will be displayed in the terminal if any settings
-conflict with the project's Yarn configuration, or the Yarn 2 API. An error will
-also be displayed if you're missing any environment variables.
+   # HOMEBREW
+   # https://brew.sh
+   export HOMEBREW_PREFIX=$(brew --prefix)
+
+   # NVM
+   # https://github.com/nvm-sh/nvm
+   export NVM_DIR=$HOME/.nvm
+
+   # YARN
+   export YARN_RC_FILENAME=.yarnrc.yml
+   ```
+
+9. Load `dotenv` plugin via `$ZDOTDIR/.zshrc`:
+
+   ```zsh
+   plugins=(dotenv)
+   ```
+
+10. Reload shell
+
+    ```sh
+    exec $SHELL
+    ```
 
 ### Environment Variables
 
-All environment variables are documented in `package.json` of each project,
-under the `env` field.
+| name                |
+| ------------------- |
+| `CODECOV_TOKEN`     |
+| `GITHUB_TOKEN`      |
+| `HOMEBREW_BREWFILE` |
+| `NODE_ENV`          |
+| `NODE_NO_WARNINGS`  |
+| `PAT_BOT`           |
+| `ZSH_DOTENV_FILE`   |
 
-#### `NODE_OPTIONS`
+#### GitHub Actions
 
-The `NODE_OPTIONS` environment variable is required when running any script that
-includes [TypeScript path aliases](./tsconfig.json) (e.g: scripts from the root
-[`scripts`](./scripts) directory).
+Variables are prefixed by `secrets.` in [workflow](.github/workflows/) files.
 
-To prevent `yarn bootstrap` errors, you'll need to conditionally require the
-`tsconfig-paths/register` module:
+### Git Config
 
-1. Open `~/.bash_profile`, `~/.zprofile`, **or** `~/.zshrc`
+The examples in this guide contain references to custom Git aliases.
 
-2. Conditionally append `-r <path/to/import>`
-
-   ```zsh
-   if [ -f "$PWD/node_modules/tsconfig-paths/register.js" ]; then
-     export NODE_OPTIONS="$NODE_OPTIONS -r tsconfig-paths/register"
-   fi
-   ```
-
-3. Restart your shell
-
-4. Run your script:
-
-   ```zsh
-   yarn build:grease
-   ```
-
-   _instead of_
-
-   ```zsh
-   NODE_OPTIONS='-r tsconfig-paths/register' yarn build:grease
-   ```
+See [`.github/.gitconfig`](.github/.gitconfig) for an exhaustive list.
 
 ## Contributing Code
 
-[Husky][6] is used to run Git hooks that locally enforce coding and commit
-message standards, as well run tests associated with any files changed since the
-last commit.
+[Husky][5] is used to locally enforce coding and commit message standards, as well as run tests pre-push.
 
-Any code merged into the [development and production branches](#branching-model)
-must confront the following criteria:
+Any code merged into the [trunk](#branching-model) must confront the following criteria:
 
 - changes should be discussed prior to implementation
 - changes have been tested properly
@@ -152,262 +134,274 @@ must confront the following criteria:
 
 ### Branching Model
 
-- Development: `next`
-- Production: `main`
+This project follows a [Trunk Based Development][6] workflow, specifically the [short-lived branch style][7].
 
-### Branch Prefixes
+- Trunk Branch: `main`
+- Short-Lived Branches: `feat/*`, `hotfix/*`, `release/*`
+
+#### Branch Naming Conventions
 
 When creating a new branch, the name should match the following format:
 
 ```zsh
-[prefix]/<TICKET-ID>-<branch_name>
- │           │      │
- │           │      └─⫸ a short, memorable name (possibly the future PR title)
- │           │
- │           └─⫸ check jira issue
+[prefix]/<issue-number>-<branch_name>
+ │        │              │
+ │        │              │
+ │        │              │
+ │        │              └─⫸ a short, memorable name
+ │        │
+ │        └─⫸ check github issue
  │
- └─⫸ bugfix|feat|hotfix|release
+ └─⫸ feat|feat/fix|hotfix|release
 ```
-
-For example:
-
-```zsh
-git feat P010-1-repository-setup
-```
-
-will create a new branch titled `feat/P010-1-repository-setup`.
 
 ### Commit Messages
 
-This project follows [Conventional Commit][7] standards and uses [commitlint][8]
-to enforce those standards.
+This project follows [Conventional Commit][8] standards and uses [commitlint][9] to enforce those standards.
 
 This means every commit must conform to the following format:
 
 ```zsh
-<type>[optional scope]: <description>
- │     │                │
- │     │                └─⫸ summary in present tense; lowercase without period at the end
+<type>[scope][!]: <description>
+ │     │      │    │
+ │     │      │    │
+ │     │      │    └─⫸ summary in present tense (lowercase without punctuation)
+ │     │      │
+ │     │      └─⫸ optional breaking change flag
  │     │
- │     └─⫸ see commitlint.config.js
+ │     └─⫸ see .commitlintrc.cts
  │
  └─⫸ build|ci|chore|docs|feat|fix|perf|refactor|revert|style|test|wip
 
-[optional body]
+[body]
 
-[optional footer(s)]
+[BREAKING CHANGE: <change>]
+
+[footer(s)]
 ```
 
 `<type>` must be one of the following values:
 
 - `build`: Changes that affect the build system or external dependencies
-- `ci`: Changes to our CI configuration files and scripts
-- `chore`: Changes that don't impact external users
-- `docs`: Documentation only changes
+- `ci`: Changes to our CI/CD configuration files and scripts
+- `chore`: Housekeeping tasks / changes that don't impact external users
+- `docs`: Documentation improvements
 - `feat`: New features
 - `fix`: Bug fixes
 - `perf`: Performance improvements
 - `refactor`: Code improvements
 - `revert`: Revert past changes
 - `style`: Changes that do not affect the meaning of the code
-- `test`: Adding missing tests or correcting existing tests
+- `test`: Change that impact the test suite
 - `wip`: Working on changes, but you need to go to bed :wink:
 
-For example:
+e.g:
 
-```zsh
-git chore "add eslint configuration"
-```
+- `build(deps-dev): bump cspell from 6.7.0 to 6.8.0`
+- `perf: lighten initial load`
 
-will produce the following commit: `chore: add eslint configuration`
-
-To include an inline code snippet in your commit message, be sure to escape your
-backticks:
-
-```zsh
-git ac "feat(lifecycles): \`greaser-notes\`"
-```
-
-See [`commitlint.config.js`](commitlint.config.js) for an exhasutive list of
-valid commit scopes and types.
+See [`.commitlintrc.cts`](.commitlintrc.cts) to view all commit guidelines.
 
 ### Code Style
 
-[Prettier][9] is used to format code, and [ESLint][10] to lint files.
+[dprint][10] is used to format code and [ESLint][11] to lint files.
 
-**Prettier Configuration**
-
-- [`.prettierrc.js`](.prettierrc.js)
-- [`.prettierignore`](.prettierignore)
-
-**ESLint Configuration**
-
-- [`.eslintrc.js`](.eslintrc.js)
+- [`.dprint.jsonc`](.dprint.jsonc)
 - [`.eslintignore`](.eslintignore)
+- [`.eslintrc.base.cjs`](.eslintrc.base.cjs)
+- [`.eslintrc.cjs`](.eslintrc.cjs)
 
 ### Making Changes
 
-All workspace source code can be found in [`packages/*/src`](packages/).
-
-The purpose of each file should be documented using the `@file` annotation,
-along with an accompanying `@module` annotation. A guide to workspace-specific
-changes can be found in the each workspace's Contributing Guide.
+Source code is located in [`src`](src) directory.
 
 ### Documentation
 
-- JavaScript & TypeScript: [JSDoc][11], linted with [`eslint-plugin-jsdoc`][12]
+- JavaScript & TypeScript: [JSDoc][12]; linted with [`eslint-plugin-jsdoc`][13]
 
-Before making a pull request, be sure your code is well documented, as it will
-be part of your code review.
+Before making a pull request, be sure your code is well documented, as it will be part of your code review.
 
 ### Testing
 
-This project uses [Jest][13] as its test runner. To run _all_ the tests in this
-project, run `yarn test` from the project root.
+This project uses [Vitest][14] to run tests.
 
-Husky is configured to run tests before every push. Use [`describe.skip`][14] or
-[`it.skip`][15] if you need to create a new issue regarding the test, or need to
-make a `wip` commit.
+[Husky](#contributing-code) is configured to run tests against changed files.
+
+Be sure to use [`it.skip`][15] or [`it.todo`][16] where appropriate.
+
+#### Running Tests
+
+- `yarn test`
+- `yarn test:cov`
+
+#### Code Coverage
+
+Code coverage is reported using [Codecov][17].
+
+To manually upload coverage reports:
+
+1. Retrieve `CODECOV_TOKEN` from a maintainer
+
+2. Add `CODECOV_TOKEN` to `.env.repo`
+
+3. Reload shell
+
+   ```sh
+   exec $SHELL
+   ```
+
+4. Install [Codecov Uploader][18]
+
+5. Run `yarn codecov`
 
 ### Getting Help
 
-If you need help, make note of any issues in their respective files. Whenever
-possible, create a test to reproduce the error. Make sure to label your issue as
-`type:question` and `status:help-wanted`.
+If you need help, make note of any issues in their respective files in the form of a [JSDoc comment][12]. If you need
+help with a test, don't forget to use [`it.skip`][15] and/or [`it.todo`][16]. Afterwards, [start a discussion in the Q&A
+category][19].
 
 ## Labels
 
-This project uses a well-defined list of labels to organize tickets and pull
-requests. Most labels are grouped into different categories (identified by the
-prefix, eg: `status:`).
+This project uses a well-defined list of labels to organize issues and pull requests. Most labels are scoped (i.e:
+`status:`).
 
-A list of labels can be found in [`.github/labels.yml`](.github/labels.yml).
+A list of labels can be found in [`.github/infrastructure.yml`](.github/infrastructure.yml).
 
 ## Opening Issues
 
-Before opening an issue please make sure, you have:
+Before opening an issue, make sure you have:
 
 - read the documentation
-- searched open issues for an existing issue with the same topic
-- search closed issues for a solution or feedback
+- checked that the issue hasn't already been filed by searching open issues
+- searched closed issues for solution(s) or feedback
 
-If you haven't found a related open issue, or feel that a closed issue should be
-re-visited, please open a new issue. A well-written issue has the following
-traits:
+If you haven't found a related open issue, or feel that a closed issue should be re-visited, open a new issue.
 
-- follows an [issue template](.github/ISSUE_TEMPLATE)
-- is [labeled](#labels) appropriately
-- contains a well-written summary of the feature, bug, or problem statement
-- contains a minimal, inlined code example (if applicable)
-- includes links to prior discussion if you've found any
+A well-written issue
 
-## Pull Requests & Code Reviews
+- contains a well-written summary of the bug, feature, or improvement
+- contains a [minimal, reproducible example][20] (if applicable)
+- includes links to related articles and documentation (if any)
+- includes an emoji in the title :wink:
 
-When you're ready to have your changes reviewed, open a pull request against the
-`next` branch.
+## Pull Requests
 
-Every opened PR should:
+When you're ready to submit your changes, open a pull request (PR) against `main`:
 
-- use [**this template**](.github/PULL_REQUEST_TEMPLATE.md)
-- reference it's ticket id
-- be [labeled](#labels) appropriately
-- be assigned to yourself
-- give maintainers push access so quick fixes can be pushed to your branch
+```sh
+https://github.com/flex-development/grease/compare/main...$branch
+```
 
-### Pull Request URL Format
+where `$branch` is the name of the branch you'd like to merge into `main`.
+
+All PRs are subject to review before being merged into `main`.
+
+Before submitting a PR, be sure you have:
+
+- performed a self-review of your changes
+- added and/or updated relevant tests
+- added and/or updated relevant documentation
+
+Every PR you open should:
+
+- [follow this template](.github/PULL_REQUEST_TEMPLATE.md)
+- [be titled appropriately](#pull-request-titles)
+
+### Pull Request Titles
+
+To keep in line with [commit message standards](#commit-messages) after PRs are merged, PR titles are expected to adhere
+to the same rules.
+
+## Merge Strategies
+
+In every repository, the `rebase and merge` and `squash and merge` options are enabled.
+
+- **rebase and merge**: PR has one commit or commits that are not grouped
+- **squash and merge**: PR has one commit or a group of commits
+
+When squashing, be sure to follow [commit message standards](#commit-messages):
 
 ```zsh
-https://github.com/flex-development/grease/compare/next...<branch>
+<type>[scope][!]:<pull-request-title> (#pull-request-n)
+ │     │      │   │                    │
+ │     │      │   │                    │
+ │     │      │   │                    └─⫸ check pull request
+ │     │      │   │
+ │     │      │   └─⫸ lowercase title
+ │     │      │
+ │     │      └─⫸ optional breaking change flag
+ │     │
+ │     └─⫸ see .commitlintrc.cts
+ │
+ └─⫸ build|ci|chore|docs|feat|fix|perf|refactor|release|revert|style|test
 ```
 
-where `<branch>` is the name of the branch you'd like to merge into `next`.
+e.g:
 
-### Code Reviews
+- `ci(workflows): simplify release workflow #24`
+- `refactor: project architecture #21`
+- `release: 1.0.0 #13`
 
-All pull requests are subject to code reviews before being merged into `next`
-and `main`. During code reviews, code-style and documentation will be reviewed.
+## Deployment
 
-If any changes are requested, those changes will need to be implemented and
-approved before the pull request is merged.
+> Note: Package and release publication is executed via GitHub workflow.\
+> This is so invalid or malicious versions cannot be published without merging those changes into `main` first.
 
-### Merge Strategies
-
-In every repository, the `create a merge commit` and `squash and merge` options
-are enabled.
-
-- if a PR has a single commit, or the changes across commits are logically
-  grouped, use `squash and merge`
-- if a PR has multiple commits, not logically grouped, `create a merge commit`
-
-When merging, please make sure to use the following commit message format:
-
-```txt
-merge: <TICKET-ID> (#pull-request-n)
-        │            │
-        │            └─⫸ check your pull request
-        │
-        └─⫸ check jira issue
-```
-
-e.g: `merge: P010-1 (#1)`
-
-## Releasing
-
-This repository is configured to publish packages and releases when a
-`release/*` branch is merged.
-
-> Note: Publishing is executed via the
-> [Continuous Deployment](./.github/workflows/continous-deployment.yml)
-> workflow. This is so invalid or malicious versions cannot be release without
-> merging those changes into `next` first.
-
-Before releasing, the following steps must be completed:
+Before deploying, the following steps must be completed:
 
 1. Schedule a code freeze
-2. Create a new `release/*` branch
-   - where `*` is `<package.json#name-no-scope>@<package.json#version>`
-     - e.g: `grease@1.1.0`
-   - branch naming conventions **must be followed exactly**. the branch name is
-     used to create distribution tags, locate drafted releases, and generate the
-     correct workspace publish command
-3. Decide what version bump the release needs (major, minor, patch)
-   - versioning
-     - `yarn release:grease` (determines [bumps based on commits][16])
-     - `yarn release:grease --first-release`
-     - `yarn release:grease --release-as major`
-     - `yarn release:grease --release-as minor`
-     - `yarn release:grease --release-as patch`
-   - a new release will be drafted
-4. Open a new pull request from `release/*` into `next`
-   - title the PR `release: <package.json#name>@<package.json#version>`
-     - e.g: `release: @flex-development/grease@1.1.0`
-   - after review, merge the PR with a merge commit
-     - `merge: release <package.json#name>@<package.json#version>`
-       - e.g: `merge: release @flex-development/grease@1.1.0`
-   - once the PR is merged, the deployment workflow will be triggered
-   - the maintainer who approved the PR should check to make sure the workflow
-     completes all jobs as expected. if successful, the workflow will:
-     - publish package to the [GitHub Package Registry][17] and [NPM][18]
-     - update the production branch (merge branch `next` into `main`)
-     - publish the drafted release
-     - close issues with the `status:merged` label
-     - add the `status:released` label to newly closed issues
+2. Decide what type of version bump the package needs
+   - `yarn bump --recommend`
+3. Bump version
+   - `yarn bump <new-version>`
+   - `yarn bump major`
+   - `yarn bump minor`
+   - `yarn bump patch`
+   - `yarn bump premajor --preid <dist-tag>`
+   - `yarn bump preminor --preid <dist-tag>`
+   - `yarn bump prepatch --preid <dist-tag>`
+   - `yarn bump prerelease --preid <dist-tag>`
+4. Update `CHANGELOG.md`
+   - `yarn changelog -sw` (remove `-sw` to do a dry-run, i.e. `yarn changelog`)
+5. `yarn release`
+6. Open PR from `release/*` into `main`
+   - PR title should match `release: <release-tag>`
+     - e.g: `release: 1.1.0`
+   - link all issues being released
+   - after review, `squash and merge` PR
+     - `release: <release-tag> (#pull-request-n)`
+       - e.g: `release: 1.1.0 (#3)`
+   - on PR merge, [release workflow](.github/workflows/release.yml) will fire
+     - if successful, the workflow will:
+       - pack project
+       - create and push new tag
+       - create and publish github release
+       - make sure all prereleased or released issues are closed
+       - delete the release branch
+     - on release publish, [publish workflow](.github/workflows/publish.yml) will fire
+       - if successful, the workflow will:
+         - publish package to [github package registry][21]
+         - publish package to [npm][22]
 
-[1]: https://www.atlassian.com/software/jira
-[2]: https://yarnpkg.com/getting-started/migration
-[3]: https://yarnpkg.com/features/workspaces
-[4]: https://github.com/features/packages
-[5]: https://docs.github.com/packages/learn-github-packages/installing-a-package
-[6]: https://github.com/typicode/husky
-[7]: https://www.conventionalcommits.org
-[8]: https://github.com/conventional-changelog/commitlint
-[9]: https://prettier.io
-[10]: https://eslint.org
-[11]: https://jsdoc.app
-[12]: https://github.com/gajus/eslint-plugin-jsdoc
-[13]: https://jestjs.io
-[14]: https://jestjs.io/docs/api#describeskipname-fn
-[15]: https://jestjs.io/docs/api#testskipname-fn
-[16]: https://www.conventionalcommits.org/en/v1.0.0
-[17]: https://github.com/features/packages
-[18]: https://www.npmjs.com
+[1]: https://brew.sh
+[2]: https://docs.github.com/authentication/managing-commit-signature-verification/about-commit-signature-verification#gpg-commit-signature-verification
+[3]: https://yarnpkg.com/getting-started
+[4]: https://github.com/ohmyzsh/ohmyzsh
+[5]: https://github.com/typicode/husky
+[6]: https://trunkbaseddevelopment.com
+[7]: https://trunkbaseddevelopment.com/styles/#short-lived-feature-branches
+[8]: https://conventionalcommits.org
+[9]: https://github.com/conventional-changelog/commitlint
+[10]: https://dprint.dev/
+[11]: https://eslint.org
+[12]: https://jsdoc.app
+[13]: https://github.com/gajus/eslint-plugin-jsdoc
+[14]: https://vitest.dev
+[15]: https://vitest.dev/api/#test-skip
+[16]: https://vitest.dev/api/#test-todo
+[17]: https://codecov.io
+[18]: https://docs.codecov.com/docs/codecov-uploader
+[19]: https://github.com/flex-development/grease/discussions/new?category=q-a
+[20]: https://stackoverflow.com/help/minimal-reproducible-example
+[21]: https://github.com/features/packages
+[22]: https://npmjs.com
