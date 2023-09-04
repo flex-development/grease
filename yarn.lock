@@ -4177,7 +4177,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cosmiconfig@npm:8.2.0, cosmiconfig@npm:^8.0.0, cosmiconfig@npm:^8.1.0":
+"cosmiconfig@npm:8.2.0":
   version: 8.2.0
   resolution: "cosmiconfig@npm:8.2.0"
   dependencies:
@@ -4189,7 +4189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cosmiconfig@npm:8.3.3":
+"cosmiconfig@npm:8.3.3, cosmiconfig@npm:^8.0.0, cosmiconfig@npm:^8.1.0":
   version: 8.3.3
   resolution: "cosmiconfig@npm:8.3.3"
   dependencies:
