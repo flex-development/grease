@@ -3,4 +3,4 @@
  * @module grease
  */
 
-export {}
+export * from './models'
