@@ -7,5 +7,8 @@
   },
   "exclude": ["**/__mocks__", "**/__tests__"],
   "extends": "./tsconfig.json",
+  "files": [
+    "./typings/class-validator/esm2015/metadata/ValidationMetadata.d.ts"
+  ],
   "include": ["./dist/*", "./src/*"]
 }

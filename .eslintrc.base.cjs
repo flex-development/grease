@@ -803,6 +803,7 @@ const config = {
         'jsdoc/no-undefined-types': 0,
         'jsdoc/require-file-overview': 0,
         'no-var': 0,
+        'unicorn/filename-case': 0,
         'unicorn/no-keyword-prefix': 0
       }
     },

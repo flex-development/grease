@@ -19,7 +19,7 @@ const config: Config = defineBuildConfig({
     { dts: 'only', ignore: ['cli/**'] },
     {
       dts: false,
-      pattern: ['*.ts', 'models/**'],
+      pattern: ['*.ts', 'decorators/**', 'models/**'],
       sourcemap: true
     },
     {
