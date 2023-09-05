@@ -34,25 +34,21 @@ updates:
       commitlint:
         patterns:
           - '@commitlint/*'
-      dateformat:
-        patterns:
-          - '@types/dateformat'
-          - dateformat
+      dependencies:
+        dependency-type: production
       eslint:
         patterns:
           - '@types/eslint'
           - eslint
       flex-development:
+        dependency-type: development
         patterns:
           - '@flex-development/*'
       nestjs:
+        dependency-type: development
         patterns:
           - '@nestjs/*'
           - rxjs
-      shelljs:
-        patterns:
-          - '@types/shelljs'
-          - shelljs
       typescript-eslint:
         patterns:
           - '@typescript-eslint/*'
