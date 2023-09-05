@@ -17,6 +17,7 @@ const config: Config = defineBuildConfig({
   charset: 'utf8',
   entries: [
     { dts: 'only', ignore: ['cli/**'] },
+    { dts: false, pattern: ['enums/*'] },
     {
       dts: false,
       pattern: ['*.ts', 'decorators/**', 'models/**'],
