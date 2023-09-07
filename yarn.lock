@@ -1430,7 +1430,7 @@ __metadata:
     "@flex-development/pathe": "npm:2.0.0"
     "@flex-development/pkg-types": "npm:3.0.0"
     "@flex-development/tsconfig-utils": "npm:2.0.2"
-    "@flex-development/tutils": "npm:6.0.0-alpha.21"
+    "@flex-development/tutils": "npm:6.0.0-alpha.22"
     "@graphql-eslint/eslint-plugin": "npm:3.20.1"
     "@nestjs/common": "npm:10.2.4"
     "@nestjs/core": "npm:10.2.4"
@@ -1455,7 +1455,7 @@ __metadata:
     class-transformer: "npm:0.5.1"
     class-validator: "npm:0.14.0"
     consola: "npm:3.2.3"
-    cosmiconfig: "npm:8.3.3"
+    cosmiconfig: "npm:8.3.4"
     cross-env: "npm:7.0.3"
     cspell: "npm:7.3.2"
     dateformat: "npm:5.0.3"
@@ -1751,6 +1751,15 @@ __metadata:
   peerDependencies:
     typescript: ">=5.0.4"
   checksum: 410b8f3501a31aa16b4ebc44521b53aea23780fd3df87611522a0a3c73334eea9f21f6ea75a44e8450ec461cffbe1857b89b1dcfb27f84a2b8388089fd5a98ac
+  languageName: node
+  linkType: hard
+
+"@flex-development/tutils@npm:6.0.0-alpha.22":
+  version: 6.0.0-alpha.22
+  resolution: "@flex-development/tutils@npm:6.0.0-alpha.22::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40flex-development%2Ftutils%2F6.0.0-alpha.22%2F22f766c2fbcdb4177f61acb9f10ce8abd66b9c01"
+  peerDependencies:
+    typescript: ">=5.0.4"
+  checksum: 9b8340958dc8b675446c3c6ae609daad11e0182863c1067b7cf3851b87c27c31176f3fbc6775c6ba752fbbb16c52c6bbc74d1344c87ee83e9e77b07fa4982265
   languageName: node
   linkType: hard
 
@@ -4190,7 +4199,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cosmiconfig@npm:8.3.3, cosmiconfig@npm:^8.0.0, cosmiconfig@npm:^8.1.0":
+"cosmiconfig@npm:8.3.4":
+  version: 8.3.4
+  resolution: "cosmiconfig@npm:8.3.4"
+  dependencies:
+    import-fresh: "npm:^3.3.0"
+    js-yaml: "npm:^4.1.0"
+    parse-json: "npm:^5.2.0"
+    path-type: "npm:^4.0.0"
+  peerDependencies:
+    typescript: ">=4.9.5"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 692237403a287ea03f81ddcf98b2b2963274f9ca1bc7a42d8afa9abbec64f29ca8db5b5ef5abd55dfea052dd89dbf3d90ce72a953ea7546f54bf0d1c125d3cf0
+  languageName: node
+  linkType: hard
+
+"cosmiconfig@npm:^8.0.0, cosmiconfig@npm:^8.1.0":
   version: 8.3.3
   resolution: "cosmiconfig@npm:8.3.3"
   dependencies:
