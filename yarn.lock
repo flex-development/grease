@@ -4199,7 +4199,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cosmiconfig@npm:8.3.4":
+"cosmiconfig@npm:8.3.4, cosmiconfig@npm:^8.0.0, cosmiconfig@npm:^8.1.0":
   version: 8.3.4
   resolution: "cosmiconfig@npm:8.3.4"
   dependencies:
@@ -4213,23 +4213,6 @@ __metadata:
     typescript:
       optional: true
   checksum: 692237403a287ea03f81ddcf98b2b2963274f9ca1bc7a42d8afa9abbec64f29ca8db5b5ef5abd55dfea052dd89dbf3d90ce72a953ea7546f54bf0d1c125d3cf0
-  languageName: node
-  linkType: hard
-
-"cosmiconfig@npm:^8.0.0, cosmiconfig@npm:^8.1.0":
-  version: 8.3.3
-  resolution: "cosmiconfig@npm:8.3.3"
-  dependencies:
-    import-fresh: "npm:^3.3.0"
-    js-yaml: "npm:^4.1.0"
-    parse-json: "npm:^5.2.0"
-    path-type: "npm:^4.0.0"
-  peerDependencies:
-    typescript: ">=4.9.5"
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 21e684066e678accaab40bd25a7245bf40ab258d2e41541d6b45c9d015c4ed593c9f5786e1cf925334d04abf1380b2c76fbcdf45fcc998fc5a127679583a5d23
   languageName: node
   linkType: hard
 
