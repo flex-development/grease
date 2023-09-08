@@ -159,7 +159,13 @@ const config = {
         '@typescript-eslint/no-base-to-string': [
           2,
           {
-            ignoredTypeNames: ['Error', 'RegExp', 'URL', 'URLSearchParams']
+            ignoredTypeNames: [
+              'Error',
+              'RegExp',
+              'SemVer',
+              'URL',
+              'URLSearchParams'
+            ]
           }
         ],
         '@typescript-eslint/no-confusing-non-null-assertion': 0,

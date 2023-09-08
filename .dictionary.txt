@@ -27,7 +27,6 @@ pkgs
 preid
 shelljs
 shfmt
-swcrc
 tscu
 unstub
 vates

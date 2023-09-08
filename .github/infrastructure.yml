@@ -61,6 +61,9 @@ labels:
   - name: flag:needs-refactor
     description: code improvements required before being merged
     color: fbca04
+  - name: scope:bump
+    description: version bumping
+    color: 74cefc
   - name: scope:cli
     description: cli application
     color: 74cefc

@@ -4,8 +4,7 @@
  */
 
 import { ReleaseType } from '#src/enums'
-import { cast, join } from '@flex-development/tutils'
-import util from 'node:util'
+import { cast } from '@flex-development/tutils'
 import TestSubject from '../is-release-version.constraint'
 
 describe('unit:decorators/IsReleaseVersionConstraint', () => {
@@ -17,14 +16,8 @@ describe('unit:decorators/IsReleaseVersionConstraint', () => {
 
   describe('#defaultMessage', () => {
     it('should return default validation failure message', () => {
-      // Arrange
-      const value: unknown = 0
-
-      // Act + Expect
-      expect(subject.defaultMessage(cast({ value }))).to.equal(join([
-        '$property must be release type or semantic version;',
-        `received ${util.inspect(value)}`
-      ], ' '))
+      expect(subject.defaultMessage(cast({ value: 0 })))
+        .to.equal('$property must be a release type or semantic version')
     })
   })
 

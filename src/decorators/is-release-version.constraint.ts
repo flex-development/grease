@@ -20,7 +20,6 @@ import {
   type ValidationArguments,
   type ValidationOptions
 } from 'class-validator'
-import util from 'node:util'
 import semver from 'semver'
 
 /**
@@ -61,10 +60,10 @@ class IsReleaseVersionConstraint implements IValidatorConstraint {
      * @const {string} tmp
      */
     const tmp: string =
-      '{prefix}$property must be release type or semantic version; received {value}'
+      '{prefix}$property must be a release type or semantic version'
 
     return buildMessage(
-      prefix => template(tmp, { prefix, value: util.inspect(args.value) }),
+      prefix => template(tmp, { prefix }),
       cast<Optional<ValidationOptions>>(get(args, 'constraints.0'))
     )()
   }

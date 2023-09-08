@@ -1,0 +1,54 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`integration:options/BumpOptions > validation > should fail validation if schema is invalid 1`] = `
+[
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isManifestId": "manifest must be module id of package directory or file",
+    },
+    "property": "manifest",
+    "value": null,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isString": "preid must be a string",
+    },
+    "property": "preid",
+    "value": null,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isIn": "prestart must be one of the following values: 0, 1",
+    },
+    "property": "prestart",
+    "value": 3,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isReleaseVersion": "release must be a release type or semantic version",
+    },
+    "property": "release",
+    "value": "3.1",
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isBoolean": "silent must be a boolean value",
+    },
+    "property": "silent",
+    "value": 0,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isBoolean": "write must be a boolean value",
+    },
+    "property": "write",
+    "value": 1,
+  },
+]
+`;

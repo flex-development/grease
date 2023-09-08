@@ -3,9 +3,15 @@
  * @module grease/models/Version
  */
 
+import { ReleaseType } from '#src/enums'
+import type { ReleaseVersion } from '#src/types'
 import type { SemanticVersion } from '@flex-development/pkg-types'
-import { get, set } from '@flex-development/tutils'
-import { SemVer } from 'semver'
+import {
+  cast,
+  equal,
+  type Optional
+} from '@flex-development/tutils'
+import semver, { SemVer } from 'semver'
 
 /**
  * Semantic version data model.
@@ -23,28 +29,93 @@ class Version extends SemVer {
    * @override
    * @member {SemanticVersion} version
    */
-  declare public version: SemanticVersion
+  public override version: SemanticVersion
+
+  /**
+   * Create a new semantic version.
+   *
+   * @param {SemVer | string} version - Semantic version instance or string
+   */
+  constructor(version: SemVer | string) {
+    super(version, { includePrerelease: true, loose: false })
+    this.version = cast(version.toString())
+  }
 
   /**
    * Copy properties from the given semantic version.
    *
+   * Range options will **not** be copied.
+   *
    * @public
    *
-   * @param {SemVer} ver - Version to copy
+   * @param {SemVer} version - Version to copy
    * @return {this} `this` version
    */
-  public copy(ver: SemVer): this {
-    this.build = ver.build
-    this.loose = ver.loose
-    this.major = ver.major
-    this.minor = ver.minor
-    this.options = ver.options
-    this.patch = ver.patch
-    this.prerelease = ver.prerelease
-    this.raw = ver.raw
-    set(this, 'includePrerelease', get(ver, 'includePrerelease', false))
+  public copy(version: SemVer): this {
+    this.build = version.build
+    this.major = version.major
+    this.minor = version.minor
+    this.patch = version.patch
+    this.prerelease = version.prerelease
+    this.raw = version.raw
     this.format()
     return this
+  }
+
+  /**
+   * Bump `this` version.
+   *
+   * @public
+   * @override
+   *
+   * @param {ReleaseVersion} release - Release version or type
+   * @param {Optional<string>?} preid - Prerelease identifier
+   * @param {number?} prestart - Prerelease start range
+   * @return {this} `this` version
+   */
+  public override inc(
+    release: ReleaseVersion,
+    preid: Optional<string> = undefined,
+    prestart: number = 1
+  ): this {
+    /**
+     * New prerelease check.
+     *
+     * @const {boolean} prerelease
+     */
+    const prerelease: boolean = !this.prerelease.length &&
+      !equal(release, 'pre') &&
+      release.startsWith('pre')
+
+    /**
+     * New version.
+     *
+     * @var {SemVer} version
+     */
+    let version: SemVer = new SemVer(this.version)
+
+    // bump version
+    switch (true) {
+      case release === ReleaseType.MAJOR:
+      case release === ReleaseType.MINOR:
+      case release === ReleaseType.PATCH:
+      case release === ReleaseType.PREMAJOR:
+      case release === ReleaseType.PREMINOR:
+      case release === ReleaseType.PREPATCH:
+      case release === ReleaseType.PRERELEASE:
+        version.inc(cast(release), preid)
+        if (prerelease && prestart) version.inc(ReleaseType.PRERELEASE, preid)
+        break
+      case !!semver.valid(release):
+        version = new SemVer(release)
+        break
+      default:
+        throw new Error(`invalid increment argument: ${release}`, {
+          cause: { release }
+        })
+    }
+
+    return this.copy(version)
   }
 
   /**

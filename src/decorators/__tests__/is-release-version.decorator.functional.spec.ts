@@ -22,7 +22,7 @@ describe('functional:decorators/IsReleaseVersion', () => {
       // Act + Expect
       expect((await validate(new Model()))[0]?.constraints).to.eql({
         [IsReleaseVersionConstraint.options.name]:
-          'release must be release type or semantic version; received 0'
+          'release must be a release type or semantic version'
       })
     })
   })

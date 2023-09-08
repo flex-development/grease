@@ -5,9 +5,8 @@
 
 import pkg from '#pkg' assert { type: 'json' }
 import pathe from '@flex-development/pathe'
-import { DOT, cast, join } from '@flex-development/tutils'
+import { DOT, cast } from '@flex-development/tutils'
 import { pathToFileURL } from 'node:url'
-import util from 'node:util'
 import TestSubject from '../is-manifest-id.constraint'
 
 describe('unit:decorators/IsManifestIdConstraint', () => {
@@ -19,14 +18,8 @@ describe('unit:decorators/IsManifestIdConstraint', () => {
 
   describe('#defaultMessage', () => {
     it('should return default validation failure message', () => {
-      // Arrange
-      const value: unknown = import.meta.url
-
-      // Act + Expect
-      expect(subject.defaultMessage(cast({ value }))).to.equal(join([
-        '$property must be module id of package directory or file;',
-        `received ${util.inspect(value)}`
-      ], ' '))
+      expect(subject.defaultMessage(cast({ value: import.meta.url })))
+        .to.equal('$property must be module id of package directory or file')
     })
   })
 

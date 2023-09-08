@@ -20,7 +20,13 @@ const config: Config = defineBuildConfig({
     { dts: false, pattern: ['enums/*'] },
     {
       dts: false,
-      pattern: ['*.ts', 'decorators/**', 'models/**', 'providers/**'],
+      pattern: [
+        '*.ts',
+        'decorators/**',
+        'models/**',
+        'options/**',
+        'providers/**'
+      ],
       sourcemap: true
     },
     {

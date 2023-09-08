@@ -22,7 +22,7 @@ describe('functional:decorators/IsManifestId', () => {
       // Act + Expect
       expect((await validate(new Model()))[0]?.constraints).to.eql({
         [IsManifestIdConstraint.options.name]:
-          'manifest must be module id of package directory or file; received null'
+          'manifest must be module id of package directory or file'
       })
     })
   })

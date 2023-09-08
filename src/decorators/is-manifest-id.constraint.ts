@@ -11,9 +11,9 @@ import {
 import pathe from '@flex-development/pathe'
 import {
   cast,
-  fallback,
   get,
   isString,
+  isURL,
   template,
   type Optional
 } from '@flex-development/tutils'
@@ -25,7 +25,6 @@ import {
   type ValidationOptions
 } from 'class-validator'
 import { URL } from 'node:url'
-import util from 'node:util'
 
 /**
  * Package manifest module id validator.
@@ -65,10 +64,10 @@ class IsManifestIdConstraint implements IValidatorConstraint {
      * @const {string} tmp
      */
     const tmp: string =
-      '{prefix}$property must be module id of package directory or file; received {value}'
+      '{prefix}$property must be module id of package directory or file'
 
     return buildMessage(
-      prefix => template(tmp, { prefix, value: util.inspect(args.value) }),
+      prefix => template(tmp, { prefix }),
       cast<Optional<ValidationOptions>>(get(args, 'constraints.0'))
     )()
   }
@@ -85,15 +84,17 @@ class IsManifestIdConstraint implements IValidatorConstraint {
    * @return {value is ModuleId} `true` if value is package manifest module id
    */
   public validate(value: unknown): value is ModuleId {
+    if (!isString(value) && !isURL(value)) return false
+
     /**
      * Value to check.
      *
      * @var {ModuleId} val
      */
-    let val: ModuleId = cast(fallback(value, import.meta.url))
+    let val: ModuleId = value
 
     // convert file url string to URL instance
-    if (isString(val) && val.startsWith('file://')) val = new URL(val)
+    if (isString(val) && val.startsWith('file:///')) val = new URL(val)
 
     // convert package.json file to package directory
     if (isFile(val)) {

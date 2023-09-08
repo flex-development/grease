@@ -6,5 +6,6 @@
 export * from './decorators'
 export * from './enums'
 export * from './models'
+export * from './options'
 export * from './providers'
 export type * from './types'

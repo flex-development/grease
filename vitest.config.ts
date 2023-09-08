@@ -6,11 +6,11 @@
 
 import { DECORATOR_REGEX } from '@flex-development/decorator-regex'
 import pathe from '@flex-development/pathe'
-import { cast, split, type Nullable } from '@flex-development/tutils'
-import swc from '@swc/core'
+import * as tscu from '@flex-development/tsconfig-utils'
+import { split, type Nullable } from '@flex-development/tutils'
 import ci from 'is-ci'
+import ts from 'typescript'
 import tsconfigpaths from 'vite-tsconfig-paths'
-import GithubActionsReporter from 'vitest-github-actions-reporter'
 import {
   defineConfig,
   type UserConfig,
@@ -44,16 +44,11 @@ const config: UserConfigExport = defineConfig((): UserConfig => {
         /**
          * Transforms source `code` containing decorators.
          *
-         * @see https://github.com/swc-project/swc/issues/3854
-         *
          * @param {string} code - Source code
          * @param {string} id - Module id of source code
-         * @return {Promise<Nullable<{ code: string }>>} Transform result
+         * @return {Nullable<{ code: string }>} Transform result
          */
-        async transform(
-          code: string,
-          id: string
-        ): Promise<Nullable<{ code: string }>> {
+        transform(code: string, id: string): Nullable<{ code: string }> {
           // do nothing if source code does not contain decorators
           DECORATOR_REGEX.lastIndex = 0
           if (!DECORATOR_REGEX.test(code)) return null
@@ -81,32 +76,13 @@ const config: UserConfigExport = defineConfig((): UserConfig => {
           }
 
           return {
-            code: (
-              await swc.transform(code, {
-                configFile: false,
-                filename: id,
-                inlineSourcesContent: true,
-                jsc: {
-                  keepClassNames: true,
-                  parser: {
-                    decorators: true,
-                    dynamicImport: true,
-                    syntax: 'typescript',
-                    tsx: pathe.extname(id) === '.tsx'
-                  },
-                  target: cast<swc.JscTarget>(tsconfig.compilerOptions.target),
-                  transform: {
-                    decoratorMetadata:
-                      tsconfig.compilerOptions.emitDecoratorMetadata,
-                    legacyDecorator: true,
-                    useDefineForClassFields:
-                      tsconfig.compilerOptions.useDefineForClassFields
-                  }
-                },
-                sourceMaps: 'inline',
-                swcrc: false
-              })
-            ).code
+            code: ts.transpileModule(code, {
+              compilerOptions: tscu.normalizeCompilerOptions({
+                ...tsconfig.compilerOptions,
+                inlineSourceMap: true
+              }),
+              fileName: id
+            }).outputText
           }
         }
       },
@@ -154,7 +130,7 @@ const config: UserConfigExport = defineConfig((): UserConfig => {
       reporters: [
         'json',
         'verbose',
-        ci ? new GithubActionsReporter() : './__tests__/reporters/notifier.ts'
+        ...(ci ? [] : ['./__tests__/reporters/notifier.ts'])
       ],
       /**
        * Stores snapshots next to `file`'s directory.
