@@ -688,7 +688,6 @@ const config = {
           2,
           {
             styles: {
-              chalk: { default: true },
               shelljs: { default: true }
             }
           }
@@ -847,6 +846,7 @@ const config = {
         '@typescript-eslint/consistent-indexed-object-style': 0,
         '@typescript-eslint/no-base-to-string': 0,
         '@typescript-eslint/no-empty-function': 0,
+        '@typescript-eslint/no-invalid-void-type': 0,
         '@typescript-eslint/no-unused-expressions': 0,
         '@typescript-eslint/prefer-as-const': 0,
         '@typescript-eslint/prefer-ts-expect-error': 0,
@@ -905,14 +905,6 @@ const config = {
       files: '**/*.+(cjs|js|mjs)',
       rules: {
         '@typescript-eslint/explicit-member-accessibility': 0
-      }
-    },
-    {
-      extends: ['plugin:@graphql-eslint/operations-all'],
-      files: '**/*.gql',
-      rules: {
-        '@graphql-eslint/no-anonymous-operations': 0,
-        '@graphql-eslint/require-id-when-available': 0
       }
     },
     {
@@ -1069,6 +1061,7 @@ const config = {
       parser: 'yaml-eslint-parser',
       plugins: ['yml'],
       rules: {
+        'spaced-comment': 0,
         'yml/block-mapping': 2,
         'yml/block-mapping-question-indicator-newline': [2, 'never'],
         'yml/block-sequence': 2,

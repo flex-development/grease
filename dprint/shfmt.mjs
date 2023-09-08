@@ -15,10 +15,12 @@ process.stdin.pipe(new Transform({
    * @see https://github.com/un-ts/sh-syntax
    * @see https://github.com/mvdan/sh/blob/master/cmd/shfmt/shfmt.1.scd
    *
-   * @param {Buffer} buf - Data buffer
+   * @async
+   *
+   * @param {Buffer} buffer - Data buffer
    * @return {Promise<string>} Formatted file content
    */
-  async transform(buf) {
+  async transform(buffer) {
     const [filepath] = process.argv.slice(2)
 
     const {
@@ -61,7 +63,7 @@ process.stdin.pipe(new Transform({
      * @type {string}
      * @const originalText
      */
-    const originalText = buf.toString()
+    const originalText = buffer.toString()
 
     /**
      * Formatted text AST.

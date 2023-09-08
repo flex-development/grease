@@ -25,6 +25,11 @@
   "exec": {
     "commands": [
       {
+        "command": "node ./dprint/prettier.mjs {{file_path}}",
+        "exts": ["yaml", "yml"],
+        "stdin": true
+      },
+      {
         "command": "node ./dprint/shfmt.mjs {{file_path}}",
         "exts": ["sh", "txt", "zsh"],
         "fileNames": [
@@ -45,11 +50,6 @@
           "pre-commit",
           "pre-push"
         ],
-        "stdin": true
-      },
-      {
-        "command": "node ./dprint/prettier.mjs {{file_path}}",
-        "exts": ["css", "gql", "html", "scss", "vue", "yaml", "yml"],
         "stdin": true
       }
     ]
@@ -77,9 +77,9 @@
   },
   "newLineKind": "lf",
   "plugins": [
+    "https://plugins.dprint.dev/typescript-0.87.1.wasm",
     "https://plugins.dprint.dev/json-0.17.4.wasm",
     "https://plugins.dprint.dev/markdown-0.16.0.wasm",
-    "https://plugins.dprint.dev/typescript-0.87.1.wasm",
     "https://plugins.dprint.dev/exec-0.4.3.json@42343548b8022c99b1d750be6b894fe6b6c7ee25f72ae9f9082226dd2e515072"
   ],
   "typescript": {
@@ -89,9 +89,9 @@
     "binaryExpression.spaceSurroundingBitwiseAndArithmeticOperator": true,
     "bracePosition": "sameLine",
     "commentLine.forceSpaceAfterSlashes": true,
-    "constructSignature.spaceAfterNewKeyword": false,
+    "constructSignature.spaceAfterNewKeyword": true,
     "constructor.spaceBeforeParentheses": false,
-    "constructorType.spaceAfterNewKeyword": false,
+    "constructorType.spaceAfterNewKeyword": true,
     "doWhileStatement.spaceAfterWhileKeyword": true,
     "enumDeclaration.memberSpacing": "maintain",
     "exportDeclaration.forceMultiLine": false,

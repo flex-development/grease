@@ -14,10 +14,12 @@ process.stdin.pipe(new Transform({
    *
    * @see https://prettier.io
    *
-   * @param {Buffer} buf - Data buffer
+   * @async
+   *
+   * @param {Buffer} buffer - Data buffer
    * @return {Promise<string>} Formatted file content
    */
-  async transform(buf) {
+  async transform(buffer) {
     const [filepath] = process.argv.slice(2)
 
     const {
@@ -36,7 +38,7 @@ process.stdin.pipe(new Transform({
      * @type {string}
      * @const text
      */
-    const text = await prettier.format(buf.toString(), {
+    const text = await prettier.format(buffer.toString(), {
       arrowParens: 'avoid',
       bracketSpacing: spaces_around_brackets === 'inside',
       endOfLine: end_of_line === 'unset' ? 'auto' : end_of_line,
