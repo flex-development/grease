@@ -8,7 +8,6 @@ import type { ReleaseVersion } from '#src/types'
 import type { SemanticVersion } from '@flex-development/pkg-types'
 import {
   cast,
-  equal,
   type Optional
 } from '@flex-development/tutils'
 import semver, { SemVer } from 'semver'
@@ -79,15 +78,6 @@ class Version extends SemVer {
     prestart: number = 1
   ): this {
     /**
-     * New prerelease check.
-     *
-     * @const {boolean} prerelease
-     */
-    const prerelease: boolean = !this.prerelease.length &&
-      !equal(release, 'pre') &&
-      release.startsWith('pre')
-
-    /**
      * New version.
      *
      * @var {SemVer} version
@@ -103,8 +93,8 @@ class Version extends SemVer {
       case release === ReleaseType.PREMINOR:
       case release === ReleaseType.PREPATCH:
       case release === ReleaseType.PRERELEASE:
-        version.inc(cast(release), preid)
-        if (prerelease && prestart) version.inc(ReleaseType.PRERELEASE, preid)
+        // @ts-expect-error ts(2554) types are wrong
+        version.inc(cast(release), preid, prestart)
         break
       case !!semver.valid(release):
         version = new SemVer(release)
