@@ -101,7 +101,7 @@
     "shelljs": "0.8.5"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.9.0",
+    "@arethetypeswrong/cli": "0.10.1",
     "@commitlint/cli": "17.7.1",
     "@commitlint/types": "17.4.4",
     "@faker-js/faker": "8.0.2",
