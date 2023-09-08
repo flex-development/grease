@@ -23,7 +23,27 @@ component_management:
     statuses:
       - type: project
         target: 100%
-  individual_components: []
+  individual_components:
+    - component_id: commands
+      name: commands
+      paths:
+        - src/cli/commands/*.ts
+    - component_id: decorators
+      name: decorators
+      paths:
+        - src/decorators/*.ts
+    - component_id: models
+      name: models
+      paths:
+        - src/models/*.ts
+    - component_id: options
+      name: options
+      paths:
+        - src/options/*.ts
+    - component_id: providers
+      name: providers
+      paths:
+        - src/providers/*.ts
 
 coverage:
   precision: 2
