@@ -1413,7 +1413,7 @@ __metadata:
     "@flex-development/tsconfig-utils": "npm:2.0.2"
     "@flex-development/tutils": "npm:6.0.0-alpha.22"
     "@graphql-eslint/eslint-plugin": "npm:3.20.1"
-    "@nestjs/common": "npm:10.2.4"
+    "@nestjs/common": "npm:10.2.5"
     "@nestjs/core": "npm:10.2.5"
     "@nestjs/testing": "npm:10.2.5"
     "@types/chai": "npm:4.3.5"
@@ -1435,7 +1435,7 @@ __metadata:
     class-transformer: "npm:0.5.1"
     class-validator: "npm:0.14.0"
     consola: "npm:3.2.3"
-    cosmiconfig: "npm:8.3.4"
+    cosmiconfig: "npm:8.3.5"
     cross-env: "npm:7.0.3"
     cspell: "npm:7.3.2"
     dateformat: "npm:5.0.3"
@@ -2392,9 +2392,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/common@npm:10.2.4":
-  version: 10.2.4
-  resolution: "@nestjs/common@npm:10.2.4"
+"@nestjs/common@npm:10.2.5":
+  version: 10.2.5
+  resolution: "@nestjs/common@npm:10.2.5"
   dependencies:
     iterare: "npm:1.2.1"
     tslib: "npm:2.6.2"
@@ -2409,7 +2409,7 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: dc79681e69f0af6a2adbd96f3d837af928dacc9120a87534ac2dac3e8569acadb6fb0ed76947c0c8b0fe15d6cd9fc94614713b5e4cea17ddc470162e11ee7f62
+  checksum: 18c0b82d4f9b813c1bfabc8bb8b9038ac3cca370157906ac2d5c3007237117f467a17a508d11f65b9a25fdf74a3622ad62edc520f7c904fc067e12b1769cc20f
   languageName: node
   linkType: hard
 
@@ -4056,7 +4056,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cosmiconfig@npm:8.3.4, cosmiconfig@npm:^8.0.0, cosmiconfig@npm:^8.1.0":
+"cosmiconfig@npm:8.3.5":
+  version: 8.3.5
+  resolution: "cosmiconfig@npm:8.3.5"
+  dependencies:
+    import-fresh: "npm:^3.3.0"
+    js-yaml: "npm:^4.1.0"
+    parse-json: "npm:^5.2.0"
+    path-type: "npm:^4.0.0"
+  peerDependencies:
+    typescript: ">=4.9.5"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: f1963997fb42bc9c3d1b7d553b72ca48f58deb2ea1bb7736930aa7255b876179f35a74dffaa0a95b9d5d7a830b04d592bc34173baad14b8084933a49a873971d
+  languageName: node
+  linkType: hard
+
+"cosmiconfig@npm:^8.0.0, cosmiconfig@npm:^8.1.0":
   version: 8.3.4
   resolution: "cosmiconfig@npm:8.3.4"
   dependencies:
