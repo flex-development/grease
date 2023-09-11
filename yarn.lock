@@ -1414,8 +1414,8 @@ __metadata:
     "@flex-development/tutils": "npm:6.0.0-alpha.22"
     "@graphql-eslint/eslint-plugin": "npm:3.20.1"
     "@nestjs/common": "npm:10.2.4"
-    "@nestjs/core": "npm:10.2.4"
-    "@nestjs/testing": "npm:10.2.4"
+    "@nestjs/core": "npm:10.2.5"
+    "@nestjs/testing": "npm:10.2.5"
     "@types/chai": "npm:4.3.5"
     "@types/dateformat": "npm:5.0.0"
     "@types/eslint": "npm:8.44.2"
@@ -2413,9 +2413,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/core@npm:10.2.4":
-  version: 10.2.4
-  resolution: "@nestjs/core@npm:10.2.4"
+"@nestjs/core@npm:10.2.5":
+  version: 10.2.5
+  resolution: "@nestjs/core@npm:10.2.5"
   dependencies:
     "@nuxtjs/opencollective": "npm:0.3.2"
     fast-safe-stringify: "npm:2.1.1"
@@ -2437,13 +2437,13 @@ __metadata:
       optional: true
     "@nestjs/websockets":
       optional: true
-  checksum: 387057c88a27e70a0e1efebbbb25d6a8e2bf177866ae13b1fbc870d1ff1186f19fbf4756c15b8fbd1b12fb0875947c90fd5801777d55414cd603081b0a517144
+  checksum: 870b0878e78072559784a9b8c3d94996d51cc2a8623b1a67033e9a58a996f18aa01a0f5c1173af828dd9958a69a706b6f3fbf24eb5ee1512b00f5e72d5f3fb08
   languageName: node
   linkType: hard
 
-"@nestjs/testing@npm:10.2.4":
-  version: 10.2.4
-  resolution: "@nestjs/testing@npm:10.2.4"
+"@nestjs/testing@npm:10.2.5":
+  version: 10.2.5
+  resolution: "@nestjs/testing@npm:10.2.5"
   dependencies:
     tslib: "npm:2.6.2"
   peerDependencies:
@@ -2456,7 +2456,7 @@ __metadata:
       optional: true
     "@nestjs/platform-express":
       optional: true
-  checksum: cd9313f4e4dac78bd089108e5fde9b71fadd774b3dc0e6dd3db4026ac395ce15818f5c9d8d7d91dead81760c793b190be6b25248270a8698a355c1185f3074fd
+  checksum: 1a04d3c35f700c45cd4c8b341f1c98db5a5693b9ff13b1cf0459f2910e2baa0bb909e19c4e2ade800626fa4754bce00df2ec93186748e4998f616fd19dad7eed
   languageName: node
   linkType: hard
 
