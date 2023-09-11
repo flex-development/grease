@@ -1405,7 +1405,7 @@ __metadata:
     "@flex-development/commitlint-config": "npm:1.0.1"
     "@flex-development/decorator-regex": "npm:2.0.0"
     "@flex-development/esm-types": "npm:2.0.0"
-    "@flex-development/mkbuild": "npm:1.0.0-alpha.22"
+    "@flex-development/mkbuild": "npm:1.0.0-alpha.23"
     "@flex-development/mlly": "npm:1.0.0-alpha.18"
     "@flex-development/nest-commander": "npm:1.0.0-alpha.1"
     "@flex-development/pathe": "npm:2.0.0"
@@ -1522,9 +1522,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@flex-development/mkbuild@npm:1.0.0-alpha.22":
-  version: 1.0.0-alpha.22
-  resolution: "@flex-development/mkbuild@npm:1.0.0-alpha.22::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40flex-development%2Fmkbuild%2F1.0.0-alpha.22%2Fec6827057600db9a3e70c533739037227a55941f"
+"@flex-development/mkbuild@npm:1.0.0-alpha.23":
+  version: 1.0.0-alpha.23
+  resolution: "@flex-development/mkbuild@npm:1.0.0-alpha.23::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40flex-development%2Fmkbuild%2F1.0.0-alpha.23%2F01fc88d62df2030b9fcc7a780061d20542e086a9"
   dependencies:
     "@flex-development/decorator-regex": "npm:2.0.0"
     "@flex-development/errnode": "npm:2.0.0"
@@ -1534,7 +1534,7 @@ __metadata:
     "@flex-development/pkg-types": "npm:3.0.0"
     "@flex-development/toggle-pkg-type": "npm:2.0.1"
     "@flex-development/tsconfig-utils": "npm:2.0.2"
-    "@flex-development/tutils": "npm:6.0.0-alpha.21"
+    "@flex-development/tutils": "npm:6.0.0-alpha.22"
     consola: "npm:3.2.3"
     cosmiconfig: "npm:8.2.0"
     exit-hook: "npm:3.2.0"
@@ -1547,7 +1547,7 @@ __metadata:
     typescript: ">=5.0.4"
   bin:
     mkbuild: dist/cli.mjs
-  checksum: daf676a27a4aa1f96b69873aac9384b7fc35975e332941b26f96c14c2db1266e7fb3d745d0053e3031cbb1ebe178582941a761d4242b258efce86a22482a4423
+  checksum: d756447ea76a39893a3420d2d8d2dc33e38a965865ef24e763b61233e5009d88eb6b63cc6895d02cf7ac1feca1dbaee8506df63d1447f22387d3f5ecff9de41e
   languageName: node
   linkType: hard
 
