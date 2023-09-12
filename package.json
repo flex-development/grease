@@ -99,7 +99,7 @@
     "semver": "7.5.4"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.10.1",
+    "@arethetypeswrong/cli": "0.10.2",
     "@commitlint/cli": "17.7.1",
     "@commitlint/types": "17.4.4",
     "@faker-js/faker": "8.0.2",
