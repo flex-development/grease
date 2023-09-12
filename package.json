@@ -89,7 +89,6 @@
     "@nestjs/common": "10.2.5",
     "@types/dateformat": "5.0.0",
     "@types/semver": "7.5.0",
-    "@types/shelljs": "0.8.12",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.0",
     "consola": "3.2.3",
@@ -97,8 +96,7 @@
     "dateformat": "5.0.3",
     "node-emoji": "2.1.0",
     "reflect-metadata": "0.1.13",
-    "semver": "7.5.4",
-    "shelljs": "0.8.5"
+    "semver": "7.5.4"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.10.1",
@@ -115,6 +113,7 @@
     "@nestjs/core": "10.2.5",
     "@nestjs/testing": "10.2.5",
     "@types/chai": "4.3.5",
+    "@types/chai-string": "1.4.3",
     "@types/eslint": "8.44.2",
     "@types/is-ci": "3.0.0",
     "@types/node": "20.5.7",
@@ -127,6 +126,7 @@
     "@vitest/expect": "0.34.3",
     "chai": "5.0.0-alpha.1",
     "chai-each": "0.0.1",
+    "chai-string": "1.5.0",
     "cross-env": "7.0.3",
     "cspell": "7.3.2",
     "dprint": "0.40.2",
@@ -171,7 +171,7 @@
     "chai": "5.0.0-alpha.1"
   },
   "engines": {
-    "node": ">=16.20.0",
+    "node": ">=16.20.0 <20.6.0 || >20.6.0",
     "yarn": "4.0.0-rc.50"
   },
   "packageManager": "yarn@4.0.0-rc.50",

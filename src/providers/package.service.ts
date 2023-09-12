@@ -10,7 +10,7 @@ import {
   type PackageScope
 } from '@flex-development/mlly'
 import { define, DOT, type Nullable } from '@flex-development/tutils'
-import { Injectable } from '@nestjs/common/decorators'
+import { Injectable } from '@nestjs/common'
 import semver from 'semver'
 
 /**

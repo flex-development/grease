@@ -1,0 +1,392 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`unit:models/CommitGrammar > #field > should match raw commit fields 1`] = `
+[
+  {
+    "0": "-author.email-",
+    "1": "author.email",
+    "groups": {
+      "field": "author.email",
+    },
+  },
+  {
+    "0": "-author.name-",
+    "1": "author.name",
+    "groups": {
+      "field": "author.name",
+    },
+  },
+  {
+    "0": "-body-",
+    "1": "body",
+    "groups": {
+      "field": "body",
+    },
+  },
+  {
+    "0": "-date-",
+    "1": "date",
+    "groups": {
+      "field": "date",
+    },
+  },
+  {
+    "0": "-hash-",
+    "1": "hash",
+    "groups": {
+      "field": "hash",
+    },
+  },
+  {
+    "0": "-sha-",
+    "1": "sha",
+    "groups": {
+      "field": "sha",
+    },
+  },
+  {
+    "0": "-tags-",
+    "1": "tags",
+    "groups": {
+      "field": "tags",
+    },
+  },
+  {
+    "0": "-trailers-",
+    "1": "trailers",
+    "groups": {
+      "field": "trailers",
+    },
+  },
+]
+`;
+
+exports[`unit:models/CommitGrammar > #header > should match raw commit header with [type,breaking,subject,pr] 1`] = `
+{
+  "0": "refactor!: statements (#3)",
+  "1": "refactor",
+  "2": undefined,
+  "3": "!",
+  "4": "statements (#3)",
+  "5": "3",
+  "groups": {
+    "breaking": "!",
+    "pr": "3",
+    "scope": undefined,
+    "subject": "statements (#3)",
+    "type": "refactor",
+  },
+}
+`;
+
+exports[`unit:models/CommitGrammar > #header > should match raw commit header with [type,breaking,subject] 1`] = `
+{
+  "0": "feat!: watch mode",
+  "1": "feat",
+  "2": undefined,
+  "3": "!",
+  "4": "watch mode",
+  "5": undefined,
+  "groups": {
+    "breaking": "!",
+    "pr": undefined,
+    "scope": undefined,
+    "subject": "watch mode",
+    "type": "feat",
+  },
+}
+`;
+
+exports[`unit:models/CommitGrammar > #header > should match raw commit header with [type,scope,breaking,subject,pr] 1`] = `
+{
+  "0": "refactor(utils)!: [getFormat] enforce absolute module id (#3)",
+  "1": "refactor",
+  "2": "utils",
+  "3": "!",
+  "4": "[getFormat] enforce absolute module id (#3)",
+  "5": "3",
+  "groups": {
+    "breaking": "!",
+    "pr": "3",
+    "scope": "utils",
+    "subject": "[getFormat] enforce absolute module id (#3)",
+    "type": "refactor",
+  },
+}
+`;
+
+exports[`unit:models/CommitGrammar > #header > should match raw commit header with [type,scope,breaking,subject] 1`] = `
+{
+  "0": "refactor(utils)!: [\`analyzeOutputs\`] intake \`esbuild.Metafile.outputs\`",
+  "1": "refactor",
+  "2": "utils",
+  "3": "!",
+  "4": "[\`analyzeOutputs\`] intake \`esbuild.Metafile.outputs\`",
+  "5": undefined,
+  "groups": {
+    "breaking": "!",
+    "pr": undefined,
+    "scope": "utils",
+    "subject": "[\`analyzeOutputs\`] intake \`esbuild.Metafile.outputs\`",
+    "type": "refactor",
+  },
+}
+`;
+
+exports[`unit:models/CommitGrammar > #header > should match raw commit header with [type,scope,subject,pr] 1`] = `
+{
+  "0": "build(deps): Bump the flex-development group with 3 updates (#330)",
+  "1": "build",
+  "2": "deps",
+  "3": undefined,
+  "4": "Bump the flex-development group with 3 updates (#330)",
+  "5": "330",
+  "groups": {
+    "breaking": undefined,
+    "pr": "330",
+    "scope": "deps",
+    "subject": "Bump the flex-development group with 3 updates (#330)",
+    "type": "build",
+  },
+}
+`;
+
+exports[`unit:models/CommitGrammar > #header > should match raw commit header with [type,scope,subject] 1`] = `
+{
+  "0": "fix(config): prevent \`import.meta.url\` from being rewritten",
+  "1": "fix",
+  "2": "config",
+  "3": undefined,
+  "4": "prevent \`import.meta.url\` from being rewritten",
+  "5": undefined,
+  "groups": {
+    "breaking": undefined,
+    "pr": undefined,
+    "scope": "config",
+    "subject": "prevent \`import.meta.url\` from being rewritten",
+    "type": "fix",
+  },
+}
+`;
+
+exports[`unit:models/CommitGrammar > #header > should match raw commit header with [type,subject,pr] 1`] = `
+{
+  "0": "feat: file-to-file transpilation (#4)",
+  "1": "feat",
+  "2": undefined,
+  "3": undefined,
+  "4": "file-to-file transpilation (#4)",
+  "5": "4",
+  "groups": {
+    "breaking": undefined,
+    "pr": "4",
+    "scope": undefined,
+    "subject": "file-to-file transpilation (#4)",
+    "type": "feat",
+  },
+}
+`;
+
+exports[`unit:models/CommitGrammar > #header > should match raw commit header with [type,subject] 1`] = `
+{
+  "0": "ci: add @dependabot config",
+  "1": "ci",
+  "2": undefined,
+  "3": undefined,
+  "4": "add @dependabot config",
+  "5": undefined,
+  "groups": {
+    "breaking": undefined,
+    "pr": undefined,
+    "scope": undefined,
+    "subject": "add @dependabot config",
+    "type": "ci",
+  },
+}
+`;
+
+exports[`unit:models/CommitGrammar > #mention > should match mentions in raw commit 1`] = `
+[
+  {
+    "0": "@dependabot",
+    "1": "@dependabot",
+    "2": "dependabot",
+    "groups": {
+      "mention": "@dependabot",
+      "user": "dependabot",
+    },
+  },
+]
+`;
+
+exports[`unit:models/CommitGrammar > #reference > should match references in raw commit 1`] = `
+[
+  {
+    "0": "closes GH-335",
+    "1": "closes",
+    "2": undefined,
+    "3": undefined,
+    "4": undefined,
+    "5": "GH-335",
+    "6": "GH-",
+    "7": "335",
+    "groups": {
+      "action": "closes",
+      "number": "335",
+      "owner": undefined,
+      "prefix": "GH-",
+      "ref": "GH-335",
+      "repo": undefined,
+      "repository": undefined,
+    },
+  },
+  {
+    "0": "prettier/prettier#15358",
+    "1": undefined,
+    "2": "prettier/prettier",
+    "3": "prettier",
+    "4": "prettier",
+    "5": "#15358",
+    "6": "#",
+    "7": "15358",
+    "groups": {
+      "action": undefined,
+      "number": "15358",
+      "owner": "prettier",
+      "prefix": "#",
+      "ref": "#15358",
+      "repo": "prettier",
+      "repository": "prettier/prettier",
+    },
+  },
+  {
+    "0": "prettier/prettier#5715",
+    "1": undefined,
+    "2": "prettier/prettier",
+    "3": "prettier",
+    "4": "prettier",
+    "5": "#5715",
+    "6": "#",
+    "7": "5715",
+    "groups": {
+      "action": undefined,
+      "number": "5715",
+      "owner": "prettier",
+      "prefix": "#",
+      "ref": "#5715",
+      "repo": "prettier",
+      "repository": "prettier/prettier",
+    },
+  },
+  {
+    "0": "prettier/prettier#11881",
+    "1": undefined,
+    "2": "prettier/prettier",
+    "3": "prettier",
+    "4": "prettier",
+    "5": "#11881",
+    "6": "#",
+    "7": "11881",
+    "groups": {
+      "action": undefined,
+      "number": "11881",
+      "owner": "prettier",
+      "prefix": "#",
+      "ref": "#11881",
+      "repo": "prettier",
+      "repository": "prettier/prettier",
+    },
+  },
+  {
+    "0": "dprint/dprint#736",
+    "1": undefined,
+    "2": "dprint/dprint",
+    "3": "dprint",
+    "4": "dprint",
+    "5": "#736",
+    "6": "#",
+    "7": "736",
+    "groups": {
+      "action": undefined,
+      "number": "736",
+      "owner": "dprint",
+      "prefix": "#",
+      "ref": "#736",
+      "repo": "dprint",
+      "repository": "dprint/dprint",
+    },
+  },
+  {
+    "0": "dprint/dprint-plugin-typescript#432",
+    "1": undefined,
+    "2": "dprint/dprint-plugin-typescript",
+    "3": "dprint",
+    "4": "dprint-plugin-typescript",
+    "5": "#432",
+    "6": "#",
+    "7": "432",
+    "groups": {
+      "action": undefined,
+      "number": "432",
+      "owner": "dprint",
+      "prefix": "#",
+      "ref": "#432",
+      "repo": "dprint-plugin-typescript",
+      "repository": "dprint/dprint-plugin-typescript",
+    },
+  },
+]
+`;
+
+exports[`unit:models/CommitGrammar > #trailer > should match trailers in raw commit 1`] = `
+[
+  {
+    "0": "token: This is a very long value, with spaces and
+  newlines in it.",
+    "1": "token",
+    "2": "This is a very long value, with spaces and
+  newlines in it.",
+    "groups": {
+      "token": "token",
+      "value": "This is a very long value, with spaces and
+  newlines in it.",
+    },
+  },
+  {
+    "0": "BREAKING CHANGE: \`extends\` key now used for extending other configs",
+    "1": "BREAKING CHANGE",
+    "2": "\`extends\` key now used for extending other configs",
+    "groups": {
+      "token": "BREAKING CHANGE",
+      "value": "\`extends\` key now used for extending other configs",
+    },
+  },
+  {
+    "0": "BREAKING-CHANGE: use JavaScript features not available in Node 6.",
+    "1": "BREAKING-CHANGE",
+    "2": "use JavaScript features not available in Node 6.",
+    "groups": {
+      "token": "BREAKING-CHANGE",
+      "value": "use JavaScript features not available in Node 6.",
+    },
+  },
+  {
+    "0": "Reviewed-by: Z",
+    "1": "Reviewed-by",
+    "2": "Z",
+    "groups": {
+      "token": "Reviewed-by",
+      "value": "Z",
+    },
+  },
+  {
+    "0": "Refs: #123",
+    "1": "Refs",
+    "2": "#123",
+    "groups": {
+      "token": "Refs",
+      "value": "#123",
+    },
+  },
+]
+`;

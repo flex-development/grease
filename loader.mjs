@@ -126,7 +126,11 @@ export const load = async (url, context) => {
     source = code
   }
 
-  return { format: context.format, shortCircuit: true, source }
+  return {
+    format: context.format,
+    shortCircuit: true,
+    source: tutils.ifelse(context.format === mlly.Format.COMMONJS, null, source)
+  }
 }
 
 /**

@@ -1417,6 +1417,7 @@ __metadata:
     "@nestjs/core": "npm:10.2.5"
     "@nestjs/testing": "npm:10.2.5"
     "@types/chai": "npm:4.3.5"
+    "@types/chai-string": "npm:1.4.3"
     "@types/dateformat": "npm:5.0.0"
     "@types/eslint": "npm:8.44.2"
     "@types/is-ci": "npm:3.0.0"
@@ -1424,7 +1425,6 @@ __metadata:
     "@types/node-notifier": "npm:8.0.2"
     "@types/prettier": "npm:3.0.0"
     "@types/semver": "npm:7.5.0"
-    "@types/shelljs": "npm:0.8.12"
     "@typescript-eslint/eslint-plugin": "npm:6.6.0"
     "@typescript-eslint/parser": "npm:6.6.0"
     "@vates/toggle-scripts": "npm:1.0.0"
@@ -1432,6 +1432,7 @@ __metadata:
     "@vitest/expect": "npm:0.34.3"
     chai: "npm:5.0.0-alpha.1"
     chai-each: "npm:0.0.1"
+    chai-string: "npm:1.5.0"
     class-transformer: "npm:0.5.1"
     class-validator: "npm:0.14.0"
     consola: "npm:3.2.3"
@@ -1471,7 +1472,6 @@ __metadata:
     rxjs: "npm:7.8.1"
     semver: "npm:7.5.4"
     sh-syntax: "npm:0.4.1"
-    shelljs: "npm:0.8.5"
     trash-cli: "npm:5.0.0"
     ts-dedent: "npm:2.2.0"
     typescript: "npm:5.2.2"
@@ -2642,6 +2642,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/chai-string@npm:1.4.3":
+  version: 1.4.3
+  resolution: "@types/chai-string@npm:1.4.3"
+  dependencies:
+    "@types/chai": "npm:*"
+  checksum: a1f2a8046ed1b21930b650f3e0387c0cbb930c987e87b996f8595a1d0638c0c86406e487ad876eeca3bdfada84a8f45a81cf8a7308eab48629dfcc8c952e5d78
+  languageName: node
+  linkType: hard
+
 "@types/chai-subset@npm:^1.3.3":
   version: 1.3.3
   resolution: "@types/chai-subset@npm:1.3.3"
@@ -2691,16 +2700,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/glob@npm:~7.2.0":
-  version: 7.2.0
-  resolution: "@types/glob@npm:7.2.0"
-  dependencies:
-    "@types/minimatch": "npm:*"
-    "@types/node": "npm:*"
-  checksum: 6ae717fedfdfdad25f3d5a568323926c64f52ef35897bcac8aca8e19bc50c0bd84630bbd063e5d52078b2137d8e7d3c26eabebd1a2f03ff350fff8a91e79fc19
-  languageName: node
-  linkType: hard
-
 "@types/is-ci@npm:3.0.0":
   version: 3.0.0
   resolution: "@types/is-ci@npm:3.0.0"
@@ -2737,13 +2736,6 @@ __metadata:
   dependencies:
     "@types/unist": "npm:^2"
   checksum: 7446c87e3c51db5e3daa7490f9d04c183e619a8f6542f5dbaa263599052adc89af17face06609d4f5c5c49aacee2bff04748bba0342cbc4106904f9cf1121a69
-  languageName: node
-  linkType: hard
-
-"@types/minimatch@npm:*":
-  version: 5.1.2
-  resolution: "@types/minimatch@npm:5.1.2"
-  checksum: 94db5060d20df2b80d77b74dd384df3115f01889b5b6c40fa2dfa27cfc03a68fb0ff7c1f2a0366070263eb2e9d6bfd8c87111d4bc3ae93c3f291297c1bf56c85
   languageName: node
   linkType: hard
 
@@ -2804,16 +2796,6 @@ __metadata:
   version: 7.5.1
   resolution: "@types/semver@npm:7.5.1"
   checksum: 8e19822a2f6282785f4787b3640a205161a65f85de3d2159c5077002adb6e90b2f80bb7c8324ffdb9643061763e1672747f04b0ef3e9ac4179de0dce20ad641d
-  languageName: node
-  linkType: hard
-
-"@types/shelljs@npm:0.8.12":
-  version: 0.8.12
-  resolution: "@types/shelljs@npm:0.8.12"
-  dependencies:
-    "@types/glob": "npm:~7.2.0"
-    "@types/node": "npm:*"
-  checksum: c0517e8355614bad2d391270538bd5c7b65d7a771b333cb3ba9fb6321b4b44e1787e99d19cda97ac5d25ec84e2d6b81cb8cc496da5bdae6a725d922de4b44c70
   languageName: node
   linkType: hard
 
@@ -3640,6 +3622,15 @@ __metadata:
   version: 0.0.1
   resolution: "chai-each@npm:0.0.1"
   checksum: bc4dc57fd60687a2dbe212e4a9cfc6e4598931749f66a48d3aa800dd821ec3f7e31bd53937fb16ff6f5936be94e11e50f3baee4b243a838ceeb46e6b7bfa72e3
+  languageName: node
+  linkType: hard
+
+"chai-string@npm:1.5.0":
+  version: 1.5.0
+  resolution: "chai-string@npm:1.5.0"
+  peerDependencies:
+    chai: ^4.1.2
+  checksum: 39b9511525c99b9d378210897caf6352be34976c24f2e773680c2de4173d2071f3010ea0348bf681e2a201564524e28dd5541ebce8a181a455c8aeefe2a7bda3
   languageName: node
   linkType: hard
 
@@ -5645,7 +5636,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^7.0.0, glob@npm:^7.1.2, glob@npm:^7.1.3, glob@npm:^7.1.4":
+"glob@npm:^7.1.2, glob@npm:^7.1.3, glob@npm:^7.1.4":
   version: 7.2.3
   resolution: "glob@npm:7.2.3"
   dependencies:
@@ -6133,13 +6124,6 @@ __metadata:
     has: "npm:^1.0.3"
     side-channel: "npm:^1.0.4"
   checksum: e2eb5b348e427957dd4092cb57b9374a2cbcabbf61e5e5b4d99cb68eeaae29394e8efd79f23dc2b1831253346f3c16b82010737b84841225e934d80d04d68643
-  languageName: node
-  linkType: hard
-
-"interpret@npm:^1.0.0":
-  version: 1.4.0
-  resolution: "interpret@npm:1.4.0"
-  checksum: 5beec568d3f60543d0f61f2c5969d44dffcb1a372fe5abcdb8013968114d4e4aaac06bc971a4c9f5bd52d150881d8ebad72a8c60686b1361f5f0522f39c0e1a3
   languageName: node
   linkType: hard
 
@@ -8192,15 +8176,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rechoir@npm:^0.6.2":
-  version: 0.6.2
-  resolution: "rechoir@npm:0.6.2"
-  dependencies:
-    resolve: "npm:^1.1.6"
-  checksum: fe76bf9c21875ac16e235defedd7cbd34f333c02a92546142b7911a0f7c7059d2e16f441fe6fb9ae203f459c05a31b2bcf26202896d89e390eda7514d5d2702b
-  languageName: node
-  linkType: hard
-
 "redent@npm:^3.0.0":
   version: 3.0.0
   resolution: "redent@npm:3.0.0"
@@ -8333,7 +8308,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@npm:^1.1.6, resolve@npm:^1.10.0, resolve@npm:^1.10.1, resolve@npm:^1.22.4":
+"resolve@npm:^1.10.0, resolve@npm:^1.10.1, resolve@npm:^1.22.4":
   version: 1.22.4
   resolution: "resolve@npm:1.22.4"
   dependencies:
@@ -8346,7 +8321,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@npm%3A^1.1.6#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.10.0#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.10.1#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.22.4#optional!builtin<compat/resolve>":
+"resolve@patch:resolve@npm%3A^1.10.0#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.10.1#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.22.4#optional!builtin<compat/resolve>":
   version: 1.22.4
   resolution: "resolve@patch:resolve@npm%3A1.22.4#optional!builtin<compat/resolve>::version=1.22.4&hash=c3c19d"
   dependencies:
@@ -8528,19 +8503,6 @@ __metadata:
   version: 3.0.0
   resolution: "shebang-regex@npm:3.0.0"
   checksum: 1a2bcae50de99034fcd92ad4212d8e01eedf52c7ec7830eedcf886622804fe36884278f2be8be0ea5fde3fd1c23911643a4e0f726c8685b61871c8908af01222
-  languageName: node
-  linkType: hard
-
-"shelljs@npm:0.8.5":
-  version: 0.8.5
-  resolution: "shelljs@npm:0.8.5"
-  dependencies:
-    glob: "npm:^7.0.0"
-    interpret: "npm:^1.0.0"
-    rechoir: "npm:^0.6.2"
-  bin:
-    shjs: bin/shjs
-  checksum: f2178274b97b44332bbe9ddb78161137054f55ecf701c7a99db9552cb5478fe279ad5f5131d8a7c2f0730e01ccf0c629d01094143f0541962ce1a3d0243d23f7
   languageName: node
   linkType: hard
 

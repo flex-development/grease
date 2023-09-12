@@ -4,11 +4,11 @@
  */
 
 import pkg from '#pkg' assert { type: 'json' }
-import { BumpService, PackageService } from '#src/providers'
+import { BumpService, GitService, PackageService } from '#src/providers'
 import { Program } from '@flex-development/nest-commander'
 import type { CommanderError } from '@flex-development/nest-commander/commander'
 import { lowercase } from '@flex-development/tutils'
-import { Module } from '@nestjs/common/decorators'
+import { Module } from '@nestjs/common'
 import consola from 'consola'
 import { BumpCommand } from './commands'
 
@@ -17,7 +17,7 @@ import { BumpCommand } from './commands'
  *
  * @class
  */
-@Module({ providers: [BumpCommand, BumpService, PackageService] })
+@Module({ providers: [BumpCommand, BumpService, GitService, PackageService] })
 class ProgramModule {
   /**
    * Create a new CLI application module.
@@ -39,7 +39,7 @@ class ProgramModule {
    * @return {void} Nothing when complete
    */
   public static error(e: Error): void {
-    consola.error(e.message)
+    consola.error(e)
     return void (process.exitCode = 1)
   }
 

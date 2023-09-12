@@ -1,0 +1,46 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`integration:options/CommitOptions > validation > should fail validation if schema is invalid 1`] = `
+[
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isString": "from must be a string",
+    },
+    "property": "from",
+    "value": null,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isArray": "issue_prefixes must be an array",
+    },
+    "property": "issue_prefixes",
+    "value": "#",
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isString": "to must be a string",
+    },
+    "property": "to",
+    "value": /\\^HEAD/,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isDirectory": "cwd must be an absolute directory path",
+    },
+    "property": "cwd",
+    "value": "file:///",
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isBoolean": "debug must be a boolean value",
+    },
+    "property": "debug",
+    "value": null,
+  },
+]
+`;
