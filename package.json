@@ -82,6 +82,7 @@
     "typecheck:watch": "vitest typecheck"
   },
   "dependencies": {
+    "@flex-development/aggregate-error-ponyfill": "3.1.1",
     "@flex-development/mlly": "1.0.0-alpha.18",
     "@flex-development/pathe": "2.0.0",
     "@flex-development/pkg-types": "3.0.0",

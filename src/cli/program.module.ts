@@ -4,7 +4,12 @@
  */
 
 import pkg from '#pkg' assert { type: 'json' }
-import { BumpService, GitService, PackageService } from '#src/providers'
+import {
+  BumpService,
+  GitService,
+  PackageService,
+  ValidationService
+} from '#src/providers'
 import { Program } from '@flex-development/nest-commander'
 import type { CommanderError } from '@flex-development/nest-commander/commander'
 import { lowercase } from '@flex-development/tutils'
@@ -17,7 +22,15 @@ import { BumpCommand } from './commands'
  *
  * @class
  */
-@Module({ providers: [BumpCommand, BumpService, GitService, PackageService] })
+@Module({
+  providers: [
+    BumpCommand,
+    BumpService,
+    GitService,
+    PackageService,
+    ValidationService
+  ]
+})
 class ProgramModule {
   /**
    * Create a new CLI application module.

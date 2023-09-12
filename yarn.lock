@@ -1157,6 +1157,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@flex-development/aggregate-error-ponyfill@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@flex-development/aggregate-error-ponyfill@npm:3.1.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40flex-development%2Faggregate-error-ponyfill%2F3.1.1%2F06789d036a0573f507331cc4d1068616a4e58c9e"
+  dependencies:
+    "@types/es-abstract": "npm:1.17.3"
+    es-abstract: "npm:1.21.1"
+  checksum: 8fe64d928008289cc48cc6928cbdd18ee5b53e1395e3150c15f40777b6c95ce3b1685cf05a0c4505401c941bd01be156d7491264d4e8709d8e15d565f2788e27
+  languageName: node
+  linkType: hard
+
 "@flex-development/builtin-modules@npm:1.0.0":
   version: 1.0.0
   resolution: "@flex-development/builtin-modules@npm:1.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40flex-development%2Fbuiltin-modules%2F1.0.0%2F7f6d30784550e9e03c3e93e9f846d958d016f1c9"
@@ -1271,6 +1281,7 @@ __metadata:
     "@commitlint/cli": "npm:17.7.1"
     "@commitlint/types": "npm:17.4.4"
     "@faker-js/faker": "npm:8.0.2"
+    "@flex-development/aggregate-error-ponyfill": "npm:3.1.1"
     "@flex-development/commitlint-config": "npm:1.0.1"
     "@flex-development/decorator-regex": "npm:2.0.0"
     "@flex-development/esm-types": "npm:2.0.0"
@@ -1991,6 +2002,22 @@ __metadata:
   version: 5.0.0
   resolution: "@types/dateformat@npm:5.0.0"
   checksum: fee3fff637675fd55b59fff6a0507a120ae212a0c7ba823c00a45473da617a7d466e6d7d40d2b4b88af9df3f4be3ed80a51e222ea346c7738de688aa2c6747f1
+  languageName: node
+  linkType: hard
+
+"@types/es-abstract@npm:1.17.3":
+  version: 1.17.3
+  resolution: "@types/es-abstract@npm:1.17.3"
+  dependencies:
+    "@types/es-to-primitive": "npm:*"
+  checksum: ae9da1ca8c02ad806cdd500ba62389553acd56400f6f8ec594f20f2eb6deb4437744e92c3b4f06f8fb135156a309176819ac637fb54d1ce33b9e4e13f8ac503b
+  languageName: node
+  linkType: hard
+
+"@types/es-to-primitive@npm:*":
+  version: 1.2.4
+  resolution: "@types/es-to-primitive@npm:1.2.4"
+  checksum: 39f718560db1cb8aeb07e40efcf908ef15852aad996bfe67765532a2a4b656363517648beb46b2d88f5d2ef823a660969b98c5cd36d974616ed017edd0a1ecce
   languageName: node
   linkType: hard
 
@@ -3727,6 +3754,47 @@ __metadata:
   languageName: node
   linkType: hard
 
+"es-abstract@npm:1.21.1":
+  version: 1.21.1
+  resolution: "es-abstract@npm:1.21.1"
+  dependencies:
+    available-typed-arrays: "npm:^1.0.5"
+    call-bind: "npm:^1.0.2"
+    es-set-tostringtag: "npm:^2.0.1"
+    es-to-primitive: "npm:^1.2.1"
+    function-bind: "npm:^1.1.1"
+    function.prototype.name: "npm:^1.1.5"
+    get-intrinsic: "npm:^1.1.3"
+    get-symbol-description: "npm:^1.0.0"
+    globalthis: "npm:^1.0.3"
+    gopd: "npm:^1.0.1"
+    has: "npm:^1.0.3"
+    has-property-descriptors: "npm:^1.0.0"
+    has-proto: "npm:^1.0.1"
+    has-symbols: "npm:^1.0.3"
+    internal-slot: "npm:^1.0.4"
+    is-array-buffer: "npm:^3.0.1"
+    is-callable: "npm:^1.2.7"
+    is-negative-zero: "npm:^2.0.2"
+    is-regex: "npm:^1.1.4"
+    is-shared-array-buffer: "npm:^1.0.2"
+    is-string: "npm:^1.0.7"
+    is-typed-array: "npm:^1.1.10"
+    is-weakref: "npm:^1.0.2"
+    object-inspect: "npm:^1.12.2"
+    object-keys: "npm:^1.1.1"
+    object.assign: "npm:^4.1.4"
+    regexp.prototype.flags: "npm:^1.4.3"
+    safe-regex-test: "npm:^1.0.0"
+    string.prototype.trimend: "npm:^1.0.6"
+    string.prototype.trimstart: "npm:^1.0.6"
+    typed-array-length: "npm:^1.0.4"
+    unbox-primitive: "npm:^1.0.2"
+    which-typed-array: "npm:^1.1.9"
+  checksum: 065c46977cf2371b1f713c2e6dbcd2487caa2c3b10cfe5ec237206907379ae6cf538ad4d59ebe25763c21f9233a0764c44672b1155770f1397c5dba5d4e5c3e0
+  languageName: node
+  linkType: hard
+
 "es-abstract@npm:^1.20.4, es-abstract@npm:^1.22.1":
   version: 1.22.1
   resolution: "es-abstract@npm:1.22.1"
@@ -5172,7 +5240,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"internal-slot@npm:^1.0.5":
+"internal-slot@npm:^1.0.4, internal-slot@npm:^1.0.5":
   version: 1.0.5
   resolution: "internal-slot@npm:1.0.5"
   dependencies:
@@ -6565,7 +6633,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"object-inspect@npm:^1.12.3, object-inspect@npm:^1.9.0":
+"object-inspect@npm:^1.12.2, object-inspect@npm:^1.12.3, object-inspect@npm:^1.9.0":
   version: 1.12.3
   resolution: "object-inspect@npm:1.12.3"
   checksum: 532b0036f0472f561180fac0d04fe328ee01f57637624c83fb054f81b5bfe966cdf4200612a499ed391a7ca3c46b20a0bc3a55fc8241d944abe687c556a32b39
@@ -7181,7 +7249,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"regexp.prototype.flags@npm:^1.5.0":
+"regexp.prototype.flags@npm:^1.4.3, regexp.prototype.flags@npm:^1.5.0":
   version: 1.5.0
   resolution: "regexp.prototype.flags@npm:1.5.0"
   dependencies:
@@ -8580,7 +8648,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"which-typed-array@npm:^1.1.10, which-typed-array@npm:^1.1.11":
+"which-typed-array@npm:^1.1.10, which-typed-array@npm:^1.1.11, which-typed-array@npm:^1.1.9":
   version: 1.1.11
   resolution: "which-typed-array@npm:1.1.11"
   dependencies:

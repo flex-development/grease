@@ -14,6 +14,7 @@ import fs from 'node:fs/promises'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import TestSubject from '../bump.service'
 import PackageService from '../package.service'
+import ValidationService from '../validation.service'
 
 describe('functional:providers/BumpService', () => {
   let ref: TestingModule
@@ -22,7 +23,7 @@ describe('functional:providers/BumpService', () => {
 
   beforeAll(async () => {
     ref = await Test.createTestingModule({
-      providers: [TestSubject, PackageService]
+      providers: [PackageService, TestSubject, ValidationService]
     }).compile()
 
     manifest = ref.get(PackageService)

@@ -6,13 +6,13 @@
 import { Version } from '#src/models'
 import { BumpOptions, type BumpOptionsDTO } from '#src/options'
 import type { PackageJson } from '@flex-development/pkg-types'
-import { cast, define } from '@flex-development/tutils'
+import { define } from '@flex-development/tutils'
 import { Injectable } from '@nestjs/common'
-import { validateOrReject } from 'class-validator'
 import consola from 'consola'
 import fs from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import PackageService from './package.service'
+import ValidationService from './validation.service'
 
 /**
  * Version bump operations provider.
@@ -25,8 +25,12 @@ class BumpService {
    * Create a new version bump service.
    *
    * @param {PackageService} manifest - Package manifest service
+   * @param {ValidationService} validator - Validation service
    */
-  constructor(protected readonly manifest: PackageService) {}
+  constructor(
+    protected readonly manifest: PackageService,
+    protected readonly validator: ValidationService
+  ) {}
 
   /**
    * Bump a package version.
@@ -39,15 +43,6 @@ class BumpService {
    * @throws {Error} If release version is invalid
    */
   public async bump(opts: BumpOptionsDTO): Promise<Version> {
-    // validate options
-    await validateOrReject(opts = new BumpOptions(opts), {
-      forbidUnknownValues: false,
-      skipMissingProperties: false,
-      stopAtFirstError: false,
-      validationError: { target: false, value: true }
-    })
-
-    // bump options
     const {
       manifest,
       preid,
@@ -55,7 +50,7 @@ class BumpService {
       release,
       silent,
       write
-    } = cast<BumpOptions>(opts)
+    } = await this.validator.validate(new BumpOptions(opts))
 
     // initialize package manifest service
     this.manifest.init(manifest)

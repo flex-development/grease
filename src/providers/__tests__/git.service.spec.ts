@@ -8,14 +8,18 @@ import { Test, type TestingModule } from '@nestjs/testing'
 import consola from 'consola'
 import fs from 'node:fs/promises'
 import TestSubject from '../git.service'
+import ValidationService from '../validation.service'
 
 describe('unit:providers/GitService', () => {
   let ref: TestingModule
   let subject: TestSubject
 
   beforeAll(async () => {
+    ref = await Test.createTestingModule({
+      providers: [TestSubject, ValidationService]
+    }).compile()
+
     consola.mockTypes(() => vi.fn())
-    ref = await Test.createTestingModule({ providers: [TestSubject] }).compile()
     subject = ref.get(TestSubject)
   })
 

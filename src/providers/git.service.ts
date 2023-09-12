@@ -34,6 +34,7 @@ import consola from 'consola'
 import { exec, type ExecOptions } from 'node:child_process'
 import util from 'node:util'
 import semver from 'semver'
+import ValidationService from './validation.service'
 
 /**
  * Git operations provider.
@@ -78,6 +79,13 @@ class GitService {
   )
 
   /**
+   * Create a git operations service.
+   *
+   * @param {ValidationService} validator - Validation service
+   */
+  constructor(protected readonly validator: ValidationService) {}
+
+  /**
    * Get an array of parsed commits.
    *
    * @see {@linkcode CommitOptions}
@@ -89,7 +97,13 @@ class GitService {
    * @return {Promise<Commit[]>} Parsed commit array
    */
   public async commits(opts?: Partial<CommitOptions>): Promise<Commit[]> {
-    const { cwd, debug, from, issue_prefixes, to } = new CommitOptions(opts)
+    const {
+      cwd,
+      debug,
+      from,
+      issue_prefixes,
+      to
+    } = await this.validator.validate(new CommitOptions(opts))
 
     /**
      * String used to separate commit logs.
@@ -300,7 +314,12 @@ class GitService {
    * @return {Promise<string[]>} Git tags array
    */
   public async tags(opts?: Partial<GitTagOptions>): Promise<string[]> {
-    const { cwd, debug, tagprefix, unstable } = new GitTagOptions(opts)
+    const {
+      cwd,
+      debug,
+      tagprefix,
+      unstable
+    } = await this.validator.validate(new GitTagOptions(opts))
 
     /**
      * Raw commit logs.
