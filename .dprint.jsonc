@@ -9,10 +9,13 @@
     "**/*config.*.timestamp*",
     "**/.temp/",
     "**/.vercel/",
+    "**/__fixtures__/commits/*.txt",
+    "**/__fixtures__/tags/*.txt",
     "**/__tests__/report.json",
     "**/coverage/",
     "**/dist/",
     "**/node_modules",
+    "**/scratch.*",
     "**/tsconfig*temp.json",
     ".git/",
     ".husky/_/",
@@ -26,7 +29,7 @@
     "commands": [
       {
         "command": "node ./dprint/prettier.mjs {{file_path}}",
-        "exts": ["yaml", "yml"],
+        "exts": ["json5", "yaml", "yml"],
         "stdin": true
       },
       {
@@ -57,7 +60,7 @@
   "incremental": true,
   "indentWidth": 2,
   "json": {
-    "associations": ["**/*.{json5,jsonc,json}"],
+    "associations": ["**/*.{jsonc,json}"],
     "array.preferSingleLine": false,
     "commentLine.forceSpaceAfterSlashes": true,
     "ignoreNodeCommentText": "dprint-ignore",

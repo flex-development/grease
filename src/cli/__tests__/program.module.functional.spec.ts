@@ -23,7 +23,7 @@ describe('functional:cli/ProgramModule', () => {
       // Expect
       expect(process).to.have.property('exitCode', 1)
       expect(consola.error).toHaveBeenCalledOnce()
-      expect(consola.error).toHaveBeenCalledWith(e.message)
+      expect(consola.error).toHaveBeenCalledWith(e)
     })
   })
 
@@ -54,7 +54,7 @@ describe('functional:cli/ProgramModule', () => {
       // Expect
       expect(process).to.have.property('exitCode', e.exitCode)
       expect(consola.error).toHaveBeenCalledOnce()
-      expect(consola.error).toHaveBeenCalledWith(e.message)
+      expect(consola.error).toHaveBeenCalledWith(e)
     })
   })
 })

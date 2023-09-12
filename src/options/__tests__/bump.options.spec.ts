@@ -3,6 +3,7 @@
  * @module grease/options/tests/unit/BumpOptions
  */
 
+import { ReleaseType } from '#src/enums'
 import { DOT } from '@flex-development/tutils'
 import { pathToFileURL } from 'node:url'
 import TestSubject from '../bump.options'
@@ -10,7 +11,7 @@ import TestSubject from '../bump.options'
 describe('unit:options/BumpOptions', () => {
   describe('constructor', () => {
     let manifest: TestSubject['manifest']
-    let preid: Required<TestSubject>['preid']
+    let preid: TestSubject['preid']
     let prestart: TestSubject['prestart']
     let release: TestSubject['release']
     let silent: TestSubject['silent']
@@ -18,20 +19,13 @@ describe('unit:options/BumpOptions', () => {
     let write: TestSubject['write']
 
     beforeAll(() => {
-      manifest = pathToFileURL(DOT).href
-      preid = 'rc'
-      prestart = 0
-      release = 'premajor'
-      silent = true
-      write = true
-
       subject = new TestSubject({
-        manifest,
-        preid,
-        prestart,
-        release,
-        silent,
-        write
+        manifest: (manifest = pathToFileURL(DOT).href),
+        preid: (preid = 'rc'),
+        prestart: (prestart = 0),
+        release: (release = ReleaseType.PREMAJOR),
+        silent: (silent = true),
+        write: (write = true)
       })
     })
 

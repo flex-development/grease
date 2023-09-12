@@ -154,7 +154,6 @@
     "extensions": [
       "cjs",
       "cts",
-      "gql",
       "js",
       "json",
       "json5",
@@ -166,12 +165,12 @@
       "mts",
       "ts",
       "tsx",
+      "yaml",
       "yml"
     ],
     "overrideConfigFile": ".eslintrc.cjs"
   },
   "eslint.validate": [
-    "graphql",
     "javascript",
     "json",
     "json5",
@@ -278,6 +277,7 @@
   "typescript.inlayHints.enumMemberValues.enabled": true,
   "typescript.preferences.autoImportFileExcludePatterns": ["src/index.ts"],
   "typescript.preferences.importModuleSpecifierEnding": "minimal",
+  "typescript.preferences.includePackageJsonAutoImports": "on",
   "typescript.preferences.quoteStyle": "single",
   "typescript.preferences.useAliasesForRenames": true,
   "typescript.suggest.completeFunctionCalls": true,
@@ -306,11 +306,6 @@
       "extensions": [".eslintrc.base.cjs"],
       "format": "svg",
       "icon": "eslint"
-    },
-    {
-      "extensions": [".graphqlrc.yml"],
-      "format": "svg",
-      "icon": "graphql"
     },
     {
       "extensions": ["build.json", "cjs.json", "typecheck.json"],

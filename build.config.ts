@@ -5,6 +5,7 @@
 
 import { defineBuildConfig, type Config } from '@flex-development/mkbuild'
 import pathe from '@flex-development/pathe'
+import { at } from '@flex-development/tutils'
 import pkg from './package.json' assert { type: 'json' }
 import tsconfig from './tsconfig.build.json' assert { type: 'json' }
 
@@ -40,12 +41,10 @@ const config: Config = defineBuildConfig({
         '@nestjs/platform-express',
         '@nestjs/websockets/socket-module',
         'cache-manager',
-        'node-fetch',
-        'rxjs'
+        'node-fetch'
       ],
       minify: true,
       name: 'cli',
-      platform: 'node',
       source: 'src/cli/index.ts',
       sourcemap: true,
       sourcesContent: false
@@ -53,9 +52,10 @@ const config: Config = defineBuildConfig({
   ],
   keepNames: true,
   minifySyntax: true,
+  platform: 'node',
   sourceRoot: 'file' + pathe.delimiter + pathe.sep.repeat(2),
   target: [
-    pkg.engines.node.replace(/^\D+/, 'node'),
+    'node' + at(/([\d.]+)/.exec(pkg.engines.node), 0, ''),
     tsconfig.compilerOptions.target
   ],
   tsconfig: 'tsconfig.build.json'

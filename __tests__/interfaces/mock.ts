@@ -1,5 +1,5 @@
 /**
- * @file Test Environment Interfaces - Mock
+ * @file Test Interfaces - Mock
  * @module tests/interfaces/Mock
  */
 

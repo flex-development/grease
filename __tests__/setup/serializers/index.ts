@@ -4,4 +4,4 @@
  * @see https://vitest.dev/guide/snapshot.html#custom-serializer
  */
 
-export {}
+import './reg-exp-array'

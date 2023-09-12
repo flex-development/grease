@@ -690,14 +690,7 @@ const config = {
           }
         ],
         'unicorn/import-index': 2,
-        'unicorn/import-style': [
-          2,
-          {
-            styles: {
-              shelljs: { default: true }
-            }
-          }
-        ],
+        'unicorn/import-style': [2, { styles: {} }],
         'unicorn/new-for-builtins': 2,
         'unicorn/no-abusive-eslint-disable': 2,
         'unicorn/no-array-callback-reference': 0,
