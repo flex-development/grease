@@ -3,14 +3,18 @@
  * @module grease/providers/BumpService
  */
 
+import { ReleaseType } from '#src/enums'
+import type { Commit } from '#src/interfaces'
 import { Version } from '#src/models'
-import { BumpOptions, type BumpOptionsDTO } from '#src/options'
+import { BumpOptions, GitTagOptions, type BumpOptionsDTO } from '#src/options'
+import type { RecommendedBump } from '#src/types'
 import type { PackageJson } from '@flex-development/pkg-types'
-import { define } from '@flex-development/tutils'
+import { at, define, type Partial } from '@flex-development/tutils'
 import { Injectable } from '@nestjs/common'
 import consola from 'consola'
 import fs from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
+import GitService from './git.service'
 import PackageService from './package.service'
 import ValidationService from './validation.service'
 
@@ -25,22 +29,26 @@ class BumpService {
    * Create a new version bump service.
    *
    * @param {PackageService} manifest - Package manifest service
+   * @param {GitService} git - Git operations service
    * @param {ValidationService} validator - Validation service
    */
   constructor(
     protected readonly manifest: PackageService,
+    protected readonly git: GitService,
     protected readonly validator: ValidationService
   ) {}
 
   /**
    * Bump a package version.
    *
+   * @see {@linkcode BumpOptionsDTO}
+   * @see {@linkcode Version}
+   *
    * @public
    * @async
    *
    * @param {BumpOptionsDTO} opts - User version bump options
    * @return {Promise<Version>} Bumped version
-   * @throws {Error} If release version is invalid
    */
   public async bump(opts: BumpOptionsDTO): Promise<Version> {
     const {
@@ -86,6 +94,61 @@ class BumpService {
 
     !silent && consola.success('bumped version to', version.version)
     return version
+  }
+
+  /**
+   * Get a version bump recommendation.
+   *
+   * @see {@linkcode GitTagOptions}
+   * @see {@linkcode RecommendedBump}
+   *
+   * @public
+   * @async
+   *
+   * @param {Partial<GitTagOptions>} [opts] - Recommendation options
+   * @return {Promise<RecommendedBump>} Recommended version bump
+   */
+  public async recommend(
+    opts: Partial<GitTagOptions> = {}
+  ): Promise<RecommendedBump> {
+    /**
+     * Commits since last release.
+     *
+     * @const {Commit[]} commits
+     */
+    const commits: Commit[] = await this.git.commits({
+      ...opts,
+      from: at(await this.git.tags(opts), 0, '')
+    })
+
+    /**
+     * Total number of breaking changes committed since last release.
+     *
+     * @const {number} breaks
+     */
+    const breaks: number = commits.reduce((acc, commit) => {
+      return acc + (commit.breaking ? 1 : 0)
+    }, 0)
+
+    /**
+     * Total number of features committed since last release.
+     *
+     * @const {number} features
+     */
+    const features: number = commits.reduce((acc, commit) => {
+      return acc + (/^feat(ure)?/.test(commit.type) ? 1 : 0)
+    }, 0)
+
+    return {
+      breaks,
+      bump: breaks
+        ? ReleaseType.MAJOR
+        : features
+        ? ReleaseType.MINOR
+        : ReleaseType.PATCH,
+      commits: commits.length,
+      features
+    }
   }
 }
 

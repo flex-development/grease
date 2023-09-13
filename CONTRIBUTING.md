@@ -351,7 +351,7 @@ Before deploying, the following steps must be completed:
 
 1. Schedule a code freeze
 2. Decide what type of version bump the package needs
-   - `yarn bump --recommend`
+   - `yarn bump:recommend`
 3. Bump version
    - `yarn bump <new-version>`
    - `yarn bump major`

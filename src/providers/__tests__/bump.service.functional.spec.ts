@@ -13,6 +13,7 @@ import consola from 'consola'
 import fs from 'node:fs/promises'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import TestSubject from '../bump.service'
+import GitService from '../git.service'
 import PackageService from '../package.service'
 import ValidationService from '../validation.service'
 
@@ -23,7 +24,7 @@ describe('functional:providers/BumpService', () => {
 
   beforeAll(async () => {
     ref = await Test.createTestingModule({
-      providers: [PackageService, TestSubject, ValidationService]
+      providers: [GitService, PackageService, TestSubject, ValidationService]
     }).compile()
 
     manifest = ref.get(PackageService)

@@ -11,19 +11,27 @@ import {
   CliUtilityService,
   CommandRunnerService
 } from '@flex-development/nest-commander'
+import type { CommanderError } from '@flex-development/nest-commander/commander'
 import { CommandTestFactory } from '@flex-development/nest-commander/testing'
+import type { EmptyArray, Fn } from '@flex-development/tutils'
 import type { TestingModule } from '@nestjs/testing'
+import consola from 'consola'
 import { pathToFileURL } from 'node:url'
 import TestSubject from '../bump.command'
 
 describe('functional:cli/commands/BumpCommand', () => {
-  let args: ['bump', ReleaseVersion, ...string[]]
   let bump: Mock<BumpService['bump']>
   let command: TestingModule
+  let exitOverride: Mock<Fn<[CommanderError]>>
+  let recommend: Mock<BumpService['recommend']>
 
   beforeAll(() => {
-    args = ['bump', ReleaseType.PREMINOR]
+    consola.mockTypes(() => vi.fn())
     bump = vi.fn<Parameters<BumpService['bump']>>().mockName('BumpService#bump')
+    recommend = vi.fn<EmptyArray>(() => ({})).mockName('BumpService#recommend')
+    exitOverride = vi.fn<[CommanderError]>((e: CommanderError) => {
+      throw e
+    })
   })
 
   beforeEach(async () => {
@@ -33,21 +41,45 @@ describe('functional:cli/commands/BumpCommand', () => {
         TestSubject,
         {
           provide: BumpService,
-          useValue: { bump }
+          useValue: { bump, recommend }
         }
       ]
     })
 
     // @ts-expect-error ts(2445)
-    command.get(CommandRunnerService).program.exitOverride(e => {
-      throw e
+    command.get(CommandRunnerService).program.exitOverride(exitOverride)
+  })
+
+  describe('--colors, -c [choice]', () => {
+    let args: ['bump', '--recommend']
+
+    beforeAll(() => {
+      args = ['bump', '--recommend']
+    })
+
+    it('should parse flag', async () => {
+      // Act
+      await CommandTestFactory.run(command, [...args, '--colors'])
+
+      // Expect
+      expect(consola.options.formatOptions).to.have.property('colors', true)
+    })
+
+    it('should parse short flag', async () => {
+      // Act
+      await CommandTestFactory.run(command, [...args, '-c', '0'])
+
+      // Expect
+      expect(consola.options.formatOptions).to.have.property('colors', false)
     })
   })
 
   describe('--manifest, -m <id>', () => {
+    let args: ['bump', ReleaseVersion]
     let manifest: string
 
     beforeAll(() => {
+      args = ['bump', ReleaseType.PREMINOR]
       manifest = pathToFileURL('__fixtures__/pkg/major').href
     })
 
@@ -71,9 +103,11 @@ describe('functional:cli/commands/BumpCommand', () => {
   })
 
   describe('--preid <id>', () => {
+    let args: ['bump', ReleaseVersion]
     let preid: string
 
     beforeAll(() => {
+      args = ['bump', ReleaseType.PREMAJOR]
       preid = 'beta'
     })
 
@@ -88,9 +122,11 @@ describe('functional:cli/commands/BumpCommand', () => {
   })
 
   describe('--prestart <start>', () => {
+    let args: ['bump', ReleaseVersion]
     let prestart: number
 
     beforeAll(() => {
+      args = ['bump', ReleaseType.PREPATCH]
       prestart = 0
     })
 
@@ -104,27 +140,65 @@ describe('functional:cli/commands/BumpCommand', () => {
     })
   })
 
-  describe('--silent, -s', () => {
+  describe('--recommend, -r', () => {
+    let args: ['bump']
+
+    beforeAll(() => {
+      args = ['bump']
+    })
+
     it('should parse flag', async () => {
       // Act
-      await CommandTestFactory.run(command, [...args, '--silent'])
+      await CommandTestFactory.run(command, [...args, '--recommend'])
 
       // Expect
-      expect(bump).toHaveBeenCalledOnce()
-      expect(bump.mock.lastCall?.[0]).to.have.property('silent', true)
+      expect(recommend).toHaveBeenCalledOnce()
     })
 
     it('should parse short flag', async () => {
       // Act
-      await CommandTestFactory.run(command, [...args, '-s'])
+      await CommandTestFactory.run(command, [...args, '-r'])
 
       // Expect
-      expect(bump).toHaveBeenCalledOnce()
-      expect(bump.mock.lastCall?.[0]).to.have.property('silent', true)
+      expect(recommend).toHaveBeenCalledOnce()
+    })
+  })
+
+  describe('--tagprefix, -t <prefix>', () => {
+    let args: ['bump', '--recommend']
+    let prefix: string
+
+    beforeAll(() => {
+      args = ['bump', '--recommend']
+      prefix = 'grease@'
+    })
+
+    it('should parse flag', async () => {
+      // Act
+      await CommandTestFactory.run(command, [...args, `--tagprefix=${prefix}`])
+
+      // Expect
+      expect(recommend).toHaveBeenCalledOnce()
+      expect(recommend.mock.lastCall?.[0]).to.have.property('tagprefix', prefix)
+    })
+
+    it('should parse short flag', async () => {
+      // Act
+      await CommandTestFactory.run(command, [...args, '-t', prefix])
+
+      // Expect
+      expect(recommend).toHaveBeenCalledOnce()
+      expect(recommend.mock.lastCall?.[0]).to.have.property('tagprefix', prefix)
     })
   })
 
   describe('--write, -w [choice]', () => {
+    let args: ['bump', ReleaseVersion]
+
+    beforeAll(() => {
+      args = ['bump', ReleaseType.PREMINOR]
+    })
+
     it('should parse flag', async () => {
       // Act
       await CommandTestFactory.run(command, [...args, '--write=0'])
