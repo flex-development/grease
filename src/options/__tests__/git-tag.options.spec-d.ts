@@ -3,7 +3,7 @@
  * @module grease/options/tests/unit-d/GitTagOptions
  */
 
-import TestSubject from '../git-tag.options'
+import type TestSubject from '../git-tag.options'
 import type GitOptions from '../git.options'
 
 describe('unit-d:options/GitTagOptions', () => {

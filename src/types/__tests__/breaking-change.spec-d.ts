@@ -7,6 +7,18 @@ import type { Nullable } from '@flex-development/tutils'
 import type TestSubject from '../breaking-change'
 
 describe('unit-d:types/BreakingChange', () => {
+  it('should match [mentions: string[]]', () => {
+    expectTypeOf<TestSubject>()
+      .toHaveProperty('mentions')
+      .toEqualTypeOf<string[]>()
+  })
+
+  it('should match [pr: Nullable<number>]', () => {
+    expectTypeOf<TestSubject>()
+      .toHaveProperty('pr')
+      .toEqualTypeOf<Nullable<number>>()
+  })
+
   it('should match [scope: Nullable<string>]', () => {
     expectTypeOf<TestSubject>()
       .toHaveProperty('scope')

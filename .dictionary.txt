@@ -27,6 +27,7 @@ pathe
 pkgs
 preid
 shfmt
+tryit
 tscu
 unstub
 vates

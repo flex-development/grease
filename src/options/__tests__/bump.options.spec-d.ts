@@ -5,7 +5,7 @@
 
 import type { ReleaseVersion } from '#src/types'
 import type { ModuleId } from '@flex-development/mlly'
-import TestSubject from '../bump.options'
+import type TestSubject from '../bump.options'
 
 describe('unit-d:options/BumpOptions', () => {
   it('should match [manifest: ModuleId]', () => {

@@ -7,7 +7,7 @@ import { ReleaseType } from '#src/enums'
 import type { BumpOptionsDTO } from '#src/options'
 import type { ReleaseVersion } from '#src/types'
 import type { SemanticVersion } from '@flex-development/pkg-types'
-import { cast, get, type Omit } from '@flex-development/tutils'
+import { get, type Omit } from '@flex-development/tutils'
 import { SemVer } from 'semver'
 import TestSubject from '../version.model'
 
@@ -79,7 +79,7 @@ describe('unit:models/Version', () => {
 
     it('should throw if release is invalid', () => {
       // Arrange
-      const release: ReleaseVersion = cast('pre')
+      const release: ReleaseVersion = <ReleaseVersion>'pre'
       const message: string = `invalid increment argument: ${release}`
       let error!: Error
 
@@ -87,7 +87,7 @@ describe('unit:models/Version', () => {
       try {
         subject.inc(release)
       } catch (e: unknown) {
-        error = cast(e)
+        error = <typeof error>e
       }
 
       // Expect

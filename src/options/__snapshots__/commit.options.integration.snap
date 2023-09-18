@@ -5,6 +5,14 @@ exports[`integration:options/CommitOptions > validation > should fail validation
   ValidationError {
     "children": [],
     "constraints": {
+      "isConstructor": "Commit must be a constructor",
+    },
+    "property": "Commit",
+    "value": [Function Commit],
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
       "isString": "from must be a string",
     },
     "property": "from",
@@ -17,6 +25,14 @@ exports[`integration:options/CommitOptions > validation > should fail validation
     },
     "property": "issue_prefixes",
     "value": "#",
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isEnum": "provider must be one of the following values: bitbucket, github, gitlab",
+    },
+    "property": "provider",
+    "value": "gh",
   },
   ValidationError {
     "children": [],

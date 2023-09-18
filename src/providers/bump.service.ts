@@ -4,7 +4,7 @@
  */
 
 import { ReleaseType } from '#src/enums'
-import type { Commit } from '#src/interfaces'
+import type { ICommit } from '#src/interfaces'
 import { Version } from '#src/models'
 import { BumpOptions, GitTagOptions, type BumpOptionsDTO } from '#src/options'
 import type { RecommendedBump } from '#src/types'
@@ -114,9 +114,9 @@ class BumpService {
     /**
      * Commits since last release.
      *
-     * @const {Commit[]} commits
+     * @const {ICommit[]} commits
      */
-    const commits: Commit[] = await this.git.commits({
+    const commits: ICommit[] = await this.git.commits({
       ...opts,
       from: at(await this.git.tags(opts), 0, '')
     })

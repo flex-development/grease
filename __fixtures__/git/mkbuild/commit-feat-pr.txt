@@ -1,0 +1,19 @@
+-author.email-
+unicornware@flexdevelopment.llc
+-author.name-
+Lex
+-body-
+Signed-off-by: Lexus Drumgold <unicornware@flexdevelopment.llc>
+-date-
+2022-09-15T21:22:09-04:00
+-hash-
+1601d26
+-header-
+feat: file-to-file transpilation (#4)
+-sha-
+1601d268bce74abafab6a4b0d0e244b35dd1e808
+-tags-
+
+-trailers-
+Signed-off-by: Lexus Drumgold <unicornware@flexdevelopment.llc>
+--$--

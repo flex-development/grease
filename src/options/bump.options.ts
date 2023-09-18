@@ -6,11 +6,7 @@
 import { IsManifestId, IsReleaseVersion } from '#src/decorators'
 import type { ReleaseVersion } from '#src/types'
 import type { ModuleId } from '@flex-development/mlly'
-import {
-  DOT,
-  defaults,
-  type Assign
-} from '@flex-development/tutils'
+import { DOT, defaults, type Assign } from '@flex-development/tutils'
 import { IsBoolean, IsIn, IsString } from 'class-validator'
 
 /**

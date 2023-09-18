@@ -89,13 +89,7 @@ const config = {
         '@typescript-eslint/camelcase': 0,
         '@typescript-eslint/class-literal-property-style': [2, 'getters'],
         '@typescript-eslint/consistent-indexed-object-style': [2, 'record'],
-        '@typescript-eslint/consistent-type-assertions': [
-          2,
-          {
-            assertionStyle: 'as',
-            objectLiteralTypeAssertions: 'allow'
-          }
-        ],
+        '@typescript-eslint/consistent-type-assertions': 0,
         '@typescript-eslint/consistent-type-definitions': 0,
         '@typescript-eslint/consistent-type-exports': [
           2,

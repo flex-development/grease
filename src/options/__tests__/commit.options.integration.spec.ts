@@ -14,16 +14,20 @@ describe('integration:options/CommitOptions', () => {
     it('should fail validation if schema is invalid', async () => {
       // Arrange
       const subject: TestSubject = new TestSubject(cast({
+        Commit: () => vi.fn().mockName('Commit'),
         cwd: toURL(sep),
         debug: null,
         from: null,
         issue_prefixes: '#',
+        provider: 'gh',
         to: /^HEAD/
       }))
 
       // Act
       const errors = await validate(subject, {
         skipMissingProperties: false,
+        skipNullProperties: false,
+        skipUndefinedProperties: false,
         stopAtFirstError: false,
         validationError: { target: false, value: true }
       })

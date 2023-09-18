@@ -3,12 +3,20 @@
  * @module grease/options/tests/unit-d/CommitOptions
  */
 
-import TestSubject from '../commit.options'
+import type { Commit } from '#src/models'
+import type { Constructor } from '@flex-development/tutils'
+import type TestSubject from '../commit.options'
 import type GitOptions from '../git.options'
 
 describe('unit-d:options/CommitOptions', () => {
   it('should extend GitOptions', () => {
     expectTypeOf<TestSubject>().toMatchTypeOf<GitOptions>()
+  })
+
+  it('should match [Commit: Constructor<Commit>]', () => {
+    expectTypeOf<TestSubject>()
+      .toHaveProperty('Commit')
+      .toEqualTypeOf<Constructor<Commit>>()
   })
 
   it('should match [from: string]', () => {

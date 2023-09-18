@@ -3,7 +3,7 @@
  * @module grease/options/tests/unit-d/GitOptions
  */
 
-import TestSubject from '../git.options'
+import type TestSubject from '../git.options'
 
 describe('unit-d:options/GitOptions', () => {
   it('should match [cwd: string]', () => {

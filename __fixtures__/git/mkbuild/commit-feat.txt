@@ -1,0 +1,23 @@
+-author.email-
+unicornware@flexdevelopment.llc
+-author.name-
+Lexus Drumgold
+-body-
+- evanw/esbuild#1921
+
+Signed-off-by: Lexus Drumgold <unicornware@flexdevelopment.llc>
+
+-date-
+2022-09-27T03:23:45-04:00
+-hash-
+b584192
+-header-
+feat: auto-insert `require` definition when creating esm bundles
+-sha-
+b584192816d48085407487df05203de243631f4d
+-tags-
+
+-trailers-
+Signed-off-by: Lexus Drumgold <unicornware@flexdevelopment.llc>
+
+--$--

@@ -3,7 +3,8 @@
  * @module grease/options/tests/unit/CommitOptions
  */
 
-import pkg from '#pkg' assert { type: 'json' }
+import tagprefix from '#fixtures/git/grease/tagprefix'
+import { Commit } from '#src/models'
 import TestSubject from '../commit.options'
 
 describe('unit:options/CommitOptions', () => {
@@ -15,10 +16,14 @@ describe('unit:options/CommitOptions', () => {
 
     beforeAll(() => {
       subject = new TestSubject({
-        from: (from = pkg.tagPrefix + '1.0.0'),
-        issue_prefixes: (issue_prefixes = ['#']),
-        to: (to = pkg.tagPrefix + '2.0.0')
+        from: from = tagprefix + '1.0.0',
+        issue_prefixes: issue_prefixes = ['#'],
+        to: to = tagprefix + '2.0.0'
       })
+    })
+
+    it('should set #Commit', () => {
+      expect(subject).to.have.property('Commit', Commit)
     })
 
     it('should set #from', () => {

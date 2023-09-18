@@ -3,7 +3,7 @@
  * @module grease/options/tests/unit/GitTagOptions
  */
 
-import pkg from '#pkg' assert { type: 'json' }
+import gtp from '#fixtures/git/grease/tagprefix'
 import TestSubject from '../git-tag.options'
 
 describe('unit:options/GitTagOptions', () => {
@@ -14,8 +14,8 @@ describe('unit:options/GitTagOptions', () => {
 
     beforeAll(() => {
       subject = new TestSubject({
-        tagprefix: (tagprefix = pkg.tagPrefix),
-        unstable: (unstable = false)
+        tagprefix: tagprefix = gtp,
+        unstable: unstable = false
       })
     })
 

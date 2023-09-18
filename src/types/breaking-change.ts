@@ -10,6 +10,16 @@ import type { Nullable } from '@flex-development/tutils'
  */
 type BreakingChange = {
   /**
+   * Users mentioned in commit subject.
+   */
+  mentions: string[]
+
+  /**
+   * Pull request number if commit subject includes a pull request reference.
+   */
+  pr: Nullable<number>
+
+  /**
    * Commit scope if breaking change was noted in a scoped commit message.
    */
   scope: Nullable<string>

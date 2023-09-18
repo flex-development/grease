@@ -35,7 +35,7 @@ describe('unit:providers/ValidationService', () => {
       try {
         await subject.validate(instance)
       } catch (e: unknown) {
-        error = cast(e)
+        error = <typeof error>e
       }
 
       // Expect

@@ -5,7 +5,7 @@
 
 import pkg from '#pkg' assert { type: 'json' }
 import { ReleaseType } from '#src/enums'
-import type { Commit } from '#src/interfaces'
+import type { ICommit } from '#src/interfaces'
 import { Version } from '#src/models'
 import type { BumpOptionsDTO } from '#src/options'
 import { cast } from '@flex-development/tutils'
@@ -44,7 +44,7 @@ describe('unit:providers/BumpService', () => {
   describe('#recommend', () => {
     describe.each<[
       keyof typeof ReleaseType,
-      Pick<Commit, 'breaking' | 'type'>[]
+      Pick<ICommit, 'breaking' | 'type'>[]
     ]>([
       ['MAJOR', [{ breaking: true, type: 'refactor' }]],
       ['MINOR', [{ breaking: false, type: 'feat' }]],

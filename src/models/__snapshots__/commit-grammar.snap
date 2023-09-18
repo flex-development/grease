@@ -3,59 +3,93 @@
 exports[`unit:models/CommitGrammar > #field > should match raw commit fields 1`] = `
 [
   {
-    "0": "-author.email-",
+    "0": "-author.email-
+unicornware@flexdevelopment.llc",
     "1": "author.email",
+    "2": "unicornware@flexdevelopment.llc",
     "groups": {
       "field": "author.email",
+      "value": "unicornware@flexdevelopment.llc",
     },
   },
   {
-    "0": "-author.name-",
+    "0": "-author.name-
+Lex",
     "1": "author.name",
+    "2": "Lex",
     "groups": {
       "field": "author.name",
+      "value": "Lex",
     },
   },
   {
-    "0": "-body-",
+    "0": "-body-
+Signed-off-by: Lexus Drumgold <unicornware@flexdevelopment.llc>",
     "1": "body",
+    "2": "Signed-off-by: Lexus Drumgold <unicornware@flexdevelopment.llc>",
     "groups": {
       "field": "body",
+      "value": "Signed-off-by: Lexus Drumgold <unicornware@flexdevelopment.llc>",
     },
   },
   {
-    "0": "-date-",
+    "0": "-date-
+2023-09-09T23:59:31+00:00",
     "1": "date",
+    "2": "2023-09-09T23:59:31+00:00",
     "groups": {
       "field": "date",
+      "value": "2023-09-09T23:59:31+00:00",
     },
   },
   {
-    "0": "-hash-",
+    "0": "-hash-
+a399eae",
     "1": "hash",
+    "2": "a399eae",
     "groups": {
       "field": "hash",
+      "value": "a399eae",
     },
   },
   {
-    "0": "-sha-",
+    "0": "-header-
+release: 1.0.0-alpha.23 (#361)",
+    "1": "header",
+    "2": "release: 1.0.0-alpha.23 (#361)",
+    "groups": {
+      "field": "header",
+      "value": "release: 1.0.0-alpha.23 (#361)",
+    },
+  },
+  {
+    "0": "-sha-
+a399eaeff03a88cdb1d59fc1fb42d88fcdc773fe",
     "1": "sha",
+    "2": "a399eaeff03a88cdb1d59fc1fb42d88fcdc773fe",
     "groups": {
       "field": "sha",
+      "value": "a399eaeff03a88cdb1d59fc1fb42d88fcdc773fe",
     },
   },
   {
-    "0": "-tags-",
+    "0": "-tags-
+tag: 1.0.0-alpha.23",
     "1": "tags",
+    "2": "tag: 1.0.0-alpha.23",
     "groups": {
       "field": "tags",
+      "value": "tag: 1.0.0-alpha.23",
     },
   },
   {
-    "0": "-trailers-",
+    "0": "-trailers-
+Signed-off-by: Lexus Drumgold <unicornware@flexdevelopment.llc>",
     "1": "trailers",
+    "2": "Signed-off-by: Lexus Drumgold <unicornware@flexdevelopment.llc>",
     "groups": {
       "field": "trailers",
+      "value": "Signed-off-by: Lexus Drumgold <unicornware@flexdevelopment.llc>",
     },
   },
 ]
@@ -221,25 +255,6 @@ exports[`unit:models/CommitGrammar > #mention > should match mentions in raw com
 
 exports[`unit:models/CommitGrammar > #reference > should match references in raw commit 1`] = `
 [
-  {
-    "0": "closes GH-335",
-    "1": "closes",
-    "2": undefined,
-    "3": undefined,
-    "4": undefined,
-    "5": "GH-335",
-    "6": "GH-",
-    "7": "335",
-    "groups": {
-      "action": "closes",
-      "number": "335",
-      "owner": undefined,
-      "prefix": "GH-",
-      "ref": "GH-335",
-      "repo": undefined,
-      "repository": undefined,
-    },
-  },
   {
     "0": "prettier/prettier#15358",
     "1": undefined,

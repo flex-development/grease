@@ -1,0 +1,163 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`unit:models/Commit > #body > should return empty commit body 1`] = `""`;
+
+exports[`unit:models/Commit > #body > should return non-empty commit body 1`] = `
+"- \`platform\` must be set to \`node\` (https://esbuild.github.io/api/#platform)
+- https://esbuild.github.io/getting-started/#bundling-for-node"
+`;
+
+exports[`unit:models/Commit > #breaks > should return empty breaking changes array 1`] = `[]`;
+
+exports[`unit:models/Commit > #breaks > should return non-empty breaking changes array 1`] = `
+[
+  {
+    "mentions": [],
+    "pr": null,
+    "scope": null,
+    "subject": "init project rewrite",
+    "type": "refactor",
+  },
+]
+`;
+
+exports[`unit:models/Commit > #date > should return commit date 1`] = `"2023-09-09T19:00:25-04:00"`;
+
+exports[`unit:models/Commit > #hash > should return abbreviated #sha 1`] = `"c5e7153"`;
+
+exports[`unit:models/Commit > #header > should return commit header with #grammar.header match 1`] = `"feat(cli): \`BumpCommand\`"`;
+
+exports[`unit:models/Commit > #header > should return commit header without #grammar.header match 1`] = `"initial commit"`;
+
+exports[`unit:models/Commit > #mentions > should return empty mentions array 1`] = `[]`;
+
+exports[`unit:models/Commit > #mentions > should return non-empty mentions array 1`] = `
+[
+  "dependabot",
+]
+`;
+
+exports[`unit:models/Commit > #pr > should return null 1`] = `null`;
+
+exports[`unit:models/Commit > #pr > should return pull request number 1`] = `4`;
+
+exports[`unit:models/Commit > #references > should return empty reference array 1`] = `[]`;
+
+exports[`unit:models/Commit > #references > should return non-empty reference array 1`] = `
+[
+  {
+    "action": null,
+    "number": 15358,
+    "owner": "prettier",
+    "ref": "#15358",
+    "repo": "prettier",
+  },
+  {
+    "action": null,
+    "number": 5715,
+    "owner": "prettier",
+    "ref": "#5715",
+    "repo": "prettier",
+  },
+  {
+    "action": null,
+    "number": 11881,
+    "owner": "prettier",
+    "ref": "#11881",
+    "repo": "prettier",
+  },
+  {
+    "action": null,
+    "number": 736,
+    "owner": "dprint",
+    "ref": "#736",
+    "repo": "dprint",
+  },
+  {
+    "action": null,
+    "number": 432,
+    "owner": "dprint",
+    "ref": "#432",
+    "repo": "dprint-plugin-typescript",
+  },
+]
+`;
+
+exports[`unit:models/Commit > #scope > should return commit scope 1`] = `"decorators"`;
+
+exports[`unit:models/Commit > #scope > should return null 1`] = `null`;
+
+exports[`unit:models/Commit > #sha > should return commit sha 1`] = `"0705685f33ce75b785a83001827d067119c58d09"`;
+
+exports[`unit:models/Commit > #subject > should return commit subject 1`] = `"\`Version\`"`;
+
+exports[`unit:models/Commit > #tags > should return empty tags array 1`] = `[]`;
+
+exports[`unit:models/Commit > #tags > should return non-empty tags array 1`] = `
+[
+  "1.0.0-alpha.23",
+]
+`;
+
+exports[`unit:models/Commit > #toJSON > should return json-serializable commit 1`] = `
+{
+  "author": {
+    "email": "unicornware@flexdevelopment.llc",
+    "name": "Lex",
+  },
+  "body": "",
+  "breaking": false,
+  "breaks": [],
+  "date": "2023-09-09T23:59:31+00:00",
+  "hash": "a399eae",
+  "header": "release: 1.0.0-alpha.23 (#361)",
+  "mentions": [],
+  "pr": 361,
+  "references": [
+    {
+      "action": null,
+      "number": 361,
+      "owner": null,
+      "ref": "#361",
+      "repo": null,
+    },
+  ],
+  "scope": null,
+  "sha": "a399eaeff03a88cdb1d59fc1fb42d88fcdc773fe",
+  "subject": "1.0.0-alpha.23 (#361)",
+  "tags": [
+    "1.0.0-alpha.23",
+  ],
+  "trailers": [
+    {
+      "token": "Signed-off-by",
+      "value": "Lexus Drumgold <unicornware@flexdevelopment.llc>",
+    },
+  ],
+  "type": "release",
+  "version": "1.0.0-alpha.23",
+}
+`;
+
+exports[`unit:models/Commit > #trailers > should return empty trailers array 1`] = `[]`;
+
+exports[`unit:models/Commit > #trailers > should return non-empty trailers array 1`] = `
+[
+  {
+    "token": "Signed-off-by",
+    "value": "dependabot[bot] <support@github.com>",
+  },
+  {
+    "token": "Co-authored-by",
+    "value": "dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
+  },
+]
+`;
+
+exports[`unit:models/Commit > #type > should return empty commit type 1`] = `""`;
+
+exports[`unit:models/Commit > #type > should return non-empty commit type 1`] = `"build"`;
+
+exports[`unit:models/Commit > #version > should return null 1`] = `null`;
+
+exports[`unit:models/Commit > #version > should return release tag 1`] = `"grease@2.0.0"`;

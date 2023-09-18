@@ -7,7 +7,7 @@ import pkgjson from '#pkg' assert { type: 'json' }
 import { Version } from '#src/models'
 import { lookupPackageScope } from '@flex-development/mlly'
 import type { PackageJson } from '@flex-development/pkg-types'
-import { cast, define } from '@flex-development/tutils'
+import { define } from '@flex-development/tutils'
 import { pathToFileURL } from 'node:url'
 import TestSubject from '../package.service'
 
@@ -28,7 +28,7 @@ describe('unit:providers/PackageService', () => {
       try {
         subject.init(id)
       } catch (e: unknown) {
-        error = cast(e)
+        error = <typeof error>e
       }
 
       // Expect
@@ -61,7 +61,7 @@ describe('unit:providers/PackageService', () => {
         define(subject, 'scope', { value: { pkgjson } })
         subject.version
       } catch (e: unknown) {
-        error = cast(e)
+        error = <typeof error>e
       }
 
       // Expect

@@ -1,25 +1,19 @@
 /**
- * @file Type Tests - Commit
- * @module grease/interfaces/tests/unit-d/Commit
+ * @file Type Tests - ICommit
+ * @module grease/interfaces/tests/unit-d/ICommit
  */
 
-import type { Author, BreakingChange, Trailer } from '#src/types'
-import type { JsonObject, Nullable } from '@flex-development/tutils'
+import type { Author, BreakingChange, Reference, Trailer } from '#src/types'
+import type { Nullable } from '@flex-development/tutils'
 import type TestSubject from '../commit.interface'
 
-describe('unit-d:interfaces/Commit', () => {
-  it('should extend JsonObject', () => {
-    expectTypeOf<TestSubject>().toMatchTypeOf<JsonObject>()
-  })
-
+describe('unit-d:interfaces/ICommit', () => {
   it('should match [author: Author]', () => {
     expectTypeOf<TestSubject>().toHaveProperty('author').toEqualTypeOf<Author>()
   })
 
-  it('should match [body: Nullable<string>]', () => {
-    expectTypeOf<TestSubject>()
-      .toHaveProperty('body')
-      .toEqualTypeOf<Nullable<string>>()
+  it('should match [body: string]', () => {
+    expectTypeOf<TestSubject>().toHaveProperty('body').toEqualTypeOf<string>()
   })
 
   it('should match [breaking: boolean]', () => {
@@ -28,9 +22,9 @@ describe('unit-d:interfaces/Commit', () => {
       .toEqualTypeOf<boolean>()
   })
 
-  it('should match [breaking_changes: BreakingChange[]]', () => {
+  it('should match [breaks: BreakingChange[]]', () => {
     expectTypeOf<TestSubject>()
-      .toHaveProperty('breaking_changes')
+      .toHaveProperty('breaks')
       .toEqualTypeOf<BreakingChange[]>()
   })
 
@@ -56,6 +50,12 @@ describe('unit-d:interfaces/Commit', () => {
     expectTypeOf<TestSubject>()
       .toHaveProperty('pr')
       .toEqualTypeOf<Nullable<number>>()
+  })
+
+  it('should match [references: Reference[]]', () => {
+    expectTypeOf<TestSubject>()
+      .toHaveProperty('references')
+      .toEqualTypeOf<Reference[]>()
   })
 
   it('should match [scope: Nullable<string>]', () => {

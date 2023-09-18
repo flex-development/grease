@@ -43,10 +43,7 @@ class GitOptions {
    * @param {Partial<GitOptions>?} [opts] - Git options
    */
   constructor(opts?: Partial<GitOptions>) {
-    const {
-      cwd,
-      debug
-    } = defaults(fallback(opts, {}), {
+    const { cwd, debug } = defaults(fallback(opts, {}), {
       cwd: process.cwd(),
       debug: false
     })

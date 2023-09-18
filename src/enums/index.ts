@@ -4,3 +4,4 @@
  */
 
 export { default as ReleaseType } from './release-type'
+export { default as RepositoryProvider } from './repository-provider'

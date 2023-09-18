@@ -3,35 +3,31 @@
  * @module grease/providers/GitService
  */
 
-import type { Commit } from '#src/interfaces'
-import { CommitGrammar } from '#src/models'
+import { Commit, CommitGrammar } from '#src/models'
 import { CommitOptions, GitTagOptions } from '#src/options'
-import type { BreakingChange, CommitLogField, Trailer } from '#src/types'
 import {
-  at,
   cast,
-  construct,
-  fallback,
-  fork,
-  get,
   ifelse,
-  includes,
-  isNaN,
   join,
-  ksort,
-  objectify,
   pick,
+  regexp,
   select,
   sift,
+  sort,
   split,
   template,
+  timeunix,
   trim,
-  trimEnd,
-  type Construct
+  tryit,
+  type Fn
 } from '@flex-development/tutils'
 import { Injectable } from '@nestjs/common'
 import consola from 'consola'
-import { exec, type ExecOptions } from 'node:child_process'
+import {
+  exec,
+  type ExecException,
+  type ExecOptions
+} from 'node:child_process'
 import util from 'node:util'
 import semver from 'semver'
 import ValidationService from './validation.service'
@@ -57,7 +53,7 @@ class GitService {
    */
   public static readonly RAW_COMMIT_FORMAT: string = join(
     [
-      '%s%n',
+      '',
       'author.email',
       '%n%ae%n',
       'author.name',
@@ -68,6 +64,8 @@ class GitService {
       '%n%cI%n',
       'hash',
       '%n%h%n',
+      'header',
+      '%n%s%n',
       'sha',
       '%n%H%n',
       'tags',
@@ -90,20 +88,26 @@ class GitService {
    *
    * @see {@linkcode CommitOptions}
    *
+   * @template T - Parsed commit type
+   *
    * @public
    * @async
    *
-   * @param {Partial<CommitOptions>?} [opts] - Commit options
-   * @return {Promise<Commit[]>} Parsed commit array
+   * @param {Partial<CommitOptions<T>>?} [opts] - Commit options
+   * @return {Promise<T[]>} Parsed commit array
    */
-  public async commits(opts?: Partial<CommitOptions>): Promise<Commit[]> {
+  public async commits<T extends Commit = Commit>(
+    opts?: Partial<CommitOptions<T>>
+  ): Promise<T[]> {
     const {
+      Commit,
       cwd,
       debug,
       from,
       issue_prefixes,
+      provider,
       to
-    } = await this.validator.validate(new CommitOptions(opts))
+    } = await this.validator.validate(new CommitOptions<T>(opts))
 
     /**
      * String used to separate commit logs.
@@ -113,11 +117,11 @@ class GitService {
     const LOG_DELIMITER: string = '--$--'
 
     /**
-     * Git command arguments.
+     * Raw commit logs.
      *
-     * @const {string[]} args
+     * @const {string} logs
      */
-    const args: string[] = sift([
+    const logs: string = await this.log(sift([
       '--decorate-refs=refs/tags',
       '--decorate=short',
       template('--format=\'{format}{delimiter}\'', {
@@ -126,146 +130,75 @@ class GitService {
       }),
       join(sift([from, to]), '..'),
       ifelse(cwd === process.cwd(), '', `-- ${cwd}`)
-    ])
+    ]), { cwd, debug })
 
     /**
-     * Raw commit logs.
+     * Parsed commit array.
      *
-     * @const {{ stderr: string; stdout: string }} logs
+     * @const {T[]} commits
      */
-    const logs: { stderr: string; stdout: string } = await this.log(args, {
-      cwd,
-      debug
-    })
-
-    /**
-     * Array containing parsed commits.
-     *
-     * @const {Commit[]} commits
-     */
-    const commits: Commit[] = []
+    const commits: T[] = []
 
     /**
      * Commit parser grammar.
      *
      * @const {CommitGrammar} grammar
      */
-    const grammar: CommitGrammar = new CommitGrammar()
+    const grammar: CommitGrammar = new CommitGrammar(provider, issue_prefixes)
 
     // parse raw commits
-    for (let chunk of split(logs.stdout, LOG_DELIMITER + '\n')) {
+    for (let chunk of split(logs, new RegExp(`${regexp(LOG_DELIMITER)}\n?`))) {
       if (!(chunk = trim(chunk))) continue
-
-      // get commit header and raw fields
-      const [[header = ''], raw_fields]: [string[], string[]] = fork(
-        split(chunk, /^(?=-.*?-\n*$)/gm),
-        raw => !grammar.field.test(raw)
-      )
-
-      // extract commit header data
-      const {
-        groups: {
-          breaking = null,
-          pr = 'null',
-          scope = null,
-          subject = '',
-          type = ''
-        } = {}
-      } = pick(grammar.header.exec(header)!, ['groups'])
-
-      /**
-       * Commit fields object.
-       *
-       * @const {Construct<Record<CommitLogField, string>>} fields
-       */
-      const fields: Construct<Record<CommitLogField, string>> = construct(
-        cast<Record<CommitLogField, string>>(
-          objectify(
-            raw_fields,
-            raw => get(grammar.field.exec(raw)!.groups, 'field', ''),
-            raw => trim(raw.replace(grammar.field, ''))
-          )
-        )
-      )
-
-      /**
-       * Tags associated with commit.
-       *
-       * @const {string[]} tags
-       */
-      const tags: string[] = select(
-        split(fields.tags, ','),
-        tag => !!trim(tag),
-        tag => trim(tag.replace(/^tag: */, ''))
-      )
-
-      /**
-       * Commit message trailers.
-       *
-       * @const {Trailer[]} trailers
-       */
-      const trailers: Trailer[] = select(
-        [...fields.trailers.matchAll(grammar.trailer)],
-        null,
-        match => pick(match.groups!, ['token', 'value'])
-      )
-
-      /**
-       * Breaking changes noted in commit subject and trailers.
-       *
-       * @const {BreakingChange[]} breaking_changes
-       */
-      const breaking_changes: BreakingChange[] = select(
-        trailers,
-        trailer => /^BREAKING[ -]CHANGE/.test(trailer.token),
-        trailer => ({ scope: null, subject: trailer.value, type })
-      )
-
-      // add subject to breaking changes if breaking change is in subject
-      if (breaking && !includes(breaking_changes, subject)) {
-        breaking_changes.unshift({ scope, subject, type })
-      }
-
-      /**
-       * Parsed commit object.
-       *
-       * @var {Commit} commit
-       */
-      const commit: Commit = {
-        ...fields,
-        body: trimEnd(fields.body.replace(fields.trailers, '')),
-        breaking: !!breaking_changes.length,
-        breaking_changes,
-        header: header.replace(/\n$/, ''),
-        mentions: select(
-          [...chunk.matchAll(grammar.mention)],
-          null,
-          match => get(match, 'groups.user')!
-        ),
-        pr: fallback(+pr, null, isNaN),
-        references: select(
-          [...chunk.matchAll(grammar.reference(issue_prefixes))],
-          null,
-          match => ({
-            action: get(match, 'groups.action', null),
-            number: +get(match, 'groups.number', ''),
-            owner: get(match, 'groups.owner', null),
-            ref: get(match, 'groups.ref', ''),
-            repo: get(match, 'groups.repo', null)
-          })
-        ),
-        scope,
-        subject,
-        tags,
-        trailers,
-        type,
-        version: at(tags, 0, null)
-      }
-
-      commits.push(ksort(commit, { deep: true }))
+      commits.push(cast(new Commit(chunk, grammar)))
     }
 
-    return commits
+    return sort(commits, (a, b) => timeunix(b.date) - timeunix(a.date))
+  }
+
+  /**
+   * Execute a command.
+   *
+   * Throws if the command fails.
+   *
+   * @public
+   * @async
+   *
+   * @param {ReadonlyArray<string>} args - Command arguments
+   * @param {(ExecOptions & { debug?: boolean })?} [opts={}] - Exec options
+   * @return {Promise<string>} Command output
+   * @throws {Error} If command fails
+   */
+  public async exec(
+    args: readonly string[],
+    opts: ExecOptions & { debug?: boolean } = {}
+  ): Promise<string> {
+    /**
+     * Command to execute.
+     *
+     * @const {string} command
+     */
+    const command: string = join(['git', ...args], ' ')
+
+    // debug command
+    if (opts.debug) consola.info(`[GitService#${this.exec.name}]`, command)
+
+    // execute command
+    const [e, result] = await tryit<
+      Fn<[string, ExecOptions], Promise<{ stdout: string }>>,
+      ExecException & { stderr: string }
+    >(util.promisify(exec))(command, {
+      ...opts,
+      maxBuffer: Number.POSITIVE_INFINITY,
+      shell: process.env.SHELL
+    })
+
+    // throw if command failed
+    if (e) {
+      e.stderr = trim(e.stderr.replace(/^fatal: */, ''))
+      throw new Error(e.stderr, { cause: pick(e, ['cmd', 'code']) })
+    }
+
+    return trim(result.stdout)
   }
 
   /**
@@ -276,30 +209,15 @@ class GitService {
    * @public
    * @async
    *
-   * @param {ReadonlyArray<string>} args - `git log` options
-   * @param {ExecOptions & { debug?: boolean }} [opts={}] - Exec options
-   * @return {Promise<{ stderr: string; stdout: string }>} Command output
+   * @param {ReadonlyArray<string>?} [args=[]] - `git log` options
+   * @param {(ExecOptions & { debug?: boolean })?} [opts={}] - Exec options
+   * @return {Promise<string>} Command output
    */
   public async log(
-    args: readonly string[],
+    args: readonly string[] = [],
     opts: ExecOptions & { debug?: boolean } = {}
-  ): Promise<{ stderr: string; stdout: string }> {
-    /**
-     * Command to execute.
-     *
-     * @const {string} command
-     */
-    const command: string = join(['git', 'log', ...args], ' ')
-
-    // debug git log command
-    if (opts.debug) consola.info(`[GitService.${this.log.name}]`, command)
-
-    return util.promisify(exec)(command, {
-      ...opts,
-      encoding: 'utf8',
-      maxBuffer: Number.POSITIVE_INFINITY,
-      shell: process.env.SHELL
-    })
+  ): Promise<string> {
+    return this.exec(['log', ...args], opts)
   }
 
   /**
@@ -310,7 +228,7 @@ class GitService {
    * @public
    * @async
    *
-   * @param {Partial<GitTagOptions>} [opts] - Git tag options
+   * @param {Partial<GitTagOptions>?} [opts] - Git tag options
    * @return {Promise<string[]>} Git tags array
    */
   public async tags(opts?: Partial<GitTagOptions>): Promise<string[]> {
@@ -322,27 +240,21 @@ class GitService {
     } = await this.validator.validate(new GitTagOptions(opts))
 
     /**
-     * Raw commit logs.
+     * Raw tags.
      *
-     * @const {{ stderr: string; stdout: string }} logs
+     * @const {string} tags
      */
-    const logs: { stderr: string; stdout: string } = await this.log([
-      '--decorate-refs=refs/tags',
-      '--decorate=short',
-      '--format=%D'
+    const tags: string = await this.exec([
+      'tag',
+      '--sort -creatordate',
+      template('--list \'{tagprefix}*\'', { tagprefix })
     ], { cwd, debug, env: process.env })
 
-    return select(
-      select(
-        split(logs.stdout, '\n'),
-        tag => trim(tag).startsWith(`tag: ${tagprefix}`),
-        tag => trim(tag).replace(/^tag: */, '')
-      ),
-      tag => (
-        !!semver.valid(tag = tag.replace(new RegExp(`^${tagprefix}`), '')) &&
-        (unstable ? true : !semver.parse(tag)!.prerelease.length)
-      )
-    )
+    return select(sift(select(split(tags, '\n'), null, trim)), tag => {
+      return unstable
+        ? true
+        : !semver.parse(tag.replace(tagprefix, ''))!.prerelease.length
+    })
   }
 }
 

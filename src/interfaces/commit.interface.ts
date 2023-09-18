@@ -1,19 +1,17 @@
 /**
- * @file Interfaces - Commit
- * @module grease/interfaces/Commit
+ * @file Interfaces - ICommit
+ * @module grease/interfaces/ICommit
  */
 
-import type { Author, BreakingChange, Trailer } from '#src/types'
-import type { JsonObject, Nullable } from '@flex-development/tutils'
+import type { Author, BreakingChange, Reference, Trailer } from '#src/types'
+import type { Nullable } from '@flex-development/tutils'
 
 /**
  * A parsed commit.
  *
  * @see https://conventionalcommits.org
- *
- * @extends {JsonObject}
  */
-interface Commit extends JsonObject {
+interface ICommit {
   /**
    * Commit author details.
    *
@@ -24,7 +22,7 @@ interface Commit extends JsonObject {
   /**
    * Commit body text.
    */
-  body: Nullable<string>
+  body: string
 
   /**
    * Boolean indicating if commit contains breaking changes.
@@ -36,7 +34,7 @@ interface Commit extends JsonObject {
    *
    * @see {@linkcode BreakingChange}
    */
-  breaking_changes: BreakingChange[]
+  breaks: BreakingChange[]
 
   /**
    * Commit date in strict ISO 8601 format (`%cI`).
@@ -66,6 +64,13 @@ interface Commit extends JsonObject {
    * reference.
    */
   pr: Nullable<number>
+
+  /**
+   * Issue and/or pull request references.
+   *
+   * @see {@linkcode Reference}
+   */
+  references: Reference[]
 
   /**
    * Commit scope.
@@ -100,9 +105,9 @@ interface Commit extends JsonObject {
   type: string
 
   /**
-   * Tagged commit version.
+   * Release tag.
    */
   version: Nullable<string>
 }
 
-export type { Commit as default }
+export type { ICommit as default }

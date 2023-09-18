@@ -3,6 +3,7 @@
  * @module grease/decorators
  */
 
+export { default as IsConstructor } from './is-constructor.decorator'
 export { default as IsDirectory } from './is-directory.decorator'
 export { default as IsManifestId } from './is-manifest-id.decorator'
 export { default as IsNilable } from './is-nilable.decorator'

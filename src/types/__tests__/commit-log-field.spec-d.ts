@@ -26,6 +26,10 @@ describe('unit-d:types/CommitLogField', () => {
     expectTypeOf<TestSubject>().extract<'hash'>().not.toBeNever()
   })
 
+  it('should extract "header"', () => {
+    expectTypeOf<TestSubject>().extract<'header'>().not.toBeNever()
+  })
+
   it('should extract "sha"', () => {
     expectTypeOf<TestSubject>().extract<'sha'>().not.toBeNever()
   })

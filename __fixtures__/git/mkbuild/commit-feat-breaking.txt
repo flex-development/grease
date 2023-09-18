@@ -1,0 +1,26 @@
+-author.email-
+unicornware@flexdevelopment.llc
+-author.name-
+Lexus Drumgold
+-body-
+- https://esbuild.github.io/api/#watch
+- replaced `esbuilder` with `createContext` to support watch mode (and in the future, serve + live reload)
+- started adding cli flags
+- overhauled interfaces
+
+Signed-off-by: Lexus Drumgold <unicornware@flexdevelopment.llc>
+
+-date-
+2023-03-31T02:50:34-04:00
+-hash-
+f1decde
+-header-
+feat!: watch mode
+-sha-
+f1decde8597173569c69f8df8b013559231ff18b
+-tags-
+
+-trailers-
+Signed-off-by: Lexus Drumgold <unicornware@flexdevelopment.llc>
+
+--$--

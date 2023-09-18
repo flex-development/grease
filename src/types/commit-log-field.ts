@@ -10,6 +10,7 @@ type CommitLogField =
   | 'body'
   | 'date'
   | 'hash'
+  | 'header'
   | 'sha'
   | 'tags'
   | 'trailers'

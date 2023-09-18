@@ -25,6 +25,8 @@ describe('integration:options/BumpOptions', () => {
       // Act
       const errors = await validate(subject, {
         skipMissingProperties: false,
+        skipNullProperties: false,
+        skipUndefinedProperties: false,
         stopAtFirstError: false,
         validationError: { target: false, value: true }
       })
