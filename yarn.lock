@@ -1292,7 +1292,7 @@ __metadata:
     "@flex-development/pkg-types": "npm:3.0.0"
     "@flex-development/tsconfig-utils": "npm:2.0.2"
     "@flex-development/tutils": "npm:6.0.0-alpha.25"
-    "@nestjs/common": "npm:10.2.5"
+    "@nestjs/common": "npm:10.2.6"
     "@nestjs/core": "npm:10.2.6"
     "@nestjs/testing": "npm:10.2.6"
     "@types/chai": "npm:4.3.6"
@@ -1763,9 +1763,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/common@npm:10.2.5":
-  version: 10.2.5
-  resolution: "@nestjs/common@npm:10.2.5"
+"@nestjs/common@npm:10.2.6":
+  version: 10.2.6
+  resolution: "@nestjs/common@npm:10.2.6"
   dependencies:
     iterare: "npm:1.2.1"
     tslib: "npm:2.6.2"
@@ -1780,7 +1780,7 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 18c0b82d4f9b813c1bfabc8bb8b9038ac3cca370157906ac2d5c3007237117f467a17a508d11f65b9a25fdf74a3622ad62edc520f7c904fc067e12b1769cc20f
+  checksum: 38de96d759f6696c237158606cf9621b58b6a0e3d7576bd0782a4e6c0d4b0d32cdb6a80e51b29fb79d6de4e5674f73e88a7f9fa2148f43d0368b4033e0f9449b
   languageName: node
   linkType: hard
 
