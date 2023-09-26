@@ -9,6 +9,7 @@ dedupe
 dessant
 dohm
 dprint
+envinfo
 fbca
 ggshield
 gpgsign

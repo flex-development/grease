@@ -29,6 +29,11 @@ interface InfoCommandOpts extends Omit<GlobalOptions, 'tagprefix'> {
   markdown: boolean
 
   /**
+   * Package manager name.
+   */
+  pm?: 'npm' | 'pnpm' | 'Yarn'
+
+  /**
    * Enable YAML formatting.
    *
    * @default false

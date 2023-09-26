@@ -12,7 +12,16 @@ import {
   Option
 } from '@flex-development/nest-commander'
 import type * as commander from '@flex-development/nest-commander/commander'
-import { keys, type EmptyArray } from '@flex-development/tutils'
+import {
+  alphabetize,
+  cast,
+  identity,
+  ifelse,
+  keys,
+  pick,
+  sift,
+  type EmptyArray
+} from '@flex-development/tutils'
 import envinfo from 'envinfo'
 import type Opts from './info.command.opts'
 
@@ -84,6 +93,25 @@ class InfoCommand extends CommandRunner {
   }
 
   /**
+   * Parse the `--pm` flag.
+   *
+   * @see {@linkcode Opts.pm}
+   *
+   * @protected
+   *
+   * @param {string} val - Value to parse
+   * @return {'npm' | 'pnpm' | 'Yarn'} Parsed option value
+   */
+  @Option({
+    choices: ['npm', 'pnpm', 'yarn'],
+    description: 'package manager name',
+    flags: '-p, --pm <package-manager>'
+  })
+  protected parsePackageManager(val: string): 'npm' | 'pnpm' | 'Yarn' {
+    return cast(ifelse(val === 'yarn', 'Yarn', val))
+  }
+
+  /**
    * Parse the `--yaml` flag.
    *
    * @see {@linkcode Opts.yaml}
@@ -118,10 +146,13 @@ class InfoCommand extends CommandRunner {
    */
   public async run(args: EmptyArray, opts: Opts): Promise<void> {
     return void this.grease.logger.sync(opts).log(await envinfo.run({
-      Binaries: ['Node', 'Yarn', 'npm'],
-      System: ['CPU', 'OS', 'Shell'],
+      Binaries: sift(['Node', opts.pm]),
+      System: ['OS', 'Shell'],
       Utilities: ['git'],
-      npmPackages: keys(pkg.dependencies)
+      npmPackages: alphabetize([
+        ...keys(pkg.dependencies),
+        ...keys(pick(pkg.devDependencies, ['typescript']))
+      ], identity)
     }, {
       console: false,
       duplicates: true,

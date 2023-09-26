@@ -7,9 +7,11 @@ import GreaseModule from '#src/grease.module'
 import type { Spy } from '#tests/interfaces'
 import { CliUtilityService } from '@flex-development/nest-commander'
 import { CommandTestFactory } from '@flex-development/nest-commander/testing'
+import type { Get } from '@flex-development/tutils'
 import type { TestingModule } from '@nestjs/testing'
 import envinfo from 'envinfo'
 import TestSubject from '../info.command'
+import type InfoCommandOpts from '../info.command.opts'
 
 describe('functional:cli/commands/InfoCommand', () => {
   let args: [string]
@@ -36,6 +38,7 @@ describe('functional:cli/commands/InfoCommand', () => {
     await CommandTestFactory.run(command, args)
 
     // Expect
+    expect(run.mock.lastCall?.[0]?.Binaries).to.eql(['Node'])
     expect(run.mock.lastCall?.[1]?.json).to.be.true
     expect(run.mock.lastCall?.[1]?.markdown).to.be.false
   })
@@ -73,6 +76,32 @@ describe('functional:cli/commands/InfoCommand', () => {
 
       // Expect
       expect(run.mock.lastCall?.[1]?.markdown).to.be.true
+    })
+  })
+
+  describe('--pm, -p <package-manager>', () => {
+    let arg: Lowercase<Get<InfoCommandOpts, 'pm', never>>
+    let pm: Get<InfoCommandOpts, 'pm', never>
+
+    beforeAll(() => {
+      arg = 'yarn'
+      pm = 'Yarn'
+    })
+
+    it('should parse flag', async () => {
+      // Act
+      await CommandTestFactory.run(command, [...args, `--pm=${arg}`])
+
+      // Expect
+      expect(run.mock.lastCall?.[0]?.Binaries?.[1]).to.equal(pm)
+    })
+
+    it('should parse short flag', async () => {
+      // Act
+      await CommandTestFactory.run(command, [...args, '-p', arg])
+
+      // Expect
+      expect(run.mock.lastCall?.[0]?.Binaries?.[1]).to.equal(pm)
     })
   })
 
