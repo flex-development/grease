@@ -3,4 +3,4 @@
  * @module grease/interfaces
  */
 
-export type { default as ICommit } from './commit.interface'
+export type { default as IEvent } from './event.interface'

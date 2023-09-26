@@ -33,7 +33,7 @@
       "#fixtures/*": ["__fixtures__/*"],
       "#pkg": ["package.json"],
       "#src": ["src/index"],
-      "#src/*": ["src/*"],
+      "#src/*": ["src/*", "src/subdomains/*"],
       "#tests/*": ["__tests__/*"]
     },
     "preserveConstEnums": true,

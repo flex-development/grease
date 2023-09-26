@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`integration:git/options/GitTagOptions > validation > should fail validation if schema is invalid 1`] = `
+[
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isBoolean": "unstable must be a boolean value",
+    },
+    "property": "unstable",
+    "value": 1,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isString": "tagprefix must be a string",
+    },
+    "property": "tagprefix",
+    "value": /grease@/,
+  },
+]
+`;

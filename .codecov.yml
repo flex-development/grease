@@ -24,6 +24,14 @@ component_management:
       - type: project
         target: 100%
   individual_components:
+    - component_id: bump
+      name: bump
+      paths:
+        - src/subdomains/bump/**/*.ts
+    - component_id: changelog
+      name: changelog
+      paths:
+        - src/subdomains/changelog/**/*.ts
     - component_id: commands
       name: commands
       paths:
@@ -32,6 +40,10 @@ component_management:
       name: decorators
       paths:
         - src/decorators/*.ts
+    - component_id: git
+      name: git
+      paths:
+        - src/subdomains/git/**/*.ts
     - component_id: models
       name: models
       paths:
@@ -118,6 +130,8 @@ ignore:
   - '**/index.ts'
   - '**/interfaces/'
   - '**/types/'
+  - src/cli/commands/*.opts.ts
+  - src/subdomains/**/*.module.ts
 
 profiling:
   critical_files_paths: []

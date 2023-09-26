@@ -7,7 +7,6 @@ import type { ValidatorOptions } from '#src/types'
 import AggregateError from '@flex-development/aggregate-error-ponyfill'
 import {
   defaults,
-  fallback,
   join,
   select,
   template,
@@ -33,16 +32,16 @@ class ValidationService {
    *
    * @template T - Instance object type
    *
-   * @param {T} instance - Instance object to validate
+   * @param {T} obj - Instance object to validate
    * @param {ValidatorOptions?} [opts] - Validation options
    * @return {Promise<T>} Validated instance object
    * @throws {AggregateError<ValidationError, T>}
    */
   public async validate<T extends ObjectCurly>(
-    instance: T,
+    obj: T,
     opts: ValidatorOptions = {}
   ): Promise<T> {
-    const { debug, target, value } = defaults(fallback(opts, {}), {
+    const { debug, target, value } = defaults(opts, {
       debug: false,
       target: false,
       value: true
@@ -53,7 +52,7 @@ class ValidationService {
      *
      * @const {ValidationError[]} errors
      */
-    const errors: ValidationError[] = await validate(instance, {
+    const errors: ValidationError[] = await validate(obj, {
       dismissDefaultMessages: false,
       enableDebugMessages: debug,
       forbidNonWhitelisted: false,
@@ -74,14 +73,14 @@ class ValidationService {
        * @const {string} msg
        */
       const msg: string = template('{model} validation failure: [{props}]', {
-        model: instance.constructor.name,
+        model: obj.constructor.name,
         props: join(select(errors, null, e => e.property), ',')
       })
 
-      throw new AggregateError(errors, msg, { cause: instance })
+      throw new AggregateError(errors, msg, { cause: obj })
     }
 
-    return instance
+    return obj
   }
 }
 

@@ -4,3 +4,4 @@
  */
 
 export { default as BumpCommand } from './bump.command'
+export { default as GreaseCommand } from './grease.command'

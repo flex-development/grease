@@ -4,6 +4,7 @@ bdougie
 cefc
 codecov
 commitlintrc
+cqrs
 dedupe
 dessant
 dohm

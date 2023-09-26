@@ -18,15 +18,19 @@ const config: Config = defineBuildConfig({
   charset: 'utf8',
   entries: [
     { dts: 'only', ignore: ['cli/**'] },
-    { dts: false, pattern: ['enums/*'] },
+    { dts: false, pattern: ['**/enums/*'] },
     {
       dts: false,
       pattern: [
+        '**/decorators/*',
+        '**/events/*',
+        '**/models/*',
+        '**/operations/*',
+        '**/options/*',
+        '**/providers/*',
+        '**/queries/*',
         '*.ts',
-        'decorators/**',
-        'models/**',
-        'options/**',
-        'providers/**'
+        'subdomains/**/*.ts'
       ],
       sourcemap: true
     },

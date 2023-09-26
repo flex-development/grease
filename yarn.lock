@@ -1140,6 +1140,7 @@ __metadata:
     "@flex-development/tutils": "npm:6.0.0-alpha.25"
     "@nestjs/common": "npm:10.2.6"
     "@nestjs/core": "npm:10.2.6"
+    "@nestjs/cqrs": "npm:10.2.5"
     "@nestjs/testing": "npm:10.2.6"
     "@types/chai": "npm:4.3.6"
     "@types/chai-string": "npm:1.4.3"
@@ -1323,6 +1324,22 @@ __metadata:
     "@nestjs/core": ">=10.0.0"
     "@nestjs/testing": ">=10.0.0"
   checksum: deac8347736a74b4b96e65d215ecabf9b2aa206e677d284d0a3990884dd061be2d8442e3314fec01062c1b399908c7889ba64998139ca9dea0f373feb96e732d
+  languageName: node
+  linkType: hard
+
+"@flex-development/nest-commander@patch:@flex-development/nest-commander@npm%3A1.0.0-alpha.1#patches/@flex-development/nest-commander+1.0.0-alpha.1.dev.patch::locator=%40flex-development%2Fgrease%40workspace%3A.":
+  version: 1.0.0-alpha.1
+  resolution: "@flex-development/nest-commander@patch:@flex-development/nest-commander@npm%3A1.0.0-alpha.1%3A%3A__archiveUrl=https%253A%252F%252Fnpm.pkg.github.com%252Fdownload%252F%2540flex-development%252Fnest-commander%252F1.0.0-alpha.1%252Fe04080fd0e56886103a9415951c84b2772bfe7e2#patches/@flex-development/nest-commander+1.0.0-alpha.1.dev.patch::version=1.0.0-alpha.1&hash=c61d58&locator=%40flex-development%2Fgrease%40workspace%3A."
+  dependencies:
+    "@flex-development/pathe": "npm:2.0.0"
+    "@flex-development/tutils": "npm:6.0.0-alpha.21"
+    "@golevelup/nestjs-discovery": "npm:4.0.0"
+    commander: "npm:11.0.0"
+  peerDependencies:
+    "@nestjs/common": ">=10.0.0"
+    "@nestjs/core": ">=10.0.0"
+    "@nestjs/testing": ">=10.0.0"
+  checksum: 83a39a5aeabead51e42fda3c235af38cf8ea7988a6ab03965bb1fe987381e3da4146b7410af4fbd0d0b54a5e5911e5351e4d8a493ff20a8fed621051d57bf9a0
   languageName: node
   linkType: hard
 
@@ -1655,6 +1672,20 @@ __metadata:
     "@nestjs/websockets":
       optional: true
   checksum: fc88bf4dcac9cd4f7bc02b4cae082e9224790fab87e9a78fdf458f7394322206114fc5498115058bce7d37e4e26192c1494deb15a1b4db01f8576c1923348794
+  languageName: node
+  linkType: hard
+
+"@nestjs/cqrs@npm:10.2.5":
+  version: 10.2.5
+  resolution: "@nestjs/cqrs@npm:10.2.5"
+  dependencies:
+    uuid: "npm:9.0.0"
+  peerDependencies:
+    "@nestjs/common": ^9.0.0 || ^10.0.0
+    "@nestjs/core": ^9.0.0 || ^10.0.0
+    reflect-metadata: 0.1.13
+    rxjs: ^7.2.0
+  checksum: 9ec430e4104820020d8aea7030264cfcc4ba31dc4052f072347b037f814d2e7537d4d84475a0d110d7b107f50635ffb5285ec08cba0657c9e468f5274ad7dd9a
   languageName: node
   linkType: hard
 
@@ -8163,6 +8194,15 @@ __metadata:
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
   checksum: 474acf1146cb2701fe3b074892217553dfcf9a031280919ba1b8d651a068c9b15d863b7303cb15bd00a862b498e6cf4ad7b4a08fb134edd5a6f7641681cb54a2
+  languageName: node
+  linkType: hard
+
+"uuid@npm:9.0.0":
+  version: 9.0.0
+  resolution: "uuid@npm:9.0.0"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 23857699a616d1b48224bc2b8440eae6e57d25463c3a0200e514ba8279dfa3bde7e92ea056122237839cfa32045e57d8f8f4a30e581d720fd72935572853ae2e
   languageName: node
   linkType: hard
 

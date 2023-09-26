@@ -44,7 +44,7 @@
   "scripts": {
     "build": "mkbuild",
     "bump": "yarn grease bump",
-    "bump:recommend": "yarn bump -rt $(jq .tagPrefix package.json -r)",
+    "bump:recommend": "yarn bump --recommend",
     "changelog": "yarn grease changelog",
     "check:ci": "yarn dedupe --check && yarn check:format && yarn check:lint && yarn check:spelling && yarn typecheck && yarn test:cov && yarn pack && yarn check:types:build && attw package.tgz && yarn clean:pack && yarn pkg-size",
     "check:format": "dprint check --incremental=false",
@@ -66,7 +66,7 @@
     "fix:dedupe": "yarn dedupe --strategy=highest",
     "fix:format": "dprint fmt",
     "fix:lint": "yarn check:lint --cache --fix",
-    "grease": "node --loader=./loader.mjs --enable-source-maps ./src/cli",
+    "grease": "node --loader=./loader.mjs --enable-source-maps ./src/cli --tagprefix $(jq .tagPrefix package.json -r)",
     "pkg-size": "pkg-size --sizes size --sort-by name",
     "postinstall": "[ -f ./node_modules/.bin/husky ] && chmod +x .husky/* && husky install || exit 0",
     "postpack": "toggle-scripts +postinstall",
@@ -84,11 +84,13 @@
   },
   "dependencies": {
     "@flex-development/aggregate-error-ponyfill": "3.1.1",
+    "@flex-development/commitlint-config": "1.0.1",
     "@flex-development/mlly": "1.0.0-alpha.18",
     "@flex-development/pathe": "2.0.0",
     "@flex-development/pkg-types": "3.0.0",
     "@flex-development/tutils": "6.0.0-alpha.25",
     "@nestjs/common": "10.2.6",
+    "@nestjs/cqrs": "10.2.5",
     "@types/dateformat": "5.0.0",
     "@types/semver": "7.5.0",
     "class-transformer": "0.5.1",
@@ -166,6 +168,7 @@
     "yaml-eslint-parser": "1.2.2"
   },
   "resolutions": {
+    "@flex-development/nest-commander@npm:1.0.0-alpha.1": "patch:@flex-development/nest-commander@npm%3A1.0.0-alpha.1#patches/@flex-development/nest-commander+1.0.0-alpha.1.dev.patch",
     "chai": "5.0.0-alpha.1"
   },
   "engines": {

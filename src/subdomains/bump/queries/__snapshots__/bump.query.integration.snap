@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`integration:bump/queries/BumpQuery > validation > should fail validation if schema is invalid 1`] = `
+[
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isString": "to must be a string",
+    },
+    "property": "to",
+    "value": /\\^HEAD/,
+  },
+]
+`;

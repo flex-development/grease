@@ -3,19 +3,11 @@
  * @module grease/cli/ProgramModule
  */
 
-import pkg from '#pkg' assert { type: 'json' }
-import {
-  BumpService,
-  GitService,
-  PackageService,
-  ValidationService
-} from '#src/providers'
-import { Program } from '@flex-development/nest-commander'
+import GreaseModule from '#src/grease.module'
+import { LoggerService } from '#src/providers'
 import type { CommanderError } from '@flex-development/nest-commander/commander'
-import { lowercase } from '@flex-development/tutils'
 import { Module } from '@nestjs/common'
-import consola from 'consola'
-import { BumpCommand } from './commands'
+import { BumpCommand, GreaseCommand } from './commands'
 
 /**
  * CLI application module.
@@ -23,24 +15,19 @@ import { BumpCommand } from './commands'
  * @class
  */
 @Module({
-  providers: [
-    BumpCommand,
-    BumpService,
-    GitService,
-    PackageService,
-    ValidationService
-  ]
+  imports: [GreaseModule],
+  providers: [BumpCommand, GreaseCommand]
 })
 class ProgramModule {
   /**
-   * Create a new CLI application module.
+   * Logger instance.
    *
-   * @param {Program} program - CLI program instance
+   * @public
+   * @static
+   * @readonly
+   * @member {LoggerService} logger
    */
-  constructor(protected readonly program: Program) {
-    program.name(pkg.name.replace(/.*\//, ''))
-    program.description(lowercase(pkg.description))
-  }
+  public static readonly logger: LoggerService = new LoggerService()
 
   /**
    * CLI command error handler.
@@ -52,7 +39,7 @@ class ProgramModule {
    * @return {void} Nothing when complete
    */
   public static error(e: Error): void {
-    consola.error(e)
+    this.logger.error(e)
     return void (process.exitCode = 1)
   }
 
@@ -66,7 +53,7 @@ class ProgramModule {
    * @return {void} Nothing when complete
    */
   public static exit(e: CommanderError): void {
-    e.exitCode && ProgramModule.error(e)
+    e.exitCode && this.error(e)
     return void (process.exitCode = e.exitCode)
   }
 }

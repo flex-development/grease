@@ -1,0 +1,7 @@
+diff --git a/dist/providers/command-runner.service.mjs b/dist/providers/command-runner.service.mjs
+index v1.0.0-alpha.1..v1.0.0-alpha.1 100644
+--- a/dist/providers/command-runner.service.mjs
++++ b/dist/providers/command-runner.service.mjs
+@@ -81,1 +81,1 @@
+-      return metadata.instance.run.bind(metadata.instance), metadata.instance.run(this.args, this.opts());
++      return metadata.instance.run.bind(metadata.instance), metadata.instance.run(this.args, this.optsWithGlobals());

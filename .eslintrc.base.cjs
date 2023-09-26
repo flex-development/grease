@@ -135,13 +135,16 @@ const config = {
               memberTypes: [
                 'static-field',
                 'instance-field',
-                'constructor',
                 'signature',
+                'call-signature',
+                'public-constructor',
+                'protected-constructor',
+                'private-constructor',
+                'static-initialization',
                 'static-get',
                 'static-set',
                 'static-method',
-                'instance-get',
-                'instance-set',
+                ['instance-get', 'instance-set'],
                 'instance-method'
               ],
               order: 'alphabetically'
@@ -723,7 +726,7 @@ const config = {
         'unicorn/no-useless-length-check': 2,
         'unicorn/no-useless-promise-resolve-reject': 2,
         'unicorn/no-useless-spread': 2,
-        'unicorn/no-useless-undefined': 2,
+        'unicorn/no-useless-undefined': 0,
         'unicorn/no-zero-fractions': 2,
         'unicorn/number-literal-case': 0,
         // https://github.com/sindresorhus/eslint-plugin-unicorn/issues/2003

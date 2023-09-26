@@ -6,14 +6,13 @@
 import { ReleaseType } from '#src/enums'
 import type { ReleaseVersion } from '#src/types'
 import type { SemanticVersion } from '@flex-development/pkg-types'
-import {
-  cast,
-  type Optional
-} from '@flex-development/tutils'
+import { cast, type Optional } from '@flex-development/tutils'
 import semver, { SemVer } from 'semver'
 
 /**
  * Semantic version data model.
+ *
+ * @see {@linkcode SemVer}
  *
  * @class
  * @extends {SemVer}
@@ -22,7 +21,7 @@ class Version extends SemVer {
   /**
    * Semantic version string.
    *
-   * @see https://semver.org
+   * @see {@linkcode SemanticVersion}
    *
    * @public
    * @override
@@ -32,6 +31,8 @@ class Version extends SemVer {
 
   /**
    * Create a new semantic version.
+   *
+   * @see {@linkcode SemVer}
    *
    * @param {SemVer | string} version - Semantic version instance or string
    */
@@ -63,6 +64,8 @@ class Version extends SemVer {
 
   /**
    * Bump `this` version.
+   *
+   * @see {@linkcode ReleaseVersion}
    *
    * @public
    * @override
@@ -111,10 +114,12 @@ class Version extends SemVer {
   /**
    * Get a string representation of `this` semantic version.
    *
+   * @see {@linkcode SemanticVersion}
+   *
    * @public
    * @override
    *
-   * @return {string} Stringified semantic version
+   * @return {SemanticVersion} Stringified semantic version
    */
   public override toString(): SemanticVersion {
     return this.version

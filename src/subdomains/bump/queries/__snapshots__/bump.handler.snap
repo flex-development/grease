@@ -1,0 +1,10 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`unit:bump/queries/BumpQueryHandler > #execute > should return recommended version bump 1`] = `
+RecommendedBump {
+  "breaks": 1,
+  "bump": "major",
+  "commits": 26,
+  "features": 7,
+}
+`;

@@ -1,0 +1,183 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`unit:git/models/Commit > #body > should return empty commit body 1`] = `""`;
+
+exports[`unit:git/models/Commit > #body > should return non-empty commit body 1`] = `"P010-28"`;
+
+exports[`unit:git/models/Commit > #breaks > should return empty breaking changes array 1`] = `[]`;
+
+exports[`unit:git/models/Commit > #breaks > should return non-empty breaking changes array 1`] = `
+[
+  {
+    "commit": {
+      "author": {
+        "email": "unicornware@flexdevelopment.llc",
+        "name": "Lexus Drumgold",
+      },
+      "body": "",
+      "breaking": true,
+      "breaks": [
+        {
+          "commit": [Circular],
+          "mentions": [],
+          "pr": null,
+          "scope": null,
+          "subject": "init project rewrite",
+          "type": "refactor",
+        },
+      ],
+      "date": "2023-09-04T16:26:30-04:00",
+      "hash": "455c149",
+      "header": "refactor!: init project rewrite",
+      "mentions": [],
+      "pr": null,
+      "references": [],
+      "scope": null,
+      "sha": "455c1497e3ed5019ab0ebd234509703dadba206a",
+      "subject": "init project rewrite",
+      "tags": [],
+      "trailers": [
+        {
+          "token": "Signed-off-by",
+          "value": "Lexus Drumgold <unicornware@flexdevelopment.llc>",
+        },
+      ],
+      "type": "refactor",
+      "version": null,
+    },
+    "mentions": [],
+    "pr": null,
+    "scope": null,
+    "subject": "init project rewrite",
+    "type": "refactor",
+  },
+]
+`;
+
+exports[`unit:git/models/Commit > #date > should return commit date 1`] = `"2021-09-18T23:29:18-04:00"`;
+
+exports[`unit:git/models/Commit > #hash > should return abbreviated #sha 1`] = `"e003836"`;
+
+exports[`unit:git/models/Commit > #header > should return commit header with #grammar.header match 1`] = `"feat(cli): \`BumpCommand\`"`;
+
+exports[`unit:git/models/Commit > #header > should return commit header without #grammar.header match 1`] = `"initial commit"`;
+
+exports[`unit:git/models/Commit > #mentions > should return empty mentions array 1`] = `[]`;
+
+exports[`unit:git/models/Commit > #mentions > should return non-empty mentions array 1`] = `
+[
+  "dependabot",
+]
+`;
+
+exports[`unit:git/models/Commit > #pr > should return null 1`] = `null`;
+
+exports[`unit:git/models/Commit > #pr > should return pull request number 1`] = `4`;
+
+exports[`unit:git/models/Commit > #references > should return empty reference array 1`] = `[]`;
+
+exports[`unit:git/models/Commit > #references > should return non-empty reference array 1`] = `
+[
+  {
+    "action": null,
+    "number": 15358,
+    "owner": "prettier",
+    "ref": "#15358",
+    "repo": "prettier",
+  },
+  {
+    "action": null,
+    "number": 5715,
+    "owner": "prettier",
+    "ref": "#5715",
+    "repo": "prettier",
+  },
+  {
+    "action": null,
+    "number": 11881,
+    "owner": "prettier",
+    "ref": "#11881",
+    "repo": "prettier",
+  },
+  {
+    "action": null,
+    "number": 736,
+    "owner": "dprint",
+    "ref": "#736",
+    "repo": "dprint",
+  },
+  {
+    "action": null,
+    "number": 432,
+    "owner": "dprint",
+    "ref": "#432",
+    "repo": "dprint-plugin-typescript",
+  },
+]
+`;
+
+exports[`unit:git/models/Commit > #scope > should return commit scope 1`] = `"models"`;
+
+exports[`unit:git/models/Commit > #scope > should return null 1`] = `null`;
+
+exports[`unit:git/models/Commit > #sha > should return commit sha 1`] = `"e00383628638335e729d1cad2971b44ba03d3074"`;
+
+exports[`unit:git/models/Commit > #subject > should return commit subject 1`] = `"\`Version\`"`;
+
+exports[`unit:git/models/Commit > #tags > should return empty tags array 1`] = `[]`;
+
+exports[`unit:git/models/Commit > #tags > should return non-empty tags array 1`] = `
+[
+  "grease@2.0.0",
+]
+`;
+
+exports[`unit:git/models/Commit > #toJSON > should return json-serializable commit 1`] = `
+{
+  "author": {
+    "email": "unicornware@flexdevelopment.llc",
+    "name": "Lexus Drumgold",
+  },
+  "body": "",
+  "breaking": false,
+  "breaks": [],
+  "date": "2021-09-18T23:29:18-04:00",
+  "hash": "e003836",
+  "header": "release: @flex-development/grease@2.0.0",
+  "mentions": [],
+  "pr": null,
+  "references": [],
+  "scope": null,
+  "sha": "e00383628638335e729d1cad2971b44ba03d3074",
+  "subject": "@flex-development/grease@2.0.0",
+  "tags": [
+    "grease@2.0.0",
+  ],
+  "trailers": [],
+  "type": "release",
+  "version": "grease@2.0.0",
+}
+`;
+
+exports[`unit:git/models/Commit > #trailers > should return empty trailers array 1`] = `[]`;
+
+exports[`unit:git/models/Commit > #trailers > should return non-empty trailers array 1`] = `
+[
+  {
+    "token": "Signed-off-by",
+    "value": "dependabot[bot] <support@github.com>",
+  },
+  {
+    "token": "Co-authored-by",
+    "value": "dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
+  },
+]
+`;
+
+exports[`unit:git/models/Commit > #type > should return empty commit type 1`] = `""`;
+
+exports[`unit:git/models/Commit > #type > should return non-empty commit type 1`] = `"build"`;
+
+exports[`unit:git/models/Commit > #version > should return null 1`] = `null`;
+
+exports[`unit:git/models/Commit > #version > should return release tag 1`] = `"grease@2.0.0"`;

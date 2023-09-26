@@ -302,7 +302,7 @@ jobs:
         name: Checkout ${{ env.REF_NAME }}
         uses: actions/checkout@v4.1.0
         with:
-          persist-credentials: false
+          fetch-depth: 0
           ref: ${{ env.REF }}
       - id: test-files-check
         name: Check for test files

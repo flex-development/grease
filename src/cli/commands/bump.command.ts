@@ -4,9 +4,8 @@
  */
 
 import { ReleaseType } from '#src/enums'
-import type { BumpOptions } from '#src/options'
-import { BumpService } from '#src/providers'
-import type { RecommendedBump, ReleaseVersion } from '#src/types'
+import GreaseService from '#src/grease.service'
+import type { ReleaseVersion } from '#src/types'
 import {
   CliUtilityService,
   Command,
@@ -15,43 +14,14 @@ import {
 } from '@flex-development/nest-commander'
 import type * as commander from '@flex-development/nest-commander/commander'
 import {
-  DOT,
   cast,
-  isFalsy,
+  define,
+  ifelse,
   isNumeric,
   select,
-  trim,
-  type Omit
+  trim
 } from '@flex-development/tutils'
-import consola, { LogLevels } from 'consola'
-
-/**
- * Parsed command options.
- *
- * @extends {Omit<BumpOptions,'release'|'silent'>}
- */
-interface Opts extends Omit<BumpOptions, 'release' | 'silent'> {
-  /**
-   * Enable colorized output.
-   *
-   * @default true
-   */
-  colors: boolean
-
-  /**
-   * Get a version bump recommendation.
-   *
-   * @default false
-   */
-  recommend: boolean
-
-  /**
-   * Tag prefix to consider when recommending a version bump.
-   *
-   * @default ''
-   */
-  tagprefix: string
-}
+import type Opts from './bump.command.opts'
 
 /**
  * Version bump command runner.
@@ -78,55 +48,14 @@ class BumpCommand extends CommandRunner {
   /**
    * Create a new `bump` command runner.
    *
-   * @param {BumpService} bumper - Version bump service
    * @param {CliUtilityService} util - Utilities service
+   * @param {GreaseService} grease - Grease runner service
    */
   constructor(
-    protected readonly bumper: BumpService,
-    protected readonly util: CliUtilityService
+    protected readonly util: CliUtilityService,
+    protected readonly grease: GreaseService
   ) {
     super()
-  }
-
-  /**
-   * Parse the `--colors` flag.
-   *
-   * @see {@linkcode Opts.colors}
-   *
-   * @protected
-   *
-   * @param {string} val - Value to parse
-   * @return {boolean} Parsed option value
-   */
-  @Option({
-    choices: ['0', '1', '2', '3', 'false', 'true'],
-    description: 'enable colorized output',
-    env: 'FORCE_COLOR',
-    fallback: { value: 1 },
-    flags: '-c, --colors [choice]',
-    preset: 'true'
-  })
-  protected parseColors(val: string): boolean {
-    return this.util.parseBoolean(val) || !isFalsy(this.util.parseInt(val))
-  }
-
-  /**
-   * Parse the `--manifest` flag.
-   *
-   * @see {@linkcode Opts.manifest}
-   *
-   * @protected
-   *
-   * @param {string} val - Value to parse
-   * @return {string} Parsed option value
-   */
-  @Option({
-    description: 'module id of package manifest or directory',
-    fallback: { value: DOT },
-    flags: '-m, --manifest <id>'
-  })
-  protected parseManifest(val: string): string {
-    return trim(val)
   }
 
   /**
@@ -188,25 +117,6 @@ class BumpCommand extends CommandRunner {
   }
 
   /**
-   * Parse the `--tagprefix` flag.
-   *
-   * @see {@linkcode Opts.tagprefix}
-   *
-   * @protected
-   *
-   * @param {string} val - Value to parse
-   * @return {string} Parsed option value
-   */
-  @Option({
-    description: 'tag prefix to consider when recommending a version bump',
-    fallback: { value: '' },
-    flags: '-t, --tagprefix <prefix>'
-  })
-  protected parseTagprefix(val: string): string {
-    return trim(val)
-  }
-
-  /**
    * Parse the `--write` flag.
    *
    * @see {@linkcode Opts.write}
@@ -218,7 +128,7 @@ class BumpCommand extends CommandRunner {
    */
   @Option({
     choices: CliUtilityService.BOOLEAN_CHOICES,
-    description: 'write version bump to package manifest',
+    description: 'write version bump to file',
     fallback: { value: true },
     flags: '-w, --write [choice]',
     preset: 'true'
@@ -230,7 +140,7 @@ class BumpCommand extends CommandRunner {
   /**
    * Run the version bump operation.
    *
-   * @see {@linkcode BumpOptions}
+   * @see {@linkcode Opts}
    * @see {@linkcode ReleaseVersion}
    *
    * @public
@@ -240,27 +150,9 @@ class BumpCommand extends CommandRunner {
    * @param {Opts} opts - Parsed command options
    * @return {Promise<void>} Nothing when complete
    */
-  public async run(
-    [release]: [ReleaseVersion],
-    { colors, recommend, tagprefix, ...opts }: Opts
-  ): Promise<void> {
-    if (!recommend) return void (await this.bumper.bump({ ...opts, release }))
-
-    /**
-     * Recommended version bump.
-     *
-     * @const {RecommendedBump} recommended
-     */
-    const recommended: RecommendedBump = await this.bumper.recommend({
-      tagprefix
-    })
-
-    consola.level = LogLevels.debug
-    consola.options.formatOptions.colors = colors
-    consola.log(recommended.bump)
-    consola[colors ? 'debug' : 'log']('commits:', recommended.commits)
-    consola[colors ? 'debug' : 'log']('breaks:', recommended.breaks)
-    consola[colors ? 'debug' : 'log']('features:', recommended.features)
+  public async run([release]: [ReleaseVersion], opts: Opts): Promise<void> {
+    define(opts, 'release', { value: release })
+    await this.grease[ifelse(opts.recommend, 'recommend', 'bump')](cast(opts))
     return void 0
   }
 

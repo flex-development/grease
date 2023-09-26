@@ -3,13 +3,17 @@
  * @module grease/cli/tests/functional/ProgramModule
  */
 
+import { LoggerService } from '#src/providers'
+import type { Spy } from '#tests/interfaces'
 import { CommanderError } from '@flex-development/nest-commander/commander'
-import consola from 'consola'
 import TestSubject from '../program.module'
 
 describe('functional:cli/ProgramModule', () => {
-  beforeAll(() => {
-    consola.mockTypes(() => vi.fn())
+  let error: Spy<LoggerService['error']>
+
+  beforeEach(() => {
+    error = vi.spyOn(LoggerService.prototype, 'error')
+    error = error.mockImplementation(vi.fn().mockName('LoggerService#error'))
   })
 
   describe('.error', () => {
@@ -21,9 +25,9 @@ describe('functional:cli/ProgramModule', () => {
       TestSubject.error(e)
 
       // Expect
+      expect(error).toHaveBeenCalledOnce()
+      expect(error).toHaveBeenCalledWith(e)
       expect(process).to.have.property('exitCode', 1)
-      expect(consola.error).toHaveBeenCalledOnce()
-      expect(consola.error).toHaveBeenCalledWith(e)
     })
   })
 
@@ -38,8 +42,8 @@ describe('functional:cli/ProgramModule', () => {
       TestSubject.exit(e)
 
       // Expect
+      expect(error).not.toHaveBeenCalled()
       expect(process).to.have.property('exitCode', e.exitCode)
-      expect(consola.error).not.toHaveBeenCalled()
     })
 
     it('should handle error with exit code greater than 0', () => {
@@ -52,9 +56,9 @@ describe('functional:cli/ProgramModule', () => {
       TestSubject.exit(e)
 
       // Expect
+      expect(error).toHaveBeenCalledOnce()
+      expect(error).toHaveBeenCalledWith(e)
       expect(process).to.have.property('exitCode', e.exitCode)
-      expect(consola.error).toHaveBeenCalledOnce()
-      expect(consola.error).toHaveBeenCalledWith(e)
     })
   })
 })

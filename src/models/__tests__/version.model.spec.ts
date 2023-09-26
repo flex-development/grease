@@ -3,8 +3,8 @@
  * @module grease/models/tests/unit/Version
  */
 
+import type { BumpOperationDTO } from '#src/bump'
 import { ReleaseType } from '#src/enums'
-import type { BumpOptionsDTO } from '#src/options'
 import type { ReleaseVersion } from '#src/types'
 import type { SemanticVersion } from '@flex-development/pkg-types'
 import { get, type Omit } from '@flex-development/tutils'
@@ -42,7 +42,7 @@ describe('unit:models/Version', () => {
       subject = new TestSubject(new SemVer('1.2.3'))
     })
 
-    it.each<[ReleaseType, Omit<BumpOptionsDTO, 'release'>, SemanticVersion]>([
+    it.each<[ReleaseType, Omit<BumpOperationDTO, 'release'>, SemanticVersion]>([
       [ReleaseType.MAJOR, {}, '2.0.0'],
       [ReleaseType.MINOR, {}, '1.3.0'],
       [ReleaseType.PATCH, {}, '1.2.4'],

@@ -10,7 +10,8 @@ import { ProgramFactory } from '@flex-development/nest-commander'
 import ProgramModule from './program.module'
 
 await (await ProgramFactory.create(ProgramModule, {
-  error: ProgramModule.error,
-  exit: ProgramModule.exit,
+  error: ProgramModule.error.bind(ProgramModule),
+  exit: ProgramModule.exit.bind(ProgramModule),
+  positional: false,
   version: pkg.version
 })).run()

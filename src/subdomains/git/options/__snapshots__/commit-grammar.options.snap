@@ -1,0 +1,84 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`unit:git/options/CommitGrammarOptions > constructor > RepositoryProvider.BITBUCKET > should set #actions 1`] = `
+[
+  "resolving",
+  "resolved",
+  "resolves",
+  "closing",
+  "resolve",
+  "closed",
+  "closes",
+  "fixing",
+  "close",
+  "fixed",
+  "fixes",
+  "fix",
+]
+`;
+
+exports[`unit:git/options/CommitGrammarOptions > constructor > RepositoryProvider.BITBUCKET > should set #issues 1`] = `
+[
+  "JRA-",
+  "JIRA-",
+  "#",
+]
+`;
+
+exports[`unit:git/options/CommitGrammarOptions > constructor > RepositoryProvider.BITBUCKET > should set #pr 1`] = `
+[
+  "#",
+]
+`;
+
+exports[`unit:git/options/CommitGrammarOptions > constructor > RepositoryProvider.GITHUB > should set #actions 1`] = `
+[
+  "resolved",
+  "resolves",
+  "resolve",
+  "closed",
+  "closes",
+  "close",
+  "fixed",
+  "fixes",
+  "fix",
+]
+`;
+
+exports[`unit:git/options/CommitGrammarOptions > constructor > RepositoryProvider.GITHUB > should set #issues 1`] = `
+[
+  "#",
+  "GH-",
+]
+`;
+
+exports[`unit:git/options/CommitGrammarOptions > constructor > RepositoryProvider.GITHUB > should set #pr 1`] = `
+[
+  "#",
+]
+`;
+
+exports[`unit:git/options/CommitGrammarOptions > constructor > RepositoryProvider.GITLAB > should set #actions 1`] = `
+[
+  "closing",
+  "closed",
+  "closes",
+  "fixing",
+  "close",
+  "fixed",
+  "fixes",
+  "fix",
+]
+`;
+
+exports[`unit:git/options/CommitGrammarOptions > constructor > RepositoryProvider.GITLAB > should set #issues 1`] = `
+[
+  "#",
+]
+`;
+
+exports[`unit:git/options/CommitGrammarOptions > constructor > RepositoryProvider.GITLAB > should set #pr 1`] = `
+[
+  "!",
+]
+`;

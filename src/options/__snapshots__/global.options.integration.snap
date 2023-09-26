@@ -1,0 +1,38 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`integration:options/GlobalOptions > validation > should fail validation if schema is invalid 1`] = `
+[
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isBoolean": "colors must be a boolean value",
+    },
+    "property": "colors",
+    "value": 3,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isBoolean": "debug must be a boolean value",
+    },
+    "property": "debug",
+    "value": 1,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isBoolean": "silent must be a boolean value",
+    },
+    "property": "silent",
+    "value": 0,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isString": "tagprefix must be a string",
+    },
+    "property": "tagprefix",
+    "value": null,
+  },
+]
+`;

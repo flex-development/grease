@@ -350,6 +350,11 @@
       "icon": "include"
     },
     {
+      "extensions": ["providers"],
+      "format": "svg",
+      "icon": "services"
+    },
+    {
       "extensions": ["setup"],
       "format": "svg",
       "icon": "config"

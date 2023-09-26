@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`unit:GreaseService > #bump > should return package manifest 1`] = `
+{
+  "name": "premajor",
+  "version": "3.0.0-rc.1",
+}
+`;
+
+exports[`unit:GreaseService > #recommend > should return recommended version bump 1`] = `
+RecommendedBump {
+  "breaks": 1,
+  "bump": "major",
+  "commits": 26,
+  "features": 7,
+}
+`;
