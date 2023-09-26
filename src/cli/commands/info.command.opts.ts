@@ -17,7 +17,7 @@ interface InfoCommandOpts extends Omit<GlobalOptions, 'tagprefix'> {
   /**
    * Enable json formatting.
    *
-   * @default false
+   * @default true
    */
   json: boolean
 
@@ -27,6 +27,13 @@ interface InfoCommandOpts extends Omit<GlobalOptions, 'tagprefix'> {
    * @default false
    */
   markdown: boolean
+
+  /**
+   * Enable YAML formatting.
+   *
+   * @default false
+   */
+  yaml: boolean
 }
 
 export type { InfoCommandOpts as default }

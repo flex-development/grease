@@ -31,6 +31,33 @@ describe('functional:cli/commands/InfoCommand', () => {
       .mockImplementationOnce(vi.fn().mockName('envinfo.run'))
   })
 
+  it('should run successfully with defaults', async () => {
+    // Act
+    await CommandTestFactory.run(command, args)
+
+    // Expect
+    expect(run.mock.lastCall?.[1]?.json).to.be.true
+    expect(run.mock.lastCall?.[1]?.markdown).to.be.false
+  })
+
+  describe('--json, -j', () => {
+    it('should parse flag', async () => {
+      // Act
+      await CommandTestFactory.run(command, [...args, '--json'])
+
+      // Expect
+      expect(run.mock.lastCall?.[1]?.json).to.be.true
+    })
+
+    it('should parse short flag', async () => {
+      // Act
+      await CommandTestFactory.run(command, [...args, '-j'])
+
+      // Expect
+      expect(run.mock.lastCall?.[1]?.json).to.be.true
+    })
+  })
+
   describe('--markdown, -m', () => {
     it('should parse flag', async () => {
       // Act
@@ -49,21 +76,23 @@ describe('functional:cli/commands/InfoCommand', () => {
     })
   })
 
-  describe('--json, -j', () => {
+  describe('--yaml, -y', () => {
     it('should parse flag', async () => {
       // Act
-      await CommandTestFactory.run(command, [...args, '--json'])
+      await CommandTestFactory.run(command, [...args, '--yaml'])
 
       // Expect
-      expect(run.mock.lastCall?.[1]?.json).to.be.true
+      expect(run.mock.lastCall?.[1]?.json).to.be.false
+      expect(run.mock.lastCall?.[1]?.markdown).to.be.false
     })
 
     it('should parse short flag', async () => {
       // Act
-      await CommandTestFactory.run(command, [...args, '-j'])
+      await CommandTestFactory.run(command, [...args, '-y'])
 
       // Expect
-      expect(run.mock.lastCall?.[1]?.json).to.be.true
+      expect(run.mock.lastCall?.[1]?.json).to.be.false
+      expect(run.mock.lastCall?.[1]?.markdown).to.be.false
     })
   })
 })

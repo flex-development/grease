@@ -52,9 +52,9 @@ class InfoCommand extends CommandRunner {
    * @return {boolean} Parsed option value
    */
   @Option({
-    conflicts: 'markdown',
+    conflicts: ['markdown', 'yaml'],
     description: 'enable json formatting',
-    fallback: { value: false },
+    fallback: { value: true },
     flags: '-j, --json',
     preset: 'true'
   })
@@ -73,13 +73,34 @@ class InfoCommand extends CommandRunner {
    * @return {boolean} Parsed option value
    */
   @Option({
-    conflicts: 'json',
+    conflicts: ['json', 'yaml'],
     description: 'enable markdown formatting',
     fallback: { value: false },
     flags: '-m, --markdown',
     preset: 'true'
   })
   protected parseMarkown(val: string): boolean {
+    return this.util.parseBoolean(val)
+  }
+
+  /**
+   * Parse the `--yaml` flag.
+   *
+   * @see {@linkcode Opts.yaml}
+   *
+   * @protected
+   *
+   * @param {string} val - Value to parse
+   * @return {boolean} Parsed option value
+   */
+  @Option({
+    conflicts: ['json', 'markdown'],
+    description: 'enable yaml formatting',
+    fallback: { value: false },
+    flags: '-y, --yaml',
+    preset: 'true'
+  })
+  protected parseYaml(val: string): boolean {
     return this.util.parseBoolean(val)
   }
 
@@ -104,8 +125,8 @@ class InfoCommand extends CommandRunner {
     }, {
       console: false,
       duplicates: true,
-      json: opts.json,
-      markdown: opts.markdown,
+      json: !opts.yaml && opts.json,
+      markdown: !opts.yaml && opts.markdown,
       showNotFound: true
     }))
   }
