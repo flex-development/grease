@@ -19,6 +19,7 @@ import {
   trim
 } from '@flex-development/tutils'
 import BumpCommand from './bump.command'
+import InfoCommand from './info.command'
 
 /**
  * Main command runner.
@@ -31,7 +32,7 @@ import BumpCommand from './bump.command'
   examples: [],
   name: pkg.name.replace(/.*\//, ''),
   root: true,
-  subcommands: [BumpCommand]
+  subcommands: [BumpCommand, InfoCommand]
 })
 class GreaseCommand extends CommandRunner {
   /**

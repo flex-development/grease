@@ -14,7 +14,7 @@ import {
 import { ReleaseType } from '#src/enums'
 import { GitModule, GitService } from '#src/git'
 import { PackageManifest } from '#src/models'
-import { ValidationService } from '#src/providers'
+import { LoggerService, ValidationService } from '#src/providers'
 import type { Spy } from '#tests/interfaces'
 import type { Partial } from '@flex-development/tutils'
 import { CqrsModule } from '@nestjs/cqrs'
@@ -27,7 +27,7 @@ describe('unit:GreaseService', () => {
   beforeAll(async () => {
     subject = (await (await Test.createTestingModule({
       imports: [BumpModule, CqrsModule.forRoot(), GitModule],
-      providers: [TestSubject, ValidationService]
+      providers: [LoggerService, TestSubject, ValidationService]
     }).compile()).init()).get(TestSubject)
   })
 

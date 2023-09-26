@@ -8,26 +8,16 @@ import GreaseService from '#src/grease.service'
 import type { ReleaseVersion } from '#src/types'
 import type { Mock } from '#tests/interfaces'
 import {
-  CliUtilityService,
-  Program
+  CliUtilityService
 } from '@flex-development/nest-commander'
-import type { CommanderError } from '@flex-development/nest-commander/commander'
 import { CommandTestFactory } from '@flex-development/nest-commander/testing'
-import type { Fn } from '@flex-development/tutils'
 import type { TestingModule } from '@nestjs/testing'
 import TestSubject from '../bump.command'
 
 describe('functional:cli/commands/BumpCommand', () => {
   let bump: Mock<GreaseService['bump']>
   let command: TestingModule
-  let exitOverride: Mock<Fn<[CommanderError]>>
   let recommend: Mock<GreaseService['recommend']>
-
-  beforeAll(() => {
-    exitOverride = vi.fn<[CommanderError]>((e: CommanderError) => {
-      throw e
-    })
-  })
 
   beforeEach(async () => {
     command = await CommandTestFactory.createTestingCommand({
@@ -43,8 +33,6 @@ describe('functional:cli/commands/BumpCommand', () => {
         }
       ]
     })
-
-    command.get(Program).exitOverride(exitOverride)
   })
 
   describe('--preid <id>', () => {

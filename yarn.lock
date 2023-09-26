@@ -1145,6 +1145,7 @@ __metadata:
     "@types/chai": "npm:4.3.6"
     "@types/chai-string": "npm:1.4.3"
     "@types/dateformat": "npm:5.0.0"
+    "@types/envinfo": "npm:7.8.1"
     "@types/eslint": "npm:8.44.2"
     "@types/is-ci": "npm:3.0.0"
     "@types/node": "npm:20.6.0"
@@ -1168,6 +1169,7 @@ __metadata:
     dateformat: "npm:5.0.3"
     dprint: "npm:0.41.0"
     editorconfig: "npm:2.0.0"
+    envinfo: "npm:7.10.0"
     esbuild: "npm:0.19.3"
     eslint: "npm:8.50.0"
     eslint-import-resolver-typescript: "npm:3.6.1"
@@ -1888,6 +1890,13 @@ __metadata:
   version: 5.0.0
   resolution: "@types/dateformat@npm:5.0.0"
   checksum: fee3fff637675fd55b59fff6a0507a120ae212a0c7ba823c00a45473da617a7d466e6d7d40d2b4b88af9df3f4be3ed80a51e222ea346c7738de688aa2c6747f1
+  languageName: node
+  linkType: hard
+
+"@types/envinfo@npm:7.8.1":
+  version: 7.8.1
+  resolution: "@types/envinfo@npm:7.8.1"
+  checksum: ba1d7dd82cc2b2b038dd7dc2e7d7478e16a46fa85b134a7c22953be5a4c6cab4c355ffe90a5a36b3cd1afada38bf4d660d3a6db9b2b0278a7eeb86570068fdd0
   languageName: node
   linkType: hard
 
@@ -3621,6 +3630,15 @@ __metadata:
   version: 2.2.1
   resolution: "env-paths@npm:2.2.1"
   checksum: 65b5df55a8bab92229ab2b40dad3b387fad24613263d103a97f91c9fe43ceb21965cd3392b1ccb5d77088021e525c4e0481adb309625d0cb94ade1d1fb8dc17e
+  languageName: node
+  linkType: hard
+
+"envinfo@npm:7.10.0":
+  version: 7.10.0
+  resolution: "envinfo@npm:7.10.0"
+  bin:
+    envinfo: dist/cli.js
+  checksum: d4db29c5a405081759c57c0e74ffa6adab09b7477ca105587252643394f13ab128ad4c8f755b15334b5f1901cef091acc76c71b695ce0f27853ebf147c882075
   languageName: node
   linkType: hard
 

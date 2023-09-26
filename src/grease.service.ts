@@ -11,7 +11,7 @@ import {
   type BumpOperationDTO
 } from '#src/bump'
 import type { PackageManifest } from '#src/models'
-import { ValidationService } from '#src/providers'
+import { LoggerService, ValidationService } from '#src/providers'
 import { Injectable } from '@nestjs/common'
 import { CommandBus, EventBus, QueryBus } from '@nestjs/cqrs'
 
@@ -28,12 +28,14 @@ class GreaseService {
    * @param {EventBus} events - Events bus
    * @param {CommandBus} operations - Operations bus
    * @param {QueryBus} queries - Query bus
+   * @param {LoggerService} logger - Logger service
    * @param {ValidationService} validator - Validation service
    */
   constructor(
     protected readonly events: EventBus,
     protected readonly operations: CommandBus,
     protected readonly queries: QueryBus,
+    public readonly logger: LoggerService,
     public readonly validator: ValidationService
   ) {}
 
