@@ -1141,7 +1141,7 @@ __metadata:
     "@flex-development/tutils": "npm:6.0.0-alpha.25"
     "@nestjs/common": "npm:10.2.6"
     "@nestjs/core": "npm:10.2.6"
-    "@nestjs/cqrs": "npm:10.2.5"
+    "@nestjs/cqrs": "npm:10.2.6"
     "@nestjs/testing": "npm:10.2.6"
     "@types/chai": "npm:4.3.6"
     "@types/chai-string": "npm:1.4.3"
@@ -1678,9 +1678,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/cqrs@npm:10.2.5":
-  version: 10.2.5
-  resolution: "@nestjs/cqrs@npm:10.2.5"
+"@nestjs/cqrs@npm:10.2.6":
+  version: 10.2.6
+  resolution: "@nestjs/cqrs@npm:10.2.6"
   dependencies:
     uuid: "npm:9.0.0"
   peerDependencies:
@@ -1688,7 +1688,7 @@ __metadata:
     "@nestjs/core": ^9.0.0 || ^10.0.0
     reflect-metadata: 0.1.13
     rxjs: ^7.2.0
-  checksum: 9ec430e4104820020d8aea7030264cfcc4ba31dc4052f072347b037f814d2e7537d4d84475a0d110d7b107f50635ffb5285ec08cba0657c9e468f5274ad7dd9a
+  checksum: 4987d0e41113d7f9b1cec51fab9fa58e76eccea0cdc86d7f6af7e965835e6615acfe02f7391daecd9efd1215712017b427bb73a6d1dd7e4ecd7dd0118f383efc
   languageName: node
   linkType: hard
 
