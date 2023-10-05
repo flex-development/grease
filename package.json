@@ -89,7 +89,7 @@
     "@flex-development/pathe": "2.0.0",
     "@flex-development/pkg-types": "3.0.0",
     "@flex-development/tutils": "6.0.0-alpha.25",
-    "@nestjs/common": "10.2.6",
+    "@nestjs/common": "10.2.7",
     "@nestjs/cqrs": "10.2.6",
     "@types/dateformat": "5.0.0",
     "@types/semver": "7.5.0",
