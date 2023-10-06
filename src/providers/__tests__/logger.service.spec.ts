@@ -96,7 +96,7 @@ describe('unit:providers/LoggerService', () => {
     })
 
     describe('set', () => {
-      it('should set log level to LogLevel.DEBUG', () => {
+      it('should set log level to LogLevel.TRACE', () => {
         // Arrange
         const subject: TestSubject = new TestSubject()
 
@@ -104,7 +104,7 @@ describe('unit:providers/LoggerService', () => {
         subject.debugger = true
 
         // Expect
-        expect(subject).to.have.property('level', LogLevel.DEBUG)
+        expect(subject).to.have.property('level', LogLevel.TRACE)
       })
 
       it('should set log level to LogLevel.INFO', () => {
@@ -203,7 +203,7 @@ describe('unit:providers/LoggerService', () => {
       const opts: Partial<GlobalOptions> = {
         colors: false,
         debug: true,
-        silent: true
+        quiet: true
       }
 
       // Act
@@ -213,7 +213,7 @@ describe('unit:providers/LoggerService', () => {
       expect(result).to.equal(subject)
       expect(result).to.have.property('colors', opts.colors)
       expect(result).to.have.property('debugger', opts.debug)
-      expect(result).to.have.property('silent', !opts.silent)
+      expect(result).to.have.property('silent', !opts.quiet)
     })
   })
 

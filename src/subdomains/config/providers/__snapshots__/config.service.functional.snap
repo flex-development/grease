@@ -1,0 +1,78 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`functional:config/providers/ConfigService > #load > .js > should load configuration object 1`] = `
+{
+  "colors": true,
+  "config": true,
+  "cwd": "~/__fixtures__/pkg/major",
+  "debug": true,
+  "quiet": false,
+  "tagprefix": "pkg-major@",
+}
+`;
+
+exports[`functional:config/providers/ConfigService > #load > .json > should load configuration object 1`] = `
+{
+  "colors": true,
+  "config": true,
+  "cwd": "~/__fixtures__/pkg/minor",
+  "debug": true,
+  "quiet": false,
+  "tagprefix": "pkg-minor@",
+}
+`;
+
+exports[`functional:config/providers/ConfigService > #load > .json5 > should load configuration object 1`] = `
+{
+  "colors": true,
+  "config": true,
+  "cwd": "~/__fixtures__/pkg/patch",
+  "debug": true,
+  "quiet": false,
+  "tagprefix": "pkg-patch@",
+}
+`;
+
+exports[`functional:config/providers/ConfigService > #load > .jsonc > should load configuration object 1`] = `
+{
+  "colors": true,
+  "config": true,
+  "cwd": "~/__fixtures__/pkg/premajor",
+  "debug": true,
+  "quiet": false,
+  "tagprefix": "pkg-premajor@",
+}
+`;
+
+exports[`functional:config/providers/ConfigService > #load > .mjs > should load configuration object 1`] = `
+{
+  "colors": true,
+  "config": true,
+  "cwd": "~/__fixtures__/pkg/preminor",
+  "debug": true,
+  "quiet": false,
+  "tagprefix": "pkg-preminor@",
+}
+`;
+
+exports[`functional:config/providers/ConfigService > #load > .mts > should load configuration object 1`] = `
+{
+  "colors": true,
+  "config": true,
+  "cwd": "~/__fixtures__/pkg/prepatch",
+  "debug": true,
+  "quiet": false,
+  "tagprefix": "pkg-prepatch@",
+}
+`;
+
+exports[`functional:config/providers/ConfigService > #load > .ts > should load configuration object 1`] = `
+{
+  "colors": true,
+  "config": true,
+  "cwd": "~/__fixtures__/pkg/prerelease",
+  "debug": true,
+  "quiet": false,
+  "tagprefix": "pkg-prerelease@",
+}
+`;

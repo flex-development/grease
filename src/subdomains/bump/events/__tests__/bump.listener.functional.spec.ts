@@ -28,7 +28,7 @@ describe('functional:bump/events/BumpEventListener', () => {
     let success: Spy<LoggerService['success']>
 
     beforeAll(() => {
-      context = new GlobalOptions({ silent: true })
+      context = new GlobalOptions({ quiet: true })
     })
 
     beforeEach(() => {

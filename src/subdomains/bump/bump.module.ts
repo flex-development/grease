@@ -10,7 +10,7 @@ import { BumpOperationHandler } from './operations'
 import { BumpQueryHandler } from './queries'
 
 /**
- * Bump operations module.
+ * Version bump module.
  *
  * @class
  */

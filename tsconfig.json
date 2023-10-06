@@ -33,8 +33,9 @@
       "#fixtures/*": ["__fixtures__/*"],
       "#pkg": ["package.json"],
       "#src": ["src/index"],
-      "#src/*": ["src/*", "src/subdomains/*"],
-      "#tests/*": ["__tests__/*"]
+      "#src/*": ["src/subdomains/*", "src/*"],
+      "#tests/*": ["__tests__/*"],
+      "@flex-development/grease": ["src/index"]
     },
     "preserveConstEnums": true,
     "preserveSymlinks": false,
@@ -55,6 +56,6 @@
     "verbatimModuleSyntax": true
   },
   "exclude": ["**/coverage", "**/dist", "**/node_modules"],
-  "include": ["**/**.mjs", "**/**.mts", "**/**.ts"],
+  "include": ["**/**.js", "**/**.mjs", "**/**.mts", "**/**.ts"],
   "references": [{ "path": "./tsconfig.cjs.json" }]
 }

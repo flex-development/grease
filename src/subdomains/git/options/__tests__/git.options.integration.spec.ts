@@ -13,8 +13,9 @@ describe('integration:git/options/GitOptions', () => {
       // Arrange
       const subject: TestSubject = new TestSubject(cast({
         colors: 3,
+        config: 0,
         debug: 1,
-        silent: 0,
+        quiet: 0,
         tagprefix: null
       }))
 

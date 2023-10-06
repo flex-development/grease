@@ -18,6 +18,10 @@ describe('functional:cli/commands/InfoCommand', () => {
   let command: TestingModule
   let run: Spy<(typeof envinfo)['run']>
 
+  afterAll(() => {
+    vi.unstubAllEnvs()
+  })
+
   beforeAll(() => {
     args = ['info']
   })
@@ -31,6 +35,8 @@ describe('functional:cli/commands/InfoCommand', () => {
     run = vi
       .spyOn(envinfo, 'run')
       .mockImplementationOnce(vi.fn().mockName('envinfo.run'))
+
+    vi.stubEnv('GREASE_CONFIG', '0')
   })
 
   it('should run successfully with defaults', async () => {

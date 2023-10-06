@@ -3,9 +3,9 @@
  * @module grease/options/GlobalOptions
  */
 
-import { IsDirectory } from '#src/decorators'
+import { IsBoolable, IsDirectory, IsFile } from '#src/decorators'
 import pathe from '@flex-development/pathe'
-import { DOT, get } from '@flex-development/tutils'
+import { DOT, get, isString, type Partial } from '@flex-development/tutils'
 import { IsBoolean, IsString } from 'class-validator'
 
 /**
@@ -25,6 +25,21 @@ class GlobalOptions {
    */
   @IsBoolean()
   public colors: boolean
+
+  /**
+   * Path to config file, or a boolean indicating if config search is enabled.
+   *
+   * Non-absolute paths will be resolved relative to {@linkcode cwd}.
+   *
+   * @default true
+   *
+   * @public
+   * @instance
+   * @member {boolean | string} config
+   */
+  @IsFile()
+  @IsBoolable()
+  public config: boolean | string
 
   /**
    * Path to current working directory.
@@ -57,10 +72,10 @@ class GlobalOptions {
    *
    * @public
    * @instance
-   * @member {boolean} silent
+   * @member {boolean} quiet
    */
   @IsBoolean()
-  public silent: boolean
+  public quiet: boolean
 
   /**
    * Tag prefix to consider when reading tags.
@@ -77,14 +92,20 @@ class GlobalOptions {
   /**
    * Create a new options object.
    *
-   * @param {Partial<GlobalOptions>?} [opts] - Global user options
+   * @param {Partial<GlobalOptions>?} [opts] - User options
    */
   constructor(opts?: Partial<GlobalOptions>) {
     this.colors = get(opts, 'colors', true)
+    this.config = get(opts, 'config', true)
     this.cwd = pathe.resolve(get(opts, 'cwd', DOT))
     this.debug = get(opts, 'debug', false)
-    this.silent = get(opts, 'silent', false)
+    this.quiet = get(opts, 'quiet', false)
     this.tagprefix = get(opts, 'tagprefix', '')
+
+    // resolve config path
+    if (isString(this.config) && !pathe.isAbsolute(this.config)) {
+      this.config = pathe.resolve(this.cwd, this.config)
+    }
   }
 }
 

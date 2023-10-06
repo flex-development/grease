@@ -213,6 +213,16 @@
   "javascript.suggest.paths": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "javascript.validate.enable": true,
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "**/.grease.json*",
+        "**/.greaserc.json*",
+        "**/grease.config.json*"
+      ],
+      "url": "./grease.schema.json"
+    }
+  ],
   "markdown.extension.toc.slugifyMode": "github",
   "markdown.extension.toc.updateOnSave": false,
   "markdownlint.ignore": ".markdownlintignore",

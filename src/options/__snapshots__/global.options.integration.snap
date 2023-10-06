@@ -13,6 +13,14 @@ exports[`integration:options/GlobalOptions > validation > should fail validation
   ValidationError {
     "children": [],
     "constraints": {
+      "isFile": "config must be a file path or url",
+    },
+    "property": "config",
+    "value": 0,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
       "isBoolean": "debug must be a boolean value",
     },
     "property": "debug",
@@ -21,9 +29,9 @@ exports[`integration:options/GlobalOptions > validation > should fail validation
   ValidationError {
     "children": [],
     "constraints": {
-      "isBoolean": "silent must be a boolean value",
+      "isBoolean": "quiet must be a boolean value",
     },
-    "property": "silent",
+    "property": "quiet",
     "value": 0,
   },
   ValidationError {

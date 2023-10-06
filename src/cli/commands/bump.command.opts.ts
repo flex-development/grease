@@ -3,7 +3,7 @@
  * @module grease/commands/BumpCommandOpts
  */
 
-import type { BumpOperation } from '#src/subdomains/bump'
+import type { BumpOperation } from '#src/bump'
 import type { Omit } from '@flex-development/tutils'
 
 /**

@@ -1161,10 +1161,8 @@ __metadata:
     chai: "npm:5.0.0-alpha.1"
     chai-each: "npm:0.0.1"
     chai-string: "npm:1.5.0"
-    class-transformer: "npm:0.5.1"
     class-validator: "npm:0.14.0"
     consola: "npm:3.2.3"
-    cosmiconfig: "npm:8.3.6"
     cross-env: "npm:7.0.3"
     cspell: "npm:7.3.7"
     dateformat: "npm:5.0.3"
@@ -1185,9 +1183,11 @@ __metadata:
     eslint-plugin-promise: "npm:6.1.1"
     eslint-plugin-unicorn: "npm:48.0.1"
     eslint-plugin-yml: "npm:1.9.0"
+    fast-glob: "npm:3.3.1"
     growl: "npm:1.10.5"
     husky: "npm:8.0.3"
     is-ci: "npm:3.0.1"
+    json5: "npm:2.2.3"
     jsonc-eslint-parser: "npm:2.3.0"
     lint-staged: "npm:14.0.1"
     node-emoji: "npm:2.1.0"
@@ -1332,7 +1332,7 @@ __metadata:
 
 "@flex-development/nest-commander@patch:@flex-development/nest-commander@npm%3A1.0.0-alpha.1#patches/@flex-development/nest-commander+1.0.0-alpha.1.dev.patch::locator=%40flex-development%2Fgrease%40workspace%3A.":
   version: 1.0.0-alpha.1
-  resolution: "@flex-development/nest-commander@patch:@flex-development/nest-commander@npm%3A1.0.0-alpha.1%3A%3A__archiveUrl=https%253A%252F%252Fnpm.pkg.github.com%252Fdownload%252F%2540flex-development%252Fnest-commander%252F1.0.0-alpha.1%252Fe04080fd0e56886103a9415951c84b2772bfe7e2#patches/@flex-development/nest-commander+1.0.0-alpha.1.dev.patch::version=1.0.0-alpha.1&hash=c61d58&locator=%40flex-development%2Fgrease%40workspace%3A."
+  resolution: "@flex-development/nest-commander@patch:@flex-development/nest-commander@npm%3A1.0.0-alpha.1%3A%3A__archiveUrl=https%253A%252F%252Fnpm.pkg.github.com%252Fdownload%252F%2540flex-development%252Fnest-commander%252F1.0.0-alpha.1%252Fe04080fd0e56886103a9415951c84b2772bfe7e2#patches/@flex-development/nest-commander+1.0.0-alpha.1.dev.patch::version=1.0.0-alpha.1&hash=1c5a04&locator=%40flex-development%2Fgrease%40workspace%3A."
   dependencies:
     "@flex-development/pathe": "npm:2.0.0"
     "@flex-development/tutils": "npm:6.0.0-alpha.21"
@@ -1342,7 +1342,7 @@ __metadata:
     "@nestjs/common": ">=10.0.0"
     "@nestjs/core": ">=10.0.0"
     "@nestjs/testing": ">=10.0.0"
-  checksum: 83a39a5aeabead51e42fda3c235af38cf8ea7988a6ab03965bb1fe987381e3da4146b7410af4fbd0d0b54a5e5911e5351e4d8a493ff20a8fed621051d57bf9a0
+  checksum: 5daea43cc6586a59232103428b64eb1444adb8882ab38deca554d4ca72475144d7b6a042712a2fca521e53d2a3e5ecda91fac2486f4bc5ca959a461d014bcfc2
   languageName: node
   linkType: hard
 
@@ -2859,13 +2859,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"class-transformer@npm:0.5.1":
-  version: 0.5.1
-  resolution: "class-transformer@npm:0.5.1"
-  checksum: 750327e3e9a5cf233c5234252f4caf6b06c437bf68a24acbdcfb06c8e0bfff7aa97c30428184813e38e08111b42871f20c5cf669ea4490f8ae837c09f08b31e7
-  languageName: node
-  linkType: hard
-
 "class-validator@npm:0.14.0":
   version: 0.14.0
   resolution: "class-validator@npm:0.14.0"
@@ -3172,7 +3165,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cosmiconfig@npm:8.3.6, cosmiconfig@npm:^8.0.0":
+"cosmiconfig@npm:^8.0.0":
   version: 8.3.6
   resolution: "cosmiconfig@npm:8.3.6"
   dependencies:
@@ -5547,6 +5540,15 @@ __metadata:
   version: 1.0.1
   resolution: "json-stable-stringify-without-jsonify@npm:1.0.1"
   checksum: 12786c2e2f22c27439e6db0532ba321f1d0617c27ad8cb1c352a0e9249a50182fd1ba8b52a18899291604b0c32eafa8afd09e51203f19109a0537f68db2b652d
+  languageName: node
+  linkType: hard
+
+"json5@npm:2.2.3":
+  version: 2.2.3
+  resolution: "json5@npm:2.2.3"
+  bin:
+    json5: lib/cli.js
+  checksum: 1db67b853ff0de3534085d630691d3247de53a2ed1390ba0ddff681ea43e9b3e30ecbdb65c5e9aab49435e44059c23dbd6fee8ee619419ba37465bb0dd7135da
   languageName: node
   linkType: hard
 

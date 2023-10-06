@@ -7,9 +7,7 @@ import { ReleaseType } from '#src/enums'
 import GreaseService from '#src/grease.service'
 import type { ReleaseVersion } from '#src/types'
 import type { Mock } from '#tests/interfaces'
-import {
-  CliUtilityService
-} from '@flex-development/nest-commander'
+import { CliUtilityService } from '@flex-development/nest-commander'
 import { CommandTestFactory } from '@flex-development/nest-commander/testing'
 import type { TestingModule } from '@nestjs/testing'
 import TestSubject from '../bump.command'
@@ -18,6 +16,10 @@ describe('functional:cli/commands/BumpCommand', () => {
   let bump: Mock<GreaseService['bump']>
   let command: TestingModule
   let recommend: Mock<GreaseService['recommend']>
+
+  afterAll(() => {
+    vi.unstubAllEnvs()
+  })
 
   beforeEach(async () => {
     command = await CommandTestFactory.createTestingCommand({
@@ -33,6 +35,8 @@ describe('functional:cli/commands/BumpCommand', () => {
         }
       ]
     })
+
+    vi.stubEnv('GREASE_CONFIG', '0')
   })
 
   describe('--preid <id>', () => {

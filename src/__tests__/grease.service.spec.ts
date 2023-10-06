@@ -1,6 +1,6 @@
 /**
  * @file Unit Tests - GreaseService
- * @module grease/tests/GreaseService
+ * @module grease/tests/unit/GreaseService
  */
 
 import sha from '#fixtures/git/grease/sha'
@@ -11,6 +11,7 @@ import {
   RecommendedBump,
   type BumpOperationDTO
 } from '#src/bump'
+import { ConfigModule } from '#src/config'
 import { ReleaseType } from '#src/enums'
 import { GitModule, GitService } from '#src/git'
 import { PackageManifest } from '#src/models'
@@ -26,7 +27,7 @@ describe('unit:GreaseService', () => {
 
   beforeAll(async () => {
     subject = (await (await Test.createTestingModule({
-      imports: [BumpModule, CqrsModule.forRoot(), GitModule],
+      imports: [BumpModule, ConfigModule, CqrsModule.forRoot(), GitModule],
       providers: [LoggerService, TestSubject, ValidationService]
     }).compile()).init()).get(TestSubject)
   })

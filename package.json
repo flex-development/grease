@@ -1,6 +1,6 @@
 {
   "name": "@flex-development/grease",
-  "description": "Package release workflow tool",
+  "description": "Release workflow tool",
   "version": "2.0.0",
   "keywords": [
     "bump",
@@ -27,7 +27,8 @@
   "type": "module",
   "files": [
     "CHANGELOG.md",
-    "dist"
+    "dist",
+    "grease.schema.json"
   ],
   "bin": "./dist/cli.mjs",
   "exports": {
@@ -66,7 +67,7 @@
     "fix:dedupe": "yarn dedupe --strategy=highest",
     "fix:format": "dprint fmt",
     "fix:lint": "yarn check:lint --cache --fix",
-    "grease": "node --loader=./loader.mjs --enable-source-maps ./src/cli --tagprefix $(jq .tagPrefix package.json -r)",
+    "grease": "node --loader=./loader.mjs --enable-source-maps ./src/cli",
     "pkg-size": "pkg-size --sizes size --sort-by name",
     "postinstall": "[ -f ./node_modules/.bin/husky ] && chmod +x .husky/* && husky install || exit 0",
     "postpack": "toggle-scripts +postinstall",
@@ -85,6 +86,7 @@
   "dependencies": {
     "@flex-development/aggregate-error-ponyfill": "3.1.1",
     "@flex-development/commitlint-config": "1.0.1",
+    "@flex-development/mkbuild": "1.0.0-alpha.23",
     "@flex-development/mlly": "1.0.0-alpha.18",
     "@flex-development/pathe": "2.0.0",
     "@flex-development/pkg-types": "3.0.0",
@@ -93,11 +95,12 @@
     "@nestjs/cqrs": "10.2.6",
     "@types/dateformat": "5.0.0",
     "@types/semver": "7.5.0",
-    "class-transformer": "0.5.1",
     "class-validator": "0.14.0",
     "consola": "3.2.3",
-    "cosmiconfig": "8.3.6",
     "dateformat": "5.0.3",
+    "esbuild": "0.19.4",
+    "fast-glob": "3.3.1",
+    "json5": "2.2.3",
     "node-emoji": "2.1.0",
     "reflect-metadata": "0.1.13",
     "rxjs": "7.8.1",
@@ -111,7 +114,6 @@
     "@flex-development/commitlint-config": "1.0.1",
     "@flex-development/decorator-regex": "2.0.0",
     "@flex-development/esm-types": "2.0.0",
-    "@flex-development/mkbuild": "1.0.0-alpha.23",
     "@flex-development/nest-commander": "1.0.0-alpha.1",
     "@flex-development/tsconfig-utils": "2.0.2",
     "@nestjs/core": "10.2.7",
@@ -137,7 +139,6 @@
     "dprint": "0.41.0",
     "editorconfig": "2.0.0",
     "envinfo": "7.10.0",
-    "esbuild": "0.19.4",
     "eslint": "8.50.0",
     "eslint-import-resolver-typescript": "3.6.1",
     "eslint-plugin-chai-expect": "3.0.0",
@@ -179,6 +180,5 @@
   },
   "packageManager": "yarn@4.0.0-rc.50",
   "readme": "README.md",
-  "sideEffects": false,
-  "tagPrefix": "grease@"
+  "sideEffects": false
 }

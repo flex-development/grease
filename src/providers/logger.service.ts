@@ -94,7 +94,7 @@ class LoggerService implements ILogger {
    * @return {boolean} Boolean indicating if logger is in debug mode
    */
   public get debugger(): boolean {
-    return equal(LogLevel.DEBUG, this.level)
+    return this.level >= LogLevel.DEBUG
   }
 
   /**
@@ -105,7 +105,7 @@ class LoggerService implements ILogger {
    * @param {boolean} debug - Debug mode enabled?
    */
   public set debugger(debug: Optional<boolean>) {
-    this.level = ifelse(!!debug, LogLevel.DEBUG, LogLevel.INFO)
+    this.level = ifelse(!!debug, LogLevel.TRACE, LogLevel.INFO)
   }
 
   /**
@@ -271,7 +271,7 @@ class LoggerService implements ILogger {
    * @return {this} `this` synced logger
    */
   public sync(opts?: Partial<GlobalOptions>): this {
-    this.silent = get(opts, 'silent')
+    this.silent = get(opts, 'quiet')
     this.debugger = get(opts, 'debug')
     this.colors = get(opts, 'colors')
     return this

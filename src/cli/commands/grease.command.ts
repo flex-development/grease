@@ -4,6 +4,8 @@
  */
 
 import pkg from '#pkg' assert { type: 'json' }
+import type { GreaseConfig } from '#src/config'
+import GreaseService from '#src/grease.service'
 import {
   CliUtilityService,
   Command,
@@ -11,12 +13,20 @@ import {
   Option,
   Program
 } from '@flex-development/nest-commander'
+import type * as commander from '@flex-development/nest-commander/commander'
 import {
   DOT,
+  cast,
+  fallback,
+  get,
+  includes,
   isFalsy,
+  keys,
   lowercase,
   set,
-  trim
+  trim,
+  type EmptyObject,
+  type ObjectCurly
 } from '@flex-development/tutils'
 import BumpCommand from './bump.command'
 import InfoCommand from './info.command'
@@ -30,7 +40,7 @@ import InfoCommand from './info.command'
 @Command({
   description: lowercase(pkg.description),
   examples: [],
-  name: pkg.name.replace(/.*\//, ''),
+  name: GreaseService.NAME,
   root: true,
   subcommands: [BumpCommand, InfoCommand]
 })
@@ -39,9 +49,44 @@ class GreaseCommand extends CommandRunner {
    * Create a new `grease` command runner.
    *
    * @param {CliUtilityService} util - Utilities service
+   * @param {GreaseService} grease - Grease runner service
    */
-  constructor(protected readonly util: CliUtilityService) {
+  constructor(
+    protected readonly util: CliUtilityService,
+    protected readonly grease: GreaseService
+  ) {
     super()
+  }
+
+  /**
+   * Merge a configuration object into command option values.
+   *
+   * @protected
+   *
+   * @param {commander.Command} cmd - Command instance
+   * @param {ObjectCurly} config - Configuration object to merge
+   * @return {void} Nothing when complete
+   */
+  protected mergeConfig(cmd: commander.Command, config: ObjectCurly): void {
+    /**
+     * Configuration data for {@linkcode cmd}.
+     *
+     * @const {ObjectCurly} data
+     */
+    const data: ObjectCurly = get(config, cmd.name(), config)
+
+    // override cli defaults + pass config-only options
+    for (const key of keys(cmd.opts())) {
+      switch (fallback(cmd.getOptionValueSource(key), 'default')) {
+        case 'default':
+          cmd.setOptionValueWithSource(key, get(data, key), 'config')
+          break
+        default:
+          continue
+      }
+    }
+
+    return void cmd
   }
 
   /**
@@ -65,6 +110,27 @@ class GreaseCommand extends CommandRunner {
   }
 
   /**
+   * Parse the `--config` flag.
+   *
+   * @protected
+   *
+   * @param {string} val - Value to parse
+   * @return {boolean | string} Parsed option value
+   */
+  @Option({
+    description: 'path to config file or config search setting',
+    env: 'GREASE_CONFIG',
+    fallback: { value: true },
+    flags: '-g, --config [opt]',
+    preset: 'true'
+  })
+  protected parseConfig(val: string): boolean | string {
+    return includes(CliUtilityService.BOOLEAN_CHOICES, val)
+      ? this.util.parseBoolean(val)
+      : val
+  }
+
+  /**
    * Parse the `--cwd` flag.
    *
    * @protected
@@ -74,7 +140,7 @@ class GreaseCommand extends CommandRunner {
    */
   @Option({
     description: 'path to current working directory',
-    env: 'PWD',
+    env: 'GREASE_CWD',
     fallback: { value: DOT },
     flags: '-k, --cwd <dir>'
   })
@@ -91,10 +157,11 @@ class GreaseCommand extends CommandRunner {
    * @return {boolean} Parsed option value
    */
   @Option({
-    conflicts: ['silent'],
+    choices: CliUtilityService.BOOLEAN_CHOICES,
     description: 'enable verbose output',
+    env: 'GREASE_DEBUG',
     fallback: { value: false },
-    flags: '-d, --debug',
+    flags: '-d, --debug [choice]',
     preset: 'true'
   })
   protected parseDebug(val: string): boolean {
@@ -102,7 +169,7 @@ class GreaseCommand extends CommandRunner {
   }
 
   /**
-   * Parse the `--silent` flag.
+   * Parse the `--quiet` flag.
    *
    * @protected
    *
@@ -110,13 +177,13 @@ class GreaseCommand extends CommandRunner {
    * @return {boolean} Parsed option value
    */
   @Option({
-    conflicts: ['debug'],
     description: 'disable logs',
+    env: 'GREASE_QUIET',
     fallback: { value: false },
-    flags: '-s, --silent',
+    flags: '-q, --quiet',
     preset: 'true'
   })
-  protected parseSilent(val: string): boolean {
+  protected parseQuiet(val: string): boolean {
     return this.util.parseBoolean(val)
   }
 
@@ -130,11 +197,47 @@ class GreaseCommand extends CommandRunner {
    */
   @Option({
     description: 'tag prefix to consider when reading tags',
+    env: 'GREASE_TAGPREFIX',
     fallback: { value: '' },
     flags: '-T, --tagprefix <prefix>'
   })
   protected parseTagprefix(val: string): string {
     return trim(val)
+  }
+
+  /**
+   * Preaction lifecycle handler.
+   *
+   * @see https://github.com/tj/commander.js#life-cycle-hooks
+   *
+   * @protected
+   * @async
+   *
+   * @param {Program} program - Program instance
+   * @param {commander.Command} cmd - Subcommand instance
+   * @return {Promise<void>} Nothing when complete
+   */
+  protected async preAction(
+    program: Program,
+    cmd: commander.Command
+  ): Promise<void> {
+    const { config, ...opts } = program.opts()
+
+    // merge options from config file
+    if (<boolean>config) {
+      /**
+       * Configuration options from grease config file.
+       *
+       * @const {EmptyObject | GreaseConfig} config
+       */
+      const config: EmptyObject | GreaseConfig = await this.grease.config(opts)
+
+      // merge config
+      this.mergeConfig(program, config)
+      this.mergeConfig(cmd, config)
+    }
+
+    return void this.grease.logger.sync(opts)
   }
 
   /**
@@ -161,6 +264,7 @@ class GreaseCommand extends CommandRunner {
    */
   public override setCommand(program: Program): this {
     set(program, '_helpConfiguration.showGlobalOptions', true)
+    program.hook('preAction', cast(this.preAction.bind(this)))
     program.showHelpAfterError()
     return super.setCommand(program)
   }

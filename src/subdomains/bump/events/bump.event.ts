@@ -20,33 +20,19 @@ import type { GlobalOptions } from '#src/options'
  */
 class BumpEvent implements IEvent<Manifest | RecommendedBump> {
   /**
-   * Event context.
-   *
-   * @public
-   * @instance
-   * @member {GlobalOptions} context
-   */
-  public context: GlobalOptions
-
-  /**
-   * Event payload.
-   *
-   * @public
-   * @instance
-   * @member {Manifest | RecommendedBump} payload
-   */
-  public payload: Manifest | RecommendedBump
-
-  /**
    * Create a new bump event.
+   *
+   * @see {@linkcode GlobalOptions}
+   * @see {@linkcode Manifest}
+   * @see {@linkcode RecommendedBump}
    *
    * @param {Manifest | RecommendedBump} payload - Event payload
    * @param {GlobalOptions} context - Event context
    */
-  constructor(payload: Manifest | RecommendedBump, context: GlobalOptions) {
-    this.context = context
-    this.payload = payload
-  }
+  constructor(
+    public payload: Manifest | RecommendedBump,
+    public context: GlobalOptions
+  ) {}
 }
 
 export default BumpEvent

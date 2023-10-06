@@ -1,0 +1,7 @@
+// GREASE CONFIGURATION
+// https://github.com/flex-development/grease
+{
+  cwd: '__fixtures__/pkg/patch',
+  debug: true,
+  tagprefix: 'pkg-patch@'
+}

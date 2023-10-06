@@ -1217,6 +1217,9 @@ const config = {
           name: 'namepath-defining',
           required: ['type']
         },
+        fires: {
+          required: ['name']
+        },
         implements: {
           name: 'namepath-defining',
           required: ['type']

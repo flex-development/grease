@@ -1,6 +1,7 @@
 ardatan
 attw
 bdougie
+boolable
 cefc
 codecov
 commitlintrc
@@ -13,6 +14,7 @@ envinfo
 fbca
 ggshield
 gpgsign
+greaserc
 hmarr
 iife
 keyid

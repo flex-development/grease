@@ -12,6 +12,12 @@ describe('unit-d:options/GlobalOptions', () => {
       .toEqualTypeOf<boolean>()
   })
 
+  it('should match [config: boolean | string]', () => {
+    expectTypeOf<TestSubject>()
+      .toHaveProperty('config')
+      .toEqualTypeOf<boolean | string>()
+  })
+
   it('should match [cwd: string]', () => {
     expectTypeOf<TestSubject>().toHaveProperty('cwd').toEqualTypeOf<string>()
   })
@@ -20,9 +26,9 @@ describe('unit-d:options/GlobalOptions', () => {
     expectTypeOf<TestSubject>().toHaveProperty('debug').toEqualTypeOf<boolean>()
   })
 
-  it('should match [silent: boolean]', () => {
+  it('should match [quiet: boolean]', () => {
     expectTypeOf<TestSubject>()
-      .toHaveProperty('silent')
+      .toHaveProperty('quiet')
       .toEqualTypeOf<boolean>()
   })
 

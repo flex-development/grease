@@ -32,6 +32,10 @@ component_management:
       name: changelog
       paths:
         - src/subdomains/changelog/**/*.ts
+    - component_id: config
+      name: config
+      paths:
+        - src/subdomains/config/**/*.ts
     - component_id: commands
       name: commands
       paths:

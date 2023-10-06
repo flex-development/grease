@@ -9,14 +9,20 @@ import TestSubject from '../global.options'
 
 describe('unit:options/GlobalOptions', () => {
   describe('constructor', () => {
+    let config: string
     let subject: TestSubject
 
     beforeAll(() => {
-      subject = new TestSubject()
+      config = '.greaserc.jsonc'
+      subject = new TestSubject({ config })
     })
 
     it('should set #colors', () => {
       expect(subject).to.have.property('colors', true)
+    })
+
+    it('should set #config', () => {
+      expect(subject).to.have.property('config', pathe.resolve(config))
     })
 
     it('should set #cwd', () => {
@@ -27,8 +33,8 @@ describe('unit:options/GlobalOptions', () => {
       expect(subject).to.have.property('debug', false)
     })
 
-    it('should set #silent', () => {
-      expect(subject).to.have.property('silent', false)
+    it('should set #quiet', () => {
+      expect(subject).to.have.property('quiet', false)
     })
 
     it('should set #tagprefix', () => {

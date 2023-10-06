@@ -1,0 +1,4 @@
+---
+cwd: __fixtures__/pkg/invalid
+debug: true
+tagprefix: pkg-invalid@

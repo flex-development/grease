@@ -38,7 +38,7 @@ class BumpEventListener implements IEventHandler<BumpEvent> {
     const { context, payload } = event
 
     // sync logger settings
-    this.logger.sync({ ...context, debug: true })
+    this.logger.sync(context)
 
     // log recommended bump or successful version bump
     if (payload instanceof RecommendedBump) {

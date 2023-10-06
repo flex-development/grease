@@ -1,0 +1,33 @@
+{
+  "$id": "https://github.com/flex-development/grease/blob/main/grease.schema.json",
+  "description": "Release workflow tool",
+  "properties": {
+    "colors": {
+      "default": true,
+      "description": "enable colorized output",
+      "type": "boolean"
+    },
+    "cwd": {
+      "default": ".",
+      "description": "path to current working directory",
+      "type": "string"
+    },
+    "debug": {
+      "default": false,
+      "description": "enable verbose output",
+      "type": "boolean"
+    },
+    "quiet": {
+      "default": false,
+      "description": "disable logs",
+      "type": "boolean"
+    },
+    "tagprefix": {
+      "default": "",
+      "description": "tag prefix to consider when reading tags",
+      "type": "string"
+    }
+  },
+  "title": "grease",
+  "type": "object"
+}

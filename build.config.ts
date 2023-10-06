@@ -41,17 +41,20 @@ const config: Config = defineBuildConfig({
       },
       bundle: true,
       external: [
+        '@flex-development/mkbuild',
         '@nestjs/microservices',
         '@nestjs/platform-express',
         '@nestjs/websockets/socket-module',
         'cache-manager',
+        'class-transformer',
         'node-fetch'
       ],
       minify: true,
       name: 'cli',
       source: 'src/cli/index.ts',
       sourcemap: true,
-      sourcesContent: false
+      sourcesContent: false,
+      splitting: true
     }
   ],
   keepNames: true,

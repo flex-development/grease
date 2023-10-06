@@ -55,7 +55,7 @@ jobs:
         run: echo "result=$(jq .version package.json -r)" >>$GITHUB_OUTPUT
       - id: tag-prefix
         name: Get release tag prefix
-        run: echo "result=$(jq .tagPrefix package.json -r)" >>$GITHUB_OUTPUT
+        run: echo "result=$(jq .tagprefix grease.config.json -r)" >>$GITHUB_OUTPUT
       - id: gpg-import
         name: Import GPG key
         uses: crazy-max/ghaction-import-gpg@v6.0.0
