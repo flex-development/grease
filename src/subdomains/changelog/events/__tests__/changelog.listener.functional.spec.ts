@@ -12,10 +12,9 @@ import { ChangelogOperation } from '#src/changelog/operations'
 import { ChangelogQueryHandler } from '#src/changelog/queries'
 import { GlobalOptions } from '#src/options'
 import { LoggerService } from '#src/providers'
-import { get, type Fn } from '@flex-development/tutils'
+import type { Fn } from '@flex-development/tutils'
 import { Test, type TestingModule } from '@nestjs/testing'
 import tempfile from 'tempfile'
-import type { MockContext } from 'vitest'
 import ChangelogEvent from '../changelog.event'
 import TestSubject from '../changelog.listener'
 
@@ -74,21 +73,9 @@ describe('functional:changelog/events/ChangelogEventListener', () => {
     beforeEach(() => {
       vi.spyOn(ChangelogStream.prototype, 'on')
       vi.spyOn(ChangelogStream.prototype, 'print')
-      vi.spyOn(LoggerService.prototype, 'debug')
       vi.spyOn(LoggerService.prototype, 'sync')
 
       subject.handle(event)
-    })
-
-    it.extend<{ debug: MockContext<[any, ...unknown[]], void> }>({
-      debug: async ({}, use): Promise<void> => {
-        return void stream.on('unpipe', () => {
-          return void use(vi.mocked(LoggerService.prototype.debug).mock)
-        })
-      }
-    })('should debug changelog chunks', ({ debug }) => {
-      expect(debug).to.have.property('calls').be.an('array').of.length(1)
-      expect(debug).to.have.property('lastCall').eql([get(stream, 'chunks.0')])
     })
 
     it('should handle changelog stream errors', () => {

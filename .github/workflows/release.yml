@@ -49,7 +49,6 @@ jobs:
     outputs:
       prerelease: ${{ steps.dist-tag.outputs.prerelease }}
       tag: ${{ steps.tag.outputs.result }}
-      version: ${{ steps.version.outputs.result }}
     steps:
       - id: debug
         name: Print environment variables and event payload

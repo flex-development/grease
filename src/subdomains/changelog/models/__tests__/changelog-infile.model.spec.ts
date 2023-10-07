@@ -4,18 +4,23 @@
  */
 
 import pathe from '@flex-development/pathe'
+import { pick } from '@flex-development/tutils'
+import json5 from 'json5'
+import util from 'node:util'
 import TestSubject from '../changelog-infile.model'
 
 describe('unit:changelog/models/ChangelogInfile', () => {
   let cwd: string
+  let subject: TestSubject
 
   beforeAll(() => {
     cwd = '__fixtures__/changelog'
+    subject = new TestSubject(undefined, cwd)
   })
 
   describe('constructor', () => {
     it('should set #path', () => {
-      expect(new TestSubject(undefined, cwd))
+      expect(subject)
         .to.have.property('path', pathe.resolve(cwd, 'CHANGELOG.md'))
     })
 
@@ -37,9 +42,15 @@ describe('unit:changelog/models/ChangelogInfile', () => {
     })
   })
 
+  describe('#[util.inspect.custom]', () => {
+    it('should return inspection string', () => {
+      expect(json5.parse(util.inspect(subject))).to.eql(pick(subject, ['path']))
+    })
+  })
+
   describe('#toString', () => {
     it('should return infile content', () => {
-      expect(new TestSubject(undefined, cwd).toString()).toMatchSnapshot()
+      expect(subject.toString()).toMatchSnapshot()
     })
   })
 })

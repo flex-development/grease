@@ -7,7 +7,12 @@ import GreaseModule from '#src/grease.module'
 import { LoggerService } from '#src/providers'
 import type { CommanderError } from '@flex-development/nest-commander/commander'
 import { Module } from '@nestjs/common'
-import { BumpCommand, GreaseCommand, InfoCommand } from './commands'
+import {
+  BumpCommand,
+  ChangelogCommand,
+  GreaseCommand,
+  InfoCommand
+} from './commands'
 
 /**
  * CLI application module.
@@ -16,7 +21,7 @@ import { BumpCommand, GreaseCommand, InfoCommand } from './commands'
  */
 @Module({
   imports: [GreaseModule],
-  providers: [BumpCommand, GreaseCommand, InfoCommand]
+  providers: [BumpCommand, ChangelogCommand, GreaseCommand, InfoCommand]
 })
 class ProgramModule {
   /**

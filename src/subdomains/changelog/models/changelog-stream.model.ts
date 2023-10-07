@@ -12,8 +12,8 @@ import {
   at,
   cast,
   get,
-  ifelse,
   isNull,
+  pick,
   type Nilable,
   type Nullable,
   type Optional
@@ -21,6 +21,7 @@ import {
 import type { Abortable } from 'node:events'
 import fs from 'node:fs'
 import stream from 'node:stream'
+import util from 'node:util'
 import ChangelogEntry from './changelog-entry.model'
 import type ChangelogFormatter from './changelog-formatter.model'
 import ChangelogInfile from './changelog-infile.model'
@@ -179,7 +180,7 @@ class ChangelogStream<T extends Commit = Commit> extends stream.Transform {
       signal: opts.signal
     })
 
-    this.cdx = ifelse(opts.operation.debug && !opts.operation.write, -1, 0)
+    this.cdx = 0
     this.formatter = new opts.operation.Formatter()
     this.logger = opts.logger
     this.operation = Object.freeze(opts.operation)
@@ -250,7 +251,7 @@ class ChangelogStream<T extends Commit = Commit> extends stream.Transform {
    */
   public override _read(n: number): void {
     // add spacer chunk for readability when running operation in debug mode
-    this.cdx < 0 && (this.cdx++ && this.unshift(''))
+    this.operation.debug && !this.operation.write && this.unshift('')
 
     // add n number of changelog chunks
     if (this.cdx < this.chunks.length) {
@@ -266,6 +267,7 @@ class ChangelogStream<T extends Commit = Commit> extends stream.Transform {
         if (chunk === -1) break
 
         // add changelog chunk
+        this.logger.debug(util.inspect(chunk, pick(this.operation, ['colors'])))
         this.push(chunk)
         this.cdx++
       }

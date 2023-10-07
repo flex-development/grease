@@ -6,6 +6,7 @@
 import pkg from '#pkg' assert { type: 'json' }
 import type { GreaseConfig } from '#src/config'
 import GreaseService from '#src/grease.service'
+import type { GlobalOptions } from '#src/options'
 import {
   CliUtilityService,
   Command,
@@ -19,16 +20,18 @@ import {
   cast,
   fallback,
   get,
+  hasOwn,
   includes,
   isFalsy,
   keys,
   lowercase,
+  omit,
   set,
   trim,
-  type EmptyObject,
-  type ObjectCurly
+  type EmptyObject
 } from '@flex-development/tutils'
 import BumpCommand from './bump.command'
+import ChangelogCommand from './changelog.command'
 import InfoCommand from './info.command'
 
 /**
@@ -42,7 +45,7 @@ import InfoCommand from './info.command'
   examples: [],
   name: GreaseService.NAME,
   root: true,
-  subcommands: [BumpCommand, InfoCommand]
+  subcommands: [BumpCommand, ChangelogCommand, InfoCommand]
 })
 class GreaseCommand extends CommandRunner {
   /**
@@ -64,25 +67,37 @@ class GreaseCommand extends CommandRunner {
    * @protected
    *
    * @param {commander.Command} cmd - Command instance
-   * @param {ObjectCurly} config - Configuration object to merge
+   * @param {commander.OptionValues} config - Configuration object to merge
    * @return {void} Nothing when complete
    */
-  protected mergeConfig(cmd: commander.Command, config: ObjectCurly): void {
+  protected mergeConfig(
+    cmd: commander.Command,
+    config: commander.OptionValues
+  ): void {
     /**
      * Configuration data for {@linkcode cmd}.
      *
-     * @const {ObjectCurly} data
+     * @const {commander.OptionValues} data
      */
-    const data: ObjectCurly = get(config, cmd.name(), config)
+    const data: commander.OptionValues = get(config, cmd.name(), config)
+
+    /**
+     * Merged local and global option values.
+     *
+     * @const {commander.OptionValues} opts
+     */
+    const opts: commander.OptionValues = cmd.optsWithGlobals()
 
     // override cli defaults + pass config-only options
-    for (const key of keys(cmd.opts())) {
-      switch (fallback(cmd.getOptionValueSource(key), 'default')) {
-        case 'default':
-          cmd.setOptionValueWithSource(key, get(data, key), 'config')
-          break
-        default:
-          continue
+    for (const key of keys(data)) {
+      if (hasOwn(opts, key)) {
+        switch (fallback(cmd.getOptionValueSource(key), 'default')) {
+          case 'default':
+            cmd.setOptionValueWithSource(key, get(data, key), 'config')
+            break
+          default:
+            continue
+        }
       }
     }
 
@@ -221,23 +236,24 @@ class GreaseCommand extends CommandRunner {
     program: Program,
     cmd: commander.Command
   ): Promise<void> {
-    const { config, ...opts } = program.opts()
+    /**
+     * Parsed program options.
+     *
+     * @const {GlobalOptions} opts
+     */
+    const opts: GlobalOptions = program.opts()
 
-    // merge options from config file
-    if (<boolean>config) {
-      /**
-       * Configuration options from grease config file.
-       *
-       * @const {EmptyObject | GreaseConfig} config
-       */
-      const config: EmptyObject | GreaseConfig = await this.grease.config(opts)
+    /**
+     * Configuration options from grease config file.
+     *
+     * @const {EmptyObject | GreaseConfig} config
+     */
+    const config: EmptyObject | GreaseConfig = await this.grease.config({
+      ...omit(opts, ['tagprefix'])
+    })
 
-      // merge config
-      this.mergeConfig(program, config)
-      this.mergeConfig(cmd, config)
-    }
-
-    return void this.grease.logger.sync(opts)
+    this.mergeConfig(program, config)
+    return void this.mergeConfig(cmd, config)
   }
 
   /**

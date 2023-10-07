@@ -5,8 +5,9 @@
 
 import { isFile } from '@flex-development/mlly'
 import pathe from '@flex-development/pathe'
-import { DOT, type Stringafiable } from '@flex-development/tutils'
+import { DOT, merge, type Stringafiable } from '@flex-development/tutils'
 import fs from 'node:fs'
+import util from 'node:util'
 
 /**
  * Changelog infile model.
@@ -46,6 +47,30 @@ class ChangelogInfile implements Stringafiable {
    */
   public toString(): string {
     return fs.readFileSync(this.path, 'utf8')
+  }
+
+  /**
+   * Get a string representation of `this` to use with {@linkcode util.inspect}.
+   *
+   * @see https://nodejs.org/api/util.html#utilinspectcustom
+   * @see https://nodejs.org/api/util.html#utilinspectobject-options
+   *
+   * @protected
+   *
+   * @param {number} depth - Number of times to recurse while formatting `this`
+   * @param {util.InspectOptions} opts - Inspection options
+   * @param {typeof util.inspect} inspect - {@linkcode util.inspect}
+   * @return {string} String representation of `this` infile
+   */
+  protected [util.inspect.custom](
+    depth: number,
+    opts: util.InspectOptions,
+    inspect: typeof util.inspect
+  ): string {
+    return inspect({ path: this.path }, merge(opts, <typeof opts>{
+      breakLength: process.stdout.columns,
+      maxStringLength: null
+    }))
   }
 }
 

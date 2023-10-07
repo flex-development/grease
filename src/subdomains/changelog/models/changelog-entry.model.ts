@@ -17,11 +17,13 @@ import {
   fallback,
   get,
   isFalsy,
+  merge,
   select,
   type Nullable,
   type Optional,
   type Simplify
 } from '@flex-development/tutils'
+import util from 'node:util'
 import semver from 'semver'
 import ChangelogAggregator from './changelog-aggregator.model'
 import type CommitGroup from './commit-group.model'
@@ -284,6 +286,33 @@ class ChangelogEntry<T extends Commit = Commit> implements IChangelogEntry<T> {
       references: this.references,
       release: this.release
     }
+  }
+
+  /**
+   * Get a string representation of `this` to use with {@linkcode util.inspect}.
+   *
+   * @see https://nodejs.org/api/util.html#utilinspectcustom
+   * @see https://nodejs.org/api/util.html#utilinspectobject-options
+   *
+   * @protected
+   *
+   * @param {number} depth - Number of times to recurse while formatting `this`
+   * @param {util.InspectOptions} opts - Inspection options
+   * @param {typeof util.inspect} inspect - {@linkcode util.inspect}
+   * @return {string} String representation of `this` entry
+   */
+  protected [util.inspect.custom](
+    depth: number,
+    opts: util.InspectOptions,
+    inspect: typeof util.inspect
+  ): string {
+    return inspect(this.toJSON(), merge(opts, <typeof opts>{
+      breakLength: process.stdout.columns,
+      compact: false,
+      depth: null,
+      maxArrayLength: null,
+      maxStringLength: null
+    }))
   }
 }
 

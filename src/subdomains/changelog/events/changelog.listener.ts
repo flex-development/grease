@@ -3,9 +3,7 @@
  * @module grease/changelog/events/ChangelogEventListener
  */
 
-import type { ChangelogChunk } from '#src/changelog/types'
 import { LoggerService } from '#src/providers'
-import { isString } from '@flex-development/tutils'
 import { EventsHandler, type IEventHandler } from '@nestjs/cqrs'
 import ChangelogEvent from './changelog.event'
 
@@ -42,12 +40,6 @@ class ChangelogEventListener implements IEventHandler<ChangelogEvent> {
 
     // sync logger settings
     this.logger.sync(context)
-
-    // debug chunks
-    payload.on('data', (chunk: ChangelogChunk): void => {
-      !isString(chunk) && this.logger.debug(chunk)
-      return void chunk
-    })
 
     // log changelog errors
     payload.on('error', this.logger.error.bind(this.logger))

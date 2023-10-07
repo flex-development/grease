@@ -9,6 +9,8 @@ import sha from '#fixtures/git/grease/sha'
 import tagprefix from '#fixtures/git/grease/tagprefix'
 import { TYPES } from '#src/changelog/constants'
 import { at, select, template } from '@flex-development/tutils'
+import json5 from 'json5'
+import util from 'node:util'
 import Aggregator from '../changelog-aggregator.model'
 import TestSubject, { type ChangelogEntryDTO } from '../changelog-entry.model'
 import CommitGroup from '../commit-group.model'
@@ -78,6 +80,12 @@ describe('unit:changelog/models/ChangelogEntry', () => {
       expect(() => {
         return new TestSubject({ ...opts, commits: [] })
       }).to.throw(Error, 'key commit not found')
+    })
+  })
+
+  describe('#[util.inspect.custom]', () => {
+    it('should return inspection string', () => {
+      expect(json5.parse(util.inspect(subject))).to.eql(subject.toJSON())
     })
   })
 
