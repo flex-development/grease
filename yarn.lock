@@ -1145,7 +1145,6 @@ __metadata:
     "@nestjs/testing": "npm:10.2.7"
     "@types/chai": "npm:4.3.6"
     "@types/chai-string": "npm:1.4.3"
-    "@types/dateformat": "npm:5.0.0"
     "@types/envinfo": "npm:7.8.1"
     "@types/eslint": "npm:8.44.2"
     "@types/is-ci": "npm:3.0.0"
@@ -1165,7 +1164,6 @@ __metadata:
     consola: "npm:3.2.3"
     cross-env: "npm:7.0.3"
     cspell: "npm:7.3.7"
-    dateformat: "npm:5.0.3"
     dprint: "npm:0.41.0"
     editorconfig: "npm:2.0.0"
     envinfo: "npm:7.10.0"
@@ -1199,6 +1197,7 @@ __metadata:
     rxjs: "npm:7.8.1"
     semver: "npm:7.5.4"
     sh-syntax: "npm:0.4.1"
+    tempfile: "npm:5.0.0"
     trash-cli: "npm:5.0.0"
     ts-dedent: "npm:2.2.0"
     typescript: "npm:5.2.2"
@@ -1884,13 +1883,6 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: 8497e539d1620b5f4a4d9dca3fa940168f6386b599743fdb0b10c51de7b5a3eb6cc127036052d4f68636a8d33b28b05af186f5c4070a8ed7943a762269413077
-  languageName: node
-  linkType: hard
-
-"@types/dateformat@npm:5.0.0":
-  version: 5.0.0
-  resolution: "@types/dateformat@npm:5.0.0"
-  checksum: fee3fff637675fd55b59fff6a0507a120ae212a0c7ba823c00a45473da617a7d466e6d7d40d2b4b88af9df3f4be3ed80a51e222ea346c7738de688aa2c6747f1
   languageName: node
   linkType: hard
 
@@ -3351,13 +3343,6 @@ __metadata:
   version: 7.0.0
   resolution: "dargs@npm:7.0.0"
   checksum: b8f1e3cba59c42e1f13a114ad4848c3fc1cf7470f633ee9e9f1043762429bc97d91ae31b826fb135eefde203a3fdb20deb0c0a0222ac29d937b8046085d668d1
-  languageName: node
-  linkType: hard
-
-"dateformat@npm:5.0.3":
-  version: 5.0.3
-  resolution: "dateformat@npm:5.0.3"
-  checksum: e7ef2f48faa8edd8a64c94b4ec1fe700777cd2f9db6411e76115eac7773255eef3cf12142568a90a665dfe90a7832a2af06e3d4ea3a0fac3727c3a7a4eac2568
   languageName: node
   linkType: hard
 
@@ -7757,6 +7742,22 @@ __metadata:
     mkdirp: "npm:^1.0.3"
     yallist: "npm:^4.0.0"
   checksum: 4848b92da8581e64ce4d8a760b47468dd9d212a4612846d8dd75b5c224a42c66ed5bcf8cfa9e9cd2eb64ebe1351413fb3eac93324a4eee536f0941beefa1f2eb
+  languageName: node
+  linkType: hard
+
+"temp-dir@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "temp-dir@npm:3.0.0"
+  checksum: 577211e995d1d584dd60f1469351d45e8a5b4524e4a9e42d3bdd12cfde1d0bb8f5898311bef24e02aaafb69514c1feb58c7b4c33dcec7129da3b0861a4ca935b
+  languageName: node
+  linkType: hard
+
+"tempfile@npm:5.0.0":
+  version: 5.0.0
+  resolution: "tempfile@npm:5.0.0"
+  dependencies:
+    temp-dir: "npm:^3.0.0"
+  checksum: c1c1a2c0944aade54b28c7b1d4c07b9d527c5a8d7d67c3a9faa39a34b31569d1c4992ac36c35f5379114e11f30efd654458cec9edaaa21dad73ac374c9b4c655
   languageName: node
   linkType: hard
 

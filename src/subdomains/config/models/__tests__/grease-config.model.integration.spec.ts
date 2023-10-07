@@ -12,6 +12,7 @@ describe('integration:config/models/GreaseConfig', () => {
     it('should fail validation if schema is invalid', async () => {
       // Arrange
       const subject: TestSubject = new TestSubject(cast({
+        changelog: { releases: -2 },
         colors: 3,
         config: 0,
         debug: 1,
@@ -25,7 +26,7 @@ describe('integration:config/models/GreaseConfig', () => {
         skipNullProperties: false,
         skipUndefinedProperties: false,
         stopAtFirstError: false,
-        validationError: { target: false, value: true }
+        validationError: { target: false, value: false }
       })
 
       // Expect

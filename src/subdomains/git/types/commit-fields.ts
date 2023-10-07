@@ -12,7 +12,7 @@ import type CommitLogField from './commit-log-field'
  * @see {@linkcode CommitLogField}
  */
 type CommitFields = Assign<Construct<Record<CommitLogField, string>>, {
-  [K in 'breaking' | 'pr' | 'scope' | 'subject' | 'type']: string
+  [K in 'breaking' | 'scope' | 'subject' | 'type']: string
 }>
 
 export type { CommitFields as default }

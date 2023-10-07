@@ -10,6 +10,7 @@ import type {
   Author,
   BreakingChange,
   CommitFields,
+  Mention,
   Reference,
   Trailer
 } from '#src/git/types'
@@ -20,6 +21,7 @@ import {
   defaults,
   get,
   ifelse,
+  includes,
   objectify,
   pick,
   select,
@@ -131,14 +133,12 @@ class Commit implements ICommit {
       this.fields,
       pick(get(this.grammar.header.exec(this.fields.header), 'groups')!, [
         'breaking',
-        'pr',
         'scope',
         'subject',
         'type'
       ]),
       {
         breaking: '',
-        pr: 'null',
         scope: '',
         subject: '',
         type: ''
@@ -185,34 +185,27 @@ class Commit implements ICommit {
   }
 
   /**
-   * Breaking changes noted in {@linkcode subject} and {@linkcode trailers}.
+   * Breaking changes noted in {@linkcode header} and {@linkcode trailers}.
    *
    * @see {@linkcode BreakingChange}
    *
    * @public
    *
-   * @return {BreakingChange<Commit>[]} Breaking changes array
+   * @return {BreakingChange[]} Breaking changes array
    */
-  public get breaks(): BreakingChange<Commit>[] {
+  public get breaks(): BreakingChange[] {
     return unique(select(
       [
-        this.fields.breaking
-          ? {
-            pr: this.pr,
-            scope: this.scope,
-            token: 'BREAKING-CHANGE',
-            type: this.type,
-            value: this.subject
-          }
-          : <Trailer>{ token: this.fields.breaking },
+        {
+          token: (this.fields.breaking && 'BREAKING-CHANGE').toString(),
+          value: this.subject
+        },
         ...this.trailers
       ],
       trailer => /^BREAKING[ -]CHANGE/.test(trailer.token),
       trailer => ({
-        commit: this,
-        mentions: this.mentions,
-        pr: get(trailer, 'pr', null),
-        scope: get(trailer, 'scope', null),
+        date: this.date,
+        scope: this.scope,
         subject: trailer.value,
         type: this.type
       })
@@ -256,29 +249,18 @@ class Commit implements ICommit {
   }
 
   /**
-   * Users mentioned in commit.
+   * Users and/or organizations mentioned in commit subject.
    *
-   * @public
+   * @see {@linkcode Mention}
    *
-   * @return {string[]} Mentions array
+   * @return {Mention[]} Mentions array
    */
-  public get mentions(): string[] {
+  public get mentions(): Mention[] {
     return select(
       [...this.chunk.matchAll(this.grammar.mention)],
       null,
-      match => get(match, 'groups.user')!
+      match => <Mention>get(match, 'groups.mention')
     )
-  }
-
-  /**
-   * Pull request number.
-   *
-   * @public
-   *
-   * @return {Nullable<number>} Pull request number or `null`
-   */
-  public get pr(): Nullable<number> {
-    return cast(JSON.parse(this.fields.pr))
   }
 
   /**
@@ -291,17 +273,46 @@ class Commit implements ICommit {
    * @return {Reference[]} Reference array
    */
   public get references(): Reference[] {
-    return select(
-      [...this.chunk.matchAll(this.grammar.reference)],
-      null,
-      m => ({
-        action: get(m, 'groups.action', null),
-        number: JSON.parse(get(m, 'groups.number', 'null')),
-        owner: get(m, 'groups.owner', null),
-        ref: get(m, 'groups.ref', ''),
-        repo: get(m, 'groups.repo', null)
+    return select([...this.chunk.matchAll(this.grammar.reference)], null, m => {
+      const {
+        action,
+        number,
+        owner,
+        repo,
+        prefix
+      } = defaults(get(m, 'groups', <Record<string, string>>{}), {
+        action: <Reference['action']>null,
+        number: 'null',
+        owner: <Reference['owner']>null,
+        prefix: '',
+        repo: <Reference['repo']>null
       })
-    )
+
+      /**
+       * Boolean indicating if reference prefix is an issue reference prefix.
+       *
+       * @const {boolean} issue
+       */
+      const issue: boolean = includes(this.grammar.options.issues, prefix)
+
+      /**
+       * Boolean indicating if reference prefix is a pull request reference
+       * prefix.
+       *
+       * @const {boolean} pr
+       */
+      const pr: boolean = includes(this.grammar.options.pr, prefix)
+
+      return {
+        action,
+        number: +number,
+        owner,
+        prefix,
+        ref: prefix + number,
+        repo,
+        type: ifelse(issue && pr, '*', ifelse(issue, 'issue', 'pr'))
+      }
+    })
   }
 
   /**
@@ -395,12 +406,14 @@ class Commit implements ICommit {
   /**
    * Get a JSON-serializable commit object.
    *
+   * @template U - JSON-serializable commit type
+   *
    * @public
    *
-   * @return {Simplify<ICommit>} JSON-serializable commit
+   * @return {Simplify<U>} JSON-serializable commit
    */
-  public toJSON(): Simplify<ICommit> {
-    return {
+  public toJSON<U extends ICommit = ICommit>(): Simplify<U> {
+    return <Simplify<U>>{
       author: this.author,
       body: this.body,
       breaking: this.breaking,
@@ -409,7 +422,6 @@ class Commit implements ICommit {
       hash: this.hash,
       header: this.header,
       mentions: this.mentions,
-      pr: this.pr,
       references: this.references,
       scope: this.scope,
       sha: this.sha,

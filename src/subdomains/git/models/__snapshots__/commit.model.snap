@@ -9,44 +9,7 @@ exports[`unit:git/models/Commit > #breaks > should return empty breaking changes
 exports[`unit:git/models/Commit > #breaks > should return non-empty breaking changes array 1`] = `
 [
   {
-    "commit": {
-      "author": {
-        "email": "unicornware@flexdevelopment.llc",
-        "name": "Lexus Drumgold",
-      },
-      "body": "",
-      "breaking": true,
-      "breaks": [
-        {
-          "commit": [Circular],
-          "mentions": [],
-          "pr": null,
-          "scope": null,
-          "subject": "init project rewrite",
-          "type": "refactor",
-        },
-      ],
-      "date": "2023-09-04T16:26:30-04:00",
-      "hash": "455c149",
-      "header": "refactor!: init project rewrite",
-      "mentions": [],
-      "pr": null,
-      "references": [],
-      "scope": null,
-      "sha": "455c1497e3ed5019ab0ebd234509703dadba206a",
-      "subject": "init project rewrite",
-      "tags": [],
-      "trailers": [
-        {
-          "token": "Signed-off-by",
-          "value": "Lexus Drumgold <unicornware@flexdevelopment.llc>",
-        },
-      ],
-      "type": "refactor",
-      "version": null,
-    },
-    "mentions": [],
-    "pr": null,
+    "date": "2023-09-04T16:26:30-04:00",
     "scope": null,
     "subject": "init project rewrite",
     "type": "refactor",
@@ -66,13 +29,9 @@ exports[`unit:git/models/Commit > #mentions > should return empty mentions array
 
 exports[`unit:git/models/Commit > #mentions > should return non-empty mentions array 1`] = `
 [
-  "dependabot",
+  "@dependabot",
 ]
 `;
-
-exports[`unit:git/models/Commit > #pr > should return null 1`] = `null`;
-
-exports[`unit:git/models/Commit > #pr > should return pull request number 1`] = `4`;
 
 exports[`unit:git/models/Commit > #references > should return empty reference array 1`] = `[]`;
 
@@ -82,36 +41,46 @@ exports[`unit:git/models/Commit > #references > should return non-empty referenc
     "action": null,
     "number": 15358,
     "owner": "prettier",
+    "prefix": "#",
     "ref": "#15358",
     "repo": "prettier",
+    "type": "*",
   },
   {
     "action": null,
     "number": 5715,
     "owner": "prettier",
+    "prefix": "#",
     "ref": "#5715",
     "repo": "prettier",
+    "type": "*",
   },
   {
     "action": null,
     "number": 11881,
     "owner": "prettier",
+    "prefix": "#",
     "ref": "#11881",
     "repo": "prettier",
+    "type": "*",
   },
   {
     "action": null,
     "number": 736,
     "owner": "dprint",
+    "prefix": "#",
     "ref": "#736",
     "repo": "dprint",
+    "type": "*",
   },
   {
     "action": null,
     "number": 432,
     "owner": "dprint",
+    "prefix": "#",
     "ref": "#432",
     "repo": "dprint-plugin-typescript",
+    "type": "*",
   },
 ]
 `;
@@ -145,7 +114,6 @@ exports[`unit:git/models/Commit > #toJSON > should return json-serializable comm
   "hash": "e003836",
   "header": "release: @flex-development/grease@2.0.0",
   "mentions": [],
-  "pr": null,
   "references": [],
   "scope": null,
   "sha": "e00383628638335e729d1cad2971b44ba03d3074",

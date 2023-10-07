@@ -63,7 +63,17 @@ const config: UserConfigExport = defineConfig((): UserConfig => {
           const CONSTRUCTOR_PARAMS_REGEX: RegExp =
             /(?<=constructor\(\s*)([^\n)].+?)(?=\n? *?\) ?{)/gs
 
-          // add "/* c8 ignore next */" before constructor parameters
+          /**
+           * Regular expression used to match `ValidateNested` decorator usage.
+           *
+           * @see https://regex101.com/r/6RpZPk
+           *
+           * @const {RegExp} VALIDATE_NESTED_REGEX
+           */
+          const VALIDATE_NESTED_REGEX: RegExp =
+            /(@ValidateNested.+(?=(?<=\s+)public|protected|private|#))/gs
+
+          // add ignore comment before constructor parameters
           for (const [match] of code.matchAll(CONSTRUCTOR_PARAMS_REGEX)) {
             code = code.replace(match, (params: string): string => {
               return split(params, '\n').reduce((acc, param) => {
@@ -73,6 +83,11 @@ const config: UserConfigExport = defineConfig((): UserConfig => {
                 )
               }, params)
             })
+          }
+
+          // add ignore comment before properties decorated with ValidateNested
+          for (const [match] of code.matchAll(VALIDATE_NESTED_REGEX)) {
+            code = code.replace(match, match + '/* c8 ignore next */ ')
           }
 
           return {

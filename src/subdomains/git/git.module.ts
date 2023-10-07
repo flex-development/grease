@@ -8,7 +8,7 @@ import { Global, Module } from '@nestjs/common'
 import { GitService } from './providers'
 
 /**
- * Global git operations module.
+ * Git operations module.
  *
  * @class
  */

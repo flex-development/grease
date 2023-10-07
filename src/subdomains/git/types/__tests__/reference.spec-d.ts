@@ -25,6 +25,10 @@ describe('unit-d:git/types/Reference', () => {
       .toEqualTypeOf<Nullable<string>>()
   })
 
+  it('should match [prefix: string]', () => {
+    expectTypeOf<TestSubject>().toHaveProperty('prefix').toEqualTypeOf<string>()
+  })
+
   it('should match [ref: string]', () => {
     expectTypeOf<TestSubject>().toHaveProperty('ref').toEqualTypeOf<string>()
   })
@@ -33,5 +37,11 @@ describe('unit-d:git/types/Reference', () => {
     expectTypeOf<TestSubject>()
       .toHaveProperty('repo')
       .toEqualTypeOf<Nullable<string>>()
+  })
+
+  it('should match [type: "*" | "issue" | "pr"]', () => {
+    expectTypeOf<TestSubject>()
+      .toHaveProperty('type')
+      .toEqualTypeOf<'*' | 'issue' | 'pr'>()
   })
 })

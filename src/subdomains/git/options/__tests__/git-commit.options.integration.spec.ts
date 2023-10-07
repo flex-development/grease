@@ -13,7 +13,10 @@ describe('integration:git/options/GitCommitOptions', () => {
       // Arrange
       const subject: TestSubject = new TestSubject(cast({
         Commit: () => vi.fn().mockName('Commit'),
+        actions: new Set<string>(),
         from: null,
+        issues: new Set<string>(),
+        pr: new Set<string>(),
         to: /^HEAD/
       }))
 

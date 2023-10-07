@@ -18,7 +18,15 @@ const config: UserConfig = {
     'scope-enum': [
       RuleConfigSeverity.Error,
       'always',
-      scopes(['bump', 'config', 'grease', 'nestjs', 'options'])
+      scopes([
+        'bump',
+        'changelog',
+        'config',
+        'git',
+        'grease',
+        'nestjs',
+        'options'
+      ])
     ]
   }
 }

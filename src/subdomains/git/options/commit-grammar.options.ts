@@ -28,7 +28,8 @@ class CommitGrammarOptions {
   /**
    * Reference action keywords.
    *
-   * @default []
+   * @default
+   *  based on provider
    *
    * @public
    * @instance
@@ -42,7 +43,8 @@ class CommitGrammarOptions {
   /**
    * Issue reference prefixes.
    *
-   * @default []
+   * @default
+   *  based on provider
    *
    * @public
    * @instance
@@ -55,7 +57,8 @@ class CommitGrammarOptions {
   /**
    * Pull request reference prefixes.
    *
-   * @default []
+   * @default
+   *  based on provider
    *
    * @public
    * @instance

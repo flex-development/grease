@@ -25,7 +25,8 @@ describe('functional:config/providers/ConfigService', () => {
        */
       print(value: unknown, printer: Fn<[unknown], string>): string {
         const { cwd, ...rest } = cast<GreaseConfig>(value)
-        return printer({ ...rest, cwd: '~' + cwd.replace(process.cwd(), '') })
+        rest.changelog.cwd = '~' + cwd.replace(process.cwd(), '')
+        return printer({ ...rest, cwd: rest.changelog.cwd })
       },
       /**
        * Check if `value` is a {@linkcode GreaseConfig} object.

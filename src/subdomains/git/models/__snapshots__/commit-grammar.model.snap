@@ -95,24 +95,6 @@ Signed-off-by: Lexus Drumgold <unicornware@flexdevelopment.llc>",
 ]
 `;
 
-exports[`unit:git/models/CommitGrammar > #header > should match raw commit header with [type,breaking,subject,pr] 1`] = `
-{
-  "0": "refactor!: statements (#3)",
-  "1": "refactor",
-  "2": undefined,
-  "3": "!",
-  "4": "statements (#3)",
-  "5": "3",
-  "groups": {
-    "breaking": "!",
-    "pr": "3",
-    "scope": undefined,
-    "subject": "statements (#3)",
-    "type": "refactor",
-  },
-}
-`;
-
 exports[`unit:git/models/CommitGrammar > #header > should match raw commit header with [type,breaking,subject] 1`] = `
 {
   "0": "feat!: watch mode",
@@ -120,31 +102,11 @@ exports[`unit:git/models/CommitGrammar > #header > should match raw commit heade
   "2": undefined,
   "3": "!",
   "4": "watch mode",
-  "5": undefined,
   "groups": {
     "breaking": "!",
-    "pr": undefined,
     "scope": undefined,
     "subject": "watch mode",
     "type": "feat",
-  },
-}
-`;
-
-exports[`unit:git/models/CommitGrammar > #header > should match raw commit header with [type,scope,breaking,subject,pr] 1`] = `
-{
-  "0": "refactor(utils)!: [getFormat] enforce absolute module id (#3)",
-  "1": "refactor",
-  "2": "utils",
-  "3": "!",
-  "4": "[getFormat] enforce absolute module id (#3)",
-  "5": "3",
-  "groups": {
-    "breaking": "!",
-    "pr": "3",
-    "scope": "utils",
-    "subject": "[getFormat] enforce absolute module id (#3)",
-    "type": "refactor",
   },
 }
 `;
@@ -156,31 +118,11 @@ exports[`unit:git/models/CommitGrammar > #header > should match raw commit heade
   "2": "utils",
   "3": "!",
   "4": "[\`analyzeOutputs\`] intake \`esbuild.Metafile.outputs\`",
-  "5": undefined,
   "groups": {
     "breaking": "!",
-    "pr": undefined,
     "scope": "utils",
     "subject": "[\`analyzeOutputs\`] intake \`esbuild.Metafile.outputs\`",
     "type": "refactor",
-  },
-}
-`;
-
-exports[`unit:git/models/CommitGrammar > #header > should match raw commit header with [type,scope,subject,pr] 1`] = `
-{
-  "0": "build(deps): Bump the flex-development group with 3 updates (#330)",
-  "1": "build",
-  "2": "deps",
-  "3": undefined,
-  "4": "Bump the flex-development group with 3 updates (#330)",
-  "5": "330",
-  "groups": {
-    "breaking": undefined,
-    "pr": "330",
-    "scope": "deps",
-    "subject": "Bump the flex-development group with 3 updates (#330)",
-    "type": "build",
   },
 }
 `;
@@ -192,31 +134,11 @@ exports[`unit:git/models/CommitGrammar > #header > should match raw commit heade
   "2": "config",
   "3": undefined,
   "4": "prevent \`import.meta.url\` from being rewritten",
-  "5": undefined,
   "groups": {
     "breaking": undefined,
-    "pr": undefined,
     "scope": "config",
     "subject": "prevent \`import.meta.url\` from being rewritten",
     "type": "fix",
-  },
-}
-`;
-
-exports[`unit:git/models/CommitGrammar > #header > should match raw commit header with [type,subject,pr] 1`] = `
-{
-  "0": "feat: file-to-file transpilation (#4)",
-  "1": "feat",
-  "2": undefined,
-  "3": undefined,
-  "4": "file-to-file transpilation (#4)",
-  "5": "4",
-  "groups": {
-    "breaking": undefined,
-    "pr": "4",
-    "scope": undefined,
-    "subject": "file-to-file transpilation (#4)",
-    "type": "feat",
   },
 }
 `;
@@ -228,10 +150,8 @@ exports[`unit:git/models/CommitGrammar > #header > should match raw commit heade
   "2": undefined,
   "3": undefined,
   "4": "add @dependabot config",
-  "5": undefined,
   "groups": {
     "breaking": undefined,
-    "pr": undefined,
     "scope": undefined,
     "subject": "add @dependabot config",
     "type": "ci",

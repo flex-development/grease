@@ -10,6 +10,8 @@ import GitOptions from './git.options'
 /**
  * Git tag retrieval options.
  *
+ * @see {@linkcode GitOptions}
+ *
  * @class
  * @extends {GitOptions}
  */

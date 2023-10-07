@@ -1,7 +1,108 @@
 {
+  "$defs": {
+    "ICommitType": {
+      "additionalProperties": false,
+      "properties": {
+        "hidden": {
+          "default": false,
+          "description": "remove commit type from changelog",
+          "type": "boolean"
+        },
+        "section": {
+          "description": "commit group title. defaults to type",
+          "type": "string"
+        },
+        "type": {
+          "description": "commit type",
+          "type": "string"
+        }
+      },
+      "required": ["type"],
+      "type": "object"
+    }
+  },
   "$id": "https://github.com/flex-development/grease/blob/main/grease.schema.json",
   "description": "Release workflow tool",
   "properties": {
+    "changelog": {
+      "additionalProperties": false,
+      "description": "changelog options",
+      "properties": {
+        "actions": {
+          "description": "reference action keywords",
+          "items": { "type": "string" },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "infile": {
+          "description": "read CHANGELOG from this file. defaults to CHANGELOG.md if samefile is true",
+          "type": "string"
+        },
+        "issues": {
+          "description": "issue reference prefixes",
+          "items": { "type": "string" },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "outfile": {
+          "description": "write CHANGELOG to this file. defaults to CHANGELOG.md if samefile is true",
+          "type": "string"
+        },
+        "pr": {
+          "description": "pull request reference prefixes",
+          "items": { "type": "string" },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "releases": {
+          "default": 1,
+          "description": "number of releases to be generated from the latest. if 0, the entire changelog will be regenerated",
+          "minimum": -1,
+          "type": "integer"
+        },
+        "samefile": {
+          "default": false,
+          "description": "output content to infile",
+          "type": "boolean"
+        },
+        "to": {
+          "default": "HEAD",
+          "description": "end of commit revision range",
+          "type": "string"
+        },
+        "types": {
+          "default": [
+            { "section": ":sparkles: Features", "type": "feat" },
+            { "section": ":bug: Fixes", "type": "fix" },
+            { "section": ":mechanical_arm: Refactors", "type": "refactor" },
+            { "section": ":fire: Performance Improvements", "type": "perf" },
+            { "section": ":wastebasket: Reverts", "type": "revert" },
+            { "section": ":pencil: Documentation", "type": "docs" },
+            { "section": ":white_check_mark: Testing", "type": "test" },
+            { "section": ":package: Build", "type": "build" },
+            { "section": ":robot: Continuous Integration", "type": "ci" },
+            { "section": ":house_with_garden: Housekeeping", "type": "chore" },
+            { "hidden": true, "type": "release" },
+            { "hidden": true, "type": "style" },
+            { "hidden": true, "type": "wip" }
+          ],
+          "description": "an array of objects representing explicitly supported commit message types and their visibility in the changelog",
+          "items": { "$ref": "#/$defs/ICommitType" },
+          "type": "array"
+        },
+        "unstable": {
+          "default": true,
+          "description": "include unstable releases",
+          "type": "boolean"
+        },
+        "write": {
+          "default": false,
+          "description": "write content to outfile instead of process.stdout",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "colors": {
       "default": true,
       "description": "enable colorized output",

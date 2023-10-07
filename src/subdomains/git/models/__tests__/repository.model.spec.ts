@@ -65,7 +65,7 @@ describe('unit:git/models/Repository', () => {
   describe('#keywords', () => {
     describe.each<[provider: keyof typeof RepositoryProvider, pr: string]>([
       ['BITBUCKET', 'pull-requests'],
-      ['GITHUB', 'pull'],
+      ['GITHUB', 'issues'],
       ['GITLAB', 'merge_requests']
     ])('RepositoryProvider.%s', (key, pr) => {
       let remote: string

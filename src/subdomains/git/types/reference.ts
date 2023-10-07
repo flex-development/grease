@@ -25,6 +25,11 @@ type Reference = {
   owner: Nullable<string>
 
   /**
+   * Reference prefix.
+   */
+  prefix: string
+
+  /**
    * The referenced issue or pull request.
    */
   ref: string
@@ -33,6 +38,11 @@ type Reference = {
    * Repository name.
    */
   repo: Nullable<string>
+
+  /**
+   * Reference type.
+   */
+  type: '*' | 'issue' | 'pr'
 }
 
 export type { Reference as default }

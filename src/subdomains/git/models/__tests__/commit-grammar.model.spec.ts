@@ -50,32 +50,16 @@ describe('unit:git/models/CommitGrammar', () => {
   describe('#header', () => {
     it.each<[components: string, header: string]>([
       [
-        'breaking,subject,pr',
-        'refactor!: statements (#3)'
-      ],
-      [
         'breaking,subject',
         'feat!: watch mode'
-      ],
-      [
-        'scope,breaking,subject,pr',
-        'refactor(utils)!: [getFormat] enforce absolute module id (#3)'
       ],
       [
         'scope,breaking,subject',
         'refactor(utils)!: [`analyzeOutputs`] intake `esbuild.Metafile.outputs`'
       ],
       [
-        'scope,subject,pr',
-        'build(deps): Bump the flex-development group with 3 updates (#330)'
-      ],
-      [
         'scope,subject',
         'fix(config): prevent `import.meta.url` from being rewritten'
-      ],
-      [
-        'subject,pr',
-        'feat: file-to-file transpilation (#4)'
       ],
       [
         'subject',

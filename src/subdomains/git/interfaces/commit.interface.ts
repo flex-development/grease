@@ -6,6 +6,7 @@
 import type {
   Author,
   BreakingChange,
+  Mention,
   Reference,
   Trailer
 } from '#src/git/types'
@@ -35,7 +36,7 @@ interface ICommit {
   breaking: boolean
 
   /**
-   * Breaking changes noted in {@linkcode subject} and {@linkcode trailers}.
+   * Breaking changes noted in {@linkcode header} and {@linkcode trailers}.
    *
    * @see {@linkcode BreakingChange}
    */
@@ -60,15 +61,11 @@ interface ICommit {
   header: string
 
   /**
-   * Users mentioned in commit message.
+   * Users and/or organizations mentioned in commit subject.
+   *
+   * @see {@linkcode Mention}
    */
-  mentions: string[]
-
-  /**
-   * Pull request number if commit {@linkcode subject} includes a pull request
-   * reference.
-   */
-  pr: Nullable<number>
+  mentions: Mention[]
 
   /**
    * Issue and/or pull request references.

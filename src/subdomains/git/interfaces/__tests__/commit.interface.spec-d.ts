@@ -3,7 +3,13 @@
  * @module grease/git/interfaces/tests/unit-d/ICommit
  */
 
-import type { Author, BreakingChange, Reference, Trailer } from '#src/git/types'
+import type {
+  Author,
+  BreakingChange,
+  Mention,
+  Reference,
+  Trailer
+} from '#src/git/types'
 import type { Nullable } from '@flex-development/tutils'
 import type TestSubject from '../commit.interface'
 
@@ -40,16 +46,10 @@ describe('unit-d:git/interfaces/ICommit', () => {
     expectTypeOf<TestSubject>().toHaveProperty('header').toEqualTypeOf<string>()
   })
 
-  it('should match [mentions: string[]]', () => {
+  it('should match [mentions: Mention[]]', () => {
     expectTypeOf<TestSubject>()
       .toHaveProperty('mentions')
-      .toEqualTypeOf<string[]>()
-  })
-
-  it('should match [pr: Nullable<number>]', () => {
-    expectTypeOf<TestSubject>()
-      .toHaveProperty('pr')
-      .toEqualTypeOf<Nullable<number>>()
+      .toEqualTypeOf<Mention[]>()
   })
 
   it('should match [references: Reference[]]', () => {

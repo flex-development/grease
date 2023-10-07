@@ -4,7 +4,6 @@
  */
 
 import { Commit } from '#src/git/models'
-import CommitGrammarOptions from '../commit-grammar.options'
 import TestSubject from '../git-commit.options'
 
 describe('unit:git/options/GitCommitOptions', () => {
@@ -19,13 +18,20 @@ describe('unit:git/options/GitCommitOptions', () => {
       expect(subject).to.have.property('Commit', Commit)
     })
 
+    it('should set #actions', () => {
+      expect(subject).to.have.deep.property('actions', [])
+    })
+
     it('should set #from', () => {
       expect(subject).to.have.property('from', '')
     })
 
-    it('should set #grammar', () => {
-      expect(subject)
-        .to.have.deep.property('grammar', new CommitGrammarOptions())
+    it('should set #issues', () => {
+      expect(subject).to.have.deep.property('issues', [])
+    })
+
+    it('should set #pr', () => {
+      expect(subject).to.have.deep.property('pr', [])
     })
 
     it('should set #to', () => {

@@ -24,12 +24,12 @@ class CommitGrammar {
    *
    * @see {@linkcode CommitGrammarOptions}
    *
-   * @protected
+   * @public
    * @readonly
    * @instance
-   * @member {CommitGrammarOptions} options
+   * @member {Readonly<CommitGrammarOptions>} options
    */
-  protected readonly options: CommitGrammarOptions
+  public readonly options: Readonly<CommitGrammarOptions>
 
   /**
    * Create a new commit grammar instance.
@@ -39,7 +39,7 @@ class CommitGrammar {
    * @param {Partial<CommitGrammarOptions>?} [options] - Grammar options
    */
   constructor(options?: Partial<CommitGrammarOptions>) {
-    this.options = new CommitGrammarOptions(options)
+    this.options = Object.freeze(new CommitGrammarOptions(options))
   }
 
   /**
@@ -66,7 +66,7 @@ class CommitGrammar {
    * @return {RegExp} Commit header regex
    */
   public get header(): RegExp {
-    return /^(?<type>[a-z]+)(?:\((?<scope>[a-z-]+)\))?(?<breaking>!)?: +(?<subject>(?:.+ \([!#](?<pr>\d+)\))|.+)/i
+    return /^(?<type>[a-z]+)(?:\((?<scope>[a-z-]+)\))?(?<breaking>!)?: +(?<subject>.+)/i
   }
 
   /**
@@ -93,7 +93,7 @@ class CommitGrammar {
    */
   public get reference(): RegExp {
     /**
-     * Pattern matching issue references in commit bodies.
+     * Pattern matching references in raw commits.
      *
      * @const {string} pattern
      */

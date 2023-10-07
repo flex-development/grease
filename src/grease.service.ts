@@ -11,10 +11,17 @@ import {
   type BumpOperationDTO
 } from '#src/bump'
 import {
+  ChangelogEvent,
+  ChangelogOperation,
+  type ChangelogOperationDTO,
+  type ChangelogStream
+} from '#src/changelog'
+import {
   ConfigService,
   type GreaseConfig,
   type IGreaseConfig
 } from '#src/config'
+import type { Commit } from '#src/git'
 import type { PackageManifest } from '#src/models'
 import { LoggerService, ValidationService } from '#src/providers'
 import { cast, isString, type EmptyObject } from '@flex-development/tutils'
@@ -87,6 +94,38 @@ class GreaseService {
   }
 
   /**
+   * Generate a changelog from git metadata.
+   *
+   * @see {@linkcode ChangelogEvent}
+   * @see {@linkcode ChangelogOperationDTO}
+   * @see {@linkcode ChangelogStream}
+   *
+   * @public
+   * @async
+   * @fires ChangelogEvent
+   *
+   * @template T - Parsed commit type
+   *
+   * @param {ChangelogOperationDTO<T>?} [operation] - Changelog operation
+   * @return {Promise<ChangelogStream<T>>} Changlog stream
+   */
+  public async changelog<T extends Commit = Commit>(
+    operation?: ChangelogOperationDTO<T>
+  ): Promise<ChangelogStream<T>> {
+    operation = await this.validator.validate(new ChangelogOperation(operation))
+
+    /**
+     * Changelog stream.
+     *
+     * @const {ChangelogStream<T>}
+     */
+    const stream: ChangelogStream<T> = await this.operations.execute(operation)
+
+    this.events.publish(new ChangelogEvent<T>(stream, cast(operation)))
+    return stream
+  }
+
+  /**
    * Load configuration options from a grease config file.
    *
    * @see {@linkcode GreaseConfig}
@@ -97,12 +136,12 @@ class GreaseService {
    *
    * @template T - Parsed commit type
    *
-   * @param {IGreaseConfig?} [opts] - Configuration overrides
-   * @return {Promise<EmptyObject | GreaseConfig>} Configuration options
+   * @param {IGreaseConfig<T>?} [opts] - Configuration overrides
+   * @return {Promise<EmptyObject | GreaseConfig<T>>} Configuration options
    */
-  public async config(
-    opts?: IGreaseConfig
-  ): Promise<EmptyObject | GreaseConfig> {
+  public async config<T extends Commit = Commit>(
+    opts?: IGreaseConfig<T>
+  ): Promise<EmptyObject | GreaseConfig<T>> {
     const { config } = await this.validator.validate(new GlobalOptions(opts))
     return isString(config) ? this.gc.load(config, opts) : this.gc.search(opts)
   }

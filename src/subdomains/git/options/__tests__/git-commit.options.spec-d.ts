@@ -4,7 +4,6 @@
  */
 
 import type { CommitConstructor } from '#src/git/types'
-import type CommitGrammarOptions from '../commit-grammar.options'
 import type TestSubject from '../git-commit.options'
 import type GitOptions from '../git.options'
 
@@ -19,14 +18,24 @@ describe('unit-d:git/options/GitCommitOptions', () => {
       .toEqualTypeOf<CommitConstructor>()
   })
 
+  it('should match [actions: string[]]', () => {
+    expectTypeOf<TestSubject>()
+      .toHaveProperty('actions')
+      .toEqualTypeOf<string[]>()
+  })
+
   it('should match [from: string]', () => {
     expectTypeOf<TestSubject>().toHaveProperty('from').toEqualTypeOf<string>()
   })
 
-  it('should match [grammar: Omit<CommitGrammarOptions, "provider" | "tagprefix">]', () => {
+  it('should match [issues: string[]]', () => {
     expectTypeOf<TestSubject>()
-      .toHaveProperty('grammar')
-      .toEqualTypeOf<Omit<CommitGrammarOptions, 'provider' | 'tagprefix'>>()
+      .toHaveProperty('issues')
+      .toEqualTypeOf<string[]>()
+  })
+
+  it('should match [pr: string[]]', () => {
+    expectTypeOf<TestSubject>().toHaveProperty('pr').toEqualTypeOf<string[]>()
   })
 
   it('should match [to: string]', () => {

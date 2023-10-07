@@ -6,6 +6,7 @@
 import pkg from '#pkg' assert { type: 'json' }
 import type { IGreaseConfig } from '#src/config/interfaces'
 import { GreaseConfig } from '#src/config/models'
+import type { Commit } from '#src/git'
 import { GlobalOptions } from '#src/options'
 import { LoggerService, ValidationService } from '#src/providers'
 import type {
@@ -21,6 +22,7 @@ import {
   get,
   join,
   merge,
+  omit,
   template,
   type EmptyObject,
   type Merge
@@ -103,14 +105,16 @@ class ConfigService {
    * @public
    * @async
    *
+   * @template T - Parsed commit type
+   *
    * @param {string} file - Path to config file
-   * @param {IGreaseConfig?} [opts={}] - Configuration overrides
-   * @return {Promise<GreaseConfig>} Validated configuration object
+   * @param {IGreaseConfig<T>?} [opts={}] - Configuration overrides
+   * @return {Promise<GreaseConfig<T>>} Validated configuration object
    */
-  public async load(
+  public async load<T extends Commit = Commit>(
     file: string,
-    opts: IGreaseConfig = {}
-  ): Promise<EmptyObject | GreaseConfig> {
+    opts: IGreaseConfig<T> = {}
+  ): Promise<EmptyObject | GreaseConfig<T>> {
     this.logger.sync(opts)
 
     switch (true) {
@@ -134,9 +138,9 @@ class ConfigService {
         /**
          * User configuration object.
          *
-         * @var {IGreaseConfig} config
+         * @var {IGreaseConfig<T>} config
          */
-        let config: IGreaseConfig = {}
+        let config: IGreaseConfig<T> = {}
 
         /**
          * Config file source content.
@@ -213,7 +217,8 @@ class ConfigService {
     T extends IGreaseConfig = IGreaseConfig,
     U extends IGreaseConfig = IGreaseConfig
   >(config: T, opts: U = <U>{}): Merge<T, [U]> {
-    return merge<T, [U]>(config, opts)
+    config.changelog = merge({ ...config.changelog }, { ...opts.changelog })
+    return merge<T, [U]>(config, <U>omit(opts, ['changelog']))
   }
 
   /**
@@ -225,12 +230,14 @@ class ConfigService {
    * @public
    * @async
    *
-   * @param {IGreaseConfig?} [opts={}] - Configuration overrides
-   * @return {Promise<EmptyObject | GreaseConfig>} Configuration options
+   * @template T - Parsed commit type
+   *
+   * @param {IGreaseConfig<T>?} [opts={}] - Configuration overrides
+   * @return {Promise<EmptyObject | GreaseConfig<T>>} Configuration options
    */
-  public async search(
-    opts: IGreaseConfig = {}
-  ): Promise<EmptyObject | GreaseConfig> {
+  public async search<T extends Commit = Commit>(
+    opts: IGreaseConfig<T> = {}
+  ): Promise<EmptyObject | GreaseConfig<T>> {
     return this.load(at(await fg(ConfigService.SEARCH_PATTERN, {
       absolute: true,
       cwd: new GlobalOptions(opts).cwd

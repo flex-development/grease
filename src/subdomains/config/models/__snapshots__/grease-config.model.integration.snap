@@ -3,12 +3,58 @@
 exports[`integration:config/models/GreaseConfig > validation > should fail validation if schema is invalid 1`] = `
 [
   ValidationError {
+    "children": [
+      ValidationError {
+        "children": [],
+        "constraints": {
+          "isBoolean": "colors must be a boolean value",
+        },
+        "property": "colors",
+      },
+      ValidationError {
+        "children": [],
+        "constraints": {
+          "isFile": "config must be a file path or url",
+        },
+        "property": "config",
+      },
+      ValidationError {
+        "children": [],
+        "constraints": {
+          "isBoolean": "debug must be a boolean value",
+        },
+        "property": "debug",
+      },
+      ValidationError {
+        "children": [],
+        "constraints": {
+          "isBoolean": "quiet must be a boolean value",
+        },
+        "property": "quiet",
+      },
+      ValidationError {
+        "children": [],
+        "constraints": {
+          "isString": "tagprefix must be a string",
+        },
+        "property": "tagprefix",
+      },
+      ValidationError {
+        "children": [],
+        "constraints": {
+          "min": "releases must not be less than -1",
+        },
+        "property": "releases",
+      },
+    ],
+    "property": "changelog",
+  },
+  ValidationError {
     "children": [],
     "constraints": {
       "isBoolean": "colors must be a boolean value",
     },
     "property": "colors",
-    "value": 3,
   },
   ValidationError {
     "children": [],
@@ -16,7 +62,6 @@ exports[`integration:config/models/GreaseConfig > validation > should fail valid
       "isFile": "config must be a file path or url",
     },
     "property": "config",
-    "value": 0,
   },
   ValidationError {
     "children": [],
@@ -24,7 +69,6 @@ exports[`integration:config/models/GreaseConfig > validation > should fail valid
       "isBoolean": "debug must be a boolean value",
     },
     "property": "debug",
-    "value": 1,
   },
   ValidationError {
     "children": [],
@@ -32,7 +76,6 @@ exports[`integration:config/models/GreaseConfig > validation > should fail valid
       "isBoolean": "quiet must be a boolean value",
     },
     "property": "quiet",
-    "value": 0,
   },
   ValidationError {
     "children": [],
@@ -40,7 +83,6 @@ exports[`integration:config/models/GreaseConfig > validation > should fail valid
       "isString": "tagprefix must be a string",
     },
     "property": "tagprefix",
-    "value": null,
   },
 ]
 `;

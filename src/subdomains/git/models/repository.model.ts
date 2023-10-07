@@ -4,10 +4,7 @@
  */
 
 import { RepositoryProvider } from '#src/git/enums'
-import type {
-  RepositoryHost,
-  RepositoryKeywords
-} from '#src/git/types'
+import type { RepositoryHost, RepositoryKeywords } from '#src/git/types'
 import { PackageManifest } from '#src/models'
 import {
   cast,
@@ -17,11 +14,6 @@ import {
   template,
   trim
 } from '@flex-development/tutils'
-import {
-  IsEnum,
-  IsString,
-  MinLength
-} from 'class-validator'
 
 /**
  * Repository model.
@@ -40,8 +32,6 @@ class Repository {
    * @instance
    * @member {string} owner
    */
-  @IsString()
-  @MinLength(1)
   public readonly owner: string
 
   /**
@@ -56,7 +46,6 @@ class Repository {
    * @instance
    * @member {RepositoryProvider} provider
    */
-  @IsEnum(RepositoryProvider)
   public readonly provider: RepositoryProvider
 
   /**
@@ -70,8 +59,6 @@ class Repository {
    * @instance
    * @member {string} repo
    */
-  @IsString()
-  @MinLength(1)
   public readonly repo: string
 
   /**
@@ -148,7 +135,7 @@ class Repository {
       case RepositoryProvider.GITLAB:
         return { commit: 'commit', issue: 'issues', pr: 'merge_requests' }
       default:
-        return { commit: 'commit', issue: 'issues', pr: 'pull' }
+        return { commit: 'commit', issue: 'issues', pr: 'issues' }
     }
   }
 

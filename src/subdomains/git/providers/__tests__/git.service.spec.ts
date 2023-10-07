@@ -6,37 +6,43 @@
 import sha from '#fixtures/git/grease/sha'
 import tagprefix from '#fixtures/git/grease/tagprefix'
 import pkg from '#pkg' assert { type: 'json' }
-import type { ICommit } from '#src/git/interfaces'
 import { LoggerService, ValidationService } from '#src/providers'
-import type { Nullable } from '@flex-development/tutils'
-import { Test, type TestingModule } from '@nestjs/testing'
+import { template } from '@flex-development/tutils'
+import { Test } from '@nestjs/testing'
 import fs from 'node:fs/promises'
 import TestSubject from '../git.service'
 
 describe('unit:git/providers/GitService', () => {
-  let ref: TestingModule
   let subject: TestSubject
 
   beforeAll(async () => {
-    ref = await Test.createTestingModule({
+    subject = (await Test.createTestingModule({
       providers: [LoggerService, TestSubject, ValidationService]
-    }).compile()
-
-    subject = ref.get(TestSubject)
+    }).compile()).get(TestSubject)
   })
 
   describe('#commits', () => {
+    let version: string
+
+    beforeAll(() => {
+      version = '2.0.0'
+    })
+
     it('should return parsed commit array', async () => {
       // Arrange
       vi.spyOn(subject, 'log').mockImplementationOnce(async () => {
-        return fs.readFile(
-          '__fixtures__/git/grease/commits-from-2.0.0.txt',
-          'utf8'
-        )
+        const id = `__fixtures__/git/grease/commits-from-${version}.txt`
+        return fs.readFile(id, 'utf8')
       })
 
-      // Act + Expect
-      expect(await subject.commits({ to: sha })).to.be.an('array').of.length(26)
+      // Act
+      const result = await subject.commits({
+        from: template('{tagprefix}{version}', { tagprefix, version }),
+        to: sha
+      })
+
+      // Expect
+      expect(result).toMatchSnapshot()
     })
   })
 
@@ -71,25 +77,28 @@ describe('unit:git/providers/GitService', () => {
 
   describe('#origin', () => {
     it('should return remote origin url', async () => {
-      expect(await subject.origin()).to.startWith(pkg.homepage)
+      // Arrange
+      const url: string = pkg.repository.replace(/\.git$/, '')
+
+      // Act + Expect
+      expect(await subject.origin()).to.startWith(url)
     })
   })
 
-  describe('#parent', () => {
-    it.each<[string, Nullable<string>, Pick<ICommit, 'sha'>]>([
-      ['null', null, { sha: faker.git.commitSha() }],
-      ['oldest tag containing commit', 'grease@2.0.0', {
-        sha: 'e9144b57b92f0236528974df9fbd3610bc191a02'
-      }]
-    ])('should return %s', async (_, expected, commit) => {
-      expect(await subject.parent(commit, { tagprefix })).to.equal(expected)
+  describe('#tag', () => {
+    it('should return command output', async () => {
+      // Arrange
+      const args: string[] = ['--sort', '-creatordate', '--list']
+
+      // Act + Expect
+      expect(await subject.tag(args)).to.include(tagprefix)
     })
   })
 
   describe('#tags', () => {
     it('should return tags array with unstable tags', async () => {
       // Arrange
-      vi.spyOn(subject, 'exec').mockImplementationOnce(async () => {
+      vi.spyOn(subject, 'tag').mockImplementationOnce(async () => {
         return fs.readFile('__fixtures__/git/mkbuild/tags.txt', 'utf8')
       })
 
@@ -103,7 +112,7 @@ describe('unit:git/providers/GitService', () => {
 
     it('should return tags array without unstable tags', async () => {
       // Arrange
-      vi.spyOn(subject, 'exec').mockImplementationOnce(async () => {
+      vi.spyOn(subject, 'tag').mockImplementationOnce(async () => {
         return fs.readFile('__fixtures__/git/tutils/tags.txt', 'utf8')
       })
 

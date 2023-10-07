@@ -11,6 +11,11 @@ import {
   RecommendedBump,
   type BumpOperationDTO
 } from '#src/bump'
+import {
+  ChangelogModule,
+  ChangelogStream,
+  type ChangelogOperationDTO
+} from '#src/changelog'
 import { ConfigModule } from '#src/config'
 import { ReleaseType } from '#src/enums'
 import { GitModule, GitService } from '#src/git'
@@ -20,6 +25,7 @@ import type { Spy } from '#tests/interfaces'
 import type { Partial } from '@flex-development/tutils'
 import { CqrsModule } from '@nestjs/cqrs'
 import { Test } from '@nestjs/testing'
+import tempfile from 'tempfile'
 import TestSubject from '../grease.service'
 
 describe('unit:GreaseService', () => {
@@ -27,7 +33,13 @@ describe('unit:GreaseService', () => {
 
   beforeAll(async () => {
     subject = (await (await Test.createTestingModule({
-      imports: [BumpModule, ConfigModule, CqrsModule.forRoot(), GitModule],
+      imports: [
+        BumpModule,
+        ChangelogModule,
+        ConfigModule,
+        CqrsModule.forRoot(),
+        GitModule
+      ],
       providers: [LoggerService, TestSubject, ValidationService]
     }).compile()).init()).get(TestSubject)
   })
@@ -50,6 +62,28 @@ describe('unit:GreaseService', () => {
       // Expect
       expect(result).to.be.instanceof(PackageManifest)
       expect(result.pkg).toMatchSnapshot()
+    })
+  })
+
+  describe('#changelog', () => {
+    let operation: ChangelogOperationDTO
+
+    beforeAll(() => {
+      operation = {
+        outfile: tempfile({ extension: '.md' }),
+        tagprefix,
+        to: sha,
+        write: true
+      }
+    })
+
+    it('should return changelog stream', async () => {
+      // Act
+      const result = await subject.changelog(operation)
+
+      // Expect
+      expect(result).to.be.instanceof(ChangelogStream)
+      expect(result).to.have.property('chunks').be.an('array').of.length(2)
     })
   })
 

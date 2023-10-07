@@ -19,10 +19,6 @@ describe('unit-d:git/types/CommitFields', () => {
       .toEqualTypeOf<string>()
   })
 
-  it('should match [pr: string]', () => {
-    expectTypeOf<TestSubject>().toHaveProperty('pr').toEqualTypeOf<string>()
-  })
-
   it('should match [scope: string]', () => {
     expectTypeOf<TestSubject>().toHaveProperty('scope').toEqualTypeOf<string>()
   })

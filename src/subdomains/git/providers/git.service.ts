@@ -3,7 +3,6 @@
  * @module grease/git/providers/GitService
  */
 
-import type { ICommit } from '#src/git/interfaces'
 import { Commit, Repository } from '#src/git/models'
 import {
   GitCommitOptions,
@@ -12,22 +11,17 @@ import {
 } from '#src/git/options'
 import { LoggerService, ValidationService } from '#src/providers'
 import {
-  at,
   ifelse,
-  isNull,
   join,
   pick,
   regexp,
   select,
   sift,
-  sort,
   split,
   template,
-  timeunix,
   trim,
   tryit,
-  type Fn,
-  type Nullable
+  type Fn
 } from '@flex-development/tutils'
 import { Injectable } from '@nestjs/common'
 import { exec, type ExecException, type ExecOptions } from 'node:child_process'
@@ -106,7 +100,7 @@ class GitService {
   }
 
   /**
-   * Get an array of parsed commits.
+   * Get an array of parsed commits in reverse chronological order.
    *
    * @see {@linkcode GitCommitOptions}
    *
@@ -121,13 +115,7 @@ class GitService {
   public async commits<T extends Commit = Commit>(
     opts?: Partial<GitCommitOptions<T>>
   ): Promise<T[]> {
-    const {
-      Commit,
-      cwd,
-      from,
-      grammar,
-      to
-    } = await this.validator.validate(opts = new GitCommitOptions<T>(opts))
+    opts = await this.validator.validate(new GitCommitOptions<T>(opts))
 
     /**
      * Repository instance.
@@ -148,15 +136,15 @@ class GitService {
         delimiter: GitService.RAW_COMMIT_DELIMITER,
         format: GitService.RAW_COMMIT_FORMAT
       }),
-      join(sift([from, to]), '..'),
-      ifelse(cwd === process.cwd(), '', `-- ${cwd}`)
+      join(sift([opts.from, opts.to]), '..'),
+      ifelse(opts.cwd === process.cwd(), '', `-- ${opts.cwd}`)
     ]), opts)
 
-    return sort(select(
+    return select(
       split(logs, new RegExp(`${regexp(GitService.RAW_COMMIT_DELIMITER)}\n?`)),
       chunk => !!trim(chunk),
-      chunk => new Commit(trim(chunk), repository, grammar)
-    ), (a, b) => timeunix(b.date) - timeunix(a.date))
+      chunk => new opts!.Commit!(trim(chunk), repository, opts)
+    )
   }
 
   /**
@@ -213,7 +201,7 @@ class GitService {
    * @public
    * @async
    *
-   * @param {ReadonlyArray<string>?} [args=[]] - `git log` options
+   * @param {ReadonlyArray<string>?} [args=[]] - Command arguments and options
    * @param {Partial<GitOptions>?} [opts={}] - Git exec options
    * @return {Promise<string>} Command output
    */
@@ -238,37 +226,22 @@ class GitService {
   }
 
   /**
-   * Get the name of the oldest tag containing `commit`.
+   * Create, list, delete or verify a tag object signed with GPG.
    *
-   * @see {@linkcode GitTagOptions}
-   * @see {@linkcode ICommit}
+   * @see https://git-scm.com/docs/git-tag
    *
    * @public
    * @async
    *
-   * @param {Pick<ICommit, 'sha'>} commit - Commit to find
-   * @param {Partial<GitTagOptions>} [opts] - Search options
-   * @return {Promise<Nullable<string>>} Tag containing `commit` or `null`
-   * @throws {Error}
+   * @param {ReadonlyArray<string>?} [args=[]] - Command arguments and options
+   * @param {Partial<GitOptions>?} [opts={}] - Git exec options
+   * @return {Promise<string>} Command output
    */
-  public async parent(
-    commit: Pick<ICommit, 'sha'>,
-    opts?: Partial<GitTagOptions>
-  ): Promise<Nullable<string>> {
-    opts = await this.validator.validate(new GitTagOptions(opts))
-
-    // get chronological list of tags containing commit
-    const [e, tags] = await tryit(this.exec.bind(this))([
-      'tag',
-      '--sort creatordate',
-      template('--list \'{tagprefix}*\'', opts),
-      template('--contains {sha}', commit)
-    ], opts)
-
-    // throw fatal error
-    /* c8 ignore next */ if (e && !/no such commit/.test(e.message)) throw e
-
-    return ifelse(isNull(e) && tags, at(split(tags, '\n'), 0), null)
+  public async tag(
+    args: readonly string[] = [],
+    opts: Partial<GitOptions> = {}
+  ): Promise<string> {
+    return this.exec(['tag', ...args], opts)
   }
 
   /**
@@ -290,8 +263,7 @@ class GitService {
      *
      * @const {string} tags
      */
-    const tags: string = await this.exec([
-      'tag',
+    const tags: string = await this.tag([
       '--sort -creatordate',
       template('--list \'{tagprefix}*\'', opts)
     ], opts)

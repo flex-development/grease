@@ -1851,7 +1851,7 @@ release: @flex-development/grease@1.1.0
 -sha-
 5892cdeac7cbc11e1ab7bb5f4e0fe175809c99c8
 -tags-
-tag: grease@1.1.0
+
 -trailers-
 release: @flex-development/grease@1.1.0
 --$--
@@ -1870,7 +1870,7 @@ release: @flex-development/grease@1.1.0
 -sha-
 60b1c7253495f0085ad9e33f8215a89e155b8f34
 -tags-
-
+tag: grease@1.1.0
 -trailers-
 
 --$--
@@ -2280,7 +2280,7 @@ merge: release @flex-development/log@1.0.2
 -sha-
 307bfe4cb9a529ecd8aab8dc9c0a5ce251488222
 -tags-
-tag: grease@1.0.2
+
 -trailers-
 release: @flex-development/grease@1.0.2
 --$--
@@ -2299,7 +2299,7 @@ release: @flex-development/grease@1.0.2
 -sha-
 562953e50ab9f5ec934a0cb860f42ce608e54fb1
 -tags-
-
+tag: grease@1.0.2
 -trailers-
 
 --$--
@@ -2356,7 +2356,7 @@ merge: release @flex-development/grease@1.0.1
 -sha-
 b835eb8c260312d9a04cc1dd04fe73219cff2dd6
 -tags-
-tag: grease@1.0.1
+
 -trailers-
 release: @flex-development/grease@1.0.1
 --$--
@@ -2375,7 +2375,7 @@ release: @flex-development/grease@1.0.1
 -sha-
 7182992b20e571cd7c35e57120edbc74f140f4fb
 -tags-
-
+tag: grease@1.0.1
 -trailers-
 
 --$--

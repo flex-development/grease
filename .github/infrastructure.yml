@@ -220,9 +220,15 @@ repository:
     - bump
     - changelog
     - cli
+    - commit
+    - commit-analyzer
+    - conventional-changelog
+    - conventional-commits
+    - conventionalcommits
     - git
     - github
     - release
+    - semver
     - typescript
     - version
   visibility: public

@@ -7,18 +7,20 @@ import { IsConstructor } from '#src/decorators'
 import { Commit } from '#src/git/models'
 import type { CommitConstructor } from '#src/git/types'
 import {
-  define,
   get,
+  isString,
+  select,
   type Constructor,
-  type Omit,
   type Partial
 } from '@flex-development/tutils'
-import { IsInstance, IsString, ValidateNested } from 'class-validator'
-import CommitGrammarOptions from './commit-grammar.options'
+import { IsArray, IsString, MinLength } from 'class-validator'
 import GitOptions from './git.options'
 
 /**
  * Git commit retrieval and parsing options.
+ *
+ * @see {@linkcode Commit}
+ * @see {@linkcode GitOptions}
  *
  * @template T - Parsed commit type
  *
@@ -39,6 +41,21 @@ class GitCommitOptions<T extends Commit = Commit> extends GitOptions {
   public Commit: CommitConstructor<T>
 
   /**
+   * Reference action keywords.
+   *
+   * @default
+   *  based on repository provider
+   *
+   * @public
+   * @instance
+   * @member {string[]} actions
+   */
+  @IsArray()
+  @IsString({ each: true })
+  @MinLength(1, { each: true })
+  public actions: string[]
+
+  /**
    * Revision range start.
    *
    * @default ''
@@ -51,17 +68,32 @@ class GitCommitOptions<T extends Commit = Commit> extends GitOptions {
   public from: string
 
   /**
-   * Commit parser grammar options.
+   * Issue reference prefixes.
    *
-   * @default new CommitGrammarOptions(this)
+   * @default
+   *  based on repository provider
    *
    * @public
    * @instance
-   * @member {Omit<CommitGrammarOptions, 'provider' | 'tagprefix'>} grammar
+   * @member {string[]} issues
    */
-  @IsInstance(CommitGrammarOptions)
-  @ValidateNested()
-  public grammar: Omit<CommitGrammarOptions, 'provider' | 'tagprefix'>
+  @IsArray()
+  @IsString({ each: true })
+  public issues: string[]
+
+  /**
+   * Pull request reference prefixes.
+   *
+   * @default
+   *  based on repository provider
+   *
+   * @public
+   * @instance
+   * @member {string[]} pr
+   */
+  @IsArray()
+  @IsString({ each: true })
+  public pr: string[]
 
   /**
    * Revision range end.
@@ -83,10 +115,11 @@ class GitCommitOptions<T extends Commit = Commit> extends GitOptions {
   constructor(opts?: Partial<GitCommitOptions<T>>) {
     super(opts)
     this.Commit = get(opts, 'Commit', <Constructor<T>>Commit)
+    this.actions = select(get(opts, 'actions'), isString)
     this.from = get(opts, 'from', '')
-    this.grammar = new CommitGrammarOptions(get(opts, 'grammar'))
+    this.issues = select(get(opts, 'issues'), isString)
+    this.pr = select(get(opts, 'pr'), isString)
     this.to = get(opts, 'to', 'HEAD')
-    define(this.grammar, 'tagprefix', { value: this.tagprefix })
   }
 }
 

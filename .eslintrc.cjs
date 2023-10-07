@@ -10,7 +10,15 @@
  */
 const config = {
   extends: ['./.eslintrc.base.cjs'],
-  overrides: [...require('./.eslintrc.base.cjs').overrides],
+  overrides: [
+    ...require('./.eslintrc.base.cjs').overrides,
+    {
+      files: ['src/subdomains/changelog/models/changelog-stream.model.ts'],
+      rules: {
+        'promise/prefer-await-to-callbacks': 0
+      }
+    }
+  ],
   root: true
 }
 

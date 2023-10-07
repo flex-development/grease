@@ -40,7 +40,6 @@ describe('unit:git/models/Commit', () => {
           'date',
           'hash',
           'header',
-          'pr',
           'scope',
           'sha',
           'subject',
@@ -164,15 +163,6 @@ describe('unit:git/models/Commit', () => {
       ['non-empty', await chunkfix('mkbuild', 'ci')]
     ])('should return %s mentions array', (_, chunk) => {
       expect(new TestSubject(chunk).mentions).toMatchSnapshot()
-    })
-  })
-
-  describe('#pr', async () => {
-    it.each<[string, string]>([
-      ['null', await chunkfix('grease', 'fix-node')],
-      ['pull request number', await chunkfix('mkbuild', 'feat-pr')]
-    ])('should return %s', (_, chunk) => {
-      expect(new TestSubject(chunk).pr).toMatchSnapshot()
     })
   })
 
