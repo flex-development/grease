@@ -5,12 +5,13 @@
 
 import today from '#fixtures/changelog/today'
 import types from '#fixtures/changelog/types'
-import git from '#fixtures/git.service'
 import sha from '#fixtures/git/grease/sha'
-import tagprefix from '#fixtures/git/grease/tagprefix'
+import cqh from '#fixtures/query-commit.handler'
+import tqh from '#fixtures/query-tag.handler'
+import gc from '#gc' assert { type: 'json' }
+import { CommitQuery, TagQuery } from '#src/git'
 import semtag from '#tests/utils/semtag'
-import { template, type Assign, type Pick } from '@flex-development/tutils'
-import fs from 'node:fs/promises'
+import type { Assign, Pick } from '@flex-development/tutils'
 import ChangelogAggregator from '../changelog-aggregator.model'
 import ChangelogEntry, {
   type ChangelogEntryDTO
@@ -34,46 +35,25 @@ describe('unit:changelog/models/ChangelogFormatter', () => {
       }>
     ]>([
       ['first', {
-        release: semtag('1.0.0', tagprefix),
-        tagprefix,
-        to: semtag('1.0.0', tagprefix)
-      }],
-      ['new', {
-        from: '1.0.0-alpha.20',
-        release: '1.0.0-alpha.21',
-        tagprefix: '',
-        to: '1.0.0-alpha.21'
+        release: semtag('1.0.0', gc.tagprefix),
+        tagprefix: gc.tagprefix,
+        to: semtag('1.0.0', gc.tagprefix)
       }],
       ['unreleased', {
-        from: semtag('2.0.0', tagprefix),
-        release: semtag('2.0.0', tagprefix, sha),
-        tagprefix,
+        from: semtag('2.0.0', gc.tagprefix),
+        release: semtag('2.0.0', gc.tagprefix, sha),
+        tagprefix: gc.tagprefix,
         to: sha
       }]
     ])('%s entry', (_, opts) => {
       let entry: ChangelogEntry
 
       beforeEach(async () => {
-        if (opts.tagprefix !== tagprefix) {
-          vi.spyOn(git, 'exec').mockImplementationOnce(async () => {
-            return fs.readFile('__fixtures__/git/mkbuild/tags.txt', 'utf8')
-          })
-
-          vi.spyOn(git, 'log').mockImplementationOnce(async () => {
-            const t: string = '__fixtures__/git/mkbuild/commits-from-{from}.txt'
-            return fs.readFile(template(t, { from: opts.from }), 'utf8')
-          })
-
-          vi.spyOn(git, 'origin').mockImplementationOnce(async () => {
-            return 'https://github.com/flex-development/mkbuild.git'
-          })
-        }
-
         entry = new ChangelogEntry({
           ...opts,
           Aggregator: ChangelogAggregator,
-          commits: await git.commits(opts),
-          tags: await git.tags(opts),
+          commits: await cqh.execute(new CommitQuery(opts)),
+          tags: await tqh.execute(new TagQuery(opts)),
           types
         })
       })

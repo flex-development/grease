@@ -5,9 +5,9 @@
 
 import { ChangelogOperation } from '#src/changelog'
 import type { IGreaseConfig } from '#src/config/interfaces'
-import type { Commit } from '#src/git'
+import { TagOperation, type Commit } from '#src/git'
 import { GlobalOptions } from '#src/options'
-import { get, omit } from '@flex-development/tutils'
+import { define, get, keys, set } from '@flex-development/tutils'
 import { IsInstance, ValidateNested } from 'class-validator'
 
 /**
@@ -41,19 +41,50 @@ class GreaseConfig<T extends Commit = Commit> extends GlobalOptions
   public changelog: ChangelogOperation<T>
 
   /**
-   * Create a new options object.
+   * Tag options.
+   *
+   * @see {@linkcode TagOperation}
+   *
+   * @default
+   *  new TagOperation(opts.tag)
+   *
+   * @public
+   * @instance
+   * @member {TagOperation} tag
+   */
+  @IsInstance(TagOperation)
+  @ValidateNested()
+  public tag: TagOperation
+
+  /**
+   * Create a new config object.
    *
    * @see {@linkcode IGreaseConfig}
    *
-   * @param {IGreaseConfig<T>?} [opts={}] - User options
+   * @param {IGreaseConfig<T>?} [opts={}] - User config
    */
   constructor(opts: IGreaseConfig<T> = {}) {
     super(opts)
 
-    this.changelog = new ChangelogOperation<T>({
-      ...omit(get(opts, 'changelog'), ['from']),
-      ...this
-    })
+    define(opts, 'changelog', { value: get(opts, 'changelog', {}) })
+    define(opts, 'tag', { value: get(opts, 'tag', {}) })
+
+    Reflect.deleteProperty(opts.changelog!, 'from')
+    Reflect.deleteProperty(opts.tag!, 'tag')
+
+    for (const key of keys(opts)) {
+      switch (key) {
+        case 'changelog':
+        case 'tag':
+          set(opts, key, { ...get(opts, key), ...this })
+          break
+        default:
+          break
+      }
+    }
+
+    this.changelog = new ChangelogOperation<T>(opts.changelog)
+    this.tag = new TagOperation({ ...opts.tag, tag: '' })
   }
 }
 

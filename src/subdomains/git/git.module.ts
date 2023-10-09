@@ -5,7 +5,10 @@
 
 import { LoggerService, ValidationService } from '#src/providers'
 import { Global, Module } from '@nestjs/common'
+import { CqrsModule } from '@nestjs/cqrs'
+import { TagOperationHandler } from './operations'
 import { GitService } from './providers'
+import { CommitQueryHandler, TagQueryHandler } from './queries'
 
 /**
  * Git operations module.
@@ -15,7 +18,15 @@ import { GitService } from './providers'
 @Global()
 @Module({
   exports: [GitService],
-  providers: [GitService, LoggerService, ValidationService]
+  imports: [CqrsModule],
+  providers: [
+    CommitQueryHandler,
+    GitService,
+    LoggerService,
+    TagOperationHandler,
+    TagQueryHandler,
+    ValidationService
+  ]
 })
 class GitModule {}
 

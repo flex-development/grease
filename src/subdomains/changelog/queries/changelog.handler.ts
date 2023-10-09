@@ -4,8 +4,9 @@
  */
 
 import { ChangelogEntry } from '#src/changelog/models'
-import { GitService, type Commit } from '#src/git'
+import { CommitQuery, TagQuery, type Commit } from '#src/git'
 import { PackageManifest } from '#src/models'
+import { ValidationService } from '#src/providers'
 import {
   at,
   entries,
@@ -21,7 +22,7 @@ import {
   template,
   timeunix
 } from '@flex-development/tutils'
-import { QueryHandler, type IQueryHandler } from '@nestjs/cqrs'
+import { QueryBus, QueryHandler, type IQueryHandler } from '@nestjs/cqrs'
 import ChangelogQuery from './changelog.query'
 
 /**
@@ -39,9 +40,13 @@ class ChangelogQueryHandler
   /**
    * Create a new changelog entries query handler.
    *
-   * @param {GitService} git - Git operations service
+   * @param {QueryBus} queries - Query bus
+   * @param {ValidationService} validator - Validation service
    */
-  constructor(protected readonly git: GitService) {}
+  constructor(
+    protected readonly queries: QueryBus,
+    protected readonly validator: ValidationService
+  ) {}
 
   /**
    * Execute a changelog entries query.
@@ -56,12 +61,14 @@ class ChangelogQueryHandler
    * @return {ChangelogEntry[]} Changelog entry objects
    */
   public async execute(query: ChangelogQuery): Promise<ChangelogEntry[]> {
+    await this.validator.validate(query)
+
     /**
      * Git tags in reverse chronological order.
      *
      * @const {string[]} tags
      */
-    const tags: string[] = await this.git.tags(query)
+    const tags: string[] = await this.queries.execute(new TagQuery(query))
 
     // reset commit start range based on release count
     query.releases >= 0 && (query.from = fallback(tags[query.releases - 1], ''))
@@ -71,7 +78,7 @@ class ChangelogQueryHandler
      *
      * @const {Commit[]} commits
      */
-    const commits: Commit[] = await this.git.commits(query)
+    const commits: Commit[] = await this.queries.execute(new CommitQuery(query))
 
     /**
      * Package manifest.

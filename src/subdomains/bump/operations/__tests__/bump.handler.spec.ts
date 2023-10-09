@@ -5,16 +5,20 @@
 
 import pkg from '#pkg' assert { type: 'json' }
 import { PackageManifest } from '#src/models'
+import { ValidationService } from '#src/providers'
 import type { Spy } from '#tests/interfaces'
 import type { SemanticVersion } from '@flex-development/pkg-types'
+import { Test } from '@nestjs/testing'
 import TestSubject from '../bump.handler'
 import BumpOperation from '../bump.operation'
 
 describe('unit:bump/operations/BumpOperationHandler', () => {
   let subject: TestSubject
 
-  beforeAll(() => {
-    subject = new TestSubject()
+  beforeAll(async () => {
+    subject = (await Test.createTestingModule({
+      providers: [TestSubject, ValidationService]
+    }).compile()).get(TestSubject)
   })
 
   describe('#execute', () => {

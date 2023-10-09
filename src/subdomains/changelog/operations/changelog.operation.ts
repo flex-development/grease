@@ -32,6 +32,8 @@ type ChangelogOperationDTO<T extends Commit = Commit> = Assign<
 /**
  * Changelog operation model.
  *
+ * @see {@linkcode ChangelogQuery}
+ *
  * @template T - Parsed commit type
  *
  * @class

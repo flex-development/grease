@@ -4,8 +4,7 @@
  */
 
 import sha from '#fixtures/git/grease/sha'
-import tagprefix from '#fixtures/git/grease/tagprefix'
-import logger from '#fixtures/logger.service'
+import gc from '#gc' assert { type: 'json' }
 import { ChangelogOperation } from '#src/changelog/operations'
 import { LoggerService } from '#src/providers'
 import { cast, get, type Nullable } from '@flex-development/tutils'
@@ -13,6 +12,12 @@ import ChangelogFormatter from '../changelog-formatter.model'
 import TestSubject from '../changelog-stream.model'
 
 describe('unit:changelog/models/ChangelogStream', () => {
+  let logger: LoggerService
+
+  beforeAll(() => {
+    logger = new LoggerService()
+  })
+
   describe('constructor', () => {
     let operation: ChangelogOperation
     let subject: TestSubject
@@ -20,7 +25,10 @@ describe('unit:changelog/models/ChangelogStream', () => {
     beforeAll(() => {
       subject = new TestSubject({
         logger,
-        operation: operation = new ChangelogOperation({ tagprefix, to: sha })
+        operation: operation = new ChangelogOperation({
+          tagprefix: gc.tagprefix,
+          to: sha
+        })
       })
     })
 
@@ -94,7 +102,11 @@ describe('unit:changelog/models/ChangelogStream', () => {
       beforeAll(() => {
         subject = new TestSubject({
           logger,
-          operation: new ChangelogOperation({ debug, tagprefix, to: sha })
+          operation: new ChangelogOperation({
+            debug,
+            tagprefix: gc.tagprefix,
+            to: sha
+          })
         })
       })
 

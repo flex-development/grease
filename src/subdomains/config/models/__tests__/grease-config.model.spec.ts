@@ -4,6 +4,7 @@
  */
 
 import { ChangelogOperation } from '#src/changelog'
+import { TagOperation } from '#src/git'
 import TestSubject from '../grease-config.model'
 
 describe('unit:config/models/GreaseConfig', () => {
@@ -18,6 +19,10 @@ describe('unit:config/models/GreaseConfig', () => {
       expect(subject)
         .to.have.property('changelog')
         .be.instanceof(ChangelogOperation)
+    })
+
+    it('should set #tag', () => {
+      expect(subject).to.have.property('tag').be.instanceof(TagOperation)
     })
   })
 })

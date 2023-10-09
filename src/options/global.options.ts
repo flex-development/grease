@@ -78,7 +78,7 @@ class GlobalOptions {
   public quiet: boolean
 
   /**
-   * Tag prefix to consider when reading tags.
+   * Tag prefix to consider when creating and listing tags.
    *
    * @default ''
    *
@@ -88,6 +88,18 @@ class GlobalOptions {
    */
   @IsString()
   public tagprefix: string
+
+  /**
+   * Include unstable tags.
+   *
+   * @default true
+   *
+   * @public
+   * @instance
+   * @member {boolean} unstable
+   */
+  @IsBoolean()
+  public unstable: boolean
 
   /**
    * Create a new options object.
@@ -101,6 +113,7 @@ class GlobalOptions {
     this.debug = get(opts, 'debug', false)
     this.quiet = get(opts, 'quiet', false)
     this.tagprefix = get(opts, 'tagprefix', '')
+    this.unstable = get(opts, 'unstable', true)
 
     // resolve config path
     if (isString(this.config) && !pathe.isAbsolute(this.config)) {

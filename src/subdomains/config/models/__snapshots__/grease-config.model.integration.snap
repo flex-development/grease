@@ -50,6 +50,46 @@ exports[`integration:config/models/GreaseConfig > validation > should fail valid
     "property": "changelog",
   },
   ValidationError {
+    "children": [
+      ValidationError {
+        "children": [],
+        "constraints": {
+          "isBoolean": "colors must be a boolean value",
+        },
+        "property": "colors",
+      },
+      ValidationError {
+        "children": [],
+        "constraints": {
+          "isFile": "config must be a file path or url",
+        },
+        "property": "config",
+      },
+      ValidationError {
+        "children": [],
+        "constraints": {
+          "isBoolean": "debug must be a boolean value",
+        },
+        "property": "debug",
+      },
+      ValidationError {
+        "children": [],
+        "constraints": {
+          "isBoolean": "quiet must be a boolean value",
+        },
+        "property": "quiet",
+      },
+      ValidationError {
+        "children": [],
+        "constraints": {
+          "isString": "tagprefix must be a string",
+        },
+        "property": "tagprefix",
+      },
+    ],
+    "property": "tag",
+  },
+  ValidationError {
     "children": [],
     "constraints": {
       "isBoolean": "colors must be a boolean value",

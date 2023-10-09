@@ -4,10 +4,12 @@
  */
 
 import today from '#fixtures/changelog/today'
-import git from '#fixtures/git.service'
 import sha from '#fixtures/git/grease/sha'
-import tagprefix from '#fixtures/git/grease/tagprefix'
+import cqh from '#fixtures/query-commit.handler'
+import tqh from '#fixtures/query-tag.handler'
+import gc from '#gc' assert { type: 'json' }
 import { TYPES } from '#src/changelog/constants'
+import { CommitQuery, TagQuery } from '#src/git'
 import { at, select, template } from '@flex-development/tutils'
 import json5 from 'json5'
 import util from 'node:util'
@@ -26,10 +28,13 @@ describe('unit:changelog/models/ChangelogEntry', () => {
 
     subject = new TestSubject(opts = {
       Aggregator,
-      commits: await git.commits({ from: from = 'grease@2.0.0', to: sha }),
+      commits: await cqh.execute(new CommitQuery({
+        from: from = gc.tagprefix + '2.0.0',
+        to: sha
+      })),
       release: template('{from}+{sha}', { from, sha }),
-      tagprefix,
-      tags: await git.tags({ tagprefix }),
+      tagprefix: gc.tagprefix,
+      tags: await tqh.execute(new TagQuery({ tagprefix: gc.tagprefix })),
       types: select(TYPES, null, type => new CommitType(type))
     })
   })

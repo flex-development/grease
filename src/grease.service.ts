@@ -21,10 +21,15 @@ import {
   type GreaseConfig,
   type IGreaseConfig
 } from '#src/config'
-import type { Commit } from '#src/git'
+import {
+  TagOperation,
+  TagQuery,
+  type Commit,
+  type TagOperationDTO
+} from '#src/git'
 import type { PackageManifest } from '#src/models'
-import { LoggerService, ValidationService } from '#src/providers'
-import { cast, isString, type EmptyObject } from '@flex-development/tutils'
+import { LoggerService } from '#src/providers'
+import { isString, type EmptyObject } from '@flex-development/tutils'
 import { Injectable } from '@nestjs/common'
 import { CommandBus, EventBus, QueryBus } from '@nestjs/cqrs'
 import { GlobalOptions } from './options'
@@ -54,15 +59,13 @@ class GreaseService {
    * @param {CommandBus} operations - Operations bus
    * @param {QueryBus} queries - Query bus
    * @param {LoggerService} logger - Logger service
-   * @param {ValidationService} validator - Validation service
    */
   constructor(
     protected readonly gc: ConfigService,
     protected readonly events: EventBus,
     protected readonly operations: CommandBus,
     protected readonly queries: QueryBus,
-    public readonly logger: LoggerService,
-    public readonly validator: ValidationService
+    public readonly logger: LoggerService
   ) {}
 
   /**
@@ -76,11 +79,16 @@ class GreaseService {
    * @async
    * @fires BumpEvent
    *
-   * @param {BumpOperationDTO} operation - Version bump operation
+   * @param {BumpOperationDTO} payload - Bump operation payload
    * @return {Promise<PackageManifest>} Package manifest
    */
-  public async bump(operation: BumpOperationDTO): Promise<PackageManifest> {
-    operation = await this.validator.validate(new BumpOperation(operation))
+  public async bump(payload: BumpOperationDTO): Promise<PackageManifest> {
+    /**
+     * Bump operation to execute.
+     *
+     * @const {BumpOperation} operation
+     */
+    const operation: BumpOperation = new BumpOperation(payload)
 
     /**
      * Updated package manifest.
@@ -89,7 +97,7 @@ class GreaseService {
      */
     const manifest: PackageManifest = await this.operations.execute(operation)
 
-    this.events.publish(new BumpEvent(manifest, cast(operation)))
+    this.events.publish(new BumpEvent(manifest, operation))
     return manifest
   }
 
@@ -106,13 +114,18 @@ class GreaseService {
    *
    * @template T - Parsed commit type
    *
-   * @param {ChangelogOperationDTO<T>?} [operation] - Changelog operation
+   * @param {ChangelogOperationDTO<T>?} [payload] - Changelog operation payload
    * @return {Promise<ChangelogStream<T>>} Changlog stream
    */
   public async changelog<T extends Commit = Commit>(
-    operation?: ChangelogOperationDTO<T>
+    payload?: ChangelogOperationDTO<T>
   ): Promise<ChangelogStream<T>> {
-    operation = await this.validator.validate(new ChangelogOperation(operation))
+    /**
+     * Changelog operation to execute.
+     *
+     * @const {ChangelogOperation<T>} operation
+     */
+    const operation: ChangelogOperation<T> = new ChangelogOperation(payload)
 
     /**
      * Changelog stream.
@@ -121,7 +134,7 @@ class GreaseService {
      */
     const stream: ChangelogStream<T> = await this.operations.execute(operation)
 
-    this.events.publish(new ChangelogEvent<T>(stream, cast(operation)))
+    this.events.publish(new ChangelogEvent<T>(stream, operation))
     return stream
   }
 
@@ -142,7 +155,7 @@ class GreaseService {
   public async config<T extends Commit = Commit>(
     opts?: IGreaseConfig<T>
   ): Promise<EmptyObject | GreaseConfig<T>> {
-    const { config } = await this.validator.validate(new GlobalOptions(opts))
+    const { config } = new GlobalOptions(opts)
     return isString(config) ? this.gc.load(config, opts) : this.gc.search(opts)
   }
 
@@ -157,11 +170,18 @@ class GreaseService {
    * @async
    * @fires BumpEvent
    *
-   * @param {Partial<BumpQuery>?} [query] - Bump recommendation query
+   * @param {Partial<BumpQuery>?} [params] - Version bump query parameters
    * @return {Promise<RecommendedBump>} Recommended version bump
    */
-  public async recommend(query?: Partial<BumpQuery>): Promise<RecommendedBump> {
-    query = await this.validator.validate(new BumpQuery(query))
+  public async recommend(
+    params?: Partial<BumpQuery>
+  ): Promise<RecommendedBump> {
+    /**
+     * Version bump query to execute.
+     *
+     * @const {BumpQuery} query
+     */
+    const query: BumpQuery = new BumpQuery(params)
 
     /**
      * Version bump recommendation.
@@ -170,8 +190,39 @@ class GreaseService {
      */
     const recommendation: RecommendedBump = await this.queries.execute(query)
 
-    this.events.publish(new BumpEvent(recommendation, <BumpQuery>query))
+    this.events.publish(new BumpEvent(recommendation, query))
     return recommendation
+  }
+
+  /**
+   * Create a new release tag, or overwrite an existing one.
+   *
+   * @see {@linkcode TagOperationDTO}
+   * @see {@linkcode TagOperation}
+   *
+   * @public
+   * @async
+   *
+   * @param {TagOperationDTO} payload - Tag operation payload
+   * @return {Promise<TagOperation>} Executed tag operation
+   */
+  public async tag(payload: TagOperationDTO): Promise<TagOperation> {
+    return this.operations.execute(new TagOperation(payload))
+  }
+
+  /**
+   * List git tags.
+   *
+   * @see {@linkcode TagQuery}
+   *
+   * @public
+   * @async
+   *
+   * @param {Partial<TagQuery>?} [params] - Tag query parameters
+   * @return {Promise<string[]>} Git tags array
+   */
+  public async tags(params?: Partial<TagQuery>): Promise<string[]> {
+    return this.queries.execute(new TagQuery(params))
   }
 }
 

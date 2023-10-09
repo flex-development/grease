@@ -3,4 +3,4 @@
  * @module tests/fixtures/git/grease/sha
  */
 
-export default 'b61cac0a01f3d6d78e05b410bb4008842ffe16c4'
+export default 'ae99e7e800dcbef9e7b5720493e073e7dc7827ab'

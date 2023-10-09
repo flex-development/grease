@@ -3,7 +3,7 @@
  * @module grease/git/models/tests/unit/Commit
  */
 
-import tagprefix from '#fixtures/git/grease/tagprefix'
+import gc from '#gc' assert { type: 'json' }
 import chunkfix from '#tests/utils/chunkfix'
 import { keys, type EmptyString } from '@flex-development/tutils'
 import CommitGrammar from '../commit-grammar.model'
@@ -159,8 +159,8 @@ describe('unit:git/models/Commit', () => {
 
   describe('#mentions', async () => {
     it.each<[`${EmptyString | 'non-'}empty`, string]>([
-      ['empty', await chunkfix('mkbuild', 'docs')],
-      ['non-empty', await chunkfix('mkbuild', 'ci')]
+      ['empty', await chunkfix('grease', 'ci-workflows')],
+      ['non-empty', await chunkfix('grease', 'ci')]
     ])('should return %s mentions array', (_, chunk) => {
       expect(new TestSubject(chunk).mentions).toMatchSnapshot()
     })
@@ -169,7 +169,7 @@ describe('unit:git/models/Commit', () => {
   describe('#references', async () => {
     it.each<[`${EmptyString | 'non-'}empty`, string]>([
       ['empty', await chunkfix('grease', 'chore')],
-      ['non-empty', await chunkfix('mkbuild', 'chore')]
+      ['non-empty', await chunkfix('grease', 'ci')]
     ])('should return %s reference array', (_, chunk) => {
       expect(new TestSubject(chunk).references).toMatchSnapshot()
     })
@@ -178,7 +178,7 @@ describe('unit:git/models/Commit', () => {
   describe('#scope', async () => {
     it.each<[string, string]>([
       ['commit scope', await chunkfix('grease', 'feat-models')],
-      ['null', await chunkfix('mkbuild', 'feat')]
+      ['null', await chunkfix('grease', 'ci')]
     ])('should return %s', (_, chunk) => {
       expect(new TestSubject(chunk).scope).toMatchSnapshot()
     })
@@ -213,11 +213,13 @@ describe('unit:git/models/Commit', () => {
       ['empty', await chunkfix('grease', 'chore-tests')],
       ['non-empty', await chunkfix('grease', 'release')]
     ])('should return %s tags array', (_, chunk) => {
-      // Act
-      const result = new TestSubject(chunk, repository, { tagprefix }).tags
+      // Arrange
+      const subject: TestSubject = new TestSubject(chunk, repository, {
+        tagprefix: gc.tagprefix
+      })
 
-      // Expect
-      expect(result).toMatchSnapshot()
+      // Act + Expect
+      expect(subject.tags).toMatchSnapshot()
     })
   })
 
@@ -229,11 +231,13 @@ describe('unit:git/models/Commit', () => {
     })
 
     it('should return json-serializable commit', () => {
-      // Act
-      const result = new TestSubject(chunk, repository, { tagprefix }).toJSON()
+      // Arrange
+      const subject: TestSubject = new TestSubject(chunk, repository, {
+        tagprefix: gc.tagprefix
+      })
 
-      // Expect
-      expect(result).toMatchSnapshot()
+      // Act + Expect
+      expect(subject.toJSON()).toMatchSnapshot()
     })
   })
 
@@ -272,11 +276,13 @@ describe('unit:git/models/Commit', () => {
       ['null', await chunkfix('grease', 'chore-tests')],
       ['release tag', await chunkfix('grease', 'release')]
     ])('should return %s', (_, chunk) => {
-      // Act
-      const result = new TestSubject(chunk, repository, { tagprefix }).version
+      // Arrange
+      const subject: TestSubject = new TestSubject(chunk, repository, {
+        tagprefix: gc.tagprefix
+      })
 
-      // Expect
-      expect(result).toMatchSnapshot()
+      // Act + Expect
+      expect(subject.version).toMatchSnapshot()
     })
   })
 })

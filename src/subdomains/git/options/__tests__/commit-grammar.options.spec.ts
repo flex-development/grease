@@ -3,7 +3,7 @@
  * @module grease/git/options/tests/unit/CommitGrammarOptions
  */
 
-import tagprefix from '#fixtures/git/grease/tagprefix'
+import gc from '#gc' assert { type: 'json' }
 import { RepositoryProvider } from '#src/git/enums'
 import { ifelse } from '@flex-development/tutils'
 import TestSubject from '../commit-grammar.options'
@@ -37,7 +37,7 @@ describe('unit:git/options/CommitGrammarOptions', () => {
           issues: ['#'],
           pr: [ifelse(key === 'GITLAB', '!', '#')],
           provider: provider = RepositoryProvider[key],
-          tagprefix
+          tagprefix: gc.tagprefix
         })
       })
 

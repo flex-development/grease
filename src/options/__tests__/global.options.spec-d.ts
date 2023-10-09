@@ -37,4 +37,10 @@ describe('unit-d:options/GlobalOptions', () => {
       .toHaveProperty('tagprefix')
       .toEqualTypeOf<string>()
   })
+
+  it('should match [unstable: boolean]', () => {
+    expectTypeOf<TestSubject>()
+      .toHaveProperty('unstable')
+      .toEqualTypeOf<boolean>()
+  })
 })

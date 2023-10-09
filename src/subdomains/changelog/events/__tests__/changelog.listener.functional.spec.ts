@@ -4,15 +4,16 @@
  */
 
 import today from '#fixtures/changelog/today'
-import git from '#fixtures/git.service'
 import sha from '#fixtures/git/grease/sha'
-import tagprefix from '#fixtures/git/grease/tagprefix'
+import gc from '#gc' assert { type: 'json' }
 import { ChangelogStream } from '#src/changelog/models'
 import { ChangelogOperation } from '#src/changelog/operations'
 import { ChangelogQueryHandler } from '#src/changelog/queries'
+import { GitModule } from '#src/git'
 import { GlobalOptions } from '#src/options'
-import { LoggerService } from '#src/providers'
+import { LoggerService, ValidationService } from '#src/providers'
 import type { Fn } from '@flex-development/tutils'
+import { CqrsModule } from '@nestjs/cqrs'
 import { Test, type TestingModule } from '@nestjs/testing'
 import tempfile from 'tempfile'
 import ChangelogEvent from '../changelog.event'
@@ -28,7 +29,7 @@ describe('functional:changelog/events/ChangelogEventListener', () => {
       vi.spyOn(LoggerService.prototype, 'withTag')
 
       await Test.createTestingModule({
-        providers: [LoggerService, TestSubject]
+        providers: [LoggerService, TestSubject, ValidationService]
       }).compile()
     })
 
@@ -47,22 +48,28 @@ describe('functional:changelog/events/ChangelogEventListener', () => {
     let subject: TestSubject
 
     beforeAll(async () => {
-      ref = await Test.createTestingModule({
-        providers: [LoggerService, TestSubject]
-      }).compile()
+      ref = await (await Test.createTestingModule({
+        imports: [CqrsModule, GitModule],
+        providers: [
+          ChangelogQueryHandler,
+          LoggerService,
+          TestSubject,
+          ValidationService
+        ]
+      }).compile()).init()
 
       subject = ref.get(TestSubject)
 
       operation = new ChangelogOperation({
         outfile: tempfile({ extension: 'md' }),
         quiet: true,
-        tagprefix,
+        tagprefix: gc.tagprefix,
         to: sha,
         write: true
       })
 
       stream = new ChangelogStream({
-        entries: await new ChangelogQueryHandler(git).execute(operation),
+        entries: await ref.get(ChangelogQueryHandler).execute(operation),
         logger: ref.get(LoggerService),
         operation
       })

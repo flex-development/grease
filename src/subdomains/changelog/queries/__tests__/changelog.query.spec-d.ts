@@ -4,12 +4,12 @@
  */
 
 import type { ChangelogAggregator, CommitType } from '#src/changelog/models'
-import type { Commit, GitCommitOptions } from '#src/git'
+import type { Commit, CommitQuery } from '#src/git'
 import type TestSubject from '../changelog.query'
 
 describe('unit-d:changelog/queries/ChangelogQuery', () => {
-  it('should extend GitCommitOptions<T>', () => {
-    expectTypeOf<TestSubject>().toMatchTypeOf<GitCommitOptions>()
+  it('should extend CommitQuery<T>', () => {
+    expectTypeOf<TestSubject>().toMatchTypeOf<CommitQuery>()
   })
 
   it('should match [Aggregator: typeof ChangelogAggregator<T>]', () => {
@@ -28,11 +28,5 @@ describe('unit-d:changelog/queries/ChangelogQuery', () => {
     expectTypeOf<TestSubject>()
       .toHaveProperty('types')
       .toEqualTypeOf<CommitType[]>()
-  })
-
-  it('should match [unstable: boolean]', () => {
-    expectTypeOf<TestSubject>()
-      .toHaveProperty('unstable')
-      .toEqualTypeOf<boolean>()
   })
 })

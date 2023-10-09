@@ -5,7 +5,7 @@
 
 import today from '#fixtures/changelog/today'
 import sha from '#fixtures/git/grease/sha'
-import tagprefix from '#fixtures/git/grease/tagprefix'
+import gc from '#gc' assert { type: 'json' }
 import { ChangelogStream } from '#src/changelog/models'
 import { ChangelogQueryHandler } from '#src/changelog/queries'
 import { GitModule } from '#src/git'
@@ -21,7 +21,7 @@ describe('unit:changelog/operations/ChangelogOperationHandler', () => {
 
   beforeAll(async () => {
     subject = (await (await Test.createTestingModule({
-      imports: [CqrsModule.forRoot(), GitModule],
+      imports: [CqrsModule, GitModule],
       providers: [
         ChangelogQueryHandler,
         LoggerService,
@@ -39,7 +39,7 @@ describe('unit:changelog/operations/ChangelogOperationHandler', () => {
     beforeAll(() => {
       operation = new ChangelogOperation({
         outfile: tempfile({ extension: 'md' }),
-        tagprefix,
+        tagprefix: gc.tagprefix,
         to: sha,
         write: true
       })

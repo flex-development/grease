@@ -25,7 +25,8 @@ describe('functional:config/providers/ConfigService', () => {
        */
       print(value: unknown, printer: Fn<[unknown], string>): string {
         const { cwd, ...rest } = cast<GreaseConfig>(value)
-        rest.changelog.cwd = '~' + cwd.replace(process.cwd(), '')
+        rest.changelog.cwd = cwd.replace(process.cwd(), '$PWD')
+        rest.tag.cwd = rest.changelog.cwd
         return printer({ ...rest, cwd: rest.changelog.cwd })
       },
       /**

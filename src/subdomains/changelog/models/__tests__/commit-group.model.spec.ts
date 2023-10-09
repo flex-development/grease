@@ -3,9 +3,9 @@
  * @module grease/changelog/models/tests/unit/CommitGroup
  */
 
-import git from '#fixtures/git.service'
 import sha from '#fixtures/git/grease/sha'
-import { Commit } from '#src/git'
+import cqh from '#fixtures/query-commit.handler'
+import { Commit, CommitQuery } from '#src/git'
 import { Type } from '@flex-development/commitlint-config'
 import { select } from '@flex-development/tutils'
 import TestSubject from '../commit-group.model'
@@ -19,7 +19,7 @@ describe('unit:changelog/models/CommitGroup', () => {
   beforeAll(async () => {
     subject = new TestSubject({
       commits: commits = select(
-        await git.commits({ from: 'grease@2.0.0', to: sha }),
+        await cqh.execute(new CommitQuery({ from: 'grease@2.0.0', to: sha })),
         commit => commit.type === Type.FEAT
       ),
       key: key = Type.FEAT,

@@ -1,0 +1,67 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`unit:providers/LoggerService > #options > should return logger options 1`] = `
+{
+  "defaults": {
+    "level": 1,
+  },
+  "fancy": true,
+  "formatOptions": {
+    "colors": true,
+    "columns": 0,
+    "compact": true,
+    "date": false,
+  },
+  "level": 3,
+  "prompt": [Function prompt],
+  "reporters": [
+    FancyReporter {},
+  ],
+  "throttle": 1000,
+  "throttleMin": 5,
+  "types": {
+    "box": {
+      "level": 3,
+    },
+    "debug": {
+      "level": 4,
+    },
+    "error": {
+      "level": 0,
+    },
+    "fail": {
+      "level": 3,
+    },
+    "fatal": {
+      "level": 0,
+    },
+    "info": {
+      "level": 3,
+    },
+    "log": {
+      "level": 2,
+    },
+    "ready": {
+      "level": 3,
+    },
+    "silent": {
+      "level": -1,
+    },
+    "start": {
+      "level": 3,
+    },
+    "success": {
+      "level": 3,
+    },
+    "trace": {
+      "level": 5,
+    },
+    "verbose": {
+      "level": Infinity,
+    },
+    "warn": {
+      "level": 1,
+    },
+  },
+}
+`;

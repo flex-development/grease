@@ -11,7 +11,37 @@ exports[`unit:GreaseService > #recommend > should return recommended version bum
 RecommendedBump {
   "breaks": 1,
   "bump": "major",
-  "commits": 26,
-  "features": 7,
+  "commits": 72,
+  "features": 16,
 }
+`;
+
+exports[`unit:GreaseService > #tag > should return executed tag operation 1`] = `
+TagOperation {
+  "colors": true,
+  "config": true,
+  "cwd": "$PWD",
+  "debug": false,
+  "force": false,
+  "message": "",
+  "object": "HEAD",
+  "push": false,
+  "quiet": false,
+  "remote": "origin",
+  "sign": true,
+  "tag": "grease@3.0.0-alpha.1",
+  "tagprefix": "grease@",
+  "unstable": true,
+  "verify": true,
+}
+`;
+
+exports[`unit:GreaseService > #tags > should return tags array 1`] = `
+[
+  "grease@2.0.0",
+  "grease@1.1.0",
+  "grease@1.0.2",
+  "grease@1.0.1",
+  "grease@1.0.0",
+]
 `;

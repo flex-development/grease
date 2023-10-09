@@ -1,4 +1,5 @@
 {
   "$schema": "grease.schema.json",
+  "tag": { "message": "release: {tag}", "sign": true },
   "tagprefix": "grease@"
 }

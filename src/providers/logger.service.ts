@@ -16,6 +16,7 @@ import { Injectable, type LoggerService as ILogger } from '@nestjs/common'
 import {
   createConsola,
   type ConsolaInstance,
+  type ConsolaOptions,
   type LogLevel as Level
 } from 'consola'
 import { colors } from 'consola/utils'
@@ -93,7 +94,7 @@ class LoggerService implements ILogger {
    *
    * @return {boolean} Boolean indicating if logger is in debug mode
    */
-  public get debugger(): boolean {
+  public get dbg(): boolean {
     return this.level >= LogLevel.DEBUG
   }
 
@@ -104,7 +105,7 @@ class LoggerService implements ILogger {
    *
    * @param {boolean} debug - Debug mode enabled?
    */
-  public set debugger(debug: Optional<boolean>) {
+  public set dbg(debug: Optional<boolean>) {
     this.level = ifelse(!!debug, LogLevel.TRACE, LogLevel.INFO)
   }
 
@@ -132,6 +133,17 @@ class LoggerService implements ILogger {
    */
   public set level(level: Level) {
     this.consola.level = level
+  }
+
+  /**
+   * Get a logger options object.
+   *
+   * @public
+   *
+   * @return {ConsolaOptions} Logger options object
+   */
+  public get options(): ConsolaOptions {
+    return this.consola.options
   }
 
   /**
@@ -272,7 +284,7 @@ class LoggerService implements ILogger {
    */
   public sync(opts?: Partial<GlobalOptions>): this {
     this.silent = get(opts, 'quiet')
-    this.debugger = get(opts, 'debug')
+    this.dbg = get(opts, 'debug')
     this.colors = get(opts, 'colors')
     return this
   }

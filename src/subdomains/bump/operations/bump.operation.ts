@@ -20,6 +20,8 @@ type BumpOperationDTO = Assign<
 /**
  * Version bump operation model.
  *
+ * @see {@linkcode GitOptions}
+ *
  * @class
  * @extends {GitOptions}
  */

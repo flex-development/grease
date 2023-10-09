@@ -1,6 +1,6 @@
 /**
  * @file Queries - BumpQuery
- * @module grease/bump/BumpQuery
+ * @module grease/bump/queries/BumpQuery
  */
 
 import { GitOptions } from '#src/git'

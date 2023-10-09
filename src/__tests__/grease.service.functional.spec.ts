@@ -18,7 +18,7 @@ describe('functional:GreaseService', () => {
 
   beforeAll(async () => {
     subject = (await (await Test.createTestingModule({
-      imports: [BumpModule, ConfigModule, CqrsModule.forRoot(), GitModule],
+      imports: [BumpModule, ConfigModule, CqrsModule, GitModule],
       providers: [LoggerService, TestSubject, ValidationService]
     }).compile()).init()).get(TestSubject)
   })

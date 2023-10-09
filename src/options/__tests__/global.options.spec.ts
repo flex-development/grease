@@ -13,8 +13,7 @@ describe('unit:options/GlobalOptions', () => {
     let subject: TestSubject
 
     beforeAll(() => {
-      config = '.greaserc.jsonc'
-      subject = new TestSubject({ config })
+      subject = new TestSubject({ config: config = 'grease.config.json' })
     })
 
     it('should set #colors', () => {
@@ -39,6 +38,10 @@ describe('unit:options/GlobalOptions', () => {
 
     it('should set #tagprefix', () => {
       expect(subject).to.have.property('tagprefix', '')
+    })
+
+    it('should set #unstable', () => {
+      expect(subject).to.have.property('unstable', true)
     })
   })
 })

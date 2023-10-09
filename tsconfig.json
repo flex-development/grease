@@ -31,6 +31,7 @@
     "outDir": "dist",
     "paths": {
       "#fixtures/*": ["__fixtures__/*"],
+      "#gc": ["grease.config.json"],
       "#pkg": ["package.json"],
       "#src": ["src/index"],
       "#src/*": ["src/subdomains/*", "src/*"],

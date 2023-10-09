@@ -3,10 +3,10 @@
  * @module grease/changelog/events/tests/unit/ChangelogEvent
  */
 
-import logger from '#fixtures/logger.service'
 import { ChangelogStream } from '#src/changelog/models'
 import { ChangelogOperation } from '#src/changelog/operations'
 import { GlobalOptions } from '#src/options'
+import { LoggerService } from '#src/providers'
 import TestSubject from '../changelog.event'
 
 describe('unit:changelog/events/ChangelogEvent', () => {
@@ -19,7 +19,7 @@ describe('unit:changelog/events/ChangelogEvent', () => {
     beforeAll(() => {
       context = new GlobalOptions()
       operation = new ChangelogOperation()
-      payload = new ChangelogStream({ logger, operation })
+      payload = new ChangelogStream({ logger: new LoggerService(), operation })
 
       subject = new TestSubject(payload, context)
     })

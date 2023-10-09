@@ -123,9 +123,50 @@
       "description": "disable logs",
       "type": "boolean"
     },
+    "tag": {
+      "additionalProperties": false,
+      "description": "tag options",
+      "properties": {
+        "commitish": {
+          "default": "HEAD",
+          "description": "object new tag will refer to",
+          "type": "string"
+        },
+        "force": {
+          "default": false,
+          "description": "replace an existing tag instead of failing",
+          "type": "boolean"
+        },
+        "message": {
+          "description": "tag message",
+          "type": "string"
+        },
+        "push": {
+          "default": false,
+          "description": "push tag to remote after successful creation",
+          "type": "boolean"
+        },
+        "remote": {
+          "default": "origin",
+          "description": "push destination",
+          "type": "string"
+        },
+        "sign": {
+          "default": false,
+          "description": "create a gpg-signed tag, using the default e-mail address' key if `true`, or the given key if a string",
+          "type": ["boolean", "string"]
+        },
+        "verify": {
+          "default": false,
+          "description": "verify gpg signature of the new tag. defaults to true if signing is enabled",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "tagprefix": {
       "default": "",
-      "description": "tag prefix to consider when reading tags",
+      "description": "tag prefix to consider when creating and listing tags",
       "type": "string"
     }
   },

@@ -59,7 +59,7 @@ jobs:
         with:
           ref: ${{ env.REF }}
       - id: version
-        name: Get package version
+        name: Get release version
         run: echo "result=$(jq .version package.json -r)" >>$GITHUB_OUTPUT
       - id: tag-prefix
         name: Get release tag prefix
@@ -87,10 +87,8 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       HUSKY: 0
-      NODE_ENV: production
       NODE_NO_WARNINGS: 1
-      NOTES_FILE: ./RELEASE_NOTES.md
-      PRERELEASE: ${{ needs.preflight.outputs.prerelease }}
+      NOTES_FILE: RELEASE_NOTES.md
       TAG: ${{ needs.preflight.outputs.tag }}
     steps:
       - id: checkout
@@ -117,20 +115,19 @@ jobs:
         run: yarn pack -o %s-%v.tgz
       - id: release-notes
         name: Generate release notes
-        run: yarn changelog --outfile $NOTES_FILE --write
+        run: yarn grease changelog -wo $NOTES_FILE && cat $NOTES_FILE
       - id: tag
         name: Create annotated tag
         env:
           GIT_AUTHOR_EMAIL: ${{ steps.gpg-import.outputs.email }}
           GIT_COMMITTER_EMAIL: ${{ steps.gpg-import.outputs.email }}
         run: |
-          git tag --annotate --force --sign $TAG --message "release: $TAG"
-          git tag --verify $TAG
-          git push origin $TAG
+          yarn grease tag -fps -m "release: $TAG" $TAG
       - id: publish
         name: Publish release
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_REPO }}
+          PRERELEASE: ${{ needs.preflight.outputs.prerelease }}
         run: gh release create $TAG *.tgz -t=$TAG -p=$PRERELEASE -F=$NOTES_FILE
       - id: close-issues
         name: Close released issues

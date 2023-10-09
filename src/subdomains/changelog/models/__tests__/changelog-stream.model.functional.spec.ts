@@ -5,27 +5,39 @@
 
 import infile from '#fixtures/changelog/infile'
 import today from '#fixtures/changelog/today'
-import git from '#fixtures/git.service'
 import sha from '#fixtures/git/grease/sha'
-import tagprefix from '#fixtures/git/grease/tagprefix'
-import logger from '#fixtures/logger.service'
+import gc from '#gc' assert { type: 'json' }
 import { ChangelogOperation } from '#src/changelog/operations'
 import { ChangelogQueryHandler } from '#src/changelog/queries'
 import type { ChangelogChunk } from '#src/changelog/types'
-import { LoggerService } from '#src/providers'
+import { GitModule } from '#src/git'
+import { LoggerService, ValidationService } from '#src/providers'
 import type { StreamCallback } from '#src/types'
 import type { Mock } from '#tests/interfaces'
 import pathe from '@flex-development/pathe'
 import { at, join, select, type Nullable } from '@flex-development/tutils'
+import { CqrsModule } from '@nestjs/cqrs'
+import { Test, type TestingModule } from '@nestjs/testing'
 import tempfile from 'tempfile'
 import TestSubject from '../changelog-stream.model'
 
 describe('functional:changelog/models/ChangelogStream', () => {
   let encoding: BufferEncoding
+  let qh: ChangelogQueryHandler
+  let logger: LoggerService
+  let ref: TestingModule
 
-  beforeAll(() => {
-    vi.setSystemTime(today)
+  beforeAll(async () => {
+    ref = await (await Test.createTestingModule({
+      imports: [CqrsModule, GitModule],
+      providers: [ChangelogQueryHandler, LoggerService, ValidationService]
+    }).compile()).init()
+
     encoding = 'utf8'
+    qh = ref.get(ChangelogQueryHandler)
+    logger = ref.get(LoggerService)
+
+    vi.setSystemTime(today)
   })
 
   describe('constructor', () => {
@@ -43,7 +55,11 @@ describe('functional:changelog/models/ChangelogStream', () => {
       // Act
       const subject = new TestSubject({
         logger,
-        operation: new ChangelogOperation({ infile, tagprefix, to: sha })
+        operation: new ChangelogOperation({
+          infile,
+          tagprefix: gc.tagprefix,
+          to: sha
+        })
       })
 
       // Expect
@@ -60,7 +76,12 @@ describe('functional:changelog/models/ChangelogStream', () => {
       // Act
       const subject = new TestSubject({
         logger,
-        operation: new ChangelogOperation({ cwd, infile, tagprefix, to: sha })
+        operation: new ChangelogOperation({
+          cwd,
+          infile,
+          tagprefix: gc.tagprefix,
+          to: sha
+        })
       })
 
       // Expect
@@ -76,7 +97,7 @@ describe('functional:changelog/models/ChangelogStream', () => {
     beforeAll(() => {
       subject = new TestSubject({
         logger,
-        operation: new ChangelogOperation({ tagprefix, to: sha })
+        operation: new ChangelogOperation({ tagprefix: gc.tagprefix, to: sha })
       })
     })
 
@@ -102,7 +123,7 @@ describe('functional:changelog/models/ChangelogStream', () => {
     beforeAll(() => {
       subject = new TestSubject({
         logger,
-        operation: new ChangelogOperation({ tagprefix, to: sha })
+        operation: new ChangelogOperation({ tagprefix: gc.tagprefix, to: sha })
       })
 
       cb = vi.fn().mockName('cb')
@@ -160,13 +181,13 @@ describe('functional:changelog/models/ChangelogStream', () => {
       operation = new ChangelogOperation({
         outfile: tempfile({ extension: 'md' }),
         releases: 3,
-        tagprefix,
+        tagprefix: gc.tagprefix,
         to: sha,
         write: true
       })
 
       subject = new TestSubject({
-        entries: await new ChangelogQueryHandler(git).execute(operation),
+        entries: await qh.execute(operation),
         logger,
         operation
       })

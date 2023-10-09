@@ -4,9 +4,10 @@
  */
 
 import { RecommendedBump } from '#src/bump/models'
-import { GitService, type ICommit } from '#src/git'
+import { CommitQuery, TagQuery, type ICommit } from '#src/git'
+import { ValidationService } from '#src/providers'
 import { at } from '@flex-development/tutils'
-import { QueryHandler, type IQueryHandler } from '@nestjs/cqrs'
+import { QueryBus, QueryHandler, type IQueryHandler } from '@nestjs/cqrs'
 import BumpQuery from './bump.query'
 
 /**
@@ -23,9 +24,13 @@ class BumpQueryHandler implements IQueryHandler<BumpQuery, RecommendedBump> {
   /**
    * Create a new recommended version bump query handler.
    *
-   * @param {GitService} git - Git operations service
+   * @param {QueryBus} queries - Query bus
+   * @param {ValidationService} validator - Validation service
    */
-  constructor(protected readonly git: GitService) {}
+  constructor(
+    protected readonly queries: QueryBus,
+    protected readonly validator: ValidationService
+  ) {}
 
   /**
    * Execute a version bump recommendation query.
@@ -40,15 +45,17 @@ class BumpQueryHandler implements IQueryHandler<BumpQuery, RecommendedBump> {
    * @return {RecommendedBump} Recommended version bump
    */
   public async execute(query: BumpQuery): Promise<RecommendedBump> {
+    await this.validator.validate(query)
+
     /**
      * Commits since last release.
      *
      * @const {ICommit[]} commits
      */
-    const commits: ICommit[] = await this.git.commits({
+    const commits: ICommit[] = await this.queries.execute(new CommitQuery({
       ...query,
-      from: at(await this.git.tags(query), 0, '')
-    })
+      from: at(await this.queries.execute(new TagQuery(query)), 0, '')
+    }))
 
     /**
      * Total number of breaking changes committed since last release.

@@ -211,13 +211,32 @@ class GreaseCommand extends CommandRunner {
    * @return {string} Parsed option value
    */
   @Option({
-    description: 'tag prefix to consider when reading tags',
+    description: 'tag prefix to consider when creating and listing tags',
     env: 'GREASE_TAGPREFIX',
     fallback: { value: '' },
     flags: '-T, --tagprefix <prefix>'
   })
   protected parseTagprefix(val: string): string {
     return trim(val)
+  }
+
+  /**
+   * Parse the `--unstable` flag.
+   *
+   * @protected
+   *
+   * @param {string} val - Value to parse
+   * @return {boolean} Parsed option value
+   */
+  @Option({
+    choices: CliUtilityService.BOOLEAN_CHOICES,
+    description: 'include unstable releases',
+    fallback: { value: true },
+    flags: '-u, --unstable [choice]',
+    preset: 'true'
+  })
+  protected parseUnstable(val: string): boolean {
+    return this.util.parseBoolean(val)
   }
 
   /**

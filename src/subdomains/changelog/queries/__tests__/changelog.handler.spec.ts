@@ -4,10 +4,11 @@
  */
 
 import sha from '#fixtures/git/grease/sha'
-import tagprefix from '#fixtures/git/grease/tagprefix'
+import gc from '#gc' assert { type: 'json' }
 import { GitModule, GitService } from '#src/git'
 import { LoggerService, ValidationService } from '#src/providers'
 import { set, template } from '@flex-development/tutils'
+import { CqrsModule } from '@nestjs/cqrs'
 import { Test, type TestingModule } from '@nestjs/testing'
 import fs from 'node:fs/promises'
 import TestSubject from '../changelog.handler'
@@ -20,10 +21,10 @@ describe('unit:changelog/queries/ChangelogQueryHandler', () => {
   let subject: TestSubject
 
   beforeAll(async () => {
-    ref = await Test.createTestingModule({
-      imports: [GitModule],
+    ref = await (await Test.createTestingModule({
+      imports: [CqrsModule, GitModule],
       providers: [LoggerService, TestSubject, ValidationService]
-    }).compile()
+    }).compile()).init()
 
     git = ref.get(GitService)
     gitdir = '__fixtures__/git/grease'
@@ -37,7 +38,7 @@ describe('unit:changelog/queries/ChangelogQueryHandler', () => {
       query = new ChangelogQuery({
         cwd: '__fixtures__/pkg/premajor',
         releases: 0,
-        tagprefix,
+        tagprefix: gc.tagprefix,
         to: sha
       })
     })

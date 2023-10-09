@@ -31,9 +31,5 @@ describe('unit:changelog/queries/ChangelogQuery', () => {
       expect(subject).to.have.property('types').be.an('array').that.is.not.empty
       expect(subject).to.have.property('types').each.be.instanceof(CommitType)
     })
-
-    it('should set #unstable', () => {
-      expect(subject).to.have.property('unstable').be.true
-    })
   })
 })

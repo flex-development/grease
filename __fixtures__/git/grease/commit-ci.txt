@@ -1,0 +1,23 @@
+-author.email-
+unicornware@flexdevelopment.llc
+-author.name-
+Lexus Drumgold
+-body-
+- import-js/eslint-plugin-import#2843
+
+Signed-off-by: Lexus Drumgold <unicornware@flexdevelopment.llc>
+
+-date-
+2023-10-09T00:06:16-04:00
+-hash-
+ae99e7e
+-header-
+ci: [@dependabot] ignore eslint-plugin-import
+-sha-
+ae99e7e800dcbef9e7b5720493e073e7dc7827ab
+-tags-
+
+-trailers-
+Signed-off-by: Lexus Drumgold <unicornware@flexdevelopment.llc>
+
+--$--

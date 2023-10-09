@@ -3,7 +3,7 @@
  * @module grease/cli/commands/tests/functional/GreaseCommand
  */
 
-import tagprefix from '#fixtures/git/grease/tagprefix'
+import gc from '#gc' assert { type: 'json' }
 import GreaseModule from '#src/grease.module'
 import type { Mock } from '#tests/interfaces'
 import {
@@ -143,7 +143,7 @@ describe('functional:cli/commands/GreaseCommand', () => {
   describe('--tagprefix, -T <prefix>', () => {
     it('should parse flag', async () => {
       // Act
-      await CommandTestFactory.run(command, [`--tagprefix=${tagprefix}`])
+      await CommandTestFactory.run(command, [`--tagprefix=${gc.tagprefix}`])
 
       // Expect
       expect(exitOverride).not.toHaveBeenCalled()
@@ -151,7 +151,25 @@ describe('functional:cli/commands/GreaseCommand', () => {
 
     it('should parse short flag', async () => {
       // Act
-      await CommandTestFactory.run(command, ['-T', tagprefix])
+      await CommandTestFactory.run(command, ['-T', gc.tagprefix])
+
+      // Expect
+      expect(exitOverride).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('--unstable, -u [choice]', () => {
+    it('should parse flag', async () => {
+      // Act
+      await CommandTestFactory.run(command, ['--unstable=false'])
+
+      // Expect
+      expect(exitOverride).not.toHaveBeenCalled()
+    })
+
+    it('should parse short flag', async () => {
+      // Act
+      await CommandTestFactory.run(command, ['-u', '0'])
 
       // Expect
       expect(exitOverride).not.toHaveBeenCalled()

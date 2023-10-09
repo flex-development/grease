@@ -4,6 +4,7 @@
  */
 
 import { Manifest, PackageManifest } from '#src/models'
+import { ValidationService } from '#src/providers'
 import { CommandHandler, type ICommandHandler } from '@nestjs/cqrs'
 import BumpOperation from './bump.operation'
 
@@ -17,6 +18,13 @@ import BumpOperation from './bump.operation'
 class BumpOperationHandler
   implements ICommandHandler<BumpOperation, PackageManifest> {
   /**
+   * Create a new version bump operation handler.
+   *
+   * @param {ValidationService} validator - Validation service
+   */
+  constructor(protected readonly validator: ValidationService) {}
+
+  /**
    * Execute a version bump operation.
    *
    * @see {@linkcode BumpOperation}
@@ -29,7 +37,13 @@ class BumpOperationHandler
    * @return {Promise<PackageManifest>} Updated package manifest
    */
   public async execute(operation: BumpOperation): Promise<PackageManifest> {
-    const { cwd, preid, prestart, release, write } = operation
+    const {
+      cwd,
+      preid,
+      prestart,
+      release,
+      write
+    } = await this.validator.validate(operation)
 
     /**
      * Manifest file.

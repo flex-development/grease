@@ -71,7 +71,7 @@ const config: UserConfigExport = defineConfig((): UserConfig => {
            * @const {RegExp} VALIDATE_NESTED_REGEX
            */
           const VALIDATE_NESTED_REGEX: RegExp =
-            /(@ValidateNested.+(?=(?<=\s+)public|protected|private|#))/gs
+            /(@ValidateNested.+?(?=(?<=\s+)public|protected|private|#))/gs
 
           // add ignore comment before constructor parameters
           for (const [match] of code.matchAll(CONSTRUCTOR_PARAMS_REGEX)) {

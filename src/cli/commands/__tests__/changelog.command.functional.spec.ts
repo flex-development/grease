@@ -161,32 +161,6 @@ describe('functional:cli/commands/ChangelogCommand', () => {
     })
   })
 
-  describe('--unstable, -u [choice]', () => {
-    let unstable: boolean
-
-    beforeAll(() => {
-      unstable = false
-    })
-
-    it('should parse flag', async () => {
-      // Act
-      await CommandTestFactory.run(command, [...args, `--unstable=${unstable}`])
-
-      // Expect
-      expect(changelog).toHaveBeenCalledOnce()
-      expect(changelog.mock.lastCall?.[0]).toMatchObject({ unstable })
-    })
-
-    it('should parse short flag', async () => {
-      // Act
-      await CommandTestFactory.run(command, [...args, '-u', '0'])
-
-      // Expect
-      expect(changelog).toHaveBeenCalledOnce()
-      expect(changelog.mock.lastCall?.[0]).toMatchObject({ unstable })
-    })
-  })
-
   describe('--write, -w', () => {
     let write: boolean
 

@@ -7,7 +7,7 @@ import * as constants from '#src/changelog/constants'
 import type { ICommitType } from '#src/changelog/interfaces'
 import { ChangelogAggregator, CommitType } from '#src/changelog/models'
 import { IsConstructor } from '#src/decorators'
-import { GitCommitOptions, type Commit } from '#src/git'
+import { CommitQuery, type Commit } from '#src/git'
 import {
   defaults,
   define,
@@ -20,7 +20,6 @@ import {
 import {
   ArrayNotEmpty,
   IsArray,
-  IsBoolean,
   IsInstance,
   IsNumber,
   Min,
@@ -57,14 +56,14 @@ type ChangelogQueryParams<T extends Commit = Commit> = Assign<
 /**
  * Changelog entries query.
  *
- * @see {@linkcode GitCommitOptions}
+ * @see {@linkcode CommitQuery}
  *
  * @template T - Parsed commit type
  *
  * @class
- * @extends {GitCommitOptions<T>}
+ * @extends {CommitQuery<T>}
  */
-class ChangelogQuery<T extends Commit = Commit> extends GitCommitOptions<T> {
+class ChangelogQuery<T extends Commit = Commit> extends CommitQuery<T> {
   /**
    * Changelog aggregator class.
    *
@@ -115,18 +114,6 @@ class ChangelogQuery<T extends Commit = Commit> extends GitCommitOptions<T> {
   public types: CommitType[]
 
   /**
-   * Include unstable tags.
-   *
-   * @default true
-   *
-   * @public
-   * @instance
-   * @member {boolean} unstable
-   */
-  @IsBoolean()
-  public unstable: boolean
-
-  /**
    * Create a new changelog entries query.
    *
    * @see {@linkcode ChangelogQueryParams}
@@ -136,22 +123,15 @@ class ChangelogQuery<T extends Commit = Commit> extends GitCommitOptions<T> {
   constructor(params?: ChangelogQueryParams<T>) {
     super(params)
 
-    const {
-      Aggregator,
-      releases,
-      types,
-      unstable
-    } = defaults(fallback(params, {}), {
+    const { Aggregator, releases, types } = defaults(fallback(params, {}), {
       Aggregator: ChangelogAggregator,
       releases: 1,
-      types: constants.TYPES,
-      unstable: true
+      types: constants.TYPES
     })
 
     this.Aggregator = Aggregator
     this.releases = releases
     this.types = unique(select(types, null, type => new CommitType(type)))
-    this.unstable = unstable
 
     // reset revision range if all entries are queried
     !this.releases && define(this, 'from', { value: '' })

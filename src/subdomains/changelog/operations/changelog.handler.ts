@@ -5,12 +5,15 @@
 
 import { ChangelogStream } from '#src/changelog/models'
 import { ChangelogQuery } from '#src/changelog/queries'
-import { LoggerService } from '#src/providers'
+import { LoggerService, ValidationService } from '#src/providers'
 import { CommandHandler, QueryBus, type ICommandHandler } from '@nestjs/cqrs'
 import ChangelogOperation from './changelog.operation'
 
 /**
  * Changelog operation handler.
+ *
+ * @see {@linkcode ChangelogOperation}
+ * @see {@linkcode ChangelogStream}
  *
  * @class
  * @implements {ICommandHandler<ChangelogOperation,ChangelogStream>}
@@ -23,10 +26,12 @@ class ChangelogOperationHandler
    *
    * @param {QueryBus} queries - Query bus
    * @param {LoggerService} logger - Logger service
+   * @param {ValidationService} validator - Validation service
    */
   constructor(
     protected readonly queries: QueryBus,
-    protected readonly logger: LoggerService
+    protected readonly logger: LoggerService,
+    protected readonly validator: ValidationService
   ) {}
 
   /**
@@ -44,6 +49,8 @@ class ChangelogOperationHandler
   public async execute(
     operation: ChangelogOperation
   ): Promise<ChangelogStream> {
+    await this.validator.validate(operation)
+
     return new ChangelogStream({
       entries: await this.queries.execute(new ChangelogQuery(operation)),
       logger: this.logger.withTag('changelog'),

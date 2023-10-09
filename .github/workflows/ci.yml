@@ -89,7 +89,7 @@ jobs:
           key: ${{ steps.cache-key.outputs.result }}
           path: ${{ env.CACHE_PATH }}
       - id: version
-        name: Get package version
+        name: Get manifest version
         run: echo "result=$(jq .version package.json -r)" >>$GITHUB_OUTPUT
       - id: version-typescript
         name: Get TypeScript version

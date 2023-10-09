@@ -5,7 +5,7 @@
 
 import { LogLevel } from '#src/enums'
 import type { GlobalOptions } from '#src/options'
-import { cast, set, type Partial } from '@flex-development/tutils'
+import { cast, omit, set, type Partial } from '@flex-development/tutils'
 import { colors } from 'consola/utils'
 import TestSubject from '../logger.service'
 
@@ -68,7 +68,7 @@ describe('unit:providers/LoggerService', () => {
     })
   })
 
-  describe('#debugger', () => {
+  describe('#dbg', () => {
     let opt: string
 
     beforeAll(() => {
@@ -82,7 +82,7 @@ describe('unit:providers/LoggerService', () => {
         const subject: TestSubject = cast(set(new TestSubject(), opt, level))
 
         // Act + Expect
-        expect(subject).to.have.property('debugger').be.false
+        expect(subject).to.have.property('dbg').be.false
       })
 
       it('should return true if logger is in debug mode', () => {
@@ -91,7 +91,7 @@ describe('unit:providers/LoggerService', () => {
         const subject: TestSubject = cast(set(new TestSubject(), opt, level))
 
         // Act + Expect
-        expect(subject).to.have.property('debugger').be.true
+        expect(subject).to.have.property('dbg').be.true
       })
     })
 
@@ -101,7 +101,7 @@ describe('unit:providers/LoggerService', () => {
         const subject: TestSubject = new TestSubject()
 
         // Act
-        subject.debugger = true
+        subject.dbg = true
 
         // Expect
         expect(subject).to.have.property('level', LogLevel.TRACE)
@@ -113,7 +113,7 @@ describe('unit:providers/LoggerService', () => {
         const subject: TestSubject = cast(set(new TestSubject(), opt, level))
 
         // Act
-        subject.debugger = false
+        subject.dbg = false
 
         // Expect
         expect(subject).to.have.property('level', LogLevel.INFO)
@@ -140,6 +140,12 @@ describe('unit:providers/LoggerService', () => {
         // Act + Expect
         expect(subject).to.have.property('level', level)
       })
+    })
+  })
+
+  describe('#options', () => {
+    it('should return logger options', () => {
+      expect(omit(subject.options, ['stderr', 'stdout'])).toMatchSnapshot()
     })
   })
 
@@ -212,7 +218,7 @@ describe('unit:providers/LoggerService', () => {
       // Expect
       expect(result).to.equal(subject)
       expect(result).to.have.property('colors', opts.colors)
-      expect(result).to.have.property('debugger', opts.debug)
+      expect(result).to.have.property('dbg', opts.debug)
       expect(result).to.have.property('silent', !opts.quiet)
     })
   })

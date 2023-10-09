@@ -40,7 +40,15 @@ exports[`integration:options/GlobalOptions > validation > should fail validation
       "isString": "tagprefix must be a string",
     },
     "property": "tagprefix",
-    "value": null,
+    "value": /grease@/,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isBoolean": "unstable must be a boolean value",
+    },
+    "property": "unstable",
+    "value": 1,
   },
 ]
 `;

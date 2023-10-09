@@ -202,7 +202,7 @@ repository:
   automated_security_fixes: true
   default_branch: main
   delete_branch_on_merge: true
-  description: Package release workflow tool
+  description: Release workflow tool
   has_issues: true
   has_projects: true
   has_wiki: false

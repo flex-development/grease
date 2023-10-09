@@ -5,17 +5,21 @@
 
 import { ReleaseType } from '#src/enums'
 import { PackageManifest, Version } from '#src/models'
+import { ValidationService } from '#src/providers'
 import type { Spy } from '#tests/interfaces'
 import pathe from '@flex-development/pathe'
 import type { Omit } from '@flex-development/tutils'
+import { Test } from '@nestjs/testing'
 import TestSubject from '../bump.handler'
 import BumpOperation, { type BumpOperationDTO } from '../bump.operation'
 
 describe('functional:bump/operations/BumpOperationHandler', () => {
   let subject: TestSubject
 
-  beforeAll(() => {
-    subject = new TestSubject()
+  beforeAll(async () => {
+    subject = (await Test.createTestingModule({
+      providers: [TestSubject, ValidationService]
+    }).compile()).get(TestSubject)
   })
 
   describe('#execute', () => {

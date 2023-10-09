@@ -140,27 +140,6 @@ class ChangelogCommand extends CommandRunner {
   }
 
   /**
-   * Parse the `--unstable` flag.
-   *
-   * @see {@linkcode Opts.unstable}
-   *
-   * @protected
-   *
-   * @param {string} val - Value to parse
-   * @return {boolean} Parsed option value
-   */
-  @Option({
-    choices: CliUtilityService.BOOLEAN_CHOICES,
-    description: 'include unstable releases',
-    fallback: { value: true },
-    flags: '-u, --unstable [choice]',
-    preset: 'true'
-  })
-  protected parseUnstable(val: string): boolean {
-    return this.util.parseBoolean(val)
-  }
-
-  /**
    * Parse the `--write` flag.
    *
    * @see {@linkcode Opts.write}

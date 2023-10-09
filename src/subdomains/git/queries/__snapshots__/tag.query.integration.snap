@@ -1,0 +1,54 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`integration:git/queries/TagQuery > validation > should fail validation if schema is invalid 1`] = `
+[
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isBoolean": "colors must be a boolean value",
+    },
+    "property": "colors",
+    "value": 3,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isFile": "config must be a file path or url",
+    },
+    "property": "config",
+    "value": 0,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isBoolean": "debug must be a boolean value",
+    },
+    "property": "debug",
+    "value": 1,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isBoolean": "quiet must be a boolean value",
+    },
+    "property": "quiet",
+    "value": 0,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isString": "tagprefix must be a string",
+    },
+    "property": "tagprefix",
+    "value": /grease@/,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isBoolean": "unstable must be a boolean value",
+    },
+    "property": "unstable",
+    "value": 1,
+  },
+]
+`;

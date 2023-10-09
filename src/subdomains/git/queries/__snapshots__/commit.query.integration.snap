@@ -1,0 +1,54 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`integration:git/queries/CommitQuery > validation > should fail validation if schema is invalid 1`] = `
+[
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isConstructor": "Commit must be a constructor",
+    },
+    "property": "Commit",
+    "value": [Function Commit],
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isArray": "actions must be an array",
+    },
+    "property": "actions",
+    "value": Set {},
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isString": "from must be a string",
+    },
+    "property": "from",
+    "value": null,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isArray": "issues must be an array",
+    },
+    "property": "issues",
+    "value": Set {},
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isArray": "pr must be an array",
+    },
+    "property": "pr",
+    "value": Set {},
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isString": "to must be a string",
+    },
+    "property": "to",
+    "value": /\\^HEAD/,
+  },
+]
+`;

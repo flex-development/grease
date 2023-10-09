@@ -4,7 +4,7 @@
  */
 
 import sha from '#fixtures/git/grease/sha'
-import tagprefix from '#fixtures/git/grease/tagprefix'
+import gc from '#gc' assert { type: 'json' }
 import { CommitGrammarOptions } from '#src/git/options'
 import chunkfix from '#tests/utils/chunkfix'
 import type { SemanticVersion } from '@flex-development/pkg-types'
@@ -15,7 +15,7 @@ describe('unit:git/models/CommitGrammar', () => {
   let subject: TestSubject
 
   beforeAll(() => {
-    subject = new TestSubject({ tagprefix })
+    subject = new TestSubject({ tagprefix: gc.tagprefix })
   })
 
   describe('constructor', () => {
@@ -32,7 +32,7 @@ describe('unit:git/models/CommitGrammar', () => {
     let source: string
 
     beforeAll(async () => {
-      chunk = await chunkfix('mkbuild', 'release')
+      chunk = await chunkfix('grease', 'release')
       flags = subject.field.flags
       source = subject.field.source
     })
@@ -91,7 +91,7 @@ describe('unit:git/models/CommitGrammar', () => {
     let chunk: string
 
     beforeAll(async () => {
-      chunk = await chunkfix('mkbuild', 'ci')
+      chunk = await chunkfix('grease', 'ci')
     })
 
     it('should match mentions in raw commit', () => {
@@ -108,7 +108,7 @@ describe('unit:git/models/CommitGrammar', () => {
     let chunk: string
 
     beforeAll(async () => {
-      chunk = await chunkfix('mkbuild', 'chore')
+      chunk = await chunkfix('grease', 'ci')
     })
 
     it('should match references in raw commit', () => {
@@ -123,7 +123,7 @@ describe('unit:git/models/CommitGrammar', () => {
 
   describe('#tag', () => {
     it.each<['release tag' | 'version', string, SemanticVersion]>([
-      ['release tag', tagprefix, `2.0.0+${sha}`],
+      ['release tag', gc.tagprefix, `2.0.0+${sha}`],
       ['version', '', '3.0.0-alpha.1']
     ])('should match semantic %s', (_, tagprefix, version) => {
       // Arrange

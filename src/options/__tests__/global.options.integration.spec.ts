@@ -16,7 +16,8 @@ describe('integration:options/GlobalOptions', () => {
         config: 0,
         debug: 1,
         quiet: 0,
-        tagprefix: null
+        tagprefix: /grease@/,
+        unstable: 1
       }))
 
       // Act

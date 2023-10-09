@@ -4,7 +4,7 @@ exports[`unit:bump/queries/BumpQueryHandler > #execute > should return recommend
 RecommendedBump {
   "breaks": 1,
   "bump": "major",
-  "commits": 26,
-  "features": 7,
+  "commits": 72,
+  "features": 16,
 }
 `;
