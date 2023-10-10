@@ -11,7 +11,8 @@ import {
   BumpCommand,
   ChangelogCommand,
   GreaseCommand,
-  InfoCommand
+  InfoCommand,
+  TagCommand
 } from './commands'
 
 /**
@@ -21,7 +22,13 @@ import {
  */
 @Module({
   imports: [GreaseModule],
-  providers: [BumpCommand, ChangelogCommand, GreaseCommand, InfoCommand]
+  providers: [
+    BumpCommand,
+    ChangelogCommand,
+    GreaseCommand,
+    InfoCommand,
+    TagCommand
+  ]
 })
 class ProgramModule {
   /**

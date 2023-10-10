@@ -5,8 +5,8 @@
 
 import { IsBoolable } from '#src/decorators'
 import { GitOptions } from '#src/git/options'
-import { PATTERN_CHARACTER } from '@flex-development/mlly'
 import {
+  DOT,
   defaults,
   ifelse,
   isFalsy,
@@ -181,7 +181,7 @@ class TagOperation extends GitOptions {
     this.push = push
     this.remote = trim(remote)
     this.sign = JSON.parse(JSON.stringify(sign))
-    this.tag = ifelse(trim(tag), this.tagprefix + tag, PATTERN_CHARACTER)
+    this.tag = ifelse(trim(tag), this.tagprefix + tag, DOT)
     this.verify = verify
 
     isUndefined(payload.verify) && !isFalsy(this.sign) && (this.verify = true)

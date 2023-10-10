@@ -33,6 +33,7 @@ import {
 import BumpCommand from './bump.command'
 import ChangelogCommand from './changelog.command'
 import InfoCommand from './info.command'
+import TagCommand from './tag.command'
 
 /**
  * Main command runner.
@@ -45,7 +46,7 @@ import InfoCommand from './info.command'
   examples: [],
   name: GreaseService.NAME,
   root: true,
-  subcommands: [BumpCommand, ChangelogCommand, InfoCommand]
+  subcommands: [BumpCommand, ChangelogCommand, InfoCommand, TagCommand]
 })
 class GreaseCommand extends CommandRunner {
   /**
@@ -176,7 +177,7 @@ class GreaseCommand extends CommandRunner {
     description: 'enable verbose output',
     env: 'GREASE_DEBUG',
     fallback: { value: false },
-    flags: '-d, --debug [choice]',
+    flags: '-d, --debug',
     preset: 'true'
   })
   protected parseDebug(val: string): boolean {
@@ -231,6 +232,7 @@ class GreaseCommand extends CommandRunner {
   @Option({
     choices: CliUtilityService.BOOLEAN_CHOICES,
     description: 'include unstable releases',
+    env: 'GREASE_UNSTABLE',
     fallback: { value: true },
     flags: '-u, --unstable [choice]',
     preset: 'true'

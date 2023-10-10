@@ -211,7 +211,7 @@ class GreaseService {
   }
 
   /**
-   * List git tags.
+   * Get git tags.
    *
    * @see {@linkcode TagQuery}
    *

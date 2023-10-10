@@ -31,7 +31,7 @@ import type Opts from './bump.command.opts'
  */
 @Command({
   arguments: { description: 'release type or version', syntax: '[release]' },
-  description: 'version bumper',
+  description: 'execute a version bump, or get a recommendation',
   examples: [
     ReleaseType.MAJOR,
     ReleaseType.MINOR,

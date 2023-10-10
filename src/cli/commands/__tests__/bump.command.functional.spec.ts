@@ -13,12 +13,17 @@ import type { TestingModule } from '@nestjs/testing'
 import TestSubject from '../bump.command'
 
 describe('functional:cli/commands/BumpCommand', () => {
+  let args: ['bump', ReleaseVersion]
   let bump: Mock<GreaseService['bump']>
   let command: TestingModule
   let recommend: Mock<GreaseService['recommend']>
 
   afterAll(() => {
     vi.unstubAllEnvs()
+  })
+
+  beforeAll(() => {
+    args = ['bump', ReleaseType.PREMAJOR]
   })
 
   beforeEach(async () => {
@@ -40,11 +45,9 @@ describe('functional:cli/commands/BumpCommand', () => {
   })
 
   describe('--preid <id>', () => {
-    let args: ['bump', ReleaseVersion]
     let preid: string
 
     beforeAll(() => {
-      args = ['bump', ReleaseType.PREMAJOR]
       preid = 'beta'
     })
 
@@ -59,11 +62,9 @@ describe('functional:cli/commands/BumpCommand', () => {
   })
 
   describe('--prestart <start>', () => {
-    let args: ['bump', ReleaseVersion]
     let prestart: number
 
     beforeAll(() => {
-      args = ['bump', ReleaseType.PREPATCH]
       prestart = 0
     })
 
@@ -78,15 +79,9 @@ describe('functional:cli/commands/BumpCommand', () => {
   })
 
   describe('--recommend, -r', () => {
-    let args: ['bump']
-
-    beforeAll(() => {
-      args = ['bump']
-    })
-
     it('should parse flag', async () => {
       // Act
-      await CommandTestFactory.run(command, [...args, '--recommend'])
+      await CommandTestFactory.run(command, [args[0], '--recommend'])
 
       // Expect
       expect(recommend).toHaveBeenCalledOnce()
@@ -95,7 +90,7 @@ describe('functional:cli/commands/BumpCommand', () => {
 
     it('should parse short flag', async () => {
       // Act
-      await CommandTestFactory.run(command, [...args, '-r'])
+      await CommandTestFactory.run(command, [args[0], '-r'])
 
       // Expect
       expect(recommend).toHaveBeenCalledOnce()
@@ -104,19 +99,13 @@ describe('functional:cli/commands/BumpCommand', () => {
   })
 
   describe('--write, -w [choice]', () => {
-    let args: ['bump', ReleaseVersion]
-
-    beforeAll(() => {
-      args = ['bump', ReleaseType.PREMINOR]
-    })
-
     it('should parse flag', async () => {
       // Act
-      await CommandTestFactory.run(command, [...args, '--write=0'])
+      await CommandTestFactory.run(command, [...args, '--write'])
 
       // Expect
       expect(bump).toHaveBeenCalledOnce()
-      expect(bump.mock.lastCall?.[0]).to.have.property('write', false)
+      expect(bump.mock.lastCall?.[0]).to.have.property('write', true)
     })
 
     it('should parse short flag', async () => {

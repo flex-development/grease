@@ -32,7 +32,7 @@ import type Opts from './info.command.opts'
  * @extends {CommandRunner}
  */
 @Command({
-  description: 'print environment report',
+  description: 'get an environment report',
   examples: ['--json', '--markdown'],
   name: 'info'
 })
