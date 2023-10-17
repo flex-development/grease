@@ -2980,14 +2980,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:11.0.0, commander@npm:^11.0.0":
+"commander@npm:11.0.0":
   version: 11.0.0
   resolution: "commander@npm:11.0.0"
   checksum: 71cf453771c15d4e94afdd76a1e9bb31597dbc5f33130a1d399a4a7bc14eac765ebca7f0e077f347e5119087f6faa0017fd5e3cb6e4fc5c453853334c26162bc
   languageName: node
   linkType: hard
 
-"commander@npm:11.1.0":
+"commander@npm:11.1.0, commander@npm:^11.0.0":
   version: 11.1.0
   resolution: "commander@npm:11.1.0"
   checksum: 66bd2d8a0547f6cb1d34022efb25f348e433b0e04ad76a65279b1b09da108f59a4d3001ca539c60a7a46ea38bcf399fc17d91adad76a8cf43845d8dcbaf5cda1
