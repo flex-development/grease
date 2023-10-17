@@ -3,7 +3,8 @@
  * @module grease/config/ConfigModule
  */
 
-import { LoggerService, ValidationService } from '#src/providers'
+import { LogModule } from '#src/log'
+import { ValidationService } from '#src/providers'
 import { Module } from '@nestjs/common'
 import { ConfigService } from './providers'
 
@@ -14,7 +15,8 @@ import { ConfigService } from './providers'
  */
 @Module({
   exports: [ConfigService],
-  providers: [ConfigService, LoggerService, ValidationService]
+  imports: [LogModule],
+  providers: [ConfigService, ValidationService]
 })
 class ConfigModule {}
 

@@ -3,7 +3,7 @@
  * @module grease/git/providers/tests/functional/GitService
  */
 
-import { LoggerService, ValidationService } from '#src/providers'
+import { LogModule } from '#src/log'
 import type { Mock } from '#tests/interfaces'
 import { join } from '@flex-development/tutils'
 import { Test } from '@nestjs/testing'
@@ -15,7 +15,8 @@ describe('functional:git/providers/GitService', () => {
 
   beforeAll(async () => {
     subject = (await Test.createTestingModule({
-      providers: [LoggerService, TestSubject, ValidationService]
+      imports: [LogModule],
+      providers: [TestSubject]
     }).compile()).get(TestSubject)
   })
 

@@ -17,6 +17,12 @@ const config = {
       rules: {
         'promise/prefer-await-to-callbacks': 0
       }
+    },
+    {
+      files: ['src/subdomains/log/enums/log-level.ts'],
+      rules: {
+        '@typescript-eslint/prefer-literal-enum-member': 0
+      }
     }
   ],
   root: true

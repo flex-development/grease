@@ -4,9 +4,9 @@
  */
 
 import { RecommendedBump } from '#src/bump/models'
+import { LogModule, LoggerService, UserLogLevel } from '#src/log'
 import { PackageManifest } from '#src/models'
 import { GlobalOptions } from '#src/options'
-import { LoggerService } from '#src/providers'
 import type { Spy } from '#tests/interfaces'
 import { Test } from '@nestjs/testing'
 import BumpEvent from '../bump.event'
@@ -17,7 +17,8 @@ describe('functional:bump/events/BumpEventListener', () => {
 
   beforeAll(async () => {
     subject = (await Test.createTestingModule({
-      providers: [LoggerService, TestSubject]
+      imports: [LogModule],
+      providers: [TestSubject]
     }).compile()).get(TestSubject)
   })
 
@@ -28,7 +29,7 @@ describe('functional:bump/events/BumpEventListener', () => {
     let success: Spy<LoggerService['success']>
 
     beforeAll(() => {
-      context = new GlobalOptions({ quiet: true })
+      context = new GlobalOptions({ level: UserLogLevel.SILENT })
     })
 
     beforeEach(() => {

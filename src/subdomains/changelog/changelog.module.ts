@@ -3,7 +3,9 @@
  * @module grease/changelog/ChangelogModule
  */
 
-import { LoggerService, ValidationService } from '#src/providers'
+import { GitModule } from '#src/git'
+import { LogModule } from '#src/log'
+import { ValidationService } from '#src/providers'
 import { Module } from '@nestjs/common'
 import { CqrsModule } from '@nestjs/cqrs'
 import { ChangelogEventListener } from './events'
@@ -16,12 +18,11 @@ import { ChangelogQueryHandler } from './queries'
  * @class
  */
 @Module({
-  imports: [CqrsModule],
+  imports: [CqrsModule, GitModule, LogModule],
   providers: [
     ChangelogEventListener,
     ChangelogOperationHandler,
     ChangelogQueryHandler,
-    LoggerService,
     ValidationService
   ]
 })

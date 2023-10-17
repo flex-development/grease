@@ -27,8 +27,8 @@ import {
   type Commit,
   type TagOperationDTO
 } from '#src/git'
+import { LoggerService } from '#src/log'
 import type { PackageManifest } from '#src/models'
-import { LoggerService } from '#src/providers'
 import { isString, type EmptyObject } from '@flex-development/tutils'
 import { Injectable } from '@nestjs/common'
 import { CommandBus, EventBus, QueryBus } from '@nestjs/cqrs'

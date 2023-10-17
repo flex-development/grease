@@ -5,7 +5,7 @@
 
 import sha from '#fixtures/git/grease/sha'
 import pkg from '#pkg' assert { type: 'json' }
-import { LoggerService } from '#src/providers'
+import { LogModule } from '#src/log'
 import { Test } from '@nestjs/testing'
 import TestSubject from '../git.service'
 
@@ -14,7 +14,8 @@ describe('unit:git/providers/GitService', () => {
 
   beforeAll(async () => {
     subject = (await Test.createTestingModule({
-      providers: [LoggerService, TestSubject]
+      imports: [LogModule],
+      providers: [TestSubject]
     }).compile()).get(TestSubject)
   })
 

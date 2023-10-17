@@ -3,7 +3,8 @@
  * @module grease/git/GitModule
  */
 
-import { LoggerService, ValidationService } from '#src/providers'
+import { LogModule } from '#src/log'
+import { ValidationService } from '#src/providers'
 import { Global, Module } from '@nestjs/common'
 import { CqrsModule } from '@nestjs/cqrs'
 import { TagOperationHandler } from './operations'
@@ -18,11 +19,10 @@ import { CommitQueryHandler, TagQueryHandler } from './queries'
 @Global()
 @Module({
   exports: [GitService],
-  imports: [CqrsModule],
+  imports: [CqrsModule, LogModule],
   providers: [
     CommitQueryHandler,
     GitService,
-    LoggerService,
     TagOperationHandler,
     TagQueryHandler,
     ValidationService

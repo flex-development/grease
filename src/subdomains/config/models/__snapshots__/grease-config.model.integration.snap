@@ -7,9 +7,9 @@ exports[`integration:config/models/GreaseConfig > validation > should fail valid
       ValidationError {
         "children": [],
         "constraints": {
-          "isBoolean": "colors must be a boolean value",
+          "isBoolean": "color must be a boolean value",
         },
-        "property": "colors",
+        "property": "color",
       },
       ValidationError {
         "children": [],
@@ -21,16 +21,9 @@ exports[`integration:config/models/GreaseConfig > validation > should fail valid
       ValidationError {
         "children": [],
         "constraints": {
-          "isBoolean": "debug must be a boolean value",
+          "isEnum": "level must be one of the following values: debug, error, fatal, info, log, silent, trace, verbose, warn",
         },
-        "property": "debug",
-      },
-      ValidationError {
-        "children": [],
-        "constraints": {
-          "isBoolean": "quiet must be a boolean value",
-        },
-        "property": "quiet",
+        "property": "level",
       },
       ValidationError {
         "children": [],
@@ -38,6 +31,13 @@ exports[`integration:config/models/GreaseConfig > validation > should fail valid
           "isString": "tagprefix must be a string",
         },
         "property": "tagprefix",
+      },
+      ValidationError {
+        "children": [],
+        "constraints": {
+          "isBoolean": "unstable must be a boolean value",
+        },
+        "property": "unstable",
       },
       ValidationError {
         "children": [],
@@ -54,9 +54,9 @@ exports[`integration:config/models/GreaseConfig > validation > should fail valid
       ValidationError {
         "children": [],
         "constraints": {
-          "isBoolean": "colors must be a boolean value",
+          "isBoolean": "color must be a boolean value",
         },
-        "property": "colors",
+        "property": "color",
       },
       ValidationError {
         "children": [],
@@ -68,16 +68,9 @@ exports[`integration:config/models/GreaseConfig > validation > should fail valid
       ValidationError {
         "children": [],
         "constraints": {
-          "isBoolean": "debug must be a boolean value",
+          "isEnum": "level must be one of the following values: debug, error, fatal, info, log, silent, trace, verbose, warn",
         },
-        "property": "debug",
-      },
-      ValidationError {
-        "children": [],
-        "constraints": {
-          "isBoolean": "quiet must be a boolean value",
-        },
-        "property": "quiet",
+        "property": "level",
       },
       ValidationError {
         "children": [],
@@ -86,15 +79,22 @@ exports[`integration:config/models/GreaseConfig > validation > should fail valid
         },
         "property": "tagprefix",
       },
+      ValidationError {
+        "children": [],
+        "constraints": {
+          "isBoolean": "unstable must be a boolean value",
+        },
+        "property": "unstable",
+      },
     ],
     "property": "tag",
   },
   ValidationError {
     "children": [],
     "constraints": {
-      "isBoolean": "colors must be a boolean value",
+      "isBoolean": "color must be a boolean value",
     },
-    "property": "colors",
+    "property": "color",
   },
   ValidationError {
     "children": [],
@@ -106,16 +106,9 @@ exports[`integration:config/models/GreaseConfig > validation > should fail valid
   ValidationError {
     "children": [],
     "constraints": {
-      "isBoolean": "debug must be a boolean value",
+      "isEnum": "level must be one of the following values: debug, error, fatal, info, log, silent, trace, verbose, warn",
     },
-    "property": "debug",
-  },
-  ValidationError {
-    "children": [],
-    "constraints": {
-      "isBoolean": "quiet must be a boolean value",
-    },
-    "property": "quiet",
+    "property": "level",
   },
   ValidationError {
     "children": [],
@@ -123,6 +116,13 @@ exports[`integration:config/models/GreaseConfig > validation > should fail valid
       "isString": "tagprefix must be a string",
     },
     "property": "tagprefix",
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isBoolean": "unstable must be a boolean value",
+    },
+    "property": "unstable",
   },
 ]
 `;

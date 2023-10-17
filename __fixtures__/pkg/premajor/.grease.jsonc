@@ -3,6 +3,6 @@
 {
   "$schema": "../../../grease.schema.json",
   "cwd": "__fixtures__/pkg/premajor",
-  "debug": true,
+  "level": "debug",
   "tagprefix": "pkg-premajor@"
 }

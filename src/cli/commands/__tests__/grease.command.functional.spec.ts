@@ -5,6 +5,7 @@
 
 import gc from '#gc' assert { type: 'json' }
 import GreaseModule from '#src/grease.module'
+import { UserLogLevel } from '#src/log'
 import type { Mock } from '#tests/interfaces'
 import {
   CliUtilityService,
@@ -20,10 +21,6 @@ import TestSubject from '../grease.command'
 describe('functional:cli/commands/GreaseCommand', () => {
   let command: TestingModule
   let exitOverride: Mock<Fn<[CommanderError]>>
-
-  afterAll(() => {
-    vi.unstubAllEnvs()
-  })
 
   beforeAll(() => {
     exitOverride = vi.fn<[e: CommanderError]>((e: CommanderError) => {
@@ -41,13 +38,12 @@ describe('functional:cli/commands/GreaseCommand', () => {
 
     vi.spyOn(Program.prototype, 'help').mockImplementationOnce(vi.fn())
     vi.stubEnv('GREASE_CONFIG', '0')
-    vi.stubEnv('GREASE_DEBUG', '0')
   })
 
-  describe('--colors, -c [choice]', () => {
+  describe('--color, -c [choice]', () => {
     it('should parse flag', async () => {
       // Act
-      await CommandTestFactory.run(command, ['--colors'])
+      await CommandTestFactory.run(command, ['--color'])
 
       // Expect
       expect(exitOverride).not.toHaveBeenCalled()
@@ -104,10 +100,10 @@ describe('functional:cli/commands/GreaseCommand', () => {
     })
   })
 
-  describe('--debug, -d', () => {
+  describe('--level, -L <level>', () => {
     it('should parse flag', async () => {
       // Act
-      await CommandTestFactory.run(command, ['--debug'])
+      await CommandTestFactory.run(command, [`--level=${UserLogLevel.DEBUG}`])
 
       // Expect
       expect(exitOverride).not.toHaveBeenCalled()
@@ -115,25 +111,7 @@ describe('functional:cli/commands/GreaseCommand', () => {
 
     it('should parse short flag', async () => {
       // Act
-      await CommandTestFactory.run(command, ['-d'])
-
-      // Expect
-      expect(exitOverride).not.toHaveBeenCalled()
-    })
-  })
-
-  describe('--quiet, -q', () => {
-    it('should parse flag', async () => {
-      // Act
-      await CommandTestFactory.run(command, ['--quiet'])
-
-      // Expect
-      expect(exitOverride).not.toHaveBeenCalled()
-    })
-
-    it('should parse short flag', async () => {
-      // Act
-      await CommandTestFactory.run(command, ['-q'])
+      await CommandTestFactory.run(command, ['-L', UserLogLevel.SILENT])
 
       // Expect
       expect(exitOverride).not.toHaveBeenCalled()

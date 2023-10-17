@@ -6,6 +6,7 @@
 import pkg from '#pkg' assert { type: 'json' }
 import type { GreaseConfig } from '#src/config'
 import GreaseService from '#src/grease.service'
+import { UserLogLevel } from '#src/log'
 import type { GlobalOptions } from '#src/options'
 import {
   CliUtilityService,
@@ -18,6 +19,7 @@ import type * as commander from '@flex-development/nest-commander/commander'
 import {
   DOT,
   cast,
+  entries,
   fallback,
   get,
   hasOwn,
@@ -51,6 +53,9 @@ import TagCommand from './tag.command'
 class GreaseCommand extends CommandRunner {
   /**
    * Create a new `grease` command runner.
+   *
+   * @see {@linkcode CliUtilityService}
+   * @see {@linkcode GreaseService}
    *
    * @param {CliUtilityService} util - Utilities service
    * @param {GreaseService} grease - Grease runner service
@@ -106,7 +111,27 @@ class GreaseCommand extends CommandRunner {
   }
 
   /**
-   * Parse the `--colors` flag.
+   * Merge global options.
+   *
+   * @protected
+   *
+   * @param {commander.Command} cmd - Command instance
+   * @return {void} Nothing when complete
+   */
+  protected mergeGlobals(cmd: commander.Command): void {
+    for (let command = cmd.parent; command; command = command.parent) {
+      for (const [k, v] of entries(command.opts())) {
+        if (!cmd.getOptionValueSource(k)) {
+          cmd.setOptionValueWithSource(k, v, command.getOptionValueSource(k)!)
+        }
+      }
+    }
+
+    return void cmd
+  }
+
+  /**
+   * Parse the `--color` flag.
    *
    * @protected
    *
@@ -115,13 +140,13 @@ class GreaseCommand extends CommandRunner {
    */
   @Option({
     choices: ['0', '1', '2', '3', 'false', 'true'],
-    description: 'enable colorized output',
+    description: 'colorized output enabled?',
     env: 'FORCE_COLOR',
     fallback: { value: true },
-    flags: '-c, --colors [choice]',
+    flags: '-c, --color [choice]',
     preset: 'true'
   })
-  protected parseColors(val: string): boolean {
+  protected parseColor(val: string): boolean {
     return this.util.parseBoolean(val) || !isFalsy(this.util.parseInt(val))
   }
 
@@ -165,7 +190,7 @@ class GreaseCommand extends CommandRunner {
   }
 
   /**
-   * Parse the `--debug` flag.
+   * Parse the `--level` flag.
    *
    * @protected
    *
@@ -173,34 +198,22 @@ class GreaseCommand extends CommandRunner {
    * @return {boolean} Parsed option value
    */
   @Option({
-    choices: CliUtilityService.BOOLEAN_CHOICES,
-    description: 'enable verbose output',
-    env: 'GREASE_DEBUG',
-    fallback: { value: false },
-    flags: '-d, --debug',
-    preset: 'true'
+    choices: [
+      UserLogLevel.DEBUG,
+      UserLogLevel.ERROR,
+      UserLogLevel.INFO,
+      UserLogLevel.LOG,
+      UserLogLevel.SILENT,
+      UserLogLevel.WARN,
+      UserLogLevel.VERBOSE
+    ],
+    description: 'log level',
+    env: 'GREASE_LOG_LEVEL',
+    fallback: { value: UserLogLevel.INFO },
+    flags: '-L, --level <level>'
   })
-  protected parseDebug(val: string): boolean {
-    return this.util.parseBoolean(val)
-  }
-
-  /**
-   * Parse the `--quiet` flag.
-   *
-   * @protected
-   *
-   * @param {string} val - Value to parse
-   * @return {boolean} Parsed option value
-   */
-  @Option({
-    description: 'disable logs',
-    env: 'GREASE_QUIET',
-    fallback: { value: false },
-    flags: '-q, --quiet',
-    preset: 'true'
-  })
-  protected parseQuiet(val: string): boolean {
-    return this.util.parseBoolean(val)
+  protected parseLevel(val: string): UserLogLevel {
+    return <UserLogLevel>val
   }
 
   /**
@@ -231,7 +244,7 @@ class GreaseCommand extends CommandRunner {
    */
   @Option({
     choices: CliUtilityService.BOOLEAN_CHOICES,
-    description: 'include unstable releases',
+    description: 'allow prereleases',
     env: 'GREASE_UNSTABLE',
     fallback: { value: true },
     flags: '-u, --unstable [choice]',
@@ -273,8 +286,14 @@ class GreaseCommand extends CommandRunner {
       ...omit(opts, ['tagprefix'])
     })
 
+    // merge global options
+    this.mergeGlobals(cmd)
+
+    // merge configuration options
     this.mergeConfig(program, config)
-    return void this.mergeConfig(cmd, config)
+    this.mergeConfig(cmd, config)
+
+    return void 0
   }
 
   /**

@@ -12,11 +12,11 @@ describe('integration:git/options/GitOptions', () => {
     it('should fail validation if schema is invalid', async () => {
       // Arrange
       const subject: TestSubject = new TestSubject(cast({
-        colors: 3,
+        color: 3,
         config: 0,
-        debug: 1,
-        quiet: 0,
-        tagprefix: null
+        level: 'quiet',
+        tagprefix: /grease@/,
+        unstable: 1
       }))
 
       // Act

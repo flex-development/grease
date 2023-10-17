@@ -100,16 +100,20 @@
     "@flex-development/tutils": "6.0.0-alpha.25",
     "@nestjs/common": "10.2.7",
     "@nestjs/cqrs": "10.2.6",
+    "@types/node": "20.8.6",
     "@types/semver": "7.5.0",
     "class-validator": "0.14.0",
-    "consola": "3.2.3",
     "esbuild": "0.19.4",
     "fast-glob": "3.3.1",
+    "is-unicode-supported": "1.3.0",
     "json5": "2.2.3",
     "node-emoji": "2.1.0",
     "reflect-metadata": "0.1.13",
     "rxjs": "7.8.1",
-    "semver": "7.5.4"
+    "semver": "7.5.4",
+    "string-width": "6.1.0",
+    "tinyrainbow": "1.1.1",
+    "word-wrap": "1.2.5"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.12.1",
@@ -128,7 +132,6 @@
     "@types/envinfo": "7.8.1",
     "@types/eslint": "8.44.2",
     "@types/is-ci": "3.0.0",
-    "@types/node": "20.6.0",
     "@types/node-notifier": "8.0.2",
     "@types/prettier": "3.0.0",
     "@typescript-eslint/eslint-plugin": "6.7.5",
@@ -184,7 +187,7 @@
     "node": ">=16.20.0 <20.6.0 || >20.6.0",
     "yarn": "4.0.0-rc.50"
   },
-  "packageManager": "yarn@4.0.0-rc.50",
+  "packageManager": "yarn@4.0.0-rc.53",
   "readme": "README.md",
   "sideEffects": false
 }

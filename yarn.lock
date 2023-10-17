@@ -1148,7 +1148,7 @@ __metadata:
     "@types/envinfo": "npm:7.8.1"
     "@types/eslint": "npm:8.44.2"
     "@types/is-ci": "npm:3.0.0"
-    "@types/node": "npm:20.6.0"
+    "@types/node": "npm:20.8.6"
     "@types/node-notifier": "npm:8.0.2"
     "@types/prettier": "npm:3.0.0"
     "@types/semver": "npm:7.5.0"
@@ -1161,7 +1161,6 @@ __metadata:
     chai-each: "npm:0.0.1"
     chai-string: "npm:1.5.0"
     class-validator: "npm:0.14.0"
-    consola: "npm:3.2.3"
     cross-env: "npm:7.0.3"
     cspell: "npm:7.3.7"
     dprint: "npm:0.41.0"
@@ -1185,6 +1184,7 @@ __metadata:
     growl: "npm:1.10.5"
     husky: "npm:8.0.3"
     is-ci: "npm:3.0.1"
+    is-unicode-supported: "npm:1.3.0"
     json5: "npm:2.2.3"
     jsonc-eslint-parser: "npm:2.3.0"
     lint-staged: "npm:14.0.1"
@@ -1197,13 +1197,16 @@ __metadata:
     rxjs: "npm:7.8.1"
     semver: "npm:7.5.4"
     sh-syntax: "npm:0.4.1"
+    string-width: "npm:6.1.0"
     tempfile: "npm:5.0.0"
+    tinyrainbow: "npm:1.1.1"
     trash-cli: "npm:5.0.0"
     ts-dedent: "npm:2.2.0"
     typescript: "npm:5.2.2"
     vite: "npm:5.0.0-beta.7"
     vite-tsconfig-paths: "npm:4.2.1"
     vitest: "npm:0.34.6"
+    word-wrap: "npm:1.2.5"
     yaml-eslint-parser: "npm:1.2.2"
   bin:
     grease: ./dist/cli.mjs
@@ -1331,7 +1334,7 @@ __metadata:
 
 "@flex-development/nest-commander@patch:@flex-development/nest-commander@npm%3A1.0.0-alpha.1#patches/@flex-development/nest-commander+1.0.0-alpha.1.dev.patch::locator=%40flex-development%2Fgrease%40workspace%3A.":
   version: 1.0.0-alpha.1
-  resolution: "@flex-development/nest-commander@patch:@flex-development/nest-commander@npm%3A1.0.0-alpha.1%3A%3A__archiveUrl=https%253A%252F%252Fnpm.pkg.github.com%252Fdownload%252F%2540flex-development%252Fnest-commander%252F1.0.0-alpha.1%252Fe04080fd0e56886103a9415951c84b2772bfe7e2#patches/@flex-development/nest-commander+1.0.0-alpha.1.dev.patch::version=1.0.0-alpha.1&hash=1c5a04&locator=%40flex-development%2Fgrease%40workspace%3A."
+  resolution: "@flex-development/nest-commander@patch:@flex-development/nest-commander@npm%3A1.0.0-alpha.1%3A%3A__archiveUrl=https%253A%252F%252Fnpm.pkg.github.com%252Fdownload%252F%2540flex-development%252Fnest-commander%252F1.0.0-alpha.1%252Fe04080fd0e56886103a9415951c84b2772bfe7e2#patches/@flex-development/nest-commander+1.0.0-alpha.1.dev.patch::version=1.0.0-alpha.1&hash=1f9af8&locator=%40flex-development%2Fgrease%40workspace%3A."
   dependencies:
     "@flex-development/pathe": "npm:2.0.0"
     "@flex-development/tutils": "npm:6.0.0-alpha.21"
@@ -1341,7 +1344,7 @@ __metadata:
     "@nestjs/common": ">=10.0.0"
     "@nestjs/core": ">=10.0.0"
     "@nestjs/testing": ">=10.0.0"
-  checksum: 5daea43cc6586a59232103428b64eb1444adb8882ab38deca554d4ca72475144d7b6a042712a2fca521e53d2a3e5ecda91fac2486f4bc5ca959a461d014bcfc2
+  checksum: fc00faa734b6dd2659b1d6f2afa83c815b8713e097a795d49b1db0e05d38250d080152aa29e395ffb48c0906790aa8fa275215cc638173b1bd6cd76e13001d58
   languageName: node
   linkType: hard
 
@@ -1981,10 +1984,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:20.6.0":
-  version: 20.6.0
-  resolution: "@types/node@npm:20.6.0"
-  checksum: 8244a0e8ceadbc7e44687b536cb98889002671d9e873127814206ef0a2b9d6190294df794bc3bc57e8c4987fbc6504b2b27b599193aca6acbed4a6a4f535230e
+"@types/node@npm:*, @types/node@npm:20.8.6":
+  version: 20.8.6
+  resolution: "@types/node@npm:20.8.6"
+  dependencies:
+    undici-types: "npm:~5.25.1"
+  checksum: cdfe0a2d90005323bbaf8fa4002607af98d49016c81898cd7f574d9ec6fc980580ea1b97f7b6ecaa8614be8004cd03898766e99e1869428ba6ed3bcd66a15354
   languageName: node
   linkType: hard
 
@@ -3533,6 +3538,13 @@ __metadata:
   bin:
     editorconfig: bin/editorconfig
   checksum: 897896a0bdc2b3fcf5ed1466943b0e9676fe4a9dac7c71bcd0e6455efeff2e4e358a5a46dd38b24fb047f2599b2dfb23d2f4dba839c5c76cbce670448b68c1c2
+  languageName: node
+  linkType: hard
+
+"emoji-regex@npm:^10.2.1":
+  version: 10.2.1
+  resolution: "emoji-regex@npm:10.2.1"
+  checksum: fb2143d669ed7a3b180a56bfb5fc0638af25aeef421df4bb9c3a835dccfc4b737bcb45dfc8cea33c3f2b9dcd92a3fdb79820c7a840491a899e2d68aa3245c4b5
   languageName: node
   linkType: hard
 
@@ -5352,6 +5364,13 @@ __metadata:
   version: 1.0.0
   resolution: "is-typedarray@npm:1.0.0"
   checksum: 4b433bfb0f9026f079f4eb3fbaa4ed2de17c9995c3a0b5c800bec40799b4b2a8b4e051b1ada77749deb9ded4ae52fe2096973f3a93ff83df1a5a7184a669478c
+  languageName: node
+  linkType: hard
+
+"is-unicode-supported@npm:1.3.0":
+  version: 1.3.0
+  resolution: "is-unicode-supported@npm:1.3.0"
+  checksum: 20a1fc161afafaf49243551a5ac33b6c4cf0bbcce369fcd8f2951fbdd000c30698ce320de3ee6830497310a8f41880f8066d440aa3eb0a853e2aa4836dd89abc
   languageName: node
   linkType: hard
 
@@ -7522,6 +7541,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"string-width@npm:6.1.0":
+  version: 6.1.0
+  resolution: "string-width@npm:6.1.0"
+  dependencies:
+    eastasianwidth: "npm:^0.2.0"
+    emoji-regex: "npm:^10.2.1"
+    strip-ansi: "npm:^7.0.1"
+  checksum: 8aefb456a230c8d7fe254049b1b2d62603da1a3b6c7fc9f3332f6779583cc1c72653f9b6e4cd0c1c92befee1565d4a0a7542d09ba4ceb6d96af02fbd8425bb03
+  languageName: node
+  linkType: hard
+
 "string-width@npm:^5.0.0, string-width@npm:^5.0.1, string-width@npm:^5.1.2":
   version: 5.1.2
   resolution: "string-width@npm:5.1.2"
@@ -8117,6 +8147,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"undici-types@npm:~5.25.1":
+  version: 5.25.3
+  resolution: "undici-types@npm:5.25.3"
+  checksum: 9a57f2dd6fecb2d0f7d9b86aa6f417609a0ffc73247a95aa25c078cf36cbbfe6c164b63b8dace7ad01126e6510f284c185b69c78356bb1d6b279f195acffcaf4
+  languageName: node
+  linkType: hard
+
 "unicode-emoji-modifier-base@npm:^1.0.0":
   version: 1.0.0
   resolution: "unicode-emoji-modifier-base@npm:1.0.0"
@@ -8472,6 +8509,13 @@ __metadata:
   dependencies:
     string-width: "npm:^1.0.2 || 2 || 3 || 4"
   checksum: d5f8027b9a8255a493a94e4ec1b74a27bff6679d5ffe29316a3215e4712945c84ef73ca4045c7e20ae7d0c72f5f57f296e04a4928e773d4276a2f1222e4c2e99
+  languageName: node
+  linkType: hard
+
+"word-wrap@npm:1.2.5":
+  version: 1.2.5
+  resolution: "word-wrap@npm:1.2.5"
+  checksum: 1ec6f6089f205f83037be10d0c4b34c9183b0b63fca0834a5b3cee55dd321429d73d40bb44c8fc8471b5203d6e8f8275717f49a8ff4b2b0ab41d7e1b563e0854
   languageName: node
   linkType: hard
 

@@ -5,7 +5,8 @@
 
 import gc from '#gc' assert { type: 'json' }
 import { GitService } from '#src/git/providers'
-import { LoggerService, ValidationService } from '#src/providers'
+import { LoggerService, UserLogLevel } from '#src/log'
+import { ValidationService } from '#src/providers'
 import type { Mock } from '#tests/interfaces'
 import { template } from '@flex-development/tutils'
 import { Test } from '@nestjs/testing'
@@ -38,7 +39,7 @@ describe('functional:git/operations/TagOperationHandler', () => {
           provide: LoggerService,
           useValue: {
             withTag: vi.fn(() => ({
-              options: { defaults: { tag: 'grease:tag' } },
+              options: { tag: 'grease:tag' },
               start,
               success,
               sync: vi.fn().mockName('LoggerService#sync')
@@ -55,10 +56,10 @@ describe('functional:git/operations/TagOperationHandler', () => {
     beforeAll(async () => {
       operation = new TagOperation({
         force: true,
+        level: UserLogLevel.SILENT,
         message: 'release: {tag}',
         object: '^HEAD',
         push: true,
-        quiet: true,
         sign: 'keyid',
         tag: '3.0.0-test.1',
         tagprefix: gc.tagprefix

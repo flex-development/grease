@@ -4,7 +4,8 @@
  */
 
 import { GitService } from '#src/git/providers'
-import { LoggerService, ValidationService } from '#src/providers'
+import { LogModule } from '#src/log'
+import { ValidationService } from '#src/providers'
 import { Test, type TestingModule } from '@nestjs/testing'
 import fs from 'node:fs/promises'
 import TestSubject from '../tag.handler'
@@ -17,7 +18,8 @@ describe('unit:git/queries/TagQueryHandler', () => {
 
   beforeAll(async () => {
     ref = await Test.createTestingModule({
-      providers: [GitService, LoggerService, TestSubject, ValidationService]
+      imports: [LogModule],
+      providers: [GitService, TestSubject, ValidationService]
     }).compile()
 
     git = ref.get(GitService)

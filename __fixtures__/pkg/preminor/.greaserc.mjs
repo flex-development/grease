@@ -5,6 +5,6 @@
 
 export default {
   cwd: '__fixtures__/pkg/preminor',
-  debug: true,
+  level: 'debug',
   tagprefix: 'pkg-preminor@'
 }

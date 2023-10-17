@@ -4,7 +4,7 @@
  */
 
 import { GitOptions } from '#src/git/options'
-import { LoggerService } from '#src/providers'
+import { LoggerService } from '#src/log'
 import {
   defaults,
   fallback,
@@ -81,7 +81,7 @@ class GitService {
 
     // throw if command failed
     if (e) {
-      e.stderr = trim(e.stderr.replace(/^fatal: */, ''))
+      this.logger.fail(e.stderr = trim(e.stderr.replace(/^fatal: */, '')))
       throw new Error(e.stderr, { cause: pick(e, ['cmd', 'code']) })
     }
 

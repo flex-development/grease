@@ -9,7 +9,8 @@ import gc from '#gc' assert { type: 'json' }
 import { ChangelogStream } from '#src/changelog/models'
 import { ChangelogQueryHandler } from '#src/changelog/queries'
 import { GitModule } from '#src/git'
-import { LoggerService, ValidationService } from '#src/providers'
+import { LogModule } from '#src/log'
+import { ValidationService } from '#src/providers'
 import { CqrsModule } from '@nestjs/cqrs'
 import { Test } from '@nestjs/testing'
 import tempfile from 'tempfile'
@@ -21,13 +22,8 @@ describe('unit:changelog/operations/ChangelogOperationHandler', () => {
 
   beforeAll(async () => {
     subject = (await (await Test.createTestingModule({
-      imports: [CqrsModule, GitModule],
-      providers: [
-        ChangelogQueryHandler,
-        LoggerService,
-        TestSubject,
-        ValidationService
-      ]
+      imports: [CqrsModule, GitModule, LogModule],
+      providers: [ChangelogQueryHandler, TestSubject, ValidationService]
     }).compile()).init()).get(TestSubject)
 
     vi.setSystemTime(today)

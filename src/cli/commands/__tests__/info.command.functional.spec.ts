@@ -3,7 +3,7 @@
  * @module grease/cli/commands/tests/functional/InfoCommand
  */
 
-import GreaseModule from '#src/grease.module'
+import { LogLevel, LoggerOptions, LoggerService } from '#src/log'
 import type { Spy } from '#tests/interfaces'
 import { CliUtilityService } from '@flex-development/nest-commander'
 import { CommandTestFactory } from '@flex-development/nest-commander/testing'
@@ -18,25 +18,27 @@ describe('functional:cli/commands/InfoCommand', () => {
   let command: TestingModule
   let run: Spy<(typeof envinfo)['run']>
 
-  afterAll(() => {
-    vi.unstubAllEnvs()
-  })
-
   beforeAll(() => {
     args = ['info']
   })
 
   beforeEach(async () => {
     command = await CommandTestFactory.createTestingCommand({
-      imports: [GreaseModule],
-      providers: [CliUtilityService, TestSubject]
+      providers: [
+        CliUtilityService,
+        TestSubject,
+        {
+          provide: LoggerService,
+          useValue: new LoggerService(new LoggerOptions({
+            level: LogLevel.SILENT
+          }))
+        }
+      ]
     })
 
     run = vi
       .spyOn(envinfo, 'run')
       .mockImplementationOnce(vi.fn().mockName('envinfo.run'))
-
-    vi.stubEnv('GREASE_CONFIG', '0')
   })
 
   it('should run successfully with defaults', async () => {

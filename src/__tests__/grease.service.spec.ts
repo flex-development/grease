@@ -18,8 +18,8 @@ import {
 import { ConfigModule } from '#src/config'
 import { ReleaseType } from '#src/enums'
 import { GitModule, GitService, TagOperation } from '#src/git'
+import { LogModule } from '#src/log'
 import { PackageManifest } from '#src/models'
-import { LoggerService, ValidationService } from '#src/providers'
 import { set } from '@flex-development/tutils'
 import { CqrsModule } from '@nestjs/cqrs'
 import { Test } from '@nestjs/testing'
@@ -28,8 +28,8 @@ import tempfile from 'tempfile'
 import TestSubject from '../grease.service'
 
 describe('unit:GreaseService', () => {
-  let raw_tags: string
   let subject: TestSubject
+  let tags: string
 
   beforeAll(async () => {
     subject = (await (await Test.createTestingModule({
@@ -38,12 +38,13 @@ describe('unit:GreaseService', () => {
         ChangelogModule,
         ConfigModule,
         CqrsModule,
-        GitModule
+        GitModule,
+        LogModule.forRoot({ tag: TestSubject.NAME })
       ],
-      providers: [LoggerService, TestSubject, ValidationService]
+      providers: [TestSubject]
     }).compile()).init()).get(TestSubject)
 
-    raw_tags = '__fixtures__/git/grease/tags.txt'
+    tags = '__fixtures__/git/grease/tags.txt'
   })
 
   describe('#bump', () => {
@@ -92,7 +93,7 @@ describe('unit:GreaseService', () => {
   describe('#recommend', () => {
     beforeEach(() => {
       vi.spyOn(GitService.prototype, 'tag').mockImplementation(async () => {
-        return fs.readFile(raw_tags, 'utf8')
+        return fs.readFile(tags, 'utf8')
       })
     })
 
@@ -131,7 +132,7 @@ describe('unit:GreaseService', () => {
   describe('#tags', () => {
     beforeEach(() => {
       vi.spyOn(GitService.prototype, 'tag').mockImplementation(async () => {
-        return fs.readFile(raw_tags, 'utf8')
+        return fs.readFile(tags, 'utf8')
       })
     })
 

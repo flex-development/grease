@@ -33,8 +33,6 @@ describe('functional:cli/commands/ChangelogCommand', () => {
         }
       ]
     })
-
-    vi.stubEnv('GREASE_CONFIG', '0')
   })
 
   describe('--infile, -i <path>', () => {

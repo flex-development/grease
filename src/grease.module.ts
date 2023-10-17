@@ -6,11 +6,11 @@
 import { Global, Module } from '@nestjs/common'
 import { CqrsModule } from '@nestjs/cqrs'
 import GreaseService from './grease.service'
-import { LoggerService, ValidationService } from './providers'
 import { BumpModule } from './subdomains/bump'
 import { ChangelogModule } from './subdomains/changelog'
 import { ConfigModule } from './subdomains/config'
 import { GitModule } from './subdomains/git'
+import { LogModule } from './subdomains/log'
 
 /**
  * Global grease module.
@@ -19,15 +19,16 @@ import { GitModule } from './subdomains/git'
  */
 @Global()
 @Module({
-  exports: [GreaseService, LoggerService, ValidationService],
+  exports: [GreaseService, LogModule],
   imports: [
     BumpModule,
     ChangelogModule,
     ConfigModule,
     CqrsModule.forRoot(),
-    GitModule
+    GitModule,
+    LogModule.forRoot({ tag: GreaseService.NAME })
   ],
-  providers: [GreaseService, LoggerService, ValidationService]
+  providers: [GreaseService]
 })
 class GreaseModule {}
 

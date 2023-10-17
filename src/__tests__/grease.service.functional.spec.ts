@@ -6,7 +6,7 @@
 import { BumpModule } from '#src/bump'
 import { ConfigModule, ConfigService } from '#src/config'
 import { GitModule } from '#src/git'
-import { LoggerService, ValidationService } from '#src/providers'
+import { LogModule } from '#src/log'
 import type { Mock } from '#tests/interfaces'
 import pathe from '@flex-development/pathe'
 import { CqrsModule } from '@nestjs/cqrs'
@@ -18,8 +18,14 @@ describe('functional:GreaseService', () => {
 
   beforeAll(async () => {
     subject = (await (await Test.createTestingModule({
-      imports: [BumpModule, ConfigModule, CqrsModule, GitModule],
-      providers: [LoggerService, TestSubject, ValidationService]
+      imports: [
+        BumpModule,
+        ConfigModule,
+        CqrsModule,
+        GitModule,
+        LogModule.forRoot({ tag: TestSubject.NAME })
+      ],
+      providers: [TestSubject]
     }).compile()).init()).get(TestSubject)
   })
 

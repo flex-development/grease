@@ -15,6 +15,3 @@ index v1.0.0-alpha.1..v1.0.0-alpha.1 100644
 +        return method.handler.bind(metadata.instance)(value, previous)
 +      });
 +      command.addOption(option);
-@@ -81,1 +81,1 @@
--      return metadata.instance.run.bind(metadata.instance), metadata.instance.run(this.args, this.opts());
-+      return metadata.instance.run.bind(metadata.instance), metadata.instance.run(this.args, this.optsWithGlobals());

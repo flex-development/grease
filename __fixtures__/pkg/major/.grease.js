@@ -5,6 +5,6 @@
 
 export default {
   cwd: '__fixtures__/pkg/major',
-  debug: true,
+  level: 'debug',
   tagprefix: 'pkg-major@'
 }

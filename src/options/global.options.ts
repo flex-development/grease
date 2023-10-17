@@ -4,9 +4,17 @@
  */
 
 import { IsBoolable, IsDirectory, IsFile } from '#src/decorators'
+import { UserLogLevel } from '#src/log'
 import pathe from '@flex-development/pathe'
-import { DOT, get, isString, type Partial } from '@flex-development/tutils'
-import { IsBoolean, IsString } from 'class-validator'
+import {
+  DOT,
+  defaults,
+  fallback,
+  isString,
+  type OrLowercase,
+  type Partial
+} from '@flex-development/tutils'
+import { IsBoolean, IsEnum, IsString } from 'class-validator'
 
 /**
  * Global grease options.
@@ -15,16 +23,16 @@ import { IsBoolean, IsString } from 'class-validator'
  */
 class GlobalOptions {
   /**
-   * Enable colorized output.
+   * Colorized output enabled?
    *
    * @default true
    *
    * @public
    * @instance
-   * @member {boolean} colors
+   * @member {boolean} color
    */
   @IsBoolean()
-  public colors: boolean
+  public color: boolean
 
   /**
    * Path to config file, or a boolean indicating if config search is enabled.
@@ -54,28 +62,16 @@ class GlobalOptions {
   public cwd: string
 
   /**
-   * Enable verbose output.
+   * Log level.
    *
-   * @default false
-   *
-   * @public
-   * @instance
-   * @member {boolean} debug
-   */
-  @IsBoolean()
-  public debug: boolean
-
-  /**
-   * Disable logs.
-   *
-   * @default false
+   * @default UserLogLevel.WARN
    *
    * @public
    * @instance
-   * @member {boolean} quiet
+   * @member {OrLowercase<UserLogLevel>} level
    */
-  @IsBoolean()
-  public quiet: boolean
+  @IsEnum(UserLogLevel)
+  public level: OrLowercase<UserLogLevel>
 
   /**
    * Tag prefix to consider when creating and listing tags.
@@ -90,7 +86,7 @@ class GlobalOptions {
   public tagprefix: string
 
   /**
-   * Include unstable tags.
+   * Allow prereleases.
    *
    * @default true
    *
@@ -107,13 +103,28 @@ class GlobalOptions {
    * @param {Partial<GlobalOptions>?} [opts] - User options
    */
   constructor(opts?: Partial<GlobalOptions>) {
-    this.colors = get(opts, 'colors', true)
-    this.config = get(opts, 'config', true)
-    this.cwd = pathe.resolve(get(opts, 'cwd', DOT))
-    this.debug = get(opts, 'debug', false)
-    this.quiet = get(opts, 'quiet', false)
-    this.tagprefix = get(opts, 'tagprefix', '')
-    this.unstable = get(opts, 'unstable', true)
+    const {
+      color,
+      config,
+      cwd,
+      level,
+      tagprefix,
+      unstable
+    } = defaults(fallback(opts, {}), {
+      color: true,
+      config: true,
+      cwd: DOT,
+      level: UserLogLevel.WARN,
+      tagprefix: '',
+      unstable: true
+    })
+
+    this.color = color
+    this.config = config
+    this.cwd = pathe.resolve(cwd)
+    this.level = level
+    this.tagprefix = tagprefix
+    this.unstable = unstable
 
     // resolve config path
     if (isString(this.config) && !pathe.isAbsolute(this.config)) {

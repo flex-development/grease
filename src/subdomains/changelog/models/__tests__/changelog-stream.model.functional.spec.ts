@@ -11,7 +11,8 @@ import { ChangelogOperation } from '#src/changelog/operations'
 import { ChangelogQueryHandler } from '#src/changelog/queries'
 import type { ChangelogChunk } from '#src/changelog/types'
 import { GitModule } from '#src/git'
-import { LoggerService, ValidationService } from '#src/providers'
+import { LogModule, LoggerService } from '#src/log'
+import { ValidationService } from '#src/providers'
 import type { StreamCallback } from '#src/types'
 import type { Mock } from '#tests/interfaces'
 import pathe from '@flex-development/pathe'
@@ -29,8 +30,8 @@ describe('functional:changelog/models/ChangelogStream', () => {
 
   beforeAll(async () => {
     ref = await (await Test.createTestingModule({
-      imports: [CqrsModule, GitModule],
-      providers: [ChangelogQueryHandler, LoggerService, ValidationService]
+      imports: [CqrsModule, GitModule, LogModule],
+      providers: [ChangelogQueryHandler, ValidationService]
     }).compile()).init()
 
     encoding = 'utf8'
@@ -41,14 +42,8 @@ describe('functional:changelog/models/ChangelogStream', () => {
   })
 
   describe('constructor', () => {
-    let debug: Mock<LoggerService['debug']>
-
-    beforeAll(() => {
-      debug = vi.fn().mockName('logger.debug')
-    })
-
     beforeEach(() => {
-      vi.spyOn(logger, 'debug').mockImplementation(debug)
+      vi.spyOn(logger, 'debug')
     })
 
     it('should add infile chunk if infile is found', () => {
@@ -85,8 +80,8 @@ describe('functional:changelog/models/ChangelogStream', () => {
       })
 
       // Expect
-      expect(debug).toHaveBeenCalledOnce()
-      expect(debug).toHaveBeenCalledWith('infile not found', path)
+      expect(logger.debug).toHaveBeenCalledOnce()
+      expect(logger.debug).toHaveBeenCalledWith('infile not found', path)
       expect(subject).to.have.deep.property('chunks', [null])
     })
   })

@@ -2,6 +2,6 @@
 // https://github.com/flex-development/grease
 {
   cwd: '__fixtures__/pkg/patch',
-  debug: true,
+  level: 'debug',
   tagprefix: 'pkg-patch@'
 }

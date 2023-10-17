@@ -5,7 +5,8 @@
 
 import type { IGreaseConfig } from '#src/config/interfaces'
 import { GreaseConfig } from '#src/config/models'
-import { LoggerService, ValidationService } from '#src/providers'
+import { LogModule } from '#src/log'
+import { ValidationService } from '#src/providers'
 import * as pathe from '@flex-development/pathe'
 import { DOT, cast, type Assign, type Fn } from '@flex-development/tutils'
 import { Test } from '@nestjs/testing'
@@ -41,7 +42,8 @@ describe('functional:config/providers/ConfigService', () => {
     })
 
     subject = (await Test.createTestingModule({
-      providers: [LoggerService, TestSubject, ValidationService]
+      imports: [LogModule],
+      providers: [TestSubject, ValidationService]
     }).compile()).get(TestSubject)
   })
 

@@ -4,7 +4,6 @@
  */
 
 import { defineBuildConfig, type Config } from '@flex-development/mkbuild'
-import pathe from '@flex-development/pathe'
 import { at } from '@flex-development/tutils'
 import pkg from './package.json' assert { type: 'json' }
 import tsconfig from './tsconfig.build.json' assert { type: 'json' }
@@ -29,6 +28,7 @@ const config: Config = defineBuildConfig({
         '**/options/*',
         '**/providers/*',
         '**/queries/*',
+        '**/reporters/*',
         '*.ts',
         'subdomains/**/*.ts'
       ],
@@ -60,7 +60,6 @@ const config: Config = defineBuildConfig({
   keepNames: true,
   minifySyntax: true,
   platform: 'node',
-  sourceRoot: 'file' + pathe.delimiter + pathe.sep.repeat(2),
   target: [
     'node' + at(/([\d.]+)/.exec(pkg.engines.node), 0, ''),
     tsconfig.compilerOptions.target

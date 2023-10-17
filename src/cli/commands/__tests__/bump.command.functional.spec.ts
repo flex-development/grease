@@ -18,10 +18,6 @@ describe('functional:cli/commands/BumpCommand', () => {
   let command: TestingModule
   let recommend: Mock<GreaseService['recommend']>
 
-  afterAll(() => {
-    vi.unstubAllEnvs()
-  })
-
   beforeAll(() => {
     args = ['bump', ReleaseType.PREMAJOR]
   })
@@ -40,8 +36,6 @@ describe('functional:cli/commands/BumpCommand', () => {
         }
       ]
     })
-
-    vi.stubEnv('GREASE_CONFIG', '0')
   })
 
   describe('--preid <id>', () => {

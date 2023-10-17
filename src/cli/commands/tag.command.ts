@@ -4,6 +4,7 @@
  */
 
 import GreaseService from '#src/grease.service'
+import { LoggerService } from '#src/log'
 import {
   CliUtilityService,
   Command,
@@ -40,14 +41,21 @@ class TagCommand extends CommandRunner {
   /**
    * Create a new `tag` command runner.
    *
+   * @see {@linkcode CliUtilityService}
+   * @see {@linkcode GreaseService}
+   * @see {@linkcode LoggerService}
+   *
    * @param {CliUtilityService} util - Utilities service
    * @param {GreaseService} grease - Grease runner service
+   * @param {LoggerService} logger - Logger service
    */
   constructor(
     protected readonly util: CliUtilityService,
-    protected readonly grease: GreaseService
+    protected readonly grease: GreaseService,
+    protected readonly logger: LoggerService
   ) {
     super()
+    this.logger = logger.withTag('tag')
   }
 
   /**
@@ -260,7 +268,7 @@ class TagCommand extends CommandRunner {
   public async run(args: [string?, ...string[]], opts: Opts): Promise<void> {
     switch (opts.list) {
       case true:
-        this.grease.logger.log(join(await this.grease.tags(opts), '\n'))
+        this.logger.log(join(await this.grease.tags(opts), '\n '))
         break
       default:
         await this.grease.tag(define(opts, 'tag', { value: at(args, 0, '') }))

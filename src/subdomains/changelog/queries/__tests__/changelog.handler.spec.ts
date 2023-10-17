@@ -6,7 +6,8 @@
 import sha from '#fixtures/git/grease/sha'
 import gc from '#gc' assert { type: 'json' }
 import { GitModule, GitService } from '#src/git'
-import { LoggerService, ValidationService } from '#src/providers'
+import { LogModule } from '#src/log'
+import { ValidationService } from '#src/providers'
 import { set, template } from '@flex-development/tutils'
 import { CqrsModule } from '@nestjs/cqrs'
 import { Test, type TestingModule } from '@nestjs/testing'
@@ -22,8 +23,8 @@ describe('unit:changelog/queries/ChangelogQueryHandler', () => {
 
   beforeAll(async () => {
     ref = await (await Test.createTestingModule({
-      imports: [CqrsModule, GitModule],
-      providers: [LoggerService, TestSubject, ValidationService]
+      imports: [CqrsModule, GitModule, LogModule],
+      providers: [TestSubject, ValidationService]
     }).compile()).init()
 
     git = ref.get(GitService)

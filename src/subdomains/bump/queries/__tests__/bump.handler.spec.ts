@@ -7,7 +7,7 @@ import sha from '#fixtures/git/grease/sha'
 import gc from '#gc' assert { type: 'json' }
 import { RecommendedBump } from '#src/bump/models'
 import { GitModule, GitService } from '#src/git'
-import { LoggerService, ValidationService } from '#src/providers'
+import { ValidationService } from '#src/providers'
 import { CqrsModule } from '@nestjs/cqrs'
 import { Test } from '@nestjs/testing'
 import fs from 'node:fs/promises'
@@ -20,7 +20,7 @@ describe('unit:bump/queries/BumpQueryHandler', () => {
   beforeAll(async () => {
     subject = (await (await Test.createTestingModule({
       imports: [CqrsModule, GitModule],
-      providers: [LoggerService, TestSubject, ValidationService]
+      providers: [TestSubject, ValidationService]
     }).compile()).init()).get(TestSubject)
   })
 

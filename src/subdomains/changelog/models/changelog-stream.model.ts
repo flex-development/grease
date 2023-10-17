@@ -6,7 +6,7 @@
 import type { ChangelogOperation } from '#src/changelog/operations'
 import type { ChangelogChunk } from '#src/changelog/types'
 import type { Commit } from '#src/git'
-import type { LoggerService } from '#src/providers'
+import { LogLevel, type LoggerService } from '#src/log'
 import type { StreamCallback } from '#src/types'
 import {
   at,
@@ -116,6 +116,16 @@ class ChangelogStream<T extends Commit = Commit> extends stream.Transform {
   ]
 
   /**
+   * Debug mode enabled?
+   *
+   * @public
+   * @readonly
+   * @instance
+   * @member {boolean} debug
+   */
+  public readonly debug: boolean
+
+  /**
    * Changelog formatter.
    *
    * @see {@linkcode ChangelogFormatter}
@@ -144,12 +154,12 @@ class ChangelogStream<T extends Commit = Commit> extends stream.Transform {
    *
    * @see {@linkcode ChangelogOperation}
    *
-   * @public
+   * @protected
    * @readonly
    * @instance
    * @member {Readonly<ChangelogOperation<T>>} operation
    */
-  public readonly operation: Readonly<ChangelogOperation<T>>
+  protected readonly operation: Readonly<ChangelogOperation<T>>
 
   /**
    * Changelog entries writer.
@@ -189,6 +199,7 @@ class ChangelogStream<T extends Commit = Commit> extends stream.Transform {
       : process.stdout
 
     this.logger.sync(this.operation)
+    this.debug = this.logger.level >= LogLevel.DEBUG
     this.pause()
 
     this.chunks = <ChangelogStream<T>['chunks']>Object.freeze([
@@ -251,7 +262,7 @@ class ChangelogStream<T extends Commit = Commit> extends stream.Transform {
    */
   public override _read(n: number): void {
     // add spacer chunk for readability when running operation in debug mode
-    this.operation.debug && !this.operation.write && this.unshift('')
+    this.debug && !this.operation.write && this.unshift('')
 
     // add n number of changelog chunks
     if (this.cdx < this.chunks.length) {

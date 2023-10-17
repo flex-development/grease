@@ -4,7 +4,8 @@
  */
 
 import { GitService } from '#src/git/providers'
-import { LoggerService, ValidationService } from '#src/providers'
+import { LoggerService } from '#src/log'
+import { ValidationService } from '#src/providers'
 import { ifelse, isBoolean, isString, template } from '@flex-development/tutils'
 import { CommandHandler, type ICommandHandler } from '@nestjs/cqrs'
 import TagOperation from './tag.operation'
@@ -48,11 +49,12 @@ class TagOperationHandler
    */
   public async execute(operation: TagOperation): Promise<TagOperation> {
     const {
+      color,
       force,
+      level,
       message,
       object,
       push,
-      quiet,
       remote,
       sign,
       tag,
@@ -61,7 +63,7 @@ class TagOperationHandler
     } = await this.validator.validate(operation)
 
     // sync logger
-    this.logger.sync({ quiet })
+    this.logger.sync({ color, level })
 
     // log tag creation start
     this.logger.start('creating tag', tag)
@@ -90,18 +92,7 @@ class TagOperationHandler
     // verify gpg signature
     if (verify) {
       this.logger.start('verifying gpg signature')
-
-      /**
-       * GPG signature verification output.
-       *
-       * @const {string} output
-       */
-      const output: string = await this.git.tag(['--verify', tag], operation)
-
-      this.logger.success(output.replace(
-        /(?<=\n)(^\b)/gm,
-        ' '.repeat(this.logger.options.defaults.tag!.length + 5) + '$1'
-      ))
+      this.logger.success(await this.git.tag(['--verify', tag], operation))
     }
 
     // push tag

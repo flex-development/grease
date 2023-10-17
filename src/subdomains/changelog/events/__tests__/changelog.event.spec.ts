@@ -5,8 +5,8 @@
 
 import { ChangelogStream } from '#src/changelog/models'
 import { ChangelogOperation } from '#src/changelog/operations'
+import { LoggerService } from '#src/log'
 import { GlobalOptions } from '#src/options'
-import { LoggerService } from '#src/providers'
 import TestSubject from '../changelog.event'
 
 describe('unit:changelog/events/ChangelogEvent', () => {

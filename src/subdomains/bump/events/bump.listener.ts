@@ -4,7 +4,7 @@
  */
 
 import { RecommendedBump } from '#src/bump/models'
-import { LoggerService } from '#src/providers'
+import { LoggerService } from '#src/log'
 import { EventsHandler, type IEventHandler } from '@nestjs/cqrs'
 import BumpEvent from './bump.event'
 

@@ -4,7 +4,7 @@
  */
 
 import GreaseModule from '#src/grease.module'
-import { LoggerService } from '#src/providers'
+import { LoggerService } from '#src/log'
 import type { CommanderError } from '@flex-development/nest-commander/commander'
 import { Module } from '@nestjs/common'
 import {

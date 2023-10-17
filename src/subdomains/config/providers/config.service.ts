@@ -7,8 +7,9 @@ import pkg from '#pkg' assert { type: 'json' }
 import type { IGreaseConfig } from '#src/config/interfaces'
 import { GreaseConfig } from '#src/config/models'
 import type { Commit } from '#src/git'
+import { LoggerService } from '#src/log'
 import { GlobalOptions } from '#src/options'
-import { LoggerService, ValidationService } from '#src/providers'
+import { ValidationService } from '#src/providers'
 import type {
   Result as MkbuildResult,
   OutputExtension
@@ -50,6 +51,9 @@ class ConfigService {
 
   /**
    * Create a new configuration service.
+   *
+   * @see {@linkcode LoggerService}
+   * @see {@linkcode ValidationService}
    *
    * @param {LoggerService} logger - Logger service
    * @param {ValidationService} validator - Validation service
@@ -119,12 +123,13 @@ class ConfigService {
 
     switch (true) {
       case opts.config === false:
+        this.logger.debug('load skipped')
         break
       case mlly.isFile(file):
         /**
          * URL of configuration file.
          *
-         * @const {URL} parent
+         * @const {URL} url
          */
         const url: URL = mlly.toURL(file)
 
@@ -148,6 +153,9 @@ class ConfigService {
          * @const {string} source
          */
         let source: string = <string>await mlly.getSource(url)
+
+        // log load start
+        this.logger.debug(url.pathname)
 
         // parse config source based on extension
         switch (ext) {
@@ -184,13 +192,13 @@ class ConfigService {
             config = get(await import(mlly.toDataURL(source)), 'default', {})
             break
           default:
-            this.logger.debug('invalid extension', this.logger.color.bold(ext))
+            this.logger.debug('invalid extension', this.logger.colors.bold(ext))
             return {}
         }
 
-        config = this.merge(config, opts)
-        this.logger.debug(this.logger.color.bold(file))
-        return this.validator.validate(new GreaseConfig(config))
+        config = new GreaseConfig(this.merge(config, opts))
+        this.logger.debug(config)
+        return this.validator.validate<GreaseConfig<T>>(cast(config))
       default:
         this.logger.debug('config not found')
         break

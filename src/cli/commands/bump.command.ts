@@ -48,6 +48,9 @@ class BumpCommand extends CommandRunner {
   /**
    * Create a new `bump` command runner.
    *
+   * @see {@linkcode CliUtilityService}
+   * @see {@linkcode GreaseService}
+   *
    * @param {CliUtilityService} util - Utilities service
    * @param {GreaseService} grease - Grease runner service
    */

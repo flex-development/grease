@@ -1,0 +1,32 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`unit:log/providers/LoggerService > #colors > should return color functions map 1`] = `
+{
+  "bgBlack": [Function i],
+  "bgBlue": [Function i],
+  "bgCyan": [Function i],
+  "bgGreen": [Function i],
+  "bgMagenta": [Function i],
+  "bgRed": [Function i],
+  "bgWhite": [Function i],
+  "bgYellow": [Function i],
+  "black": [Function i],
+  "blue": [Function i],
+  "bold": [Function i],
+  "color": true,
+  "cyan": [Function i],
+  "dim": [Function i],
+  "gray": [Function i],
+  "green": [Function i],
+  "hidden": [Function i],
+  "inverse": [Function i],
+  "italic": [Function i],
+  "magenta": [Function i],
+  "red": [Function i],
+  "reset": [Function i],
+  "strikethrough": [Function i],
+  "underline": [Function i],
+  "white": [Function i],
+  "yellow": [Function i],
+}
+`;

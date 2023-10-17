@@ -5,9 +5,9 @@ exports[`integration:git/options/GitOptions > validation > should fail validatio
   ValidationError {
     "children": [],
     "constraints": {
-      "isBoolean": "colors must be a boolean value",
+      "isBoolean": "color must be a boolean value",
     },
-    "property": "colors",
+    "property": "color",
     "value": 3,
   },
   ValidationError {
@@ -21,18 +21,10 @@ exports[`integration:git/options/GitOptions > validation > should fail validatio
   ValidationError {
     "children": [],
     "constraints": {
-      "isBoolean": "debug must be a boolean value",
+      "isEnum": "level must be one of the following values: debug, error, fatal, info, log, silent, trace, verbose, warn",
     },
-    "property": "debug",
-    "value": 1,
-  },
-  ValidationError {
-    "children": [],
-    "constraints": {
-      "isBoolean": "quiet must be a boolean value",
-    },
-    "property": "quiet",
-    "value": 0,
+    "property": "level",
+    "value": "quiet",
   },
   ValidationError {
     "children": [],
@@ -40,7 +32,15 @@ exports[`integration:git/options/GitOptions > validation > should fail validatio
       "isString": "tagprefix must be a string",
     },
     "property": "tagprefix",
-    "value": null,
+    "value": /grease@/,
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isBoolean": "unstable must be a boolean value",
+    },
+    "property": "unstable",
+    "value": 1,
   },
 ]
 `;

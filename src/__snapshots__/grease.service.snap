@@ -18,15 +18,14 @@ RecommendedBump {
 
 exports[`unit:GreaseService > #tag > should return executed tag operation 1`] = `
 TagOperation {
-  "colors": true,
+  "color": true,
   "config": true,
   "cwd": "$PWD",
-  "debug": false,
   "force": false,
+  "level": "warn",
   "message": "",
   "object": "HEAD",
   "push": false,
-  "quiet": false,
   "remote": "origin",
   "sign": true,
   "tag": "grease@3.0.0-alpha.1",

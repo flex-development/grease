@@ -12,7 +12,7 @@ import type { IGreaseConfig } from '@flex-development/grease'
  */
 const config: IGreaseConfig = {
   cwd: '__fixtures__/pkg/prepatch',
-  debug: true,
+  level: 'debug',
   tagprefix: 'pkg-prepatch@'
 }
 

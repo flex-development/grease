@@ -6,7 +6,7 @@
 import sha from '#fixtures/git/grease/sha'
 import gc from '#gc' assert { type: 'json' }
 import { ChangelogOperation } from '#src/changelog/operations'
-import { LoggerService } from '#src/providers'
+import { LoggerService, UserLogLevel } from '#src/log'
 import { cast, get, type Nullable } from '@flex-development/tutils'
 import ChangelogFormatter from '../changelog-formatter.model'
 import TestSubject from '../changelog-stream.model'
@@ -96,14 +96,14 @@ describe('unit:changelog/models/ChangelogStream', () => {
     describe.each<[boolean, Nullable<string>]>([
       [false, null],
       [true, '']
-    ])('operation.debug === %j', (debug, chunk) => {
+    ])('#debug === %j', (debug, chunk) => {
       let subject: TestSubject
 
       beforeAll(() => {
         subject = new TestSubject({
           logger,
           operation: new ChangelogOperation({
-            debug,
+            level: debug ? UserLogLevel.DEBUG : UserLogLevel.WARN,
             tagprefix: gc.tagprefix,
             to: sha
           })

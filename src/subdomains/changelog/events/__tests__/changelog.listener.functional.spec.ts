@@ -10,8 +10,9 @@ import { ChangelogStream } from '#src/changelog/models'
 import { ChangelogOperation } from '#src/changelog/operations'
 import { ChangelogQueryHandler } from '#src/changelog/queries'
 import { GitModule } from '#src/git'
+import { LogModule, LoggerService, UserLogLevel } from '#src/log'
 import { GlobalOptions } from '#src/options'
-import { LoggerService, ValidationService } from '#src/providers'
+import { ValidationService } from '#src/providers'
 import type { Fn } from '@flex-development/tutils'
 import { CqrsModule } from '@nestjs/cqrs'
 import { Test, type TestingModule } from '@nestjs/testing'
@@ -29,7 +30,8 @@ describe('functional:changelog/events/ChangelogEventListener', () => {
       vi.spyOn(LoggerService.prototype, 'withTag')
 
       await Test.createTestingModule({
-        providers: [LoggerService, TestSubject, ValidationService]
+        imports: [LogModule],
+        providers: [TestSubject]
       }).compile()
     })
 
@@ -49,20 +51,15 @@ describe('functional:changelog/events/ChangelogEventListener', () => {
 
     beforeAll(async () => {
       ref = await (await Test.createTestingModule({
-        imports: [CqrsModule, GitModule],
-        providers: [
-          ChangelogQueryHandler,
-          LoggerService,
-          TestSubject,
-          ValidationService
-        ]
+        imports: [CqrsModule, GitModule, LogModule],
+        providers: [ChangelogQueryHandler, TestSubject, ValidationService]
       }).compile()).init()
 
       subject = ref.get(TestSubject)
 
       operation = new ChangelogOperation({
+        level: UserLogLevel.SILENT,
         outfile: tempfile({ extension: 'md' }),
-        quiet: true,
         tagprefix: gc.tagprefix,
         to: sha,
         write: true

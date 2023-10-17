@@ -4,7 +4,8 @@
  */
 
 import type { IGreaseConfig } from '#src/config/interfaces'
-import { LoggerService, ValidationService } from '#src/providers'
+import { LogModule } from '#src/log'
+import { ValidationService } from '#src/providers'
 import { Test } from '@nestjs/testing'
 import TestSubject from '../config.service'
 
@@ -13,7 +14,8 @@ describe('unit:config/providers/ConfigService', () => {
 
   beforeAll(async () => {
     subject = (await Test.createTestingModule({
-      providers: [LoggerService, TestSubject, ValidationService]
+      imports: [LogModule],
+      providers: [TestSubject, ValidationService]
     }).compile()).get(TestSubject)
   })
 

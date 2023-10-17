@@ -5,7 +5,8 @@
 
 import { ChangelogStream } from '#src/changelog/models'
 import { ChangelogQuery } from '#src/changelog/queries'
-import { LoggerService, ValidationService } from '#src/providers'
+import { LoggerService } from '#src/log'
+import { ValidationService } from '#src/providers'
 import { CommandHandler, QueryBus, type ICommandHandler } from '@nestjs/cqrs'
 import ChangelogOperation from './changelog.operation'
 

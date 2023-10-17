@@ -3,7 +3,9 @@
  * @module grease/bump/BumpModule
  */
 
-import { LoggerService, ValidationService } from '#src/providers'
+import { GitModule } from '#src/git'
+import { LogModule } from '#src/log'
+import { ValidationService } from '#src/providers'
 import { Module } from '@nestjs/common'
 import { CqrsModule } from '@nestjs/cqrs'
 import { BumpEventListener } from './events'
@@ -16,12 +18,11 @@ import { BumpQueryHandler } from './queries'
  * @class
  */
 @Module({
-  imports: [CqrsModule],
+  imports: [CqrsModule, GitModule, LogModule],
   providers: [
     BumpEventListener,
     BumpOperationHandler,
     BumpQueryHandler,
-    LoggerService,
     ValidationService
   ]
 })

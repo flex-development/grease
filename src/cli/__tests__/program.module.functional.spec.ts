@@ -3,7 +3,7 @@
  * @module grease/cli/tests/functional/ProgramModule
  */
 
-import { LoggerService } from '#src/providers'
+import { LoggerService } from '#src/log'
 import type { Spy } from '#tests/interfaces'
 import { CommanderError } from '@flex-development/nest-commander/commander'
 import TestSubject from '../program.module'

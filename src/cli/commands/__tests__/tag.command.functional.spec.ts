@@ -6,7 +6,7 @@
 import sha from '#fixtures/git/grease/sha'
 import pkg from '#pkg'
 import GreaseService from '#src/grease.service'
-import { LoggerService } from '#src/providers'
+import { LoggerService } from '#src/log'
 import type { Mock } from '#tests/interfaces'
 import { CliUtilityService } from '@flex-development/nest-commander'
 import { CommandTestFactory } from '@flex-development/nest-commander/testing'
@@ -21,10 +21,6 @@ describe('functional:cli/commands/TagCommand', () => {
   let tag: Mock<GreaseService['tag']>
   let tags: Mock<GreaseService['tags']>
 
-  afterAll(() => {
-    vi.unstubAllEnvs()
-  })
-
   beforeAll(() => {
     args = ['tag', faker.system.semver()]
   })
@@ -33,7 +29,6 @@ describe('functional:cli/commands/TagCommand', () => {
     command = await CommandTestFactory.createTestingCommand({
       providers: [
         CliUtilityService,
-        LoggerService,
         TestSubject,
         {
           provide: GreaseService,
@@ -42,11 +37,16 @@ describe('functional:cli/commands/TagCommand', () => {
             tag: tag = vi.fn().mockName('GreaseService#tag'),
             tags: tags = vi.fn().mockName('GreaseService#tags')
           }
+        },
+        {
+          provide: LoggerService,
+          useValue: {
+            log: log = vi.fn().mockName('LoggerService#log'),
+            withTag: vi.fn().mockReturnValue({ log })
+          }
         }
       ]
     })
-
-    vi.stubEnv('GREASE_CONFIG', '0')
   })
 
   describe('--force, -f', () => {

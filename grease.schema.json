@@ -103,7 +103,7 @@
       },
       "type": "object"
     },
-    "colors": {
+    "color": {
       "default": true,
       "description": "enable colorized output",
       "type": "boolean"
@@ -113,15 +113,21 @@
       "description": "path to current working directory",
       "type": "string"
     },
-    "debug": {
-      "default": false,
-      "description": "enable verbose output",
-      "type": "boolean"
-    },
-    "quiet": {
-      "default": false,
-      "description": "disable logs",
-      "type": "boolean"
+    "level": {
+      "default": "log",
+      "description": "log level",
+      "enum": [
+        "debug",
+        "error",
+        "fatal",
+        "info",
+        "log",
+        "silent",
+        "trace",
+        "verbose",
+        "warn"
+      ],
+      "type": "string"
     },
     "tag": {
       "additionalProperties": false,
@@ -168,6 +174,11 @@
       "default": "",
       "description": "tag prefix to consider when creating and listing tags",
       "type": "string"
+    },
+    "unstable": {
+      "default": true,
+      "description": "allow prereleases",
+      "type": "boolean"
     }
   },
   "title": "grease",

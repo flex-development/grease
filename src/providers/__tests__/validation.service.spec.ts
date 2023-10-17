@@ -27,8 +27,8 @@ describe('unit:providers/ValidationService', () => {
 
     it('should throw if validation fails', async () => {
       // Arrange
-      const obj: GlobalOptions = new GlobalOptions(cast({ cwd: 'x', debug: 0 }))
-      const message: string = `GlobalOptions validation failure: [cwd,debug]`
+      const obj: GlobalOptions = new GlobalOptions(cast({ color: 0, cwd: 'x' }))
+      const message: string = `GlobalOptions validation failure: [color,cwd]`
       let error!: AggregateError<ValidationError, GlobalOptions>
 
       // Act

@@ -4,7 +4,7 @@
  */
 
 import pkg from '#pkg' assert { type: 'json' }
-import GreaseService from '#src/grease.service'
+import { LogObject, LoggerService } from '#src/log'
 import {
   CliUtilityService,
   Command,
@@ -40,12 +40,15 @@ class InfoCommand extends CommandRunner {
   /**
    * Create a new `info` command runner.
    *
+   * @see {@linkcode CliUtilityService}
+   * @see {@linkcode LoggerService}
+   *
    * @param {CliUtilityService} util - Utilities service
-   * @param {GreaseService} grease - Grease runner service
+   * @param {LoggerService} logger - Logger service
    */
   constructor(
     protected readonly util: CliUtilityService,
-    protected readonly grease: GreaseService
+    protected readonly logger: LoggerService
   ) {
     super()
   }
@@ -145,20 +148,23 @@ class InfoCommand extends CommandRunner {
    * @return {Promise<void>} Nothing when complete
    */
   public async run(args: EmptyArray, opts: Opts): Promise<void> {
-    return void this.grease.logger.sync(opts).log(await envinfo.run({
-      Binaries: sift(['Node', opts.pm]),
-      System: ['OS', 'Shell'],
-      Utilities: ['git'],
-      npmPackages: alphabetize([
-        ...keys(pkg.dependencies),
-        ...keys(pick(pkg.devDependencies, ['typescript']))
-      ], identity)
-    }, {
-      console: false,
-      duplicates: true,
-      json: !opts.yaml && opts.json,
-      markdown: !opts.yaml && opts.markdown,
-      showNotFound: true
+    return void this.logger.sync(opts).log(new LogObject({
+      message: await envinfo.run({
+        Binaries: sift(['Node', opts.pm]),
+        System: ['OS', 'Shell'],
+        Utilities: ['git'],
+        npmPackages: alphabetize([
+          ...keys(pkg.dependencies),
+          ...keys(pick(pkg.devDependencies, ['typescript']))
+        ], identity)
+      }, {
+        console: false,
+        duplicates: true,
+        json: !opts.yaml && opts.json,
+        markdown: !opts.yaml && opts.markdown,
+        showNotFound: true
+      }),
+      tag: ''
     }))
   }
 

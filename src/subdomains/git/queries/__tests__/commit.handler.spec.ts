@@ -6,7 +6,8 @@
 import sha from '#fixtures/git/grease/sha'
 import gc from '#gc' assert { type: 'json' }
 import { GitService } from '#src/git/providers'
-import { LoggerService, ValidationService } from '#src/providers'
+import { LogModule } from '#src/log'
+import { ValidationService } from '#src/providers'
 import { template } from '@flex-development/tutils'
 import { Test, type TestingModule } from '@nestjs/testing'
 import fs from 'node:fs/promises'
@@ -20,7 +21,8 @@ describe('unit:git/queries/CommitQueryHandler', () => {
 
   beforeAll(async () => {
     ref = await Test.createTestingModule({
-      providers: [GitService, LoggerService, TestSubject, ValidationService]
+      imports: [LogModule],
+      providers: [GitService, TestSubject, ValidationService]
     }).compile()
 
     git = ref.get(GitService)

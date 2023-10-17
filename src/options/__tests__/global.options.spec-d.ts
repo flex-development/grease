@@ -3,13 +3,13 @@
  * @module grease/options/tests/unit-d/GlobalOptions
  */
 
+import type { UserLogLevel } from '#src/log'
+import type { OrLowercase } from '@flex-development/tutils'
 import type TestSubject from '../global.options'
 
 describe('unit-d:options/GlobalOptions', () => {
-  it('should match [colors: boolean]', () => {
-    expectTypeOf<TestSubject>()
-      .toHaveProperty('colors')
-      .toEqualTypeOf<boolean>()
+  it('should match [color: boolean]', () => {
+    expectTypeOf<TestSubject>().toHaveProperty('color').toEqualTypeOf<boolean>()
   })
 
   it('should match [config: boolean | string]', () => {
@@ -22,14 +22,10 @@ describe('unit-d:options/GlobalOptions', () => {
     expectTypeOf<TestSubject>().toHaveProperty('cwd').toEqualTypeOf<string>()
   })
 
-  it('should match [debug: boolean]', () => {
-    expectTypeOf<TestSubject>().toHaveProperty('debug').toEqualTypeOf<boolean>()
-  })
-
-  it('should match [quiet: boolean]', () => {
+  it('should match [level: OrLowercase<UserLogLevel>]', () => {
     expectTypeOf<TestSubject>()
-      .toHaveProperty('quiet')
-      .toEqualTypeOf<boolean>()
+      .toHaveProperty('level')
+      .toEqualTypeOf<OrLowercase<UserLogLevel>>()
   })
 
   it('should match [tagprefix: string]', () => {

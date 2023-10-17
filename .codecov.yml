@@ -48,6 +48,10 @@ component_management:
       name: git
       paths:
         - src/subdomains/git/**/*.ts
+    - component_id: log
+      name: log
+      paths:
+        - src/subdomains/log/**/*.ts
     - component_id: models
       name: models
       paths:

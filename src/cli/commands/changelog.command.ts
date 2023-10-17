@@ -29,6 +29,9 @@ class ChangelogCommand extends CommandRunner {
   /**
    * Create a new `changelog` command runner.
    *
+   * @see {@linkcode CliUtilityService}
+   * @see {@linkcode GreaseService}
+   *
    * @param {CliUtilityService} util - Utilities service
    * @param {GreaseService} grease - Grease runner service
    */

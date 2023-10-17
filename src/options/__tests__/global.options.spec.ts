@@ -3,6 +3,7 @@
  * @module grease/options/tests/unit/GlobalOptions
  */
 
+import { UserLogLevel } from '#src/log'
 import pathe from '@flex-development/pathe'
 import { DOT } from '@flex-development/tutils'
 import TestSubject from '../global.options'
@@ -16,8 +17,8 @@ describe('unit:options/GlobalOptions', () => {
       subject = new TestSubject({ config: config = 'grease.config.json' })
     })
 
-    it('should set #colors', () => {
-      expect(subject).to.have.property('colors', true)
+    it('should set #color', () => {
+      expect(subject).to.have.property('color', true)
     })
 
     it('should set #config', () => {
@@ -28,12 +29,8 @@ describe('unit:options/GlobalOptions', () => {
       expect(subject).to.have.property('cwd', pathe.resolve(DOT))
     })
 
-    it('should set #debug', () => {
-      expect(subject).to.have.property('debug', false)
-    })
-
-    it('should set #quiet', () => {
-      expect(subject).to.have.property('quiet', false)
+    it('should set #level', () => {
+      expect(subject).to.have.property('level', UserLogLevel.WARN)
     })
 
     it('should set #tagprefix', () => {
