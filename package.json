@@ -119,7 +119,7 @@
     "@arethetypeswrong/cli": "0.12.1",
     "@commitlint/cli": "17.7.2",
     "@commitlint/types": "17.4.4",
-    "@faker-js/faker": "8.1.0",
+    "@faker-js/faker": "8.2.0",
     "@flex-development/commitlint-config": "1.0.1",
     "@flex-development/decorator-regex": "2.0.0",
     "@flex-development/esm-types": "2.0.0",
