@@ -7306,20 +7306,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^3.29.4":
-  version: 3.29.4
-  resolution: "rollup@npm:3.29.4"
-  dependencies:
-    fsevents: "npm:~2.3.2"
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  bin:
-    rollup: dist/bin/rollup
-  checksum: 9e39d54e23731a4c4067e9c02910cdf7479a0f9a7584796e2dc6efaa34bb1e5e015c062c87d1e64d96038baca76cefd47681ff22604fae5827147f54123dc6d0
-  languageName: node
-  linkType: hard
-
 "rollup@npm:^4.1.4":
   version: 4.1.4
   resolution: "rollup@npm:4.1.4"
@@ -8466,7 +8452,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:5.0.0-beta.10":
+"vite@npm:5.0.0-beta.10, vite@npm:^3.0.0 || ^4.0.0 || ^5.0.0-0, vite@npm:^3.1.0 || ^4.0.0 || ^5.0.0-0":
   version: 5.0.0-beta.10
   resolution: "vite@npm:5.0.0-beta.10"
   dependencies:
@@ -8503,46 +8489,6 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: 133392380456e255a91172c912adaa821c1b470d314e38a4f8b447de041810db80b65ec953f89b1e2b7c8aa82a7109523bbf14c0a599552640828bbc077944cc
-  languageName: node
-  linkType: hard
-
-"vite@npm:^3.0.0 || ^4.0.0 || ^5.0.0-0, vite@npm:^3.1.0 || ^4.0.0 || ^5.0.0-0":
-  version: 5.0.0-beta.8
-  resolution: "vite@npm:5.0.0-beta.8"
-  dependencies:
-    esbuild: "npm:^0.19.3"
-    fsevents: "npm:~2.3.3"
-    postcss: "npm:^8.4.31"
-    rollup: "npm:^3.29.4"
-  peerDependencies:
-    "@types/node": ^18.0.0 || >=20.0.0
-    less: "*"
-    lightningcss: ^1.21.0
-    sass: "*"
-    stylus: "*"
-    sugarss: "*"
-    terser: ^5.4.0
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  peerDependenciesMeta:
-    "@types/node":
-      optional: true
-    less:
-      optional: true
-    lightningcss:
-      optional: true
-    sass:
-      optional: true
-    stylus:
-      optional: true
-    sugarss:
-      optional: true
-    terser:
-      optional: true
-  bin:
-    vite: bin/vite.js
-  checksum: 6db6cc3d30f17e54ddf9ab753e52329632b40e19dd3b0a0586fb3f74d3e8e8aaae1be0ea528d573ca0fa6729b7cfecdb768e2f34d2e819bd0b4040e03604d93b
   languageName: node
   linkType: hard
 
