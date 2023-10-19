@@ -406,3 +406,41 @@ jobs:
         with:
           name: ${{ env.TARFILE }}
           path: ${{ env.TARFILE }}
+  changelog:
+    needs:
+      - build
+      - commitlint
+      - format
+      - gitguardian
+      - lint
+      - preflight
+      - spelling
+      - test
+      - typescript
+    runs-on: ubuntu-latest
+    env:
+      NODE_NO_WARNINGS: 1
+    steps:
+      - id: checkout
+        name: Checkout ${{ env.REF_NAME }}
+        uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ env.REF }}
+      - id: node
+        name: Setup Node.js
+        uses: actions/setup-node@v3.8.1
+        with:
+          cache: yarn
+          cache-dependency-path: yarn.lock
+          node-version-file: .nvmrc
+      - id: cache
+        name: Restore dependencies cache
+        uses: actions/cache@v3.3.2
+        with:
+          key: ${{ needs.preflight.outputs.cache-key }}
+          path: ${{ env.CACHE_PATH }}
+      - id: preview
+        name: Print changelog preview
+        run: yarn grease changelog
