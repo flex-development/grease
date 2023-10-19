@@ -1204,7 +1204,7 @@ __metadata:
     trash-cli: "npm:5.0.0"
     ts-dedent: "npm:2.2.0"
     typescript: "npm:5.2.2"
-    vite: "npm:5.0.0-beta.10"
+    vite: "npm:5.0.0-beta.11"
     vite-tsconfig-paths: "npm:4.2.1"
     vitest: "npm:0.34.6"
     word-wrap: "npm:1.2.5"
@@ -8453,9 +8453,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:5.0.0-beta.10, vite@npm:^3.0.0 || ^4.0.0 || ^5.0.0-0, vite@npm:^3.1.0 || ^4.0.0 || ^5.0.0-0":
-  version: 5.0.0-beta.10
-  resolution: "vite@npm:5.0.0-beta.10"
+"vite@npm:5.0.0-beta.11, vite@npm:^3.0.0 || ^4.0.0 || ^5.0.0-0, vite@npm:^3.1.0 || ^4.0.0 || ^5.0.0-0":
+  version: 5.0.0-beta.11
+  resolution: "vite@npm:5.0.0-beta.11"
   dependencies:
     esbuild: "npm:^0.19.3"
     fsevents: "npm:~2.3.3"
@@ -8489,7 +8489,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 133392380456e255a91172c912adaa821c1b470d314e38a4f8b447de041810db80b65ec953f89b1e2b7c8aa82a7109523bbf14c0a599552640828bbc077944cc
+  checksum: 2ddbe6c1b4a95cc3a79e165f63a2512bc470cd1345348956ee275610c28a19a2a1747a446c00f215e77a1d3562626da8a7880370490a2102649086dc2ad00ffc
   languageName: node
   linkType: hard
 
