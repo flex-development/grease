@@ -24,6 +24,10 @@ class TagOperationHandler
   /**
    * Create a new tag operation handler.
    *
+   * @see {@linkcode GitService}
+   * @see {@linkcode LoggerService}
+   * @see {@linkcode ValidationService}
+   *
    * @param {GitService} git - Git commands service
    * @param {LoggerService} logger - Logger service
    * @param {ValidationService} validator - Validation service
@@ -63,10 +67,10 @@ class TagOperationHandler
     } = await this.validator.validate(operation)
 
     // sync logger
-    this.logger.sync({ color, level })
+    this.logger.sync({ color, level }).verbose(operation)
 
-    // log tag creation start
-    this.logger.start('creating tag', tag)
+    // log tag start
+    this.logger.start(tag)
 
     // create tag object
     await this.git.tag([
@@ -86,20 +90,18 @@ class TagOperationHandler
       ifelse(object !== 'HEAD', object, '')
     ], operation)
 
-    // log tag creation success
-    this.logger.success('created tag', tag)
+    // log tagged object
+    this.logger.info('tagged %s', object)
 
     // verify gpg signature
     if (verify) {
-      this.logger.start('verifying gpg signature')
-      this.logger.success(await this.git.tag(['--verify', tag], operation))
+      this.logger.info(await this.git.tag(['--verify', tag], operation))
     }
 
     // push tag
     if (push) {
-      this.logger.start('pushing', tag)
       await this.git.push([ifelse(force, '-f', ''), remote, tag], operation)
-      this.logger.success('pushed', tag, 'to', remote)
+      this.logger.info('pushed to %s', remote)
     }
 
     return operation

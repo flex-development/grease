@@ -19,7 +19,7 @@ import { ConfigModule } from '#src/config'
 import { ReleaseType } from '#src/enums'
 import { GitModule, GitService, TagOperation } from '#src/git'
 import { LogModule } from '#src/log'
-import { PackageManifest } from '#src/models'
+import { Version } from '#src/models'
 import { set } from '@flex-development/tutils'
 import { CqrsModule } from '@nestjs/cqrs'
 import { Test } from '@nestjs/testing'
@@ -58,13 +58,13 @@ describe('unit:GreaseService', () => {
       }
     })
 
-    it('should return package manifest', async () => {
+    it('should return bump version', async () => {
       // Act
       const result = await subject.bump(operation)
 
       // Expect
-      expect(result).to.be.instanceof(PackageManifest)
-      expect(result.pkg).toMatchSnapshot()
+      expect(result).to.be.instanceof(Version)
+      expect(result).toMatchSnapshot()
     })
   })
 
@@ -101,7 +101,8 @@ describe('unit:GreaseService', () => {
       // Act
       const result = await subject.recommend({
         tagprefix: gc.tagprefix,
-        to: sha
+        to: sha,
+        unstable: true
       })
 
       // Expect

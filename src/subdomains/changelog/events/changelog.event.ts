@@ -4,9 +4,9 @@
  */
 
 import type { ChangelogStream } from '#src/changelog/models'
+import type { ChangelogOperation } from '#src/changelog/operations'
 import type { Commit } from '#src/git'
 import type { IEvent } from '#src/interfaces'
-import type { GlobalOptions } from '#src/options'
 
 /**
  * Changelog event.
@@ -25,15 +25,15 @@ class ChangelogEvent<T extends Commit = Commit>
   /**
    * Create a new changelog event.
    *
+   * @see {@linkcode ChangelogOperation}
    * @see {@linkcode ChangelogStream}
-   * @see {@linkcode GlobalOptions}
    *
    * @param {ChangelogStream<T>} payload - Event payload
-   * @param {GlobalOptions} context - Event context
+   * @param {ChangelogOperation<T>} context - Event context
    */
   constructor(
-    public payload: ChangelogStream<T>,
-    public context: GlobalOptions
+    public readonly payload: ChangelogStream<T>,
+    public readonly context: ChangelogOperation<T>
   ) {}
 }
 

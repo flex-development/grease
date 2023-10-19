@@ -4,20 +4,24 @@
  */
 
 import type { RecommendedBump } from '#src/bump/models'
-import type { Manifest } from '#src/models'
-import type { GlobalOptions } from '#src/options'
+import type { BumpOperation } from '#src/bump/operations'
+import type { BumpQuery } from '#src/bump/queries'
+import type { Version } from '#src/models'
+import type { ReadonlyKeys } from '@flex-development/tutils'
 import type TestSubject from '../bump.event'
 
 describe('unit-d:bump/events/BumpEvent', () => {
-  it('should match [context: GlobalOptions]', () => {
+  it('should match [readonly context: BumpOperation | BumpQuery]', () => {
+    expectTypeOf<ReadonlyKeys<TestSubject>>().extract<'context'>().toBeString()
     expectTypeOf<TestSubject>()
       .toHaveProperty('context')
-      .toEqualTypeOf<GlobalOptions>()
+      .toEqualTypeOf<BumpOperation | BumpQuery>()
   })
 
-  it('should match [payload: Manifest | RecommendedBump]', () => {
+  it('should match [readonly payload: RecommendedBump | Version]', () => {
+    expectTypeOf<ReadonlyKeys<TestSubject>>().extract<'payload'>().toBeString()
     expectTypeOf<TestSubject>()
       .toHaveProperty('payload')
-      .toEqualTypeOf<Manifest | RecommendedBump>()
+      .toEqualTypeOf<RecommendedBump | Version>()
   })
 })

@@ -10,5 +10,13 @@ exports[`integration:bump/queries/BumpQuery > validation > should fail validatio
     "property": "to",
     "value": /\\^HEAD/,
   },
+  ValidationError {
+    "children": [],
+    "constraints": {
+      "isBoolean": "unstable must be a boolean value",
+    },
+    "property": "unstable",
+    "value": 1,
+  },
 ]
 `;

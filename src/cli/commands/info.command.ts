@@ -4,12 +4,12 @@
  */
 
 import pkg from '#pkg' assert { type: 'json' }
-import { LogObject, LoggerService } from '#src/log'
+import { LogObject, LoggerService, UserLogLevel } from '#src/log'
 import {
   CliUtilityService,
-  Command,
   CommandRunner,
-  Option
+  Option,
+  Subcommand
 } from '@flex-development/nest-commander'
 import type * as commander from '@flex-development/nest-commander/commander'
 import {
@@ -31,7 +31,7 @@ import type Opts from './info.command.opts'
  * @class
  * @extends {CommandRunner}
  */
-@Command({
+@Subcommand({
   description: 'get an environment report',
   examples: ['--json', '--markdown'],
   name: 'info'
@@ -64,10 +64,12 @@ class InfoCommand extends CommandRunner {
    * @return {boolean} Parsed option value
    */
   @Option({
-    conflicts: ['markdown', 'yaml'],
-    description: 'enable json formatting',
-    fallback: { value: true },
+    conflicts: ['markdown'],
+    description: 'enable json output',
+    env: 'GREASE_JSON',
+    fallback: { value: false },
     flags: '-j, --json',
+    implies: { level: UserLogLevel.LOG },
     preset: 'true'
   })
   protected parseJson(val: string): boolean {
@@ -85,7 +87,7 @@ class InfoCommand extends CommandRunner {
    * @return {boolean} Parsed option value
    */
   @Option({
-    conflicts: ['json', 'yaml'],
+    conflicts: ['json'],
     description: 'enable markdown formatting',
     fallback: { value: false },
     flags: '-m, --markdown',
@@ -115,27 +117,6 @@ class InfoCommand extends CommandRunner {
   }
 
   /**
-   * Parse the `--yaml` flag.
-   *
-   * @see {@linkcode Opts.yaml}
-   *
-   * @protected
-   *
-   * @param {string} val - Value to parse
-   * @return {boolean} Parsed option value
-   */
-  @Option({
-    conflicts: ['json', 'markdown'],
-    description: 'enable yaml formatting',
-    fallback: { value: false },
-    flags: '-y, --yaml',
-    preset: 'true'
-  })
-  protected parseYaml(val: string): boolean {
-    return this.util.parseBoolean(val)
-  }
-
-  /**
    * Print local environment information.
    *
    * @see {@linkcode Opts}
@@ -160,11 +141,11 @@ class InfoCommand extends CommandRunner {
       }, {
         console: false,
         duplicates: true,
-        json: !opts.yaml && opts.json,
-        markdown: !opts.yaml && opts.markdown,
+        json: opts.json,
+        markdown: opts.markdown,
         showNotFound: true
       }),
-      tag: ''
+      tag: null
     }))
   }
 

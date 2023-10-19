@@ -4,16 +4,25 @@
  */
 
 import type { BumpOperation } from '#src/bump'
-import type { Omit } from '@flex-development/tutils'
+import type { Assign, Omit } from '@flex-development/tutils'
+import type Opts from './grease.command.opts'
 
 /**
  * Parsed `bump` command options.
  *
  * @see {@linkcode BumpOperation}
+ * @see {@linkcode Opts}
  *
- * @extends {Omit<BumpOperation,'release'>}
+ * @extends {Omit<Assign<BumpOperation,Opts>,'release'>}
  */
-interface BumpCommandOpts extends Omit<BumpOperation, 'release'> {
+interface BumpCommandOpts extends Omit<Assign<BumpOperation, Opts>, 'release'> {
+  /**
+   * Enable json output.
+   *
+   * @default false
+   */
+  json: boolean
+
   /**
    * Get a version bump recommendation.
    *

@@ -13,6 +13,7 @@ describe('integration:bump/operations/BumpOperation', () => {
     it('should fail validation if schema is invalid', async () => {
       // Arrange
       const subject: TestSubject = new TestSubject(cast({
+        files: [],
         preid: null,
         prestart: 3,
         release: '3.1',

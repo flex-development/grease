@@ -68,7 +68,7 @@ exports[`functional:log/reporters/FancyReporter > #write > LogType.INFO > should
 
 exports[`functional:log/reporters/FancyReporter > #write > LogType.LOG > should write log 1`] = `
 "
- log message
+log message
 "
 `;
 

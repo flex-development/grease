@@ -26,6 +26,12 @@ describe('unit-d:changelog/operations/ChangelogOperation', () => {
       .toEqualTypeOf<Optional<string>>()
   })
 
+  it('should match [quiet: boolean]', () => {
+    expectTypeOf<TestSubject>()
+      .toHaveProperty('quiet')
+      .toEqualTypeOf<boolean>()
+  })
+
   it('should match [outfile?: Optional<string>]', () => {
     expectTypeOf<TestSubject>()
       .toHaveProperty('outfile')

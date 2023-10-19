@@ -8,6 +8,8 @@ import { GlobalOptions } from '#src/options'
 /**
  * Common git options.
  *
+ * @see {@linkcode GlobalOptions}
+ *
  * @class
  * @extends {GlobalOptions}
  */

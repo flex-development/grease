@@ -5,7 +5,7 @@
 
 import gc from '#gc' assert { type: 'json' }
 import { GitService } from '#src/git/providers'
-import { LoggerService, UserLogLevel } from '#src/log'
+import { LogModule, UserLogLevel } from '#src/log'
 import { ValidationService } from '#src/providers'
 import type { Mock } from '#tests/interfaces'
 import { template } from '@flex-development/tutils'
@@ -15,35 +15,20 @@ import TagOperation from '../tag.operation'
 
 describe('functional:git/operations/TagOperationHandler', () => {
   let push: Mock<GitService['push']>
-  let start: Mock<LoggerService['start']>
   let subject: TestSubject
-  let success: Mock<LoggerService['success']>
   let tag: Mock<GitService['tag']>
 
   beforeAll(async () => {
-    start = vi.fn().mockName('LoggerService#start')
-    success = vi.fn().mockName('LoggerService#success')
-
     subject = (await Test.createTestingModule({
+      imports: [LogModule],
       providers: [
         TestSubject,
         ValidationService,
         {
           provide: GitService,
           useValue: {
-            push: push = vi.fn().mockName('GitService#push'),
+            push: push = vi.fn(async () => '').mockName('GitService#push'),
             tag: tag = vi.fn(async () => '').mockName('GitService#tag')
-          }
-        },
-        {
-          provide: LoggerService,
-          useValue: {
-            withTag: vi.fn(() => ({
-              options: { tag: 'grease:tag' },
-              start,
-              success,
-              sync: vi.fn().mockName('LoggerService#sync')
-            })).mockName('LoggerService#withTag')
           }
         }
       ]
@@ -83,9 +68,7 @@ describe('functional:git/operations/TagOperationHandler', () => {
       ]
 
       // Expect
-      expect(start).toHaveBeenCalledWith('creating tag', operation.tag)
       expect(tag).toHaveBeenCalledWith(args, operation)
-      expect(success).toHaveBeenCalledWith('created tag', operation.tag)
     })
 
     it('should push tag to remote', () => {
@@ -93,15 +76,11 @@ describe('functional:git/operations/TagOperationHandler', () => {
       const { remote, tag } = operation
 
       // Expect
-      expect(start).toHaveBeenCalledWith('pushing', tag)
       expect(push).toHaveBeenCalledWith(['-f', remote, tag], operation)
-      expect(success).toHaveBeenCalledWith('pushed', tag, 'to', remote)
     })
 
     it('should verify gpg signature', () => {
-      expect(start).toHaveBeenCalledWith('verifying gpg signature')
       expect(tag).toHaveBeenCalledWith(['--verify', operation.tag], operation)
-      expect(success).toHaveBeenCalledWith('')
     })
   })
 })

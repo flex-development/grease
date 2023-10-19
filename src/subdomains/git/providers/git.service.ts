@@ -68,7 +68,7 @@ class GitService {
     const command: string = join(sift(['git', ...args]), ' ')
 
     // debug command
-    this.logger.sync(opts).debug(command)
+    this.logger.sync(opts).verbose(command)
 
     // execute command
     const [e, result] = await tryit<

@@ -3,7 +3,6 @@
  * @module grease/models/AbstractManifest
  */
 
-import { isDirectory, toURL, type ModuleId } from '@flex-development/mlly'
 import pathe from '@flex-development/pathe'
 import { DOT } from '@flex-development/tutils'
 import Version from './version.model'
@@ -19,34 +18,19 @@ abstract class AbstractManifest {
    * Absolute path to manifest directory.
    *
    * @public
+   * @abstract
    * @instance
    * @member {string} dir
    */
-  public dir: string
-
-  /**
-   * Manifest filename.
-   *
-   * @public
-   * @abstract
-   * @readonly
-   * @instance
-   * @member {string} filename
-   */
-  public abstract readonly filename: string
+  public abstract dir: string
 
   /**
    * Create a new manifest.
    *
-   * @param {ModuleId?} [dir=DOT] - Module id of manifest directory
-   * @throws {Error} If manifest directory is not found
+   * @param {string?} [cwd=DOT] - Absolute path to current working directory
    */
-  constructor(dir: ModuleId = DOT) {
-    if (!isDirectory(this.dir = toURL(dir).pathname)) {
-      throw new Error('manifest directory not found', {
-        cause: { dir: this.dir }
-      })
-    }
+  constructor(cwd: string = DOT) {
+    void cwd
   }
 
   /**
@@ -59,6 +43,16 @@ abstract class AbstractManifest {
   public get file(): string {
     return pathe.join(this.dir, this.filename)
   }
+
+  /**
+   * Get `this` manifest filename.
+   *
+   * @public
+   * @abstract
+   *
+   * @return {string} `this` filename
+   */
+  public abstract get filename(): string
 
   /**
    * Get `this` manifest version.

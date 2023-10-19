@@ -19,16 +19,16 @@ describe('unit-d:models/AbstractManifest', () => {
     expectTypeOf<TestSubject>().toHaveProperty('dir').toEqualTypeOf<string>()
   })
 
+  it('should match [readonly file: string]', () => {
+    expectTypeOf<ReadonlyKeys<TestSubject>>().extract<'file'>().toBeString()
+    expectTypeOf<TestSubject>().toHaveProperty('file').toEqualTypeOf<string>()
+  })
+
   it('should match [readonly filename: string]', () => {
     expectTypeOf<ReadonlyKeys<TestSubject>>().extract<'filename'>().toBeString()
     expectTypeOf<TestSubject>()
       .toHaveProperty('filename')
       .toEqualTypeOf<string>()
-  })
-
-  it('should match [readonly file: string]', () => {
-    expectTypeOf<ReadonlyKeys<TestSubject>>().extract<'file'>().toBeString()
-    expectTypeOf<TestSubject>().toHaveProperty('file').toEqualTypeOf<string>()
   })
 
   it('should match [version: Version]', () => {

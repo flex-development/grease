@@ -93,6 +93,7 @@
   "dependencies": {
     "@flex-development/aggregate-error-ponyfill": "3.1.1",
     "@flex-development/commitlint-config": "1.0.1",
+    "@flex-development/errnode": "2.0.0",
     "@flex-development/mkbuild": "1.0.0-alpha.23",
     "@flex-development/mlly": "1.0.0-alpha.18",
     "@flex-development/pathe": "2.0.0",
@@ -184,8 +185,7 @@
     "chai": "5.0.0-alpha.1"
   },
   "engines": {
-    "node": ">=16.20.0 <20.6.0 || >20.6.0",
-    "yarn": "4.0.0-rc.50"
+    "node": ">=16.20.0 <20.6.0 || >20.6.0"
   },
   "packageManager": "yarn@4.0.0-rc.53",
   "readme": "README.md",

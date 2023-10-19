@@ -1131,6 +1131,7 @@ __metadata:
     "@flex-development/aggregate-error-ponyfill": "npm:3.1.1"
     "@flex-development/commitlint-config": "npm:1.0.1"
     "@flex-development/decorator-regex": "npm:2.0.0"
+    "@flex-development/errnode": "npm:2.0.0"
     "@flex-development/esm-types": "npm:2.0.0"
     "@flex-development/mkbuild": "npm:1.0.0-alpha.23"
     "@flex-development/mlly": "npm:1.0.0-alpha.18"

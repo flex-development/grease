@@ -3,65 +3,110 @@
  * @module grease/bump/operations/BumpOperationHandler
  */
 
-import { Manifest, PackageManifest } from '#src/models'
+import { LoggerService } from '#src/log'
+import type { Manifest, Version } from '#src/models'
 import { ValidationService } from '#src/providers'
+import { at, select } from '@flex-development/tutils'
 import { CommandHandler, type ICommandHandler } from '@nestjs/cqrs'
 import BumpOperation from './bump.operation'
 
 /**
  * Version bump operation handler.
  *
+ * @see {@linkcode BumpOperation}
+ * @see {@linkcode Version}
+ *
  * @class
- * @implements {ICommandHandler<BumpOperation,PackageManifest>}
+ * @implements {ICommandHandler<BumpOperation,Version>}
  */
 @CommandHandler(BumpOperation)
-class BumpOperationHandler
-  implements ICommandHandler<BumpOperation, PackageManifest> {
+class BumpOperationHandler implements ICommandHandler<BumpOperation, Version> {
   /**
    * Create a new version bump operation handler.
    *
+   * @see {@linkcode LoggerService}
+   * @see {@linkcode ValidationService}
+   *
+   * @param {LoggerService} logger - Logger instance
    * @param {ValidationService} validator - Validation service
    */
-  constructor(protected readonly validator: ValidationService) {}
+  constructor(
+    protected readonly logger: LoggerService,
+    protected readonly validator: ValidationService
+  ) {
+    this.logger = logger.withTag('bump')
+  }
 
   /**
    * Execute a version bump operation.
    *
    * @see {@linkcode BumpOperation}
-   * @see {@linkcode PackageManifest}
+   * @see {@linkcode Version}
    *
    * @public
    * @async
    *
    * @param {BumpOperation} operation - Operation to execute
-   * @return {Promise<PackageManifest>} Updated package manifest
+   * @return {Promise<Version>} Bumped version
    */
-  public async execute(operation: BumpOperation): Promise<PackageManifest> {
+  public async execute(operation: BumpOperation): Promise<Version> {
     const {
+      color,
       cwd,
+      files,
+      level,
       preid,
       prestart,
       release,
       write
     } = await this.validator.validate(operation)
 
+    // sync logger
+    this.logger.sync({ color, level }).verbose(operation)
+
+    // log bump start
+    this.logger.start(release)
+
     /**
-     * Manifest file.
+     * Bump files.
      *
-     * @const {PackageManifest} manifest
+     * @const {[Manifest, ...Manifest[]]}
      */
-    const manifest: PackageManifest = new PackageManifest(cwd)
+    const manifests: [Manifest, ...Manifest[]] = [
+      new (at(files, 0))(cwd),
+      ...select(files.slice(1), null, Manifest => new Manifest(cwd))
+    ]
 
-    // exit early if bump is not needed
-    if (manifest.version.version === release) return manifest
+    // execute version bumps
+    for (const manifest of manifests) {
+      if (manifest.version.version !== release) {
+        /**
+         * Current manifest version.
+         *
+         * @const {Version} version
+         */
+        const version: Version = manifest.version
 
-    // bump manifest version
-    manifest.version = manifest.version.inc(release, preid, prestart)
+        // bump manifest version
+        manifest.version = manifest.version.inc(release, preid, prestart)
 
-    // write version bump to manifest
-    write && await (<Manifest>manifest).write()
+        // log bump
+        this.logger.info(
+          '%s → %s (%s)',
+          version.version,
+          manifest.version.version,
+          this.logger.colors.dim(manifest.file)
+        )
 
-    return manifest
+        // write version bump to manifest
+        if (write) {
+          await manifest.write()
+          this.logger.debug('bump written')
+        }
+      }
+    }
+
+    return at(manifests, 0).version
   }
 }
 

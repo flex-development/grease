@@ -3,20 +3,21 @@
  * @module grease/commands/BumpCommand
  */
 
+import { RecommendedBump } from '#src/bump'
 import { ReleaseType } from '#src/enums'
 import GreaseService from '#src/grease.service'
+import { LogObject, LoggerService, UserLogLevel } from '#src/log'
+import type { Version } from '#src/models'
 import type { ReleaseVersion } from '#src/types'
 import {
   CliUtilityService,
-  Command,
   CommandRunner,
-  Option
+  Option,
+  Subcommand
 } from '@flex-development/nest-commander'
 import type * as commander from '@flex-development/nest-commander/commander'
 import {
   cast,
-  define,
-  ifelse,
   isNumeric,
   select,
   trim
@@ -29,7 +30,7 @@ import type Opts from './bump.command.opts'
  * @class
  * @extends {CommandRunner}
  */
-@Command({
+@Subcommand({
   arguments: { description: 'release type or version', syntax: '[release]' },
   description: 'execute a version bump, or get a recommendation',
   examples: [
@@ -50,15 +51,41 @@ class BumpCommand extends CommandRunner {
    *
    * @see {@linkcode CliUtilityService}
    * @see {@linkcode GreaseService}
+   * @see {@linkcode LoggerService}
    *
    * @param {CliUtilityService} util - Utilities service
    * @param {GreaseService} grease - Grease runner service
+   * @param {LoggerService} logger - Logger service
    */
   constructor(
     protected readonly util: CliUtilityService,
-    protected readonly grease: GreaseService
+    protected readonly grease: GreaseService,
+    protected readonly logger: LoggerService
   ) {
     super()
+    this.logger = logger.withTag('bump')
+  }
+
+  /**
+   * Parse the `--json` flag.
+   *
+   * @see {@linkcode Opts.json}
+   *
+   * @protected
+   *
+   * @param {string} val - Value to parse
+   * @return {boolean} Parsed option value
+   */
+  @Option({
+    description: 'enable json output',
+    env: 'GREASE_JSON',
+    fallback: { value: false },
+    flags: '-j, --json',
+    implies: { level: UserLogLevel.LOG },
+    preset: 'true'
+  })
+  protected parseJson(val: string): boolean {
+    return this.util.parseBoolean(val)
   }
 
   /**
@@ -120,6 +147,27 @@ class BumpCommand extends CommandRunner {
   }
 
   /**
+   * Parse the `--unstable` flag.
+   *
+   * @see {@linkcode Opts.unstable}
+   *
+   * @protected
+   *
+   * @param {string} val - Value to parse
+   * @return {boolean} Parsed option value
+   */
+  @Option({
+    description: 'allow unstable recommendations',
+    env: 'GREASE_UNSTABLE',
+    fallback: { value: false },
+    flags: '-u, --unstable',
+    preset: 'true'
+  })
+  protected parseUnstable(val: string): boolean {
+    return this.util.parseBoolean(val)
+  }
+
+  /**
    * Parse the `--write` flag.
    *
    * @see {@linkcode Opts.write}
@@ -130,10 +178,9 @@ class BumpCommand extends CommandRunner {
    * @return {boolean} Parsed option value
    */
   @Option({
-    choices: CliUtilityService.BOOLEAN_CHOICES,
     description: 'write version bump to file',
-    fallback: { value: true },
-    flags: '-w, --write [choice]',
+    fallback: { value: false },
+    flags: '-w, --write',
     preset: 'true'
   })
   protected parseWrite(val: string): boolean {
@@ -154,8 +201,37 @@ class BumpCommand extends CommandRunner {
    * @return {Promise<void>} Nothing when complete
    */
   public async run([release]: [ReleaseVersion], opts: Opts): Promise<void> {
-    define(opts, 'release', { value: release })
-    await this.grease[ifelse(opts.recommend, 'recommend', 'bump')](cast(opts))
+    this.logger.sync(opts)
+
+    /**
+     * Version bump operation or query payload.
+     *
+     * @const {RecommendedBump | Version} payload
+     */
+    const payload: RecommendedBump | Version = opts.recommend
+      ? await this.grease.recommend(opts)
+      : await this.grease.bump({ ...opts, release })
+
+    // print payload
+    switch (true) {
+      case opts.json:
+        this.logger.log(new LogObject({
+          message: JSON.stringify(payload, null, 2),
+          tag: null
+        }))
+        break
+      case payload instanceof RecommendedBump:
+        const { bump, breaks, commits, features } = <RecommendedBump>payload
+        this.logger.log(bump)
+        this.logger.debug('commits:', commits)
+        this.logger.debug('breaks:', breaks)
+        this.logger.debug('features:', features)
+        break
+      default:
+        this.logger.success((<Version>payload).version)
+        break
+    }
+
     return void 0
   }
 

@@ -15,6 +15,7 @@ describe('integration:changelog/operations/ChangelogOperation', () => {
         Formatter: () => vi.fn().mockName('Formatter'),
         infile: null,
         outfile: null,
+        quiet: 'false',
         samefile: 1,
         write: 0
       }))

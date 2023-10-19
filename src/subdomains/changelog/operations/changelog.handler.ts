@@ -25,6 +25,10 @@ class ChangelogOperationHandler
   /**
    * Create a new changelog operation handler.
    *
+   * @see {@linkcode LoggerService}
+   * @see {@linkcode QueryBus}
+   * @see {@linkcode ValidationService}
+   *
    * @param {QueryBus} queries - Query bus
    * @param {LoggerService} logger - Logger service
    * @param {ValidationService} validator - Validation service
@@ -33,7 +37,9 @@ class ChangelogOperationHandler
     protected readonly queries: QueryBus,
     protected readonly logger: LoggerService,
     protected readonly validator: ValidationService
-  ) {}
+  ) {
+    this.logger = logger.withTag('changelog')
+  }
 
   /**
    * Execute a changelog operation.
@@ -51,10 +57,11 @@ class ChangelogOperationHandler
     operation: ChangelogOperation
   ): Promise<ChangelogStream> {
     await this.validator.validate(operation)
+    this.logger.sync(operation).verbose(operation)
 
     return new ChangelogStream({
       entries: await this.queries.execute(new ChangelogQuery(operation)),
-      logger: this.logger.withTag('changelog'),
+      logger: this.logger,
       operation
     })
   }

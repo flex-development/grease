@@ -3,19 +3,19 @@
  * @module grease/bump/events/tests/unit/BumpEvent
  */
 
-import { PackageManifest, type Manifest } from '#src/models'
-import { GlobalOptions } from '#src/options'
+import { BumpQuery } from '#src/bump/queries'
+import { Version } from '#src/models'
 import TestSubject from '../bump.event'
 
 describe('unit:bump/events/BumpEvent', () => {
   describe('constructor', () => {
-    let context: GlobalOptions
-    let payload: Manifest
+    let context: BumpQuery
+    let payload: Version
     let subject: TestSubject
 
     beforeAll(() => {
-      context = new GlobalOptions()
-      payload = new PackageManifest()
+      context = new BumpQuery()
+      payload = new Version(faker.system.semver())
       subject = new TestSubject(payload, context)
     })
 

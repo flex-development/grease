@@ -3,11 +3,25 @@
  * @module grease/bump/operations/BumpOperation
  */
 
-import { IsReleaseVersion } from '#src/decorators'
+import type { BumpFile } from '#src/bump/types'
+import { IsConstructor, IsReleaseVersion } from '#src/decorators'
 import { GitOptions } from '#src/git'
+import { PackageManifest } from '#src/models'
 import type { ReleaseVersion } from '#src/types'
-import { defaults, type Assign, type Pick } from '@flex-development/tutils'
-import { IsBoolean, IsIn, IsString } from 'class-validator'
+import {
+  cast,
+  defaults,
+  unique,
+  type Assign,
+  type Pick
+} from '@flex-development/tutils'
+import {
+  ArrayNotEmpty,
+  IsArray,
+  IsBoolean,
+  IsIn,
+  IsString
+} from 'class-validator'
 
 /**
  * Bump operation payload transfer object.
@@ -26,6 +40,22 @@ type BumpOperationDTO = Assign<
  * @extends {GitOptions}
  */
 class BumpOperation extends GitOptions {
+  /**
+   * Bump files.
+   *
+   * @see {@linkcode BumpFile}
+   *
+   * @default [PackageManifest]
+   *
+   * @public
+   * @instance
+   * @member {ReadonlyArray<BumpFile>} files
+   */
+  @IsConstructor({ each: true })
+  @IsArray()
+  @ArrayNotEmpty()
+  public files: readonly [BumpFile, ...BumpFile[]]
+
   /**
    * Prerelease identifier.
    *
@@ -85,16 +115,19 @@ class BumpOperation extends GitOptions {
     super(payload)
 
     const {
+      files,
       preid,
       prestart,
       release,
       write
     } = defaults(payload, {
+      files: <BumpOperation['files']>[PackageManifest],
       preid: 'alpha',
-      prestart: 1 as const,
+      prestart: <BumpOperation['prestart']>1,
       write: false
     })
 
+    this.files = cast(Object.freeze(unique(files, F => new F(this.cwd).file)))
     this.preid = preid
     this.prestart = prestart
     this.release = release

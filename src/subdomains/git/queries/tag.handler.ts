@@ -23,6 +23,9 @@ class TagQueryHandler implements IQueryHandler<TagQuery, string[]> {
   /**
    * Create a new tags query handler.
    *
+   * @see {@linkcode GitService}
+   * @see {@linkcode ValidationService}
+   *
    * @param {GitService} git - Git commands service
    * @param {ValidationService} validator - Validation service
    */

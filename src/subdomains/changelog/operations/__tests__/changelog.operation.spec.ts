@@ -55,6 +55,10 @@ describe('unit:changelog/operations/ChangelogOperation', () => {
       expect(subject).to.have.property('outfile', outfile)
     })
 
+    it('should set #quiet', () => {
+      expect(new TestSubject()).to.have.property('quiet', false)
+    })
+
     it('should set #samefile', () => {
       expect(new TestSubject()).to.have.property('samefile', false)
     })
@@ -72,6 +76,14 @@ describe('unit:changelog/operations/ChangelogOperation', () => {
 
     it('should set #write', () => {
       expect(new TestSubject()).to.have.property('write', false)
+    })
+
+    it('should set #write according to #quiet', () => {
+      // Act
+      const subject: TestSubject = new TestSubject({ quiet: true, write: true })
+
+      // Expect
+      expect(subject).to.have.property('write', false)
     })
   })
 })

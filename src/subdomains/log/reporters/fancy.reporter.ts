@@ -139,12 +139,13 @@ class FancyReporter extends Reporter {
       colors: this.logger.options.color
     }, log.message, ...log.args), '\n')
 
-    return template('{newline}{header} {lines}{trace}', {
+    return template('{newline}{header}{spacer}{lines}{trace}', {
       header,
       lines: join(select(lines, null, (line: string, i: number): string => {
         return ifelse(i, wrap(line, { indent, width: line.length }), line)
       }), '\n'),
       newline: ifelse(log.level <= LogLevel.ERROR && log.error, '\n', ''),
+      spacer: ifelse(header.length, ' ', ''),
       trace: this.formatTrace(log)
     })
   }

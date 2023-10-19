@@ -6,7 +6,7 @@
 import { RecommendedBump } from '#src/bump/models'
 import { CommitQuery, TagQuery, type ICommit } from '#src/git'
 import { ValidationService } from '#src/providers'
-import { at } from '@flex-development/tutils'
+import { at, ifelse } from '@flex-development/tutils'
 import { QueryBus, QueryHandler, type IQueryHandler } from '@nestjs/cqrs'
 import BumpQuery from './bump.query'
 
@@ -23,6 +23,9 @@ import BumpQuery from './bump.query'
 class BumpQueryHandler implements IQueryHandler<BumpQuery, RecommendedBump> {
   /**
    * Create a new recommended version bump query handler.
+   *
+   * @see {@linkcode QueryBus}
+   * @see {@linkcode ValidationService}
    *
    * @param {QueryBus} queries - Query bus
    * @param {ValidationService} validator - Validation service
@@ -63,7 +66,7 @@ class BumpQueryHandler implements IQueryHandler<BumpQuery, RecommendedBump> {
      * @const {number} breaks
      */
     const breaks: number = commits.reduce((acc, commit) => {
-      return acc + (commit.breaking ? 1 : 0)
+      return acc + ifelse(commit.breaking, 1, 0)
     }, 0)
 
     /**
@@ -72,10 +75,15 @@ class BumpQueryHandler implements IQueryHandler<BumpQuery, RecommendedBump> {
      * @const {number} features
      */
     const features: number = commits.reduce((acc, commit) => {
-      return acc + (/^feat(ure)?/.test(commit.type) ? 1 : 0)
+      return acc + ifelse(/^feat(ure)?/.test(commit.type), 1, 0)
     }, 0)
 
-    return new RecommendedBump({ breaks, commits: commits.length, features })
+    return new RecommendedBump({
+      breaks,
+      commits: commits.length,
+      features,
+      unstable: query.unstable
+    })
   }
 }
 

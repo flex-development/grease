@@ -3,22 +3,17 @@
  * @module grease/commands/TagCommand
  */
 
+import { TagOperation } from '#src/git'
 import GreaseService from '#src/grease.service'
-import { LoggerService } from '#src/log'
+import { LogObject, LoggerService, UserLogLevel } from '#src/log'
 import {
   CliUtilityService,
-  Command,
   CommandRunner,
-  Option
+  Option,
+  Subcommand
 } from '@flex-development/nest-commander'
 import type * as commander from '@flex-development/nest-commander/commander'
-import {
-  at,
-  define,
-  includes,
-  join,
-  trim
-} from '@flex-development/tutils'
+import { includes, isArray, pick, trim } from '@flex-development/tutils'
 import type Opts from './tag.command.opts'
 
 /**
@@ -27,7 +22,7 @@ import type Opts from './tag.command.opts'
  * @class
  * @extends {CommandRunner}
  */
-@Command({
+@Subcommand({
   arguments: { description: 'name of tag to create', syntax: '[tagname]' },
   description: 'create and list tags',
   examples: [
@@ -69,7 +64,6 @@ class TagCommand extends CommandRunner {
    * @return {boolean} Parsed option value
    */
   @Option({
-    choices: CliUtilityService.BOOLEAN_CHOICES,
     description: 'replace an existing tag instead of failing',
     env: 'GREASE_TAG_FORCE',
     fallback: { value: false },
@@ -77,6 +71,28 @@ class TagCommand extends CommandRunner {
     preset: 'true'
   })
   protected parseForce(val: string): boolean {
+    return this.util.parseBoolean(val)
+  }
+
+  /**
+   * Parse the `--json` flag.
+   *
+   * @see {@linkcode Opts.json}
+   *
+   * @protected
+   *
+   * @param {string} val - Value to parse
+   * @return {boolean} Parsed option value
+   */
+  @Option({
+    description: 'enable json output',
+    env: 'GREASE_JSON',
+    fallback: { value: false },
+    flags: '-j, --json',
+    implies: { level: UserLogLevel.LOG },
+    preset: 'true'
+  })
+  protected parseJson(val: string): boolean {
     return this.util.parseBoolean(val)
   }
 
@@ -91,7 +107,6 @@ class TagCommand extends CommandRunner {
    * @return {boolean} Parsed option value
    */
   @Option({
-    choices: CliUtilityService.BOOLEAN_CHOICES,
     description: 'list tags',
     fallback: { value: false },
     flags: '-l, --list',
@@ -152,7 +167,6 @@ class TagCommand extends CommandRunner {
    * @return {boolean} Parsed option value
    */
   @Option({
-    choices: CliUtilityService.BOOLEAN_CHOICES,
     description: 'push tag to remote after successful creation',
     env: 'GREASE_TAG_PUSH',
     fallback: { value: false },
@@ -219,13 +233,34 @@ class TagCommand extends CommandRunner {
    */
   @Option({
     description: 'tag sorting configuration',
-    env: 'GREASE_TAG_SORT',
     fallback: { value: ['-creatordate'] },
     flags: '--sort <list>',
     implies: { list: true }
   })
   protected parseSort(val: string): string[] {
     return [...this.util.parseList(val)]
+  }
+
+  /**
+   * Parse the `--unstable` flag.
+   *
+   * @see {@linkcode Opts.unstable}
+   *
+   * @protected
+   *
+   * @param {string} val - Value to parse
+   * @return {boolean} Parsed option value
+   */
+  @Option({
+    choices: CliUtilityService.BOOLEAN_CHOICES,
+    description: 'include unstable tags',
+    env: 'GREASE_UNSTABLE',
+    fallback: { value: true },
+    flags: '-u, --unstable [choice]',
+    preset: 'true'
+  })
+  protected parseUnstable(val: string): boolean {
+    return this.util.parseBoolean(val)
   }
 
   /**
@@ -261,17 +296,43 @@ class TagCommand extends CommandRunner {
    * @public
    * @async
    *
-   * @param {[string?, ...string[]]} args - Parsed command arguments
+   * @param {[string]} args - Parsed command arguments
    * @param {Opts} opts - Parsed command options
    * @return {Promise<void>} Nothing when complete
    */
-  public async run(args: [string?, ...string[]], opts: Opts): Promise<void> {
-    switch (opts.list) {
-      case true:
-        this.logger.log(join(await this.grease.tags(opts), '\n '))
+  public async run([tag]: [string], opts: Opts): Promise<void> {
+    this.logger.sync(opts)
+
+    /**
+     * Tag operation or query payload.
+     *
+     * @const {string[] | TagOperation} payload
+     */
+    const payload: string[] | TagOperation = opts.list
+      ? await this.grease.tags(opts)
+      : await this.grease.tag({ ...opts, tag })
+
+    // print payload
+    switch (true) {
+      case opts.json:
+        /**
+         * JSON-friendly payload.
+         *
+         * @const {string} message
+         */
+        const message: string = JSON.stringify(
+          payload instanceof TagOperation ? pick(payload, ['tag']) : payload,
+          null,
+          2
+        )
+
+        this.logger.log(new LogObject({ message, tag: null }))
+        break
+      case isArray<string>(payload):
+        for (const tag of <string[]>payload) this.logger.log(tag)
         break
       default:
-        await this.grease.tag(define(opts, 'tag', { value: at(args, 0, '') }))
+        this.logger.success((<TagOperation>payload).tag)
         break
     }
 

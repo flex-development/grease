@@ -28,7 +28,7 @@ import {
   type TagOperationDTO
 } from '#src/git'
 import { LoggerService } from '#src/log'
-import type { PackageManifest } from '#src/models'
+import type { Version } from '#src/models'
 import { isString, type EmptyObject } from '@flex-development/tutils'
 import { Injectable } from '@nestjs/common'
 import { CommandBus, EventBus, QueryBus } from '@nestjs/cqrs'
@@ -73,16 +73,16 @@ class GreaseService {
    *
    * @see {@linkcode BumpEvent}
    * @see {@linkcode BumpOperationDTO}
-   * @see {@linkcode PackageManifest}
+   * @see {@linkcode Version}
    *
    * @public
    * @async
    * @fires BumpEvent
    *
    * @param {BumpOperationDTO} payload - Bump operation payload
-   * @return {Promise<PackageManifest>} Package manifest
+   * @return {Promise<Version>} Bump version
    */
-  public async bump(payload: BumpOperationDTO): Promise<PackageManifest> {
+  public async bump(payload: BumpOperationDTO): Promise<Version> {
     /**
      * Bump operation to execute.
      *
@@ -91,14 +91,14 @@ class GreaseService {
     const operation: BumpOperation = new BumpOperation(payload)
 
     /**
-     * Updated package manifest.
+     * Bumped version.
      *
-     * @const {PackageManifest} manifest
+     * @const {Version} version
      */
-    const manifest: PackageManifest = await this.operations.execute(operation)
+    const version: Version = await this.operations.execute(operation)
 
-    this.events.publish(new BumpEvent(manifest, operation))
-    return manifest
+    this.events.publish(new BumpEvent(version, operation))
+    return version
   }
 
   /**

@@ -38,6 +38,8 @@ import Repository from './repository.model'
 /**
  * Parsed commit model.
  *
+ * @see {@linkcode ICommit}
+ *
  * @class
  * @implements {ICommit}
  */
@@ -79,6 +81,8 @@ class Commit implements ICommit {
   /**
    * Repository provider name.
    *
+   * @see {@linkcode RepositoryProvider}
+   *
    * @public
    * @readonly
    * @instance
@@ -89,6 +93,8 @@ class Commit implements ICommit {
   /**
    * Parent repository.
    *
+   * @see {@linkcode Repository}
+   *
    * @public
    * @readonly
    * @instance
@@ -98,6 +104,10 @@ class Commit implements ICommit {
 
   /**
    * Create a new parsed commit.
+   *
+   * @see {@linkcode Buffer}
+   * @see {@linkcode CommitGrammarOptions}
+   * @see {@linkcode Repository}
    *
    * @param {Buffer | Commit | string} chunk - Raw commit chunk or parsed commit
    * @param {Repository?} [repository=new Repository()] - Parent repository

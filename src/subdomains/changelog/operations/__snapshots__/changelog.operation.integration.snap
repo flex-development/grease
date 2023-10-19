@@ -29,18 +29,18 @@ exports[`integration:changelog/operations/ChangelogOperation > validation > shou
   ValidationError {
     "children": [],
     "constraints": {
-      "isBoolean": "samefile must be a boolean value",
+      "isBoolean": "quiet must be a boolean value",
     },
-    "property": "samefile",
-    "value": 1,
+    "property": "quiet",
+    "value": "false",
   },
   ValidationError {
     "children": [],
     "constraints": {
-      "isBoolean": "write must be a boolean value",
+      "isBoolean": "samefile must be a boolean value",
     },
-    "property": "write",
-    "value": 0,
+    "property": "samefile",
+    "value": 1,
   },
 ]
 `;

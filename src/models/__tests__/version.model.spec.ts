@@ -95,15 +95,26 @@ describe('unit:models/Version', () => {
       expect(error).to.have.deep.property('cause', { release })
       expect(error).to.have.property('message', message)
     })
+  })
 
-    describe('#toString', () => {
-      it('should return semantic version string', () => {
-        // Arrange
-        const version: SemanticVersion = '3.1.3'
+  describe('#toJSON', () => {
+    it('should return json-serializable semantic version', () => {
+      // Arrange
+      const metadata: string = '067c93cc68575a652d8609585bd64478c38dccfe'
+      const version: SemanticVersion = `1.2.3-alpha.4+${metadata}`
 
-        // Act + Expect
-        expect(new TestSubject(version).toString()).to.equal(version)
-      })
+      // Act + Expect
+      expect(new TestSubject(version).toJSON()).toMatchSnapshot()
+    })
+  })
+
+  describe('#toString', () => {
+    it('should return semantic version string', () => {
+      // Arrange
+      const version: SemanticVersion = <SemanticVersion>faker.system.semver()
+
+      // Act + Expect
+      expect(new TestSubject(version).toString()).to.equal(version)
     })
   })
 })

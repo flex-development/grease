@@ -235,26 +235,6 @@ class GreaseCommand extends CommandRunner {
   }
 
   /**
-   * Parse the `--unstable` flag.
-   *
-   * @protected
-   *
-   * @param {string} val - Value to parse
-   * @return {boolean} Parsed option value
-   */
-  @Option({
-    choices: CliUtilityService.BOOLEAN_CHOICES,
-    description: 'allow prereleases',
-    env: 'GREASE_UNSTABLE',
-    fallback: { value: true },
-    flags: '-u, --unstable [choice]',
-    preset: 'true'
-  })
-  protected parseUnstable(val: string): boolean {
-    return this.util.parseBoolean(val)
-  }
-
-  /**
    * Preaction lifecycle handler.
    *
    * @see https://github.com/tj/commander.js#life-cycle-hooks

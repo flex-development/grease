@@ -3,13 +3,15 @@
  * @module grease/cli/commands/tests/functional/InfoCommand
  */
 
+import GreaseService from '#src/grease.service'
 import { LogLevel, LoggerOptions, LoggerService } from '#src/log'
 import type { Spy } from '#tests/interfaces'
 import { CliUtilityService } from '@flex-development/nest-commander'
 import { CommandTestFactory } from '@flex-development/nest-commander/testing'
-import type { Get } from '@flex-development/tutils'
+import { constant, type Get } from '@flex-development/tutils'
 import type { TestingModule } from '@nestjs/testing'
 import envinfo from 'envinfo'
+import GreaseCommand from '../grease.command'
 import TestSubject from '../info.command'
 import type InfoCommandOpts from '../info.command.opts'
 
@@ -24,9 +26,17 @@ describe('functional:cli/commands/InfoCommand', () => {
 
   beforeEach(async () => {
     command = await CommandTestFactory.createTestingCommand({
+      positional: false,
       providers: [
         CliUtilityService,
+        GreaseCommand,
         TestSubject,
+        {
+          provide: GreaseService,
+          useValue: {
+            config: vi.fn(constant({})).mockName('GreaseService#config')
+          }
+        },
         {
           provide: LoggerService,
           useValue: new LoggerService(new LoggerOptions({
@@ -39,16 +49,6 @@ describe('functional:cli/commands/InfoCommand', () => {
     run = vi
       .spyOn(envinfo, 'run')
       .mockImplementationOnce(vi.fn().mockName('envinfo.run'))
-  })
-
-  it('should run successfully with defaults', async () => {
-    // Act
-    await CommandTestFactory.run(command, args)
-
-    // Expect
-    expect(run.mock.lastCall?.[0]?.Binaries).to.eql(['Node'])
-    expect(run.mock.lastCall?.[1]?.json).to.be.true
-    expect(run.mock.lastCall?.[1]?.markdown).to.be.false
   })
 
   describe('--json, -j', () => {
@@ -110,26 +110,6 @@ describe('functional:cli/commands/InfoCommand', () => {
 
       // Expect
       expect(run.mock.lastCall?.[0]?.Binaries?.[1]).to.equal(pm)
-    })
-  })
-
-  describe('--yaml, -y', () => {
-    it('should parse flag', async () => {
-      // Act
-      await CommandTestFactory.run(command, [...args, '--yaml'])
-
-      // Expect
-      expect(run.mock.lastCall?.[1]?.json).to.be.false
-      expect(run.mock.lastCall?.[1]?.markdown).to.be.false
-    })
-
-    it('should parse short flag', async () => {
-      // Act
-      await CommandTestFactory.run(command, [...args, '-y'])
-
-      // Expect
-      expect(run.mock.lastCall?.[1]?.json).to.be.false
-      expect(run.mock.lastCall?.[1]?.markdown).to.be.false
     })
   })
 })

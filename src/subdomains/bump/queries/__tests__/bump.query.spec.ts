@@ -16,5 +16,9 @@ describe('unit:bump/queries/BumpQuery', () => {
     it('should set #to', () => {
       expect(subject).to.have.property('to', 'HEAD')
     })
+
+    it('should set #unstable', () => {
+      expect(subject).to.have.property('unstable', false)
+    })
   })
 })

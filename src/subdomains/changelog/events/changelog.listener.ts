@@ -45,7 +45,7 @@ class ChangelogEventListener implements IEventHandler<ChangelogEvent> {
     payload.on('error', this.logger.error.bind(this.logger))
 
     // print changelog stream
-    return void payload.print()
+    return void (!context.quiet && payload.print())
   }
 }
 

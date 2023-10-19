@@ -3,11 +3,14 @@
  * @module grease/bump/operations/tests/functional/BumpOperationHandler
  */
 
+import pkg from '#pkg' assert { type: 'json' }
 import { ReleaseType } from '#src/enums'
+import { LogModule } from '#src/log'
 import { PackageManifest, Version } from '#src/models'
 import { ValidationService } from '#src/providers'
 import type { Spy } from '#tests/interfaces'
 import pathe from '@flex-development/pathe'
+import type { SemanticVersion } from '@flex-development/pkg-types'
 import type { Omit } from '@flex-development/tutils'
 import { Test } from '@nestjs/testing'
 import TestSubject from '../bump.handler'
@@ -18,6 +21,7 @@ describe('functional:bump/operations/BumpOperationHandler', () => {
 
   beforeAll(async () => {
     subject = (await Test.createTestingModule({
+      imports: [LogModule],
       providers: [TestSubject, ValidationService]
     }).compile()).get(TestSubject)
   })
@@ -51,10 +55,9 @@ describe('functional:bump/operations/BumpOperationHandler', () => {
 
       beforeEach(async () => {
         inc = vi.spyOn(Version.prototype, 'inc')
+        write = vi.spyOn(PackageManifest.prototype, 'write')
 
-        write = vi
-          .spyOn(PackageManifest.prototype, 'write')
-          .mockImplementationOnce(vi.fn().mockName('PackageManifest#write'))
+        write = write.mockImplementationOnce(vi.fn().mockName('Manifest#write'))
 
         await subject.execute(op)
       })
@@ -66,6 +69,30 @@ describe('functional:bump/operations/BumpOperationHandler', () => {
 
       it('should write version bump to manifest file', () => {
         expect(write).toHaveBeenCalledOnce()
+      })
+    })
+
+    describe('noop', () => {
+      let inc: Spy<Version['inc']>
+      let op: BumpOperation
+      let write: Spy<PackageManifest['write']>
+
+      beforeAll(() => {
+        op = new BumpOperation({ release: <SemanticVersion>pkg.version })
+      })
+
+      beforeEach(() => {
+        inc = vi.spyOn(Version.prototype, 'inc')
+        write = vi.spyOn(PackageManifest.prototype, 'write')
+      })
+
+      it('should do nothing if bump is not needed', async () => {
+        // Act
+        await subject.execute(op)
+
+        // Expect
+        expect(inc).not.toHaveBeenCalled()
+        expect(write).not.toHaveBeenCalled()
       })
     })
   })

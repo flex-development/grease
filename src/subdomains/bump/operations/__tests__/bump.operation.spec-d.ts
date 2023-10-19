@@ -3,6 +3,7 @@
  * @module grease/bump/operations/tests/unit-d/BumpOperation
  */
 
+import type { BumpFile } from '#src/bump/types'
 import type { GitOptions } from '#src/git'
 import type { ReleaseVersion } from '#src/types'
 import type TestSubject from '../bump.operation'
@@ -12,7 +13,13 @@ describe('unit-d:bump/operations/BumpOperation', () => {
     expectTypeOf<TestSubject>().toMatchTypeOf<GitOptions>()
   })
 
-  it('should match [preid: string', () => {
+  it('should match [files: readonly [BumpFile, ...BumpFile[]]]', () => {
+    expectTypeOf<TestSubject>()
+      .toHaveProperty('files')
+      .toEqualTypeOf<readonly [BumpFile, ...BumpFile[]]>()
+  })
+
+  it('should match [preid: string]', () => {
     expectTypeOf<TestSubject>()
       .toHaveProperty('preid')
       .toEqualTypeOf<string>()

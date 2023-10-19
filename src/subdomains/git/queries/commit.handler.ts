@@ -81,6 +81,9 @@ class CommitQueryHandler<T extends Commit = Commit>
   /**
    * Create a new commits query handler.
    *
+   * @see {@linkcode GitService}
+   * @see {@linkcode ValidationService}
+   *
    * @param {GitService} git - Git commands service
    * @param {ValidationService} validator - Validation service
    */

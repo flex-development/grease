@@ -8,8 +8,13 @@ import type { IGreaseConfig } from '#src/config/interfaces'
 import { GreaseConfig } from '#src/config/models'
 import type { Commit } from '#src/git'
 import { LoggerService } from '#src/log'
-import { GlobalOptions } from '#src/options'
 import { ValidationService } from '#src/providers'
+import {
+  ERR_MODULE_NOT_FOUND,
+  ERR_UNKNOWN_FILE_EXTENSION,
+  ERR_UNSUPPORTED_DIR_IMPORT,
+  type NodeError
+} from '@flex-development/errnode'
 import type {
   Result as MkbuildResult,
   OutputExtension
@@ -18,8 +23,8 @@ import * as mlly from '@flex-development/mlly'
 import * as pathe from '@flex-development/pathe'
 import {
   DOT,
-  at,
   cast,
+  define,
   get,
   join,
   merge,
@@ -114,6 +119,7 @@ class ConfigService {
    * @param {string} file - Path to config file
    * @param {IGreaseConfig<T>?} [opts={}] - Configuration overrides
    * @return {Promise<GreaseConfig<T>>} Validated configuration object
+   * @throws {NodeError} If loading fails
    */
   public async load<T extends Commit = Commit>(
     file: string,
@@ -123,7 +129,7 @@ class ConfigService {
 
     switch (true) {
       case opts.config === false:
-        this.logger.debug('load skipped')
+        this.logger.verbose('load skipped')
         break
       case mlly.isFile(file):
         /**
@@ -155,7 +161,7 @@ class ConfigService {
         let source: string = <string>await mlly.getSource(url)
 
         // log load start
-        this.logger.debug(url.pathname)
+        this.logger.verbose(url.pathname)
 
         // parse config source based on extension
         switch (ext) {
@@ -192,16 +198,36 @@ class ConfigService {
             config = get(await import(mlly.toDataURL(source)), 'default', {})
             break
           default:
-            this.logger.debug('invalid extension', this.logger.colors.bold(ext))
-            return {}
+            this.logger.fail('invalid extension', this.logger.colors.bold(ext))
+
+            /**
+             * Configuration loading error.
+             *
+             * @const {NodeError} error
+             */
+            const error: NodeError = new ERR_UNKNOWN_FILE_EXTENSION(ext, file)
+
+            this.logger.trace(error)
+            throw error
         }
 
         config = new GreaseConfig(this.merge(config, opts))
-        this.logger.debug(config)
+        this.logger.verbose(config)
         return this.validator.validate<GreaseConfig<T>>(cast(config))
       default:
-        this.logger.debug('config not found')
-        break
+        this.logger.fail('invalid config', this.logger.colors.bold(file))
+
+        /**
+         * Configuration loading error.
+         *
+         * @const {NodeError} error
+         */
+        const error: NodeError = mlly.isDirectory(file)
+          ? new ERR_UNSUPPORTED_DIR_IMPORT(file, import.meta.url)
+          : new ERR_MODULE_NOT_FOUND(file, import.meta.url, 'module')
+
+        this.logger.trace(error)
+        throw error
     }
 
     return {}
@@ -246,10 +272,10 @@ class ConfigService {
   public async search<T extends Commit = Commit>(
     opts: IGreaseConfig<T> = {}
   ): Promise<EmptyObject | GreaseConfig<T>> {
-    return this.load(at(await fg(ConfigService.SEARCH_PATTERN, {
-      absolute: true,
-      cwd: new GlobalOptions(opts).cwd
-    }), 0, 'ENOENT'), opts)
+    const [file = ''] = await fg(ConfigService.SEARCH_PATTERN, opts)
+
+    !file && define(opts, 'config', { value: false })
+    return this.load(pathe.resolve(get(opts, 'cwd', ''), file), opts)
   }
 }
 

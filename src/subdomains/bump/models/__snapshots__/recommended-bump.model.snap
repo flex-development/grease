@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`unit:bump/models/RecommendedBump > #toJSON > should return json-serializable recommendation 1`] = `
+{
+  "breaks": 1,
+  "bump": "premajor",
+  "commits": 72,
+  "features": 16,
+  "unstable": true,
+}
+`;

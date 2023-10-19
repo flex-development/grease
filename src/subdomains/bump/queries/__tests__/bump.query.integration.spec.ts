@@ -11,7 +11,10 @@ describe('integration:bump/queries/BumpQuery', () => {
   describe('validation', () => {
     it('should fail validation if schema is invalid', async () => {
       // Arrange
-      const subject: TestSubject = new TestSubject(cast({ to: /^HEAD/ }))
+      const subject: TestSubject = new TestSubject(cast({
+        to: /^HEAD/,
+        unstable: 1
+      }))
 
       // Act
       const errors = await validate(subject, {

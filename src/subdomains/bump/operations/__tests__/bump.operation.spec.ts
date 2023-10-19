@@ -4,6 +4,7 @@
  */
 
 import { ReleaseType } from '#src/enums'
+import { PackageManifest } from '#src/models'
 import TestSubject from '../bump.operation'
 
 describe('unit:bump/operations/BumpOperation', () => {
@@ -13,6 +14,10 @@ describe('unit:bump/operations/BumpOperation', () => {
 
     beforeAll(() => {
       subject = new TestSubject({ release: (release = ReleaseType.PREMAJOR) })
+    })
+
+    it('should set #files', () => {
+      expect(subject).to.have.deep.property('files', [PackageManifest])
     })
 
     it('should set #preid', () => {

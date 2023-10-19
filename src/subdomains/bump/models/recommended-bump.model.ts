@@ -3,15 +3,23 @@
  * @module grease/bump/models/RecommendedBump
  */
 
+import type { IRecommendedBump } from '#src/bump/interfaces'
 import { ReleaseType } from '#src/enums'
-import { ifelse, type Omit } from '@flex-development/tutils'
+import {
+  ifelse,
+  type Omit,
+  type Simplify
+} from '@flex-development/tutils'
 
 /**
- * Recommended version bump.
+ * Recommended version bump data model.
+ *
+ * @see {@linkcode IRecommendedBump}
  *
  * @class
+ * @implements {IRecommendedBump}
  */
-class RecommendedBump {
+class RecommendedBump implements IRecommendedBump {
   /**
    * Total number of breaking changes committed since last release.
    *
@@ -28,9 +36,9 @@ class RecommendedBump {
    *
    * @public
    * @instance
-   * @member {Extract<ReleaseType, 'major' | 'minor' | 'patch'>} bump
+   * @member {Exclude<ReleaseType, 'prerelease'>} bump
    */
-  public bump: Extract<ReleaseType, 'major' | 'minor' | 'patch'>
+  public bump: Exclude<ReleaseType, 'prerelease'>
 
   /**
    * Number of commits considered.
@@ -51,19 +59,55 @@ class RecommendedBump {
   public features: number
 
   /**
+   * Prerelease recommendation?
+   *
+   * @public
+   * @instance
+   * @member {boolean} unstable
+   */
+  public unstable: boolean
+
+  /**
    * Create a new version bump recommendation.
    *
-   * @param {Omit<RecommendedBump, 'bump'>} data - Version bump data
+   * @see {@linkcode IRecommendedBump}
+   *
+   * @param {Omit<IRecommendedBump, 'bump'>} data - Version bump data
    */
-  constructor(data: Omit<RecommendedBump, 'bump'>) {
+  constructor(data: Omit<IRecommendedBump, 'bump'>) {
     this.breaks = data.breaks
     this.commits = data.commits
     this.features = data.features
-    this.bump = ifelse(
-      this.breaks,
-      ReleaseType.MAJOR,
-      ifelse(this.features, ReleaseType.MINOR, ReleaseType.PATCH)
-    )
+    this.unstable = data.unstable
+
+    switch (true) {
+      case this.breaks > 0:
+        this.bump = ReleaseType[ifelse(this.unstable, 'PREMAJOR', 'MAJOR')]
+        break
+      case this.features > 0:
+        this.bump = ReleaseType[ifelse(this.unstable, 'PREMINOR', 'MINOR')]
+        break
+      default:
+        this.bump = ReleaseType[ifelse(this.unstable, 'PREPATCH', 'PATCH')]
+        break
+    }
+  }
+
+  /**
+   * Get a JSON-serializable recommendation.
+   *
+   * @public
+   *
+   * @return {Simplify<IRecommendedBump>} JSON-serializable recommendation
+   */
+  public toJSON(): Simplify<IRecommendedBump> {
+    return {
+      breaks: this.breaks,
+      bump: this.bump,
+      commits: this.commits,
+      features: this.features,
+      unstable: this.unstable
+    }
   }
 }
 

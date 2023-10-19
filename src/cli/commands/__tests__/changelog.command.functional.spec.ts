@@ -8,8 +8,10 @@ import GreaseService from '#src/grease.service'
 import type { Mock } from '#tests/interfaces'
 import { CliUtilityService } from '@flex-development/nest-commander'
 import { CommandTestFactory } from '@flex-development/nest-commander/testing'
+import { constant } from '@flex-development/tutils'
 import type { TestingModule } from '@nestjs/testing'
 import TestSubject from '../changelog.command'
+import GreaseCommand from '../grease.command'
 
 describe('functional:cli/commands/ChangelogCommand', () => {
   let args: ['changelog']
@@ -22,13 +24,16 @@ describe('functional:cli/commands/ChangelogCommand', () => {
 
   beforeEach(async () => {
     command = await CommandTestFactory.createTestingCommand({
+      positional: false,
       providers: [
         CliUtilityService,
+        GreaseCommand,
         TestSubject,
         {
           provide: GreaseService,
           useValue: {
-            changelog: changelog = vi.fn().mockName('GreaseService#changelog')
+            changelog: changelog = vi.fn().mockName('GreaseService#changelog'),
+            config: vi.fn(constant({})).mockName('GreaseService#config')
           }
         }
       ]
@@ -156,6 +161,26 @@ describe('functional:cli/commands/ChangelogCommand', () => {
       // Expect
       expect(changelog).toHaveBeenCalledOnce()
       expect(changelog.mock.lastCall?.[0]).toMatchObject({ to })
+    })
+  })
+
+  describe('--unstable, -u [choice]', () => {
+    it('should parse flag', async () => {
+      // Act
+      await CommandTestFactory.run(command, [...args, '--unstable'])
+
+      // Expect
+      expect(changelog).toHaveBeenCalledOnce()
+      expect(changelog.mock.lastCall?.[0]).to.have.property('unstable').be.true
+    })
+
+    it('should parse short flag', async () => {
+      // Act
+      await CommandTestFactory.run(command, [...args, '-u', '0'])
+
+      // Expect
+      expect(changelog).toHaveBeenCalledOnce()
+      expect(changelog.mock.lastCall?.[0]).to.have.property('unstable').be.false
     })
   })
 

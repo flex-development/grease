@@ -8,7 +8,6 @@ import { LogModule } from '#src/log'
 import { ValidationService } from '#src/providers'
 import { Module } from '@nestjs/common'
 import { CqrsModule } from '@nestjs/cqrs'
-import { BumpEventListener } from './events'
 import { BumpOperationHandler } from './operations'
 import { BumpQueryHandler } from './queries'
 
@@ -19,12 +18,7 @@ import { BumpQueryHandler } from './queries'
  */
 @Module({
   imports: [CqrsModule, GitModule, LogModule],
-  providers: [
-    BumpEventListener,
-    BumpOperationHandler,
-    BumpQueryHandler,
-    ValidationService
-  ]
+  providers: [BumpOperationHandler, BumpQueryHandler, ValidationService]
 })
 class BumpModule {}
 

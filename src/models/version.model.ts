@@ -4,20 +4,23 @@
  */
 
 import { ReleaseType } from '#src/enums'
+import type { IVersion } from '#src/interfaces'
 import type { ReleaseVersion } from '#src/types'
 import type { SemanticVersion } from '@flex-development/pkg-types'
-import { cast, type Optional } from '@flex-development/tutils'
+import { cast, type Optional, type Simplify } from '@flex-development/tutils'
 import semver, { SemVer } from 'semver'
 
 /**
  * Semantic version data model.
  *
+ * @see {@linkcode IVersion}
  * @see {@linkcode SemVer}
  *
  * @class
  * @extends {SemVer}
+ * @implements {IVersion}
  */
-class Version extends SemVer {
+class Version extends SemVer implements IVersion {
   /**
    * Semantic version string.
    *
@@ -109,6 +112,26 @@ class Version extends SemVer {
     }
 
     return this.copy(version)
+  }
+
+  /**
+   * Get a JSON-serializable semantic version.
+   *
+   * @see {@linkcode IVersion}
+   *
+   * @public
+   *
+   * @return {Simplify<IVersion>} JSON-serializable semantic version
+   */
+  public toJSON(): Simplify<IVersion> {
+    return {
+      build: Object.freeze(this.build),
+      major: this.major,
+      minor: this.minor,
+      patch: this.patch,
+      prerelease: Object.freeze(this.prerelease),
+      version: this.toString()
+    }
   }
 
   /**

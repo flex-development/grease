@@ -11,7 +11,6 @@ import { ChangelogOperation } from '#src/changelog/operations'
 import { ChangelogQueryHandler } from '#src/changelog/queries'
 import { GitModule } from '#src/git'
 import { LogModule, LoggerService, UserLogLevel } from '#src/log'
-import { GlobalOptions } from '#src/options'
 import { ValidationService } from '#src/providers'
 import type { Fn } from '@flex-development/tutils'
 import { CqrsModule } from '@nestjs/cqrs'
@@ -42,7 +41,6 @@ describe('functional:changelog/events/ChangelogEventListener', () => {
   })
 
   describe('#handle', () => {
-    let context: GlobalOptions
     let event: ChangelogEvent
     let operation: ChangelogOperation
     let ref: TestingModule
@@ -71,7 +69,7 @@ describe('functional:changelog/events/ChangelogEventListener', () => {
         operation
       })
 
-      event = new ChangelogEvent(stream, context = new GlobalOptions(operation))
+      event = new ChangelogEvent(stream, operation)
     })
 
     beforeEach(() => {
@@ -97,7 +95,7 @@ describe('functional:changelog/events/ChangelogEventListener', () => {
 
     it('should sync logger settings', () => {
       expect(LoggerService.prototype.sync).toHaveBeenCalledOnce()
-      expect(LoggerService.prototype.sync).toHaveBeenCalledWith(context)
+      expect(LoggerService.prototype.sync).toHaveBeenCalledWith(operation)
     })
   })
 })

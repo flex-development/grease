@@ -4,34 +4,36 @@
  */
 
 import type { RecommendedBump } from '#src/bump/models'
+import type { BumpOperation } from '#src/bump/operations'
+import type { BumpQuery } from '#src/bump/queries'
 import type { IEvent } from '#src/interfaces'
-import type { Manifest } from '#src/models'
-import type { GlobalOptions } from '#src/options'
+import type { Version } from '#src/models'
 
 /**
  * Bump event.
  *
  * @see {@linkcode IEvent}
- * @see {@linkcode Manifest}
  * @see {@linkcode RecommendedBump}
+ * @see {@linkcode Version}
  *
  * @class
- * @implements {IEvent<Manifest|RecommendedBump>}
+ * @implements {IEvent<RecommendedBump|Version>}
  */
-class BumpEvent implements IEvent<Manifest | RecommendedBump> {
+class BumpEvent implements IEvent<RecommendedBump | Version> {
   /**
    * Create a new bump event.
    *
-   * @see {@linkcode GlobalOptions}
-   * @see {@linkcode Manifest}
+   * @see {@linkcode BumpOperation}
+   * @see {@linkcode BumpQuery}
    * @see {@linkcode RecommendedBump}
+   * @see {@linkcode Version}
    *
-   * @param {Manifest | RecommendedBump} payload - Event payload
-   * @param {GlobalOptions} context - Event context
+   * @param {RecommendedBump | Version} payload - Event payload
+   * @param {BumpOperation | BumpQuery} context - Event context
    */
   constructor(
-    public payload: Manifest | RecommendedBump,
-    public context: GlobalOptions
+    public readonly payload: RecommendedBump | Version,
+    public readonly context: BumpOperation | BumpQuery
   ) {}
 }
 

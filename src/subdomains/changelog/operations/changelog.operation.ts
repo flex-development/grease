@@ -75,6 +75,18 @@ class ChangelogOperation<T extends Commit = Commit> extends ChangelogQuery<T> {
   public outfile?: Optional<string>
 
   /**
+   * Do not write content to {@linkcode outfile} or {@linkcode process.stdout}.
+   *
+   * @default false
+   *
+   * @public
+   * @instance
+   * @member {boolean} quiet
+   */
+  @IsBoolean()
+  public quiet: boolean
+
+  /**
    * Read existing entries from and output new entries to {@linkcode infile}.
    *
    * @default false
@@ -112,12 +124,14 @@ class ChangelogOperation<T extends Commit = Commit> extends ChangelogQuery<T> {
       Formatter,
       infile,
       outfile,
+      quiet,
       samefile,
       write
     } = defaults(fallback(payload, {}), {
       Formatter: ChangelogFormatter,
       infile: undefined,
       outfile: undefined,
+      quiet: false,
       samefile: false,
       write: false
     })
@@ -125,8 +139,12 @@ class ChangelogOperation<T extends Commit = Commit> extends ChangelogQuery<T> {
     this.Formatter = Formatter
     this.infile = infile
     this.outfile = outfile
+    this.quiet = quiet
     this.samefile = samefile
     this.write = write
+
+    // silence operation
+    this.quiet && (this.write = false)
 
     // changelog regeneration implies samefile
     !this.releases && this.write && (this.samefile = true)

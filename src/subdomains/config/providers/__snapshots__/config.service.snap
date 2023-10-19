@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`unit:config/providers/ConfigService > #load > should throw if config extension is invalid 1`] = `"ERR_UNKNOWN_FILE_EXTENSION"`;
+
+exports[`unit:config/providers/ConfigService > #load > should throw if config file is not found 1`] = `"ERR_MODULE_NOT_FOUND"`;
+
+exports[`unit:config/providers/ConfigService > #load > should throw if config module is invalid 1`] = `"ERR_UNSUPPORTED_DIR_IMPORT"`;

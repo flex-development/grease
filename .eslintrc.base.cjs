@@ -885,6 +885,12 @@ const config = {
       }
     },
     {
+      files: '**/*.abstract.ts',
+      rules: {
+        '@typescript-eslint/no-useless-constructor': 0
+      }
+    },
+    {
       files: ['**/decorators/*.constraint.ts', '**/*.decorator.ts'],
       rules: {
         '@typescript-eslint/ban-types': 0,

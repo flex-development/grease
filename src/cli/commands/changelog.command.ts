@@ -6,9 +6,9 @@
 import GreaseService from '#src/grease.service'
 import {
   CliUtilityService,
-  Command,
   CommandRunner,
-  Option
+  Option,
+  Subcommand
 } from '@flex-development/nest-commander'
 import type * as commander from '@flex-development/nest-commander/commander'
 import { trim, type EmptyArray } from '@flex-development/tutils'
@@ -20,7 +20,7 @@ import type Opts from './changelog.command.opts'
  * @class
  * @extends {CommandRunner}
  */
-@Command({
+@Subcommand({
   description: 'generate a changelog from git metadata',
   examples: ['', '--releases=0 --write', '-sw'],
   name: 'changelog'
@@ -54,10 +54,7 @@ class ChangelogCommand extends CommandRunner {
    */
   @Option({
     description: 'read CHANGELOG from this file',
-    fallback: {
-      description: 'CHANGELOG.md if --samefile is specified',
-      value: ''
-    },
+    fallback: { description: 'CHANGELOG.md given --samefile', value: '' },
     flags: '-i, --infile <path>'
   })
   protected parseInfile(val: string): string {
@@ -143,6 +140,28 @@ class ChangelogCommand extends CommandRunner {
   }
 
   /**
+   * Parse the `--unstable` flag.
+   *
+   * @see {@linkcode Opts.unstable}
+   *
+   * @protected
+   *
+   * @param {string} val - Value to parse
+   * @return {boolean} Parsed option value
+   */
+  @Option({
+    choices: CliUtilityService.BOOLEAN_CHOICES,
+    description: 'include unstable releases',
+    env: 'GREASE_UNSTABLE',
+    fallback: { value: true },
+    flags: '-u, --unstable [choice]',
+    preset: 'true'
+  })
+  protected parseUnstable(val: string): boolean {
+    return this.util.parseBoolean(val)
+  }
+
+  /**
    * Parse the `--write` flag.
    *
    * @see {@linkcode Opts.write}
@@ -153,7 +172,6 @@ class ChangelogCommand extends CommandRunner {
    * @return {boolean} Parsed option value
    */
   @Option({
-    choices: CliUtilityService.BOOLEAN_CHOICES,
     description: 'write content to outfile instead of process.stdout',
     fallback: { value: false },
     flags: '-w, --write',

@@ -135,22 +135,4 @@ describe('functional:cli/commands/GreaseCommand', () => {
       expect(exitOverride).not.toHaveBeenCalled()
     })
   })
-
-  describe('--unstable, -u [choice]', () => {
-    it('should parse flag', async () => {
-      // Act
-      await CommandTestFactory.run(command, ['--unstable=false'])
-
-      // Expect
-      expect(exitOverride).not.toHaveBeenCalled()
-    })
-
-    it('should parse short flag', async () => {
-      // Act
-      await CommandTestFactory.run(command, ['-u', '0'])
-
-      // Expect
-      expect(exitOverride).not.toHaveBeenCalled()
-    })
-  })
 })

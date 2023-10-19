@@ -4,16 +4,25 @@
  */
 
 import type { TagOperation } from '#src/git'
-import type { Omit } from '@flex-development/tutils'
+import type { Assign, Omit } from '@flex-development/tutils'
+import type Opts from './grease.command.opts'
 
 /**
  * Parsed `tag` command options.
  *
+ * @see {@linkcode Opts}
  * @see {@linkcode TagOperation}
  *
- * @extends {Omit<TagOperation,'tag'>}
+ * @extends {Omit<Assign<TagOperation,Opts>,'tag'>}
  */
-interface TagCommandOpts extends Omit<TagOperation, 'tag'> {
+interface TagCommandOpts extends Omit<Assign<TagOperation, Opts>, 'tag'> {
+  /**
+   * Enable json output.
+   *
+   * @default false
+   */
+  json: boolean
+
   /**
    * List git tags.
    *

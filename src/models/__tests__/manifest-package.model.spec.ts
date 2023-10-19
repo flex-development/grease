@@ -5,8 +5,14 @@
 
 import pkg from '#pkg' assert { type: 'json' }
 import { ReleaseType } from '#src/enums'
+import pathe from '@flex-development/pathe'
 import type { SemanticVersion } from '@flex-development/pkg-types'
-import { set, type EmptyArray, type Nullable } from '@flex-development/tutils'
+import {
+  DOT,
+  set,
+  type EmptyArray,
+  type Nullable
+} from '@flex-development/tutils'
 import fs from 'node:fs'
 import TestSubject from '../manifest-package.model'
 import Version from '../version.model'
@@ -19,8 +25,8 @@ describe('unit:models/PackageManifest', () => {
   })
 
   describe('constructor', () => {
-    it('should set #filename', () => {
-      expect(subject).to.have.property('filename', 'package.json')
+    it('should set #dir', () => {
+      expect(subject).to.have.property('dir', pathe.resolve(DOT))
     })
 
     it('should set #pkg', () => {
@@ -41,8 +47,20 @@ describe('unit:models/PackageManifest', () => {
 
       // Expect
       expect(error).to.be.instanceof(Error)
-      expect(error).to.have.deep.property('cause', { dir })
+      expect(error).to.have.nested.property('cause.dir', pathe.resolve(dir))
       expect(error).to.have.property('message', 'package.json not found')
+    })
+  })
+
+  describe('#file', () => {
+    it('should return absolute path to manifest', () => {
+      expect(subject).to.have.property('file', pathe.resolve(subject.filename))
+    })
+  })
+
+  describe('#filename', () => {
+    it('should return manifest filename', () => {
+      expect(subject).to.have.property('filename', 'package.json')
     })
   })
 

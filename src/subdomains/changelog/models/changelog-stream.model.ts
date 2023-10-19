@@ -12,6 +12,7 @@ import {
   at,
   cast,
   get,
+  isNIL,
   isNull,
   pick,
   type Nilable,
@@ -262,7 +263,9 @@ class ChangelogStream<T extends Commit = Commit> extends stream.Transform {
    */
   public override _read(n: number): void {
     // add spacer chunk for readability when running operation in debug mode
-    this.debug && !this.operation.write && this.unshift('')
+    if (this.debug && !this.operation.quiet && !this.operation.write) {
+      this.unshift('')
+    }
 
     // add n number of changelog chunks
     if (this.cdx < this.chunks.length) {
@@ -340,9 +343,14 @@ class ChangelogStream<T extends Commit = Commit> extends stream.Transform {
     cb: StreamCallback
   ): void {
     return void this._transform(chunk, encoding, (e, chunk): void => {
-      if (e) return void cb(e)
-      if (isNull(chunk)) return void cb(chunk)
-      return void this.writer.write(chunk, encoding, cb)
+      switch (true) {
+        case !isNIL(e):
+          return void cb(e)
+        case !this.operation.quiet && !isNull(chunk):
+          return void this.writer.write(chunk, encoding, cb)
+        default:
+          return void cb(null)
+      }
     })
   }
 

@@ -5,6 +5,14 @@ exports[`integration:bump/operations/BumpOperation > validation > should fail va
   ValidationError {
     "children": [],
     "constraints": {
+      "arrayNotEmpty": "files should not be empty",
+    },
+    "property": "files",
+    "value": [],
+  },
+  ValidationError {
+    "children": [],
+    "constraints": {
       "isString": "preid must be a string",
     },
     "property": "preid",

@@ -5,7 +5,7 @@
 
 import { GitOptions } from '#src/git'
 import { get, type Partial } from '@flex-development/tutils'
-import { IsString } from 'class-validator'
+import { IsBoolean, IsString } from 'class-validator'
 
 /**
  * Recommended version bump query.
@@ -29,6 +29,19 @@ class BumpQuery extends GitOptions {
   public to: string
 
   /**
+   * Prerelease recommendation?
+   *
+   * @default false
+   *
+   * @public
+   * @override
+   * @instance
+   * @member {boolean} unstable
+   */
+  @IsBoolean()
+  public override unstable: boolean
+
+  /**
    * Create a new bump query.
    *
    * @param {Partial<BumpQuery>} [params] - Query parameters
@@ -36,6 +49,7 @@ class BumpQuery extends GitOptions {
   constructor(params?: Partial<BumpQuery>) {
     super(params)
     this.to = get(params, 'to', 'HEAD')
+    this.unstable = get(params, 'unstable', false)
   }
 }
 

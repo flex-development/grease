@@ -4,17 +4,20 @@
  */
 
 import type { ChangelogStream } from '#src/changelog/models'
-import type { GlobalOptions } from '#src/options'
+import type { ChangelogOperation } from '#src/changelog/operations'
+import type { ReadonlyKeys } from '@flex-development/tutils'
 import type TestSubject from '../changelog.event'
 
 describe('unit-d:changelog/events/ChangelogEvent', () => {
-  it('should match [context: GlobalOptions]', () => {
+  it('should match [readonly context: ChangelogOperation<T>]', () => {
+    expectTypeOf<ReadonlyKeys<TestSubject>>().extract<'context'>().toBeString()
     expectTypeOf<TestSubject>()
       .toHaveProperty('context')
-      .toEqualTypeOf<GlobalOptions>()
+      .toEqualTypeOf<ChangelogOperation>()
   })
 
-  it('should match [payload: ChangelogStream<T>]', () => {
+  it('should match [readonly payload: ChangelogStream<T>]', () => {
+    expectTypeOf<ReadonlyKeys<TestSubject>>().extract<'payload'>().toBeString()
     expectTypeOf<TestSubject>()
       .toHaveProperty('payload')
       .toEqualTypeOf<ChangelogStream>()

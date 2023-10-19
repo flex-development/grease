@@ -3,21 +3,20 @@
  * @module grease/commands/InfoCommandOpts
  */
 
-import type { GlobalOptions } from '#src/options'
-import type { Omit } from '@flex-development/tutils'
+import type Opts from './grease.command.opts'
 
 /**
  * Parsed `info` command options.
  *
- * @see {@linkcode GlobalOptions}
+ * @see {@linkcode Opts}
  *
- * @extends {Omit<GlobalOptions,'tagprefix'>}
+ * @extends {Opts}
  */
-interface InfoCommandOpts extends Omit<GlobalOptions, 'tagprefix'> {
+interface InfoCommandOpts extends Opts {
   /**
-   * Enable json formatting.
+   * Enable json output.
    *
-   * @default true
+   * @default false
    */
   json: boolean
 
@@ -32,13 +31,6 @@ interface InfoCommandOpts extends Omit<GlobalOptions, 'tagprefix'> {
    * Package manager name.
    */
   pm?: 'npm' | 'pnpm' | 'Yarn'
-
-  /**
-   * Enable YAML formatting.
-   *
-   * @default false
-   */
-  yaml: boolean
 }
 
 export type { InfoCommandOpts as default }

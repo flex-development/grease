@@ -3,7 +3,8 @@
  * @module grease/models/PackageManifest
  */
 
-import { readPackageJson, type ModuleId } from '@flex-development/mlly'
+import { readPackageJson } from '@flex-development/mlly'
+import pathe from '@flex-development/pathe'
 import type { PackageJson } from '@flex-development/pkg-types'
 import { DOT, define, pick, type Nullable } from '@flex-development/tutils'
 import fs from 'node:fs'
@@ -14,25 +15,27 @@ import Version from './version.model'
 /**
  * Package manifest model.
  *
+ * @see {@linkcode AbstractManifest}
+ *
  * @class
  * @extends {AbstractManifest}
  */
 class PackageManifest extends AbstractManifest {
   /**
-   * Manifest filename.
+   * Absolute path to manifest directory.
    *
    * @public
-   * @readonly
    * @instance
-   * @member {string} filename
+   * @member {string} dir
    */
-  public readonly filename: string
+  public dir: string
 
   /**
    * Package context.
    *
    * @public
    * @readonly
+   * @instance
    * @member {PackageJson} pkg
    */
   public readonly pkg: PackageJson
@@ -40,22 +43,42 @@ class PackageManifest extends AbstractManifest {
   /**
    * Create a new package manifest.
    *
-   * @param {ModuleId?} [dir=DOT] - Module id of manifest directory
-   * @throws {Error} If `package.json` is not found
+   * @param {string?} [cwd=DOT] - Absolute path to current working directory
+   * @throws {Error}
    */
-  constructor(dir: ModuleId = DOT) {
-    super(dir)
-    this.filename = 'package.json'
+  constructor(cwd: string = DOT) {
+    super(cwd)
 
     /**
      * Package result.
      *
      * @const {Nullable<PackageJson>} pkg
      */
-    const pkg: Nullable<PackageJson> = readPackageJson(dir)
+    const pkg: Nullable<PackageJson> = readPackageJson(
+      this.dir = pathe.resolve(cwd),
+      undefined,
+      import.meta.url
+    )
 
-    if (!pkg) throw new Error(`${this.filename} not found`, { cause: { dir } })
+    // throw if package was not found
+    if (!pkg) {
+      throw new Error(`${this.filename} not found`, {
+        cause: { dir: this.dir }
+      })
+    }
+
     this.pkg = pkg
+  }
+
+  /**
+   * Get `this` manifest filename.
+   *
+   * @public
+   *
+   * @return {string} `this` filename
+   */
+  public get filename(): string {
+    return 'package.json'
   }
 
   /**
