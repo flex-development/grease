@@ -10,15 +10,17 @@ import gc from '#gc' assert { type: 'json' }
 import { ChangelogOperation } from '#src/changelog/operations'
 import { ChangelogQueryHandler } from '#src/changelog/queries'
 import type { ChangelogChunk } from '#src/changelog/types'
-import { GitModule } from '#src/git'
+import { GitModule, GitService } from '#src/git'
 import { LogModule, LoggerService } from '#src/log'
 import { ValidationService } from '#src/providers'
 import type { StreamCallback } from '#src/types'
 import type { Mock } from '#tests/interfaces'
+import type * as mlly from '@flex-development/mlly'
 import pathe from '@flex-development/pathe'
 import { at, join, select, type Nullable } from '@flex-development/tutils'
 import { CqrsModule } from '@nestjs/cqrs'
 import { Test, type TestingModule } from '@nestjs/testing'
+import fs from 'node:fs/promises'
 import tempfile from 'tempfile'
 import TestSubject from '../changelog-stream.model'
 
@@ -173,6 +175,11 @@ describe('functional:changelog/models/ChangelogStream', () => {
     let subject: TestSubject
 
     beforeAll(async () => {
+      vi.mock('@flex-development/mlly', async importOriginal => ({
+        ...(await importOriginal<typeof mlly>()),
+        readPackageJson: vi.fn(() => ({ version: '2.0.0' }))
+      }))
+
       operation = new ChangelogOperation({
         outfile: tempfile({ extension: 'md' }),
         releases: 3,
@@ -180,15 +187,19 @@ describe('functional:changelog/models/ChangelogStream', () => {
         to: sha,
         write: true
       })
+    })
+
+    beforeEach(async () => {
+      vi.spyOn(GitService.prototype, 'tag').mockImplementationOnce(async () => {
+        return fs.readFile('__fixtures__/git/grease/tags.txt', 'utf8')
+      })
 
       subject = new TestSubject({
         entries: await qh.execute(operation),
         logger,
         operation
       })
-    })
 
-    beforeEach(() => {
       vi.spyOn(subject.writer, 'write')
     })
 
