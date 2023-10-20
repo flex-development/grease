@@ -49,6 +49,7 @@ jobs:
     outputs:
       prerelease: ${{ steps.dist-tag.outputs.prerelease }}
       tag: ${{ steps.tag.outputs.result }}
+      version: ${{ steps.version.outputs.result }}
     steps:
       - id: debug
         name: Print environment variables and event payload
@@ -85,7 +86,6 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.PAT_REPO }}
       HUSKY: 0
       NOTES_FILE: RELEASE_NOTES.md
-      TAG: ${{ needs.preflight.outputs.tag }}
     steps:
       - id: checkout
         name: Checkout ${{ env.REF_NAME }}
@@ -120,11 +120,12 @@ jobs:
       - id: tag
         name: Create annotated tag
         run: |
-          node ./dist/cli.mjs tag -ps -m 'release: $TAG' $TAG
+          node ./dist/cli.mjs tag -ps -m 'release: {tag}' ${{ needs.preflight.outputs.version }}
       - id: publish
         name: Publish release
         env:
           PRERELEASE: ${{ needs.preflight.outputs.prerelease }}
+          TAG: ${{ needs.preflight.outputs.tag }}
         run: gh release create $TAG *.tgz -t=$TAG -p=$PRERELEASE -F=$NOTES_FILE
       - id: close-issues
         name: Close released issues

@@ -23,7 +23,7 @@ import type Opts from './tag.command.opts'
  * @extends {CommandRunner}
  */
 @Subcommand({
-  arguments: { description: 'name of tag to create', syntax: '[tagname]' },
+  arguments: { description: 'release version', syntax: '[version]' },
   description: 'create and list tags',
   examples: [
     '--list',
