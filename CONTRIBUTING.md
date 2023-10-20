@@ -347,12 +347,9 @@ e.g:
 > Note: Package and release publication is executed via GitHub workflow.\
 > This is so invalid or malicious versions cannot be published without merging those changes into `main` first.
 
-Before deploying, the following steps must be completed:
-
-1. Schedule a code freeze
-2. Decide what type of version bump the package needs
+1. Get a version bump recommendation
    - `yarn bump:recommend`
-3. Start local release
+2. Create release branch
    - `yarn release <new-version>`
    - `yarn release major`
    - `yarn release minor`
@@ -361,24 +358,18 @@ Before deploying, the following steps must be completed:
    - `yarn release preminor --preid <dist-tag>`
    - `yarn release prepatch --preid <dist-tag>`
    - `yarn release prerelease --preid <dist-tag>`
-4. Open PR from `release/*` into `main`
-   - PR title should match `release: <release-tag>`
-     - e.g: `release: 1.1.0`
-   - link all issues being released
-   - after review, `squash and merge` PR
-     - `release: <release-tag> (#pull-request-n)`
-       - e.g: `release: 1.1.0 (#3)`
-   - on PR merge, [release workflow](.github/workflows/release.yml) will fire
-     - if successful, the workflow will:
-       - pack project
-       - create and push new tag
-       - create and publish github release
-       - make sure all prereleased or released issues are closed
-       - delete the release branch
-     - on release publish, [publish workflow](.github/workflows/publish.yml) will fire
-       - if successful, the workflow will:
-         - publish package to [github package registry][21]
-         - publish package to [npm][22]
+3. Monitor workflows
+   1. [`release-branch`](.github/workflows/release-branch.yml)
+      - bump manifest version
+      - add changelog entry for new release
+      - create release pr
+   2. [`release`](.github/workflows/release.yml)
+      - create and push new tag
+      - create and publish github release
+      - ensure all relevant issues are closed
+   3. [`publish`](.github/workflows/publish.yml)
+      - publish package to [github package registry][21]
+      - publish package to [npm][22]
 
 [1]: https://brew.sh
 [2]: https://docs.github.com/authentication/managing-commit-signature-verification/about-commit-signature-verification#gpg-commit-signature-verification
