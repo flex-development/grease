@@ -87,7 +87,6 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       HUSKY: 0
-      NODE_NO_WARNINGS: 1
       NOTES_FILE: RELEASE_NOTES.md
       TAG: ${{ needs.preflight.outputs.tag }}
     steps:
@@ -114,14 +113,16 @@ jobs:
         run: yarn
       - id: pack
         name: Pack project
+        env:
+          NODE_NO_WARNINGS: 1
         run: yarn pack -o %s-%v.tgz
       - id: release-notes
         name: Generate release notes
-        run: yarn grease changelog -wo $NOTES_FILE && cat $NOTES_FILE
+        run: node ./dist/cli.mjs changelog && node ./dist/cli.mjs changelog -wo $NOTES_FILE
       - id: tag
         name: Create annotated tag
         run: |
-          node ./dist/cli.mjs tag -fps -m "release: $TAG" $TAG
+          node ./dist/cli.mjs tag -ps -m 'release: $TAG' $TAG
       - id: publish
         name: Publish release
         env:
