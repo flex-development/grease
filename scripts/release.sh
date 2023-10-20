@@ -12,8 +12,9 @@ set -e
 # 6. print package size report
 # 7. get release version data
 # 8. get release branch name
-# 9. push release branch
-# 10. cleanup
+# 9. create release branch
+# 10. push release branch
+# 11. cleanup
 #
 # References:
 #
@@ -27,5 +28,6 @@ attw package.tgz
 yarn pkg-size
 RELEASE_VERSION=$(node ./dist/cli.mjs bump -j $@)
 RELEASE_BRANCH=release/$(jq .version -r <<<$RELEASE_VERSION)
+git branch $RELEASE_BRANCH
 git push origin --no-verify --set-upstream $RELEASE_BRANCH
 yarn clean:pack
