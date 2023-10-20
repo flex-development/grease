@@ -9,9 +9,10 @@ import cqh from '#fixtures/query-commit.handler'
 import tqh from '#fixtures/query-tag.handler'
 import gc from '#gc' assert { type: 'json' }
 import { TYPES } from '#src/changelog/constants'
-import { CommitQuery, TagQuery } from '#src/git'
+import { CommitQuery, GitService, TagQuery } from '#src/git'
 import { at, select, template } from '@flex-development/tutils'
 import json5 from 'json5'
+import fs from 'node:fs/promises'
 import util from 'node:util'
 import Aggregator from '../changelog-aggregator.model'
 import TestSubject, { type ChangelogEntryDTO } from '../changelog-entry.model'
@@ -25,6 +26,12 @@ describe('unit:changelog/models/ChangelogEntry', () => {
 
   beforeAll(async () => {
     vi.setSystemTime(today)
+  })
+
+  beforeEach(async () => {
+    vi.spyOn(GitService.prototype, 'tag').mockImplementation(async () => {
+      return fs.readFile('__fixtures__/git/grease/tags.txt', 'utf8')
+    })
 
     subject = new TestSubject(opts = {
       Aggregator,

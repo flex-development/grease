@@ -20,7 +20,8 @@ import { ReleaseType } from '#src/enums'
 import { GitModule, GitService, TagOperation } from '#src/git'
 import { LogModule } from '#src/log'
 import { Version } from '#src/models'
-import { set } from '@flex-development/tutils'
+import type * as mlly from '@flex-development/mlly'
+import { includes, set } from '@flex-development/tutils'
 import { CqrsModule } from '@nestjs/cqrs'
 import { Test } from '@nestjs/testing'
 import fs from 'node:fs/promises'
@@ -29,7 +30,6 @@ import TestSubject from '../grease.service'
 
 describe('unit:GreaseService', () => {
   let subject: TestSubject
-  let tags: string
 
   beforeAll(async () => {
     subject = (await (await Test.createTestingModule({
@@ -43,8 +43,14 @@ describe('unit:GreaseService', () => {
       ],
       providers: [TestSubject]
     }).compile()).init()).get(TestSubject)
+  })
 
-    tags = '__fixtures__/git/grease/tags.txt'
+  beforeEach(() => {
+    vi.spyOn(GitService.prototype, 'tag').mockImplementation(async args => {
+      return includes(args?.[0] ?? '', '--list')
+        ? fs.readFile('__fixtures__/git/grease/tags.txt', 'utf8')
+        : ''
+    })
   })
 
   describe('#bump', () => {
@@ -72,6 +78,11 @@ describe('unit:GreaseService', () => {
     let operation: ChangelogOperationDTO
 
     beforeAll(() => {
+      vi.mock('@flex-development/mlly', async importOriginal => ({
+        ...(await importOriginal<typeof mlly>()),
+        readPackageJson: vi.fn(() => ({ version: '2.0.0' }))
+      }))
+
       operation = {
         outfile: tempfile({ extension: '.md' }),
         tagprefix: gc.tagprefix,
@@ -91,12 +102,6 @@ describe('unit:GreaseService', () => {
   })
 
   describe('#recommend', () => {
-    beforeEach(() => {
-      vi.spyOn(GitService.prototype, 'tag').mockImplementation(async () => {
-        return fs.readFile(tags, 'utf8')
-      })
-    })
-
     it('should return recommended version bump', async () => {
       // Act
       const result = await subject.recommend({
@@ -112,10 +117,6 @@ describe('unit:GreaseService', () => {
   })
 
   describe('#tag', () => {
-    beforeEach(() => {
-      vi.spyOn(GitService.prototype, 'tag').mockImplementation(async () => '')
-    })
-
     it('should return executed tag operation', async () => {
       // Act
       const result = await subject.tag({
@@ -131,12 +132,6 @@ describe('unit:GreaseService', () => {
   })
 
   describe('#tags', () => {
-    beforeEach(() => {
-      vi.spyOn(GitService.prototype, 'tag').mockImplementation(async () => {
-        return fs.readFile(tags, 'utf8')
-      })
-    })
-
     it('should return tags array', async () => {
       // Act
       const results = await subject.tags()
