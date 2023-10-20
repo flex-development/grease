@@ -126,7 +126,7 @@ jobs:
       - id: pr
         name: Create pull request
         run: |
-          gh pr create --title='${{ needs.preflight.outputs.message }}' --label=scope:release --assignee=@${{ github.actor }} --body='## Description
+          gh pr create --title='${{ needs.preflight.outputs.message }}' --label=scope:release --assignee=${{ github.actor }} --body='## Description
 
           <!-- A clear and concise description of your changes. -->
 
