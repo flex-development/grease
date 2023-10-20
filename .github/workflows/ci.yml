@@ -439,6 +439,6 @@ jobs:
         with:
           key: ${{ needs.preflight.outputs.cache-key }}
           path: ${{ env.CACHE_PATH }}
-      - id: preview
-        name: Print changelog preview
-        run: yarn grease changelog
+      - id: summary
+        name: Get changelog preview
+        run: echo "$(yarn grease changelog)" >>$GITHUB_STEP_SUMMARY
