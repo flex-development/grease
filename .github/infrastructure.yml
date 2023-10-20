@@ -88,6 +88,9 @@ labels:
   - name: scope:cli
     description: cli application
     color: 74cefc
+  - name: scope:changelog
+    description: changelog generation
+    color: 74cefc
   - name: scope:config
     description: configuration
     color: 74cefc
@@ -96,6 +99,9 @@ labels:
     color: 74cefc
   - name: scope:esm
     description: es modules
+    color: 74cefc
+  - name: scope:git
+    description: git integration
     color: 74cefc
   - name: scope:install
     description: package install
