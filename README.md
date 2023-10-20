@@ -1,4 +1,4 @@
-# :gear: grease
+# :rocket: grease
 
 [![github release](https://img.shields.io/github/v/release/flex-development/grease.svg?include_prereleases&sort=semver)](https://github.com/flex-development/grease/releases/latest)
 [![npm](https://img.shields.io/npm/v/@flex-development/grease.svg)](https://npmjs.com/package/@flex-development/grease)
@@ -9,7 +9,7 @@
 [![vitest](https://img.shields.io/badge/-vitest-6e9f18?style=flat&logo=vitest&logoColor=ffffff)](https://vitest.dev/)
 [![yarn](https://img.shields.io/badge/-yarn-2c8ebb?style=flat&logo=yarn&logoColor=ffffff)](https://yarnpkg.com/)
 
-Package release workflow tool for Node.js and CLI environments
+Release workflow tool for Node.js and CLI environments
 
 ## Contents
 

@@ -202,7 +202,7 @@ repository:
   automated_security_fixes: true
   default_branch: main
   delete_branch_on_merge: true
-  description: Release workflow tool
+  description: 🚀 Release workflow tool for Node.js and CLI environments
   has_issues: true
   has_projects: true
   has_wiki: false
@@ -227,8 +227,11 @@ repository:
     - conventionalcommits
     - git
     - github
+    - node
+    - nodejs
     - release
     - semver
+    - tag
     - typescript
     - version
   visibility: public

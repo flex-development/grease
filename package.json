@@ -1,6 +1,6 @@
 {
   "name": "@flex-development/grease",
-  "description": "Release workflow tool",
+  "description": "Release workflow tool for Node.js and CLI environments",
   "version": "2.0.0",
   "keywords": [
     "bump",
@@ -14,8 +14,11 @@
     "git",
     "github",
     "gitlab",
+    "node",
+    "nodejs",
     "release",
     "semver",
+    "tag",
     "typescript",
     "version"
   ],
@@ -188,6 +191,5 @@
     "node": ">=16.20.0 <20.6.0 || >20.6.0"
   },
   "packageManager": "yarn@4.0.0-rc.53",
-  "readme": "README.md",
   "sideEffects": false
 }
