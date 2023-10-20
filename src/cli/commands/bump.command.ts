@@ -100,6 +100,7 @@ class BumpCommand extends CommandRunner {
    */
   @Option({
     description: 'prerelease identifier',
+    env: 'GREASE_BUMP_PREID',
     flags: '--preid <id>'
   })
   protected parsePreid(val: string): string {
@@ -119,6 +120,7 @@ class BumpCommand extends CommandRunner {
   @Option({
     choices: select(CliUtilityService.BOOLEAN_CHOICES, isNumeric),
     description: 'base to be used for prerelease identifier',
+    env: 'GREASE_BUMP_PRESTART',
     fallback: { value: 1 },
     flags: '--prestart <start>'
   })
@@ -179,6 +181,7 @@ class BumpCommand extends CommandRunner {
    */
   @Option({
     description: 'write version bump to file',
+    env: 'GREASE_BUMP_WRITE',
     fallback: { value: false },
     flags: '-w, --write',
     preset: 'true'

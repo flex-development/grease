@@ -71,6 +71,7 @@ jobs:
           git_tag_gpgsign: true
           git_user_signingkey: true
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
           trust_level: 5
       - id: gitconfig
         name: List gitconfig values

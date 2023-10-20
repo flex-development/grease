@@ -55,19 +55,11 @@ jobs:
         with:
           git_commit_gpgsign: true
           git_config_global: true
+          git_push_gpgsign: false
           git_user_signingkey: true
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-      # todo: remove when https://github.com/crazy-max/ghaction-import-gpg/issues/118 is resolved
-      - id: gpg-trust
-        name: Set trust on GPG key
-        if: steps.metadata.outputs.package-ecosystem == 'npm_and_yarn'
-        run: |
-          gpg --no-tty --command-fd 0 --edit-key ${{ steps.gpg-import.outputs.keyid }} << EOTRUST
-          trust
-          5
-          y
-          quit
-          EOTRUST
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          trust_level: 5
       - id: lockfile-fix
         name: Fix yarn.lock
         if: steps.metadata.outputs.package-ecosystem == 'npm_and_yarn'
@@ -80,8 +72,6 @@ jobs:
         name: Push yarn.lock
         if: steps.metadata.outputs.package-ecosystem == 'npm_and_yarn'
         env:
-          GIT_AUTHOR_EMAIL: ${{ steps.gpg-import.outputs.email }}
-          GIT_COMMITTER_EMAIL: ${{ steps.gpg-import.outputs.email }}
           COMMIT_MESSAGE: 'build(yarn): [dependabot skip] fix lockfile for @dependabot'
         run: |
           git add yarn.lock

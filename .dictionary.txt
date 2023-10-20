@@ -21,6 +21,7 @@ groupby
 hmarr
 iife
 infile
+kaisugi
 keyid
 ksort
 larsgw

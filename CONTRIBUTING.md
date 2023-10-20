@@ -352,19 +352,16 @@ Before deploying, the following steps must be completed:
 1. Schedule a code freeze
 2. Decide what type of version bump the package needs
    - `yarn bump:recommend`
-3. Bump version
-   - `yarn bump <new-version>`
-   - `yarn bump major`
-   - `yarn bump minor`
-   - `yarn bump patch`
-   - `yarn bump premajor --preid <dist-tag>`
-   - `yarn bump preminor --preid <dist-tag>`
-   - `yarn bump prepatch --preid <dist-tag>`
-   - `yarn bump prerelease --preid <dist-tag>`
-4. Update `CHANGELOG.md`
-   - `yarn changelog -sw` (remove `-sw` to do a dry-run, i.e. `yarn changelog`)
-5. `yarn release`
-6. Open PR from `release/*` into `main`
+3. Start local release
+   - `yarn release <new-version>`
+   - `yarn release major`
+   - `yarn release minor`
+   - `yarn release patch`
+   - `yarn release premajor --preid <dist-tag>`
+   - `yarn release preminor --preid <dist-tag>`
+   - `yarn release prepatch --preid <dist-tag>`
+   - `yarn release prerelease --preid <dist-tag>`
+4. Open PR from `release/*` into `main`
    - PR title should match `release: <release-tag>`
      - e.g: `release: 1.1.0`
    - link all issues being released

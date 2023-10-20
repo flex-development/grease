@@ -54,6 +54,7 @@ class ChangelogCommand extends CommandRunner {
    */
   @Option({
     description: 'read CHANGELOG from this file',
+    env: 'GREASE_CHANGELOG_INFILE',
     fallback: { description: 'CHANGELOG.md given --samefile', value: '' },
     flags: '-i, --infile <path>'
   })
@@ -73,6 +74,7 @@ class ChangelogCommand extends CommandRunner {
    */
   @Option({
     description: 'write CHANGELOG to this file',
+    env: 'GREASE_CHANGELOG_OUTFILE',
     flags: '-o, --outfile <path>',
     implies: { write: true }
   })
@@ -93,6 +95,7 @@ class ChangelogCommand extends CommandRunner {
   @Option({
     description:
       'number of releases to be generated from the latest. if 0, the entire changelog will be regenerated',
+    env: 'GREASE_CHANGELOG_RELEASES',
     fallback: { value: 1 },
     flags: '-r, --releases <count>'
   })
@@ -112,6 +115,7 @@ class ChangelogCommand extends CommandRunner {
    */
   @Option({
     description: 'output content to infile',
+    env: 'GREASE_CHANGELOG_SAMEFILE',
     fallback: { value: false },
     flags: '-s, --samefile',
     preset: 'true'
@@ -132,6 +136,7 @@ class ChangelogCommand extends CommandRunner {
    */
   @Option({
     description: 'end of commit revision range',
+    env: 'GREASE_CHANGELOG_TO',
     fallback: { value: 'HEAD' },
     flags: '-t, --to <commitish>'
   })
@@ -173,6 +178,7 @@ class ChangelogCommand extends CommandRunner {
    */
   @Option({
     description: 'write content to outfile instead of process.stdout',
+    env: 'GREASE_CHANGELOG_WRITE',
     fallback: { value: false },
     flags: '-w, --write',
     preset: 'true'
