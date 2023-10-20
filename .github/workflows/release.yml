@@ -75,9 +75,6 @@ jobs:
           target: ${{ steps.version.outputs.result }}
   publish:
     needs: preflight
-    permissions:
-      contents: write
-      packages: read
     runs-on: ubuntu-latest
     environment:
       name: release
@@ -85,7 +82,7 @@ jobs:
         ${{ format('{0}/{1}/releases/tag/{2}', github.server_url, github.repository,
         needs.preflight.outputs.tag) }}
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.PAT_REPO }}
       HUSKY: 0
       NOTES_FILE: RELEASE_NOTES.md
       TAG: ${{ needs.preflight.outputs.tag }}
@@ -126,7 +123,6 @@ jobs:
       - id: publish
         name: Publish release
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_REPO }}
           PRERELEASE: ${{ needs.preflight.outputs.prerelease }}
         run: gh release create $TAG *.tgz -t=$TAG -p=$PRERELEASE -F=$NOTES_FILE
       - id: close-issues
