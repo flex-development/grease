@@ -94,6 +94,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
           ref: ${{ env.REF }}
+          token: ${{ env.GITHUB_TOKEN }}
       - id: gpg-import
         name: Import GPG key
         uses: crazy-max/ghaction-import-gpg@v6.0.0
