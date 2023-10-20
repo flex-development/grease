@@ -33,7 +33,6 @@ on:
       - feat/**
       - hotfix/**
       - main
-      - release/**
   workflow_dispatch:
 permissions:
   contents: read
