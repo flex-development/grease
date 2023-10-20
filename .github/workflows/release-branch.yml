@@ -1,16 +1,15 @@
-# Release Branch Workflow
+# Release Branch
 #
-# Execute version bump and changelog operations on release branch creation or workflow dispatch.
+# Execute version bump, changelog, and pull request operations on release branch creation.
 #
 # References:
 #
+# - https://cli.github.com/manual/gh_pr_create
 # - https://docs.github.com/actions/learn-github-actions/contexts
 # - https://docs.github.com/actions/learn-github-actions/expressions
 # - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#create
-# - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch
 # - https://docs.github.com/actions/using-workflows/workflow-commands-for-github-actions
 # - https://docs.github.com/webhooks-and-events/webhooks/webhook-events-and-payloads#create
-# - https://docs.github.com/webhooks-and-events/webhooks/webhook-events-and-payloads#workflow_dispatch
 # - https://github.com/actions/checkout
 # - https://github.com/actions/setup-node
 # - https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#yarn2-configuration
@@ -20,30 +19,20 @@
 
 ---
 name: release-branch
-on:
-  create:
-  workflow_dispatch:
-    inputs:
-      dry:
-        default: true
-        description: dry run?
-        type: boolean
-      version:
-        description: release version
-        required: true
-        type: string
+on: create
 concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   preflight:
-    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref_name, 'release/')
+    if: startsWith(github.ref_name, 'release/')
     permissions:
       contents: read
     runs-on: ubuntu-latest
     outputs:
+      message: ${{ steps.message.outputs.result }}
       tag: ${{ steps.tag.outputs.result }}
-      version: ${{ inputs.version || steps.version.outputs.match }}
+      version: ${{ steps.version.outputs.match }}
     steps:
       - id: debug
         name: Print environment variables and event payload
@@ -60,11 +49,15 @@ jobs:
         with:
           regex: |
             (?<=release\/)(?<version>(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:-(?<prerelease>(?:0|[1-9]\d*|\d*[A-Za-z-][\dA-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][\dA-Za-z-]*))*))?(?:\+(?<metadata>[\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*))?$)
-          text: ${{ inputs.version && format('release/{0}', inputs.version) || github.ref_name }}
+          text: ${{ github.ref_name }}
       - id: tag
         name: Get release tag
         run: |
           echo "result=$(jq .tagprefix grease.config.json -r)${{ steps.version.outputs.match }}" >>$GITHUB_OUTPUT
+      - id: message
+        name: Get release message
+        run: |
+          echo "result=release: ${{ steps.tag.outputs.result }}" >>$GITHUB_OUTPUT
   prepare:
     if: needs.preflight.outputs.version != ''
     needs: preflight
@@ -73,7 +66,6 @@ jobs:
       packages: read
     runs-on: ubuntu-latest
     env:
-      DRY_RUN: ${{ fromJson(inputs.dry) || !startsWith(github.ref_name, 'release/') }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       HUSKY: 0
     steps:
@@ -117,4 +109,61 @@ jobs:
           git log --show-signature 'HEAD^..HEAD'
       - id: push
         name: Push release preparation
-        run: git push${{ fromJson(env.DRY_RUN) && ' --dry-run' || '' }} --no-verify
+        run: git push --no-verify
+  pr:
+    needs:
+      - preflight
+      - prepare
+    env:
+      GITHUB_TOKEN: ${{ secrets.PAT_REPO }}
+    runs-on: ubuntu-latest
+    steps:
+      - id: checkout
+        name: Checkout ${{ github.ref_name }}
+        uses: actions/checkout@v4.1.1
+        with:
+          ref: ${{ github.ref }}
+      - id: pr
+        name: Create pull request
+        run: |
+          gh pr create --title='${{ needs.preflight.outputs.message }}' --label=scope:release --assignee=@${{ github.actor }} --body='## Description
+
+          <!-- A clear and concise description of your changes. -->
+
+          - bumped manifest version to `${{ needs.preflight.outputs.version }}`
+          - added `CHANGELOG` entry for `${{ needs.preflight.outputs.tag }}`
+
+          ## Linked issues
+
+          <!--
+          A list of linked issues and/or pull requests.
+
+          - <closes|fixes|resolves> #<issue-number>
+          - <prereleases|releases> #<pr-number>
+          -->
+
+          N/A
+
+          ## Related documents
+
+          <!-- A list of related documents (e.g. docs, proposals, specs, etc), if any. -->
+
+          N/A
+
+          ## Additional context
+
+          <!--
+          Include additional details here. Be sure to note if any tolerable vulnerabilities or warnings have been introduced.
+          -->
+
+          N/A
+
+          ## Submission checklist
+
+          - [x] self-review performed
+          - [x] tests added and/or updated
+          - [x] documentation added or updated
+          - [x] new, **tolerable** vulnerabilities and/or warnings documented, if any
+          - [x] [pr naming conventions][1]
+
+          [1]: https://github.com/${{ github.repository }}/blob/main/CONTRIBUTING.md#pull-request-titles'
