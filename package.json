@@ -60,7 +60,7 @@
     "check:spelling": "cspell lint --color --no-progress --relative $@ \"**\"",
     "check:types": "tsc -p tsconfig.typecheck.json",
     "check:types:attw": "yarn pack && attw package.tgz && yarn clean:pack",
-    "check:types:build": "bash ./scripts/typecheck-build.sh",
+    "check:types:build": "tsc -p tsconfig.build.json",
     "check:upgrades": "yarn upgrade-interactive",
     "clean:build": "trash ./{dist,*.tgz}",
     "clean:coverage": "trash ./coverage",
