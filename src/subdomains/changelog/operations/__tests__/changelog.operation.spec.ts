@@ -63,6 +63,17 @@ describe('unit:changelog/operations/ChangelogOperation', () => {
       expect(new TestSubject()).to.have.property('samefile', false)
     })
 
+    it('should set #samefile according to #infile and #outfile', () => {
+      // Arrange
+      const infile: string = 'CHANGELOG.md'
+
+      // Act
+      const subject: TestSubject = new TestSubject({ infile, outfile: infile })
+
+      // Expect
+      expect(subject).to.have.property('samefile').be.true
+    })
+
     it('should set #samefile and #releases according to #write', () => {
       // Act
       const subject: TestSubject = new TestSubject({

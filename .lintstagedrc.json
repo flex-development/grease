@@ -8,6 +8,6 @@
   "src/**/*.ts": [
     "vitest --changed --coverage --run",
     "yarn build",
-    "yarn check:types:build"
+    "bash -c tsc -p tsconfig.build.json"
   ]
 }

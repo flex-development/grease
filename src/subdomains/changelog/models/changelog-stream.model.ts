@@ -8,13 +8,13 @@ import type { ChangelogChunk } from '#src/changelog/types'
 import type { Commit } from '#src/git'
 import { LogLevel, type LoggerService } from '#src/log'
 import type { StreamCallback } from '#src/types'
+import pathe from '@flex-development/pathe'
 import {
   at,
   cast,
   get,
   isNIL,
   isNull,
-  pick,
   type Nilable,
   type Nullable,
   type Optional
@@ -23,6 +23,7 @@ import type { Abortable } from 'node:events'
 import fs from 'node:fs'
 import stream from 'node:stream'
 import util from 'node:util'
+import tempfile from 'tempfile'
 import ChangelogEntry from './changelog-entry.model'
 import type ChangelogFormatter from './changelog-formatter.model'
 import ChangelogInfile from './changelog-infile.model'
@@ -163,6 +164,16 @@ class ChangelogStream<T extends Commit = Commit> extends stream.Transform {
   protected readonly operation: Readonly<ChangelogOperation<T>>
 
   /**
+   * Temporary output file.
+   *
+   * @protected
+   * @readonly
+   * @instance
+   * @member {string} tempfile
+   */
+  protected readonly tempfile: string
+
+  /**
    * Changelog entries writer.
    *
    * @see {@linkcode stream.Writable}
@@ -195,8 +206,13 @@ class ChangelogStream<T extends Commit = Commit> extends stream.Transform {
     this.formatter = new opts.operation.Formatter()
     this.logger = opts.logger
     this.operation = Object.freeze(opts.operation)
+
+    this.tempfile = this.operation.outfile
+      ? tempfile({ extension: pathe.extname(this.operation.outfile).slice(1) })
+      : ''
+
     this.writer = this.operation.write && this.operation.outfile
-      ? fs.createWriteStream(this.operation.outfile, { flags: 'w+' })
+      ? fs.createWriteStream(this.tempfile)
       : process.stdout
 
     this.logger.sync(this.operation)
@@ -281,7 +297,7 @@ class ChangelogStream<T extends Commit = Commit> extends stream.Transform {
         if (chunk === -1) break
 
         // add changelog chunk
-        this.logger.debug(util.inspect(chunk, pick(this.operation, ['colors'])))
+        this.logger.debug(util.inspect(chunk, { colors: this.operation.color }))
         this.push(chunk)
         this.cdx++
       }
@@ -367,7 +383,21 @@ class ChangelogStream<T extends Commit = Commit> extends stream.Transform {
    * @return {this} `this` changelog stream
    */
   public print(): this {
-    return this.pipe(this)
+    return this.pipe(this).on('finish', (): void => {
+      if (this.operation.outfile) {
+        /**
+         * Temporary output file stream.
+         *
+         * @const {fs.ReadStream} tempfile
+         */
+        const tempfile: fs.ReadStream = fs.createReadStream(this.tempfile)
+
+        // pipe tempfile to outfile
+        tempfile.pipe(fs.createWriteStream(this.operation.outfile))
+      }
+
+      return void this.operation.outfile
+    })
   }
 
   /**

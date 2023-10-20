@@ -14,6 +14,7 @@ import pathe from '@flex-development/pathe'
 import {
   defaults,
   fallback,
+  isFalse,
   type Assign,
   type Optional
 } from '@flex-development/tutils'
@@ -140,7 +141,7 @@ class ChangelogOperation<T extends Commit = Commit> extends ChangelogQuery<T> {
     this.infile = infile
     this.outfile = outfile
     this.quiet = quiet
-    this.samefile = samefile
+    this.samefile = fallback(samefile, !!infile && infile === outfile, isFalse)
     this.write = write
 
     // silence operation
