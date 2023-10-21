@@ -37,7 +37,8 @@ on:
         type: string
 env:
   REF: ${{ inputs.sha || github.event.pull_request.merge_commit_sha }}
-  REF_NAME: ${{ format('main@{0}', inputs.sha || github.event.pull_request.merge_commit_sha) }}
+  REF_NAME: |
+    ${{ format('{0}@{1}', github.base_ref, inputs.sha || github.event.pull_request.merge_commit_sha) }}
 jobs:
   preflight:
     if: |
@@ -116,7 +117,7 @@ jobs:
         run: yarn pack -o %s-%v.tgz
       - id: release-notes
         name: Generate release notes
-        run: node ./dist/cli.mjs changelog && node ./dist/cli.mjs changelog -wo $NOTES_FILE
+        run: echo "$(node ./dist/cli.mjs changelog)" >>$GITHUB_STEP_SUMMARY
       - id: tag
         name: Create annotated tag
         run: |
@@ -126,7 +127,8 @@ jobs:
         env:
           PRERELEASE: ${{ needs.preflight.outputs.prerelease }}
           TAG: ${{ needs.preflight.outputs.tag }}
-        run: gh release create $TAG *.tgz -t=$TAG -p=$PRERELEASE -F=$NOTES_FILE
+        run: |
+          gh release create $TAG *.tgz --title=$TAG --notes="$(cat $GITHUB_STEP_SUMMARY)" --verify-tag --prerelease=$PRERELEASE --discussion-category=releases
       - id: close-issues
         name: Close released issues
         uses: bdougie/close-issues-based-on-label@master
