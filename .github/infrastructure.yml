@@ -24,6 +24,7 @@ branches:
           - context: add-to-project
           - context: auto-merge
           - context: build
+          - context: changelog
           - context: codecov/changes
             app_id: 254
           - context: codecov/patch
