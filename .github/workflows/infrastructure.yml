@@ -37,7 +37,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   infrastructure:
-    if: contains(vars.ADMINS, github.actor)
+    if: contains(vars.MAINTAINERS, github.actor)
     runs-on: ubuntu-latest
     steps:
       - id: debug
