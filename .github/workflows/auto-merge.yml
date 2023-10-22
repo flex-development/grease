@@ -22,7 +22,7 @@ name: auto-merge
 on: pull_request
 jobs:
   auto-merge:
-    if: github.event.pull_request.auto_merge == null && github.event.pull_request.draft == false
+    if: github.event.pull_request.auto_merge == null && !github.event.pull_request.draft
     runs-on: ubuntu-latest
     steps:
       - id: debug
