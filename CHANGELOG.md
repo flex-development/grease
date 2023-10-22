@@ -1,3 +1,34 @@
+## [grease@3.0.0-alpha.2](https://github.com/flex-development/grease/compare/grease@3.0.0-alpha.1...grease@3.0.0-alpha.2) (2023-10-22)
+
+### :package: Build
+
+- [[`e0fbdb6`](https://github.com/flex-development/grease/commit/e0fbdb69740566a85037a2fc556843e89ed948d3)] **deps-dev:** bump the eslint group with 1 update ([#162](https://github.com/flex-development/grease/issues/162))
+
+### :robot: Continuous Integration
+
+- [[`742df94`](https://github.com/flex-development/grease/commit/742df940d5721246f88e2d8beb445cfb7eee9c96)] add `changelog` job to required status checks
+- [[`6a18c00`](https://github.com/flex-development/grease/commit/6a18c00962f4851fcb31fb8cd8fa89923d48f5c7)] **workflows:** [`auto-merge`] cleanup `if` conditional
+- [[`b59490e`](https://github.com/flex-development/grease/commit/b59490e97e0dd012486d6787709014423a4460e0)] **workflows:** [`auto-merge`] use bot token
+- [[`d2af94f`](https://github.com/flex-development/grease/commit/d2af94f276ed134473da76be822fb5c4876f923a)] **workflows:** [`ci`] add `changelog` job summary
+- [[`c368831`](https://github.com/flex-development/grease/commit/c36883129062b76e45bb0caa6b347ba5b73aae05)] **workflows:** [`infrastructure`] check `github.actor` against `vars.MAINTAINERS`
+- [[`b2beb7e`](https://github.com/flex-development/grease/commit/b2beb7ef8c7ae8a5ab1a185c35e4b5a237fe3e78)] **workflows:** [`integrity`] cleanup `pull_request` event activity types
+- [[`43b9bf2`](https://github.com/flex-development/grease/commit/43b9bf274e11f9acbced5ab56faf6919ac6ef173)] **workflows:** [`release-branch`] use bot token
+- [[`d2cd2d5`](https://github.com/flex-development/grease/commit/d2cd2d568c98e8f6e8eb9b2f431a0299ffc0bf54)] **workflows:** [`release`] add releases notes to job summary
+- [[`ae8d06e`](https://github.com/flex-development/grease/commit/ae8d06e60b96fd4c27c6b610f0b91083351ba878)] **workflows:** [`release`] fix `jobs.publish.steps.checkout` permissions
+- [[`7dd78af`](https://github.com/flex-development/grease/commit/7dd78af22c6476697b4594d32e02328d30265fe1)] **workflows:** [`release`] fix `jobs.publish.steps.tag` command
+- [[`1451601`](https://github.com/flex-development/grease/commit/14516019a1f79e86940eae83bcf4315d06b44dda)] **workflows:** add `auto-review`
+- [[`8170104`](https://github.com/flex-development/grease/commit/8170104089afc6e463da2ae5ddab25718522001e)] **workflows:** add `dependabot-dedupe`
+
+### :house_with_garden: Housekeeping
+
+- [[`61d48c4`](https://github.com/flex-development/grease/commit/61d48c4a099ec2e96d4cbda02c5177c7110c2447)] **github:** add labels `scope:changelog` and `scope:git`
+- [[`ea32d96`](https://github.com/flex-development/grease/commit/ea32d96665af1b92bf4168dc149a5bb4cc68732e)] **github:** sort feature issue template labels
+- [[`5009d7d`](https://github.com/flex-development/grease/commit/5009d7dc5f921130974657fdbd744b664a0eecfd)] **tests:** [vitest] update reporters config logic
+
+### :white_check_mark: Testing
+
+- [[`4a1c96d`](https://github.com/flex-development/grease/commit/4a1c96d6b36110be7b13b2a35a94ae2eb13d3220)] stabilize changelog tests
+
 ## [grease@3.0.0-alpha.1](https://github.com/flex-development/grease/compare/grease@2.0.0...grease@3.0.0-alpha.1) (2023-10-20)
 
 ### ⚠ BREAKING CHANGES
@@ -388,5 +419,6 @@
 ### :wastebasket: Reverts
 
 - [[`f56dea7`](https://github.com/flex-development/grease/commit/f56dea7be7c0ab10c37972a76710b0a27362f9cd)] **node:** add types only production build
+
 
 
