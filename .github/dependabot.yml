@@ -8,7 +8,7 @@
 version: 2
 registries:
   github:
-    token: ${{ secrets.PAT_REPO }}
+    token: ${{ secrets.GH_REGISTRY_TOKEN }}
     type: npm-registry
     url: https://npm.pkg.github.com
 updates:
