@@ -1,3 +1,9 @@
+## [grease@3.0.0-alpha.3](https://github.com/flex-development/grease/compare/grease@3.0.0-alpha.2...grease@3.0.0-alpha.3) (2023-10-22)
+
+### :robot: Continuous Integration
+
+- [[`0e96454`](https://github.com/flex-development/grease/commit/0e96454bc5b9ea1f51263ecc9ea0d31cf5124397)] **workflows:** [`release`] fix notes logic
+
 ## [grease@3.0.0-alpha.2](https://github.com/flex-development/grease/compare/grease@3.0.0-alpha.1...grease@3.0.0-alpha.2) (2023-10-22)
 
 ### :package: Build
@@ -419,6 +425,7 @@
 ### :wastebasket: Reverts
 
 - [[`f56dea7`](https://github.com/flex-development/grease/commit/f56dea7be7c0ab10c37972a76710b0a27362f9cd)] **node:** add types only production build
+
 
 
 
