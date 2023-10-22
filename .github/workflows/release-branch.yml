@@ -4,17 +4,19 @@
 #
 # References:
 #
+# - https://cli.github.com/manual/gh_auth_status
 # - https://cli.github.com/manual/gh_pr_create
 # - https://docs.github.com/actions/learn-github-actions/contexts
 # - https://docs.github.com/actions/learn-github-actions/expressions
 # - https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#create
+# - https://docs.github.com/actions/using-workflows/using-github-cli-in-workflows
 # - https://docs.github.com/actions/using-workflows/workflow-commands-for-github-actions
 # - https://docs.github.com/webhooks-and-events/webhooks/webhook-events-and-payloads#create
 # - https://github.com/actions/checkout
-# - https://github.com/actions/setup-node
-# - https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#yarn2-configuration
+# - https://github.com/actions/create-github-app-token
 # - https://github.com/hmarr/debug-action
 # - https://github.com/kaisugi/action-regex-match
+# - https://github.com/tohgarashi/verified-commit
 # - https://regex101.com/r/OwpOr2
 
 ---
@@ -25,9 +27,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   preflight:
-    if: startsWith(github.ref_name, 'release/')
-    permissions:
-      contents: read
+    if: |
+      github.ref_type == 'branch' &&
+      startsWith(github.ref_name, 'release/') &&
+      contains(vars.MAINTAINERS, github.actor)
     runs-on: ubuntu-latest
     outputs:
       message: ${{ steps.message.outputs.result }}
@@ -47,9 +50,16 @@ jobs:
         name: Get release version
         uses: kaisugi/action-regex-match@v1.0.0
         with:
-          regex: |
-            (?<=release\/)(?<version>(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:-(?<prerelease>(?:0|[1-9]\d*|\d*[A-Za-z-][\dA-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][\dA-Za-z-]*))*))?(?:\+(?<metadata>[\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*))?$)
+          regex: ${{ vars.RELEASE_BRANCH_REGEX }}
           text: ${{ github.ref_name }}
+      - id: version-fail
+        if: steps.version.outputs.match == ''
+        name: Fail on invalid release version
+        run: |
+          ERR='**Invalid release branch: ${{ github.ref_name }}**
+          Branch must match [`${{ vars.RELEASE_BRANCH_REGEX }}`](https://regex101.com/r/OwpOr2)'
+          echo "$ERR" >>$GITHUB_STEP_SUMMARY
+          exit 1
       - id: tag
         name: Get release tag
         run: |
@@ -59,35 +69,31 @@ jobs:
         run: |
           echo "result=release: ${{ steps.tag.outputs.result }}" >>$GITHUB_OUTPUT
   prepare:
-    if: needs.preflight.outputs.version != ''
     needs: preflight
     permissions:
-      contents: write
       packages: read
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      HUSKY: 0
     steps:
+      - id: bot-token
+        name: Get bot token
+        uses: actions/create-github-app-token@v1.5.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
       - id: checkout
         name: Checkout ${{ github.ref_name }}
         uses: actions/checkout@v4.1.1
         with:
           fetch-depth: 0
+          persist-credentials: false
           ref: ${{ github.ref }}
-      - id: gpg-import
-        name: Import GPG key
-        uses: crazy-max/ghaction-import-gpg@v6.0.0
-        with:
-          git_commit_gpgsign: true
-          git_config_global: true
-          git_push_gpgsign: false
-          git_user_signingkey: true
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
-          trust_level: 5
+          token: ${{ steps.bot-token.outputs.token }}
       - id: yarn
         name: Install dependencies
+        env:
+          HUSKY: 0
         run: yarn --immutable
       - id: build
         name: Build project
@@ -99,34 +105,51 @@ jobs:
         run: node ./dist/cli.mjs bump -w ${{ needs.preflight.outputs.version }}
       - id: changelog
         name: Add CHANGELOG entry for ${{ needs.preflight.outputs.tag }}
-        run: node ./dist/cli.mjs changelog && node ./dist/cli.mjs changelog -sw
+        run: |
+          echo "$(node ./dist/cli.mjs changelog)" >>$GITHUB_STEP_SUMMARY
+          node ./dist/cli.mjs changelog -sw
       - id: commit
         name: Commit release preparation
-        run: |
-          git add CHANGELOG.md package.json
-          git status
-          git commit -s -m 'release: ${{ needs.preflight.outputs.tag }}'
-          git log --show-signature 'HEAD^..HEAD'
-      - id: push
-        name: Push release preparation
-        run: git push --no-verify
+        uses: tohgarashi/verified-commit@v2.1.0
+        env:
+          GH_TOKEN: ${{ steps.bot-token.outputs.token }}
+        with:
+          commit-message: |
+            ${{ needs.preflight.outputs.message }}
+
+            Signed-off-by: ${{ vars.BOT_NAME }} <${{ vars.BOT_EMAIL }}>
+
+          detect-changed: true
+          ref: ${{ github.ref }}
   pr:
     needs:
       - preflight
       - prepare
-    env:
-      GITHUB_TOKEN: ${{ secrets.PAT_REPO }}
     runs-on: ubuntu-latest
     steps:
+      - id: bot-token
+        name: Get bot token
+        uses: actions/create-github-app-token@v1.5.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
+      - id: github-token
+        name: Set env.GITHUB_TOKEN
+        run: echo "GITHUB_TOKEN=${{ steps.bot-token.outputs.token }}" >>$GITHUB_ENV
+      - id: gh-auth
+        name: Check gh authentication state
+        run: gh auth status
       - id: checkout
         name: Checkout ${{ github.ref_name }}
         uses: actions/checkout@v4.1.1
         with:
+          persist-credentials: false
           ref: ${{ github.ref }}
+          token: ${{ steps.bot-token.outputs.token }}
       - id: pr
         name: Create pull request
         run: |
-          gh pr create --title='${{ needs.preflight.outputs.message }}' --label=scope:release --assignee=${{ github.actor }} --body='## Description
+          gh pr create --title='${{ needs.preflight.outputs.message }}' --label=scope:release --assignee=${{ github.actor }} --reviewer=${{ github.actor }} --body='## Description
 
           <!-- A clear and concise description of your changes. -->
 

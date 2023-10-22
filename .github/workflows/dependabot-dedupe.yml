@@ -33,6 +33,8 @@ concurrency:
 jobs:
   dependabot-dedupe:
     if: github.actor == 'dependabot[bot]'
+    permissions:
+      packages: read
     runs-on: ubuntu-latest
     steps:
       - id: debug
@@ -61,7 +63,7 @@ jobs:
       - id: dedupe
         name: Deduplicate dependencies
         env:
-          GITHUB_TOKEN: ${{ steps.bot-token.outputs.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           YARN_ENABLE_GLOBAL_CACHE: true
           YARN_ENABLE_IMMUTABLE_INSTALLS: false
           YARN_ENABLE_SCRIPTS: false

@@ -35,7 +35,7 @@ jobs:
           app-id: ${{ secrets.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_PRIVATE_KEY }}
       - id: github-token
-        name: Set $GITHUB_TOKEN from bot token
+        name: Set env.GITHUB_TOKEN
         run: echo "GITHUB_TOKEN=${{ steps.bot-token.outputs.token }}" >>$GITHUB_ENV
       - id: checkout
         name: Checkout ${{ github.head_ref }}
