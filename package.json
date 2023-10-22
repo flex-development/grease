@@ -1,7 +1,7 @@
 {
   "name": "@flex-development/grease",
   "description": "Release workflow tool for Node.js and CLI environments",
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0-alpha.2",
   "keywords": [
     "bump",
     "changelog",
