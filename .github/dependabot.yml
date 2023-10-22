@@ -20,8 +20,6 @@ updates:
     labels:
       - scope:dependencies
       - type:ci
-    reviewers:
-      - flex-development/dependabot-review
     schedule:
       interval: daily
   - package-ecosystem: npm
@@ -62,7 +60,5 @@ updates:
       - type:build
     registries:
       - github
-    reviewers:
-      - flex-development/dependabot-review
     schedule:
       interval: daily

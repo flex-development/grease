@@ -23,6 +23,7 @@ branches:
         checks:
           - context: add-to-project
           - context: auto-merge
+          - context: auto-review
           - context: build
           - context: changelog
           - context: codecov/changes
@@ -243,7 +244,3 @@ repository:
   visibility: public
   vulnerability_alerts: true
   web_commit_signoff_required: true
-# https://docs.github.com/rest/teams/teams#add-or-update-team-repository-permissions
-teams:
-  - team_slug: dependabot-review
-    permission: triage
