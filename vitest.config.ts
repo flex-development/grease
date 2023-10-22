@@ -7,7 +7,7 @@
 import { DECORATOR_REGEX } from '@flex-development/decorator-regex'
 import pathe from '@flex-development/pathe'
 import * as tscu from '@flex-development/tsconfig-utils'
-import { split, type Nullable } from '@flex-development/tutils'
+import { ifelse, sift, split, type Nullable } from '@flex-development/tutils'
 import ci from 'is-ci'
 import ts from 'typescript'
 import tsconfigpaths from 'vite-tsconfig-paths'
@@ -144,11 +144,11 @@ const config: UserConfigExport = defineConfig((): UserConfig => {
       mockReset: true,
       outputFile: { json: './__tests__/report.json' },
       passWithNoTests: true,
-      reporters: [
+      reporters: sift([
         'json',
         'verbose',
-        ...(ci ? [] : ['./__tests__/reporters/notifier.ts'])
-      ],
+        ifelse(ci, '', './__tests__/reporters/notifier.ts')
+      ]),
       /**
        * Stores snapshots next to `file`'s directory.
        *
