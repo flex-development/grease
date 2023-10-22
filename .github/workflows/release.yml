@@ -117,7 +117,9 @@ jobs:
         run: yarn pack -o %s-%v.tgz
       - id: release-notes
         name: Generate release notes
-        run: echo "$(node ./dist/cli.mjs changelog)" >>$GITHUB_STEP_SUMMARY
+        run: |
+          node ./dist/cli.mjs changelog -wo $NOTES_FILE
+          echo "$(cat $NOTES_FILE)" >>$GITHUB_STEP_SUMMARY
       - id: tag
         name: Create annotated tag
         run: |
@@ -128,7 +130,7 @@ jobs:
           PRERELEASE: ${{ needs.preflight.outputs.prerelease }}
           TAG: ${{ needs.preflight.outputs.tag }}
         run: |
-          gh release create $TAG *.tgz --title=$TAG --notes="$(cat $GITHUB_STEP_SUMMARY)" --verify-tag --prerelease=$PRERELEASE --discussion-category=releases
+          gh release create $TAG *.tgz --title=$TAG --notes-file=$NOTES_FILE --verify-tag --prerelease=$PRERELEASE --discussion-category=releases
       - id: close-issues
         name: Close released issues
         uses: bdougie/close-issues-based-on-label@master
