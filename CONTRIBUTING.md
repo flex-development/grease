@@ -106,9 +106,8 @@ Follow the steps below to setup your local development environment:
 | `CODECOV_TOKEN`     |
 | `GITHUB_TOKEN`      |
 | `HOMEBREW_BREWFILE` |
-| `NODE_ENV`          |
 | `NODE_NO_WARNINGS`  |
-| `PAT_BOT`           |
+| `PAT_REPO`          |
 | `ZSH_DOTENV_FILE`   |
 
 #### GitHub Actions
