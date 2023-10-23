@@ -22,9 +22,9 @@
 ---
 name: dependabot-dedupe
 on:
-  push:
+  pull_request:
     branches:
-      - dependabot/npm_and_yarn/**
+      - main
     paths:
       - package.json
 concurrency:
@@ -32,7 +32,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   dependabot-dedupe:
-    if: github.actor == 'dependabot[bot]'
+    if: github.actor == 'dependabot[bot]' && startsWith(github.head_ref, 'dependabot/npm_and_yarn/')
     permissions:
       packages: read
     runs-on: ubuntu-latest
@@ -47,11 +47,11 @@ jobs:
           app-id: ${{ secrets.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_PRIVATE_KEY }}
       - id: checkout
-        name: Checkout ${{ github.ref_name }}
+        name: Checkout ${{ github.head_ref }}
         uses: actions/checkout@v4.1.1
         with:
           persist-credentials: false
-          ref: ${{ github.ref }}
+          ref: ${{ github.head_ref }}
           token: ${{ steps.bot-token.outputs.token }}
       - id: node
         name: Setup Node.js
