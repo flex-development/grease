@@ -76,4 +76,4 @@ jobs:
         with:
           commit-message: 'build(yarn): [dependabot skip] deduplicate dependencies for @dependabot'
           detect-changed: true
-          ref: ${{ github.ref }}
+          ref: ${{ github.head_ref }}
