@@ -62,6 +62,6 @@ jobs:
           ignored_checks: ${{ github.workflow }}
           token: ${{ steps.bot-token.outputs.token }}
       - id: approve
-        if: fromJson(steps.status-checks.outputs.success)
+        if: steps.status-checks.outputs.success == 'true'
         name: Approve pull request
         run: gh pr review ${{ github.event.number }} --approve --body='lgtm 👍🏾'
