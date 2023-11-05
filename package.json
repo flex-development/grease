@@ -190,6 +190,6 @@
   "engines": {
     "node": ">=18.18.2 <20.6.0 || >20.6.0"
   },
-  "packageManager": "yarn@4.0.0-rc.53",
+  "packageManager": "yarn@4.0.1",
   "sideEffects": false
 }
