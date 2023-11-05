@@ -441,4 +441,6 @@ jobs:
           path: ${{ env.CACHE_PATH }}
       - id: summary
         name: Get changelog preview
+        env:
+          TZ: ${{ vars.TZ }}
         run: echo "$(yarn grease changelog)" >>$GITHUB_STEP_SUMMARY

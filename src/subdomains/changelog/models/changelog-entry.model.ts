@@ -236,8 +236,20 @@ class ChangelogEntry<T extends Commit = Commit> implements IChangelogEntry<T> {
      */
     const key: Optional<T> = commits.find(c => c.version === release)
 
+    /**
+     * Current date.
+     *
+     * @const {string} today
+     */
+    const today: string = new Intl.DateTimeFormat('fr-ca', {
+      day: '2-digit',
+      month: '2-digit',
+      timeZone: process.env.TZ,
+      year: 'numeric'
+    }).format(new Date())
+
     // set entry date
-    this.date = get(key, 'date', new Date().toJSON()).replace(/T.+/, '')
+    this.date = get(key, 'date', today).replace(/T.+/, '')
     this.key = fallback(key, at(commits, 0))
 
     // throw if key commit was not found

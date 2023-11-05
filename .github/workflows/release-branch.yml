@@ -105,6 +105,8 @@ jobs:
         run: node ./dist/cli.mjs bump -w ${{ needs.preflight.outputs.version }}
       - id: changelog
         name: Add CHANGELOG entry for ${{ needs.preflight.outputs.tag }}
+        env:
+          TZ: ${{ vars.TZ }}
         run: |
           echo "$(node ./dist/cli.mjs changelog)" >>$GITHUB_STEP_SUMMARY
           node ./dist/cli.mjs changelog -sw
