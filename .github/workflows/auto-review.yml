@@ -43,7 +43,16 @@ jobs:
           private-key: ${{ secrets.BOT_PRIVATE_KEY }}
       - id: github-token
         name: Set env.GITHUB_TOKEN
-        run: echo "GITHUB_TOKEN=${{ steps.bot-token.outputs.token }}" >>$GITHUB_ENV
+        run: |
+          GITHUB_TOKEN=
+
+          if [[ $GITHUB_ACTOR == flex-development[bot] ]]; then
+            GITHUB_TOKEN=${{ secrets.GH_REPO_TOKEN }}
+          else
+            GITHUB_TOKEN=${{ steps.bot-token.outputs.token }}
+          fi
+
+          echo "GITHUB_TOKEN=$GITHUB_TOKEN" >>$GITHUB_ENV
       - id: gh-auth
         name: Check gh authentication state
         run: gh auth status
@@ -58,6 +67,7 @@ jobs:
         name: Wait for status checks to complete
         uses: jchen1/wait-for-green@v1.0.8
         with:
+          check_interval: 45
           commit: ${{ github.head_ref }}
           ignored_checks: ${{ github.workflow }}
           token: ${{ steps.bot-token.outputs.token }}

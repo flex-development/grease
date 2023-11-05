@@ -51,7 +51,7 @@ jobs:
   preflight:
     if: |
       github.event.head_commit.author.name != 'dependabot[bot]'
-      && github.event.head_commit.author.username != 'flexdevelopment'
+      && github.event.head_commit.author.username != 'flexdevelopment[bot]'
       && !startsWith(github.event.head_commit.message, 'release:')
     runs-on: ubuntu-latest
     outputs:
@@ -77,7 +77,9 @@ jobs:
           node-version-file: .nvmrc
       - id: yarn
         name: Install dependencies
-        run: yarn ${{ github.actor == 'dependabot[bot]' && '--no-immutable' || '--immutable' }}
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: ${{ github.actor != 'dependabot[bot]' }}
+        run: yarn
       - id: cache-key
         name: Get cache key
         run: echo "result=${{ runner.os }}-${{ github.run_id }}" >>$GITHUB_OUTPUT
@@ -135,14 +137,14 @@ jobs:
       - id: scan
         name: Scan commits for secrets and policy breaches
         uses: GitGuardian/ggshield-action@master
-        with:
-          args: --all-policies --show-secrets --verbose
         env:
           GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
           GITHUB_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
           GITHUB_PULL_BASE_SHA: ${{ github.event.pull_request.base.sha }}
           GITHUB_PUSH_BASE_SHA: ${{ github.event.base }}
           GITHUB_PUSH_BEFORE_SHA: ${{ github.event.before }}
+        with:
+          args: --all-policies --show-secrets --verbose
   format:
     needs:
       - commitlint
@@ -331,6 +333,13 @@ jobs:
         name: Upload coverage report to Codecov
         if: steps.test-files-check.outputs.files_exists == 'true'
         uses: codecov/codecov-action@v3.1.4
+        env:
+          GITHUB_JOB: ${{ github.job }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_REF_TYPE: ${{ github.ref_type }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_SHA: ${{ env.SHA }}
+          GITHUB_WORKSPACE: ${{ github.workspace }}
         with:
           env_vars: GITHUB_JOB,GITHUB_REF,GITHUB_REF_TYPE,GITHUB_RUN_ID,GITHUB_SHA,GITHUB_WORKSPACE
           fail_ci_if_error: true
@@ -341,13 +350,6 @@ jobs:
           override_commit: ${{ env.SHA }}
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
-        env:
-          GITHUB_JOB: ${{ github.job }}
-          GITHUB_REF: ${{ github.ref }}
-          GITHUB_REF_TYPE: ${{ github.ref_type }}
-          GITHUB_RUN_ID: ${{ github.run_id }}
-          GITHUB_SHA: ${{ env.SHA }}
-          GITHUB_WORKSPACE: ${{ github.workspace }}
   build:
     needs:
       - commitlint
@@ -378,7 +380,7 @@ jobs:
           key: ${{ needs.preflight.outputs.cache-key }}
           path: ${{ env.CACHE_PATH }}
       - id: local-binaries
-        name: Add local binaries to $PATH
+        name: Add local binaries to $GITHUB_PATH
         run: echo "$GITHUB_WORKSPACE/$CACHE_PATH/.bin" >> $GITHUB_PATH
       - id: pack
         name: Pack project
@@ -389,7 +391,7 @@ jobs:
       - id: attw
         name: Analyze types distribution
         run: attw ${{ env.TARFILE }}
-      - id: pkg-size-report
+      - id: pkg-size
         name: Package size report
         run: yarn pkg-size
       - id: archive

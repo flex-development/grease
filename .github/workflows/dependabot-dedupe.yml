@@ -16,8 +16,8 @@
 # - https://github.com/actions/create-github-app-token
 # - https://github.com/actions/setup-node
 # - https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#yarn2-configuration
+# - https://github.com/flex-development/gh-commit
 # - https://github.com/hmarr/debug-action
-# - https://github.com/tohgarashi/verified-commit
 
 ---
 name: dependabot-dedupe
@@ -25,8 +25,8 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - package.json
+permissions:
+  packages: read
 concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -68,12 +68,13 @@ jobs:
           YARN_ENABLE_IMMUTABLE_INSTALLS: false
           YARN_ENABLE_SCRIPTS: false
         run: yarn dedupe --mode=update-lockfile
+      - id: status
+        name: Print git status
+        run: git status --porcelain
       - id: commit
         name: Commit and push yarn.lock
-        uses: tohgarashi/verified-commit@v2.1.0
-        env:
-          GH_TOKEN: ${{ steps.bot-token.outputs.token }}
+        uses: flex-development/gh-commit@1.0.0
         with:
-          commit-message: 'build(yarn): [dependabot skip] deduplicate dependencies for @dependabot'
-          detect-changed: true
-          ref: ${{ github.head_ref }}
+          message: 'build(yarn): [dependabot skip] deduplicate dependencies for @dependabot'
+          token: ${{ steps.bot-token.outputs.token }}
+          trailers: 'Signed-off-by: ${{ vars.BOT_NAME }} <${{ vars.BOT_EMAIL }}>'

@@ -37,6 +37,7 @@ Follow the steps below to setup your local development environment:
 
    ```sh
    git config --global commit.gpgsign true
+   git config --global tag.gpgsign true
    git config --global user.email <email>
    git config --global user.name <name>
    git config --global user.username <username>
@@ -107,7 +108,6 @@ Follow the steps below to setup your local development environment:
 | `GITHUB_TOKEN`      |
 | `HOMEBREW_BREWFILE` |
 | `NODE_NO_WARNINGS`  |
-| `PAT_REPO`          |
 | `ZSH_DOTENV_FILE`   |
 
 #### GitHub Actions

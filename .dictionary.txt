@@ -1,4 +1,3 @@
-ardatan
 attw
 bdougie
 boolable
@@ -24,8 +23,6 @@ infile
 jchen
 kaisugi
 keyid
-ksort
-larsgw
 lcov
 lintstagedrc
 mkbuild

@@ -34,8 +34,6 @@ on:
         type: string
 permissions:
   contents: read
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
