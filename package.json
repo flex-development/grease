@@ -120,7 +120,7 @@
     "word-wrap": "1.2.5"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.12.2",
+    "@arethetypeswrong/cli": "0.13.1",
     "@commitlint/cli": "18.2.0",
     "@commitlint/types": "18.1.0",
     "@faker-js/faker": "8.2.0",
