@@ -138,9 +138,8 @@ const config: UserConfigExport = defineConfig((): UserConfig => {
       globals: true,
       hookTimeout: 10 * 1000,
       include: [
-        `**/__tests__/*.${LINT_STAGED ? '{spec,spec-d}' : 'spec'}.{ts,tsx}`
+        `**/__tests__/*.${LINT_STAGED ? '{spec,spec-d}' : 'spec'}.ts?(x)`
       ],
-      isolate: true,
       mockReset: true,
       outputFile: { json: './__tests__/report.json' },
       passWithNoTests: true,
@@ -187,7 +186,6 @@ const config: UserConfigExport = defineConfig((): UserConfig => {
       },
       setupFiles: ['./__tests__/setup/index.ts'],
       silent: false,
-      singleThread: true,
       slowTestThreshold: 3000,
       snapshotFormat: {
         callToJSON: true,
@@ -201,6 +199,7 @@ const config: UserConfigExport = defineConfig((): UserConfig => {
         checker: 'tsc',
         ignoreSourceErrors: false,
         include: ['**/__tests__/*.spec-d.ts'],
+        only: true,
         tsconfig: pathe.resolve('tsconfig.typecheck.json')
       },
       unstubEnvs: true,

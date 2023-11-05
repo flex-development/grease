@@ -202,7 +202,7 @@ exports[`functional:changelog/models/ChangelogStream > #print > should write cha
 ### :pencil: Documentation
 
 - [[\`ce90c3d\`](https://github.com/flex-development/grease/commit/ce90c3d12ff403121292c79b118afd9d3158b2ac)] fix typo in contributing guide
-- [[\`90e1254\`](https://github.com/flex-development/grease/commit/90e1254eac0bcef84fcad65821458d346fda7478)] **node:** add \\"Prereleases\\" section to usage guide
+- [[\`90e1254\`](https://github.com/flex-development/grease/commit/90e1254eac0bcef84fcad65821458d346fda7478)] **node:** add "Prereleases" section to usage guide
 
 ### :sparkles: Features
 
@@ -278,7 +278,7 @@ exports[`functional:changelog/models/ChangelogStream > constructor > should add 
 ### :pencil: Documentation
 
 - [[\`857f9b0\`](https://github.com/flex-development/grease/commit/857f9b01333fe9b5c8d5a7b69bb4a4d6f50fd9c5)] code reviews
-- [[\`a8fff2f\`](https://github.com/flex-development/grease/commit/a8fff2f748de5773d2eeb43ebef8fcb2b2804b0e)] fix link to \\\\\\\\\\"Generating Release Notes\\\\\\\\\\" section
+- [[\`a8fff2f\`](https://github.com/flex-development/grease/commit/a8fff2f748de5773d2eeb43ebef8fcb2b2804b0e)] fix link to \\\\"Generating Release Notes\\\\" section
 - [[\`e74300f\`](https://github.com/flex-development/grease/commit/e74300f0bc933b992170a044390ca337497aecf5)] releasing
 - [[\`fa65fde\`](https://github.com/flex-development/grease/commit/fa65fde247ee9e709e2da7a42a59e6ef0fa1a690)] update \`Getting Started\` section in \`README\`
 - [[\`b0ad929\`](https://github.com/flex-development/grease/commit/b0ad929ece55c29d6b33521c39c0ecdb0a00f8b6)] update contributing guide

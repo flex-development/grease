@@ -11,33 +11,33 @@ exports[`functional:log/reporters/FancyReporter > #write > LogType.ERROR > shoul
 [90m[grease:bump][39m [41m ERROR [49m Invalid Version: 3.0
 
                 [90mat[39m src/subdomains/log/reporters/__tests__/fancy.reporter.functional.spec.ts:34:18
-                [90mat[39m file://node_modules/@vitest/runner/dist/index.js:361:43
-                [90mat[39m runWithSuite ([36mnode_modules/@vitest/runner/dist/index.js:50:9[39m)
-                [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:361:13[39m)
-                [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:364:57[39m)
-                [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:364:49[39m)
-                [90mat[39m collectTests ([36mnode_modules/@vitest/runner/dist/index.js:512:28[39m)
-                [90mat[39m startTests ([36mnode_modules/@vitest/runner/dist/index.js:840:17[39m)
-                [90mat[39m file://node_modules/vitest/dist/entry.js:103:7
-                [90mat[39m withEnv ([36mnode_modules/vitest/dist/entry.js:73:5[39m)
+                [90mat[39m file://node_modules/@vitest/runner/dist/index.js:362:43
+                [90mat[39m runWithSuite ([36mnode_modules/@vitest/runner/dist/index.js:51:9[39m)
+                [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:362:13[39m)
+                [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:365:57[39m)
+                [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:365:49[39m)
+                [90mat[39m collectTests ([36mnode_modules/@vitest/runner/dist/index.js:516:28[39m)
+                [90mat[39m startTests ([36mnode_modules/@vitest/runner/dist/index.js:830:17[39m)
+                [90mat[39m file://node_modules/vitest/dist/entry.js:112:7
+                [90mat[39m withEnv ([36mnode_modules/vitest/dist/entry.js:79:5[39m)
 
 "
 `;
 
 exports[`functional:log/reporters/FancyReporter > #write > LogType.FAIL > should write log 1`] = `
 "
-[90m[grease:config][39m [31m✖[39m Could not resolve \\"logger\\"
+[90m[grease:config][39m [31m✖[39m Could not resolve "logger"
 
                   [90mat[39m src/subdomains/log/reporters/__tests__/fancy.reporter.functional.spec.ts:38:18
-                  [90mat[39m file://node_modules/@vitest/runner/dist/index.js:361:43
-                  [90mat[39m runWithSuite ([36mnode_modules/@vitest/runner/dist/index.js:50:9[39m)
-                  [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:361:13[39m)
-                  [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:364:57[39m)
-                  [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:364:49[39m)
-                  [90mat[39m collectTests ([36mnode_modules/@vitest/runner/dist/index.js:512:28[39m)
-                  [90mat[39m startTests ([36mnode_modules/@vitest/runner/dist/index.js:840:17[39m)
-                  [90mat[39m file://node_modules/vitest/dist/entry.js:103:7
-                  [90mat[39m withEnv ([36mnode_modules/vitest/dist/entry.js:73:5[39m)
+                  [90mat[39m file://node_modules/@vitest/runner/dist/index.js:362:43
+                  [90mat[39m runWithSuite ([36mnode_modules/@vitest/runner/dist/index.js:51:9[39m)
+                  [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:362:13[39m)
+                  [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:365:57[39m)
+                  [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:365:49[39m)
+                  [90mat[39m collectTests ([36mnode_modules/@vitest/runner/dist/index.js:516:28[39m)
+                  [90mat[39m startTests ([36mnode_modules/@vitest/runner/dist/index.js:830:17[39m)
+                  [90mat[39m file://node_modules/vitest/dist/entry.js:112:7
+                  [90mat[39m withEnv ([36mnode_modules/vitest/dist/entry.js:79:5[39m)
 
 "
 `;
@@ -47,15 +47,15 @@ exports[`functional:log/reporters/FancyReporter > #write > LogType.FATAL > shoul
 [90m[grease:git][39m [41m FATAL [49m not a git repository
 
                [90mat[39m src/subdomains/log/reporters/__tests__/fancy.reporter.functional.spec.ts:42:18
-               [90mat[39m file://node_modules/@vitest/runner/dist/index.js:361:43
-               [90mat[39m runWithSuite ([36mnode_modules/@vitest/runner/dist/index.js:50:9[39m)
-               [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:361:13[39m)
-               [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:364:57[39m)
-               [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:364:49[39m)
-               [90mat[39m collectTests ([36mnode_modules/@vitest/runner/dist/index.js:512:28[39m)
-               [90mat[39m startTests ([36mnode_modules/@vitest/runner/dist/index.js:840:17[39m)
-               [90mat[39m file://node_modules/vitest/dist/entry.js:103:7
-               [90mat[39m withEnv ([36mnode_modules/vitest/dist/entry.js:73:5[39m)
+               [90mat[39m file://node_modules/@vitest/runner/dist/index.js:362:43
+               [90mat[39m runWithSuite ([36mnode_modules/@vitest/runner/dist/index.js:51:9[39m)
+               [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:362:13[39m)
+               [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:365:57[39m)
+               [90mat[39m Object.collect ([36mnode_modules/@vitest/runner/dist/index.js:365:49[39m)
+               [90mat[39m collectTests ([36mnode_modules/@vitest/runner/dist/index.js:516:28[39m)
+               [90mat[39m startTests ([36mnode_modules/@vitest/runner/dist/index.js:830:17[39m)
+               [90mat[39m file://node_modules/vitest/dist/entry.js:112:7
+               [90mat[39m withEnv ([36mnode_modules/vitest/dist/entry.js:79:5[39m)
 
 "
 `;
@@ -94,23 +94,23 @@ exports[`functional:log/reporters/FancyReporter > #write > LogType.TRACE > shoul
 [90m[grease:git][39m [90m→[39m cannot describe '067c93cc68575a652d8609585bd64478c38dccfe'
 
                [90mat[39m src/subdomains/log/reporters/__tests__/fancy.reporter.functional.spec.ts:84:15
-               [90mat[39m file://node_modules/@vitest/runner/dist/index.js:58:26
-               [90mat[39m file://node_modules/@vitest/runner/dist/index.js:582:59
+               [90mat[39m file://node_modules/@vitest/runner/dist/index.js:59:26
+               [90mat[39m file://node_modules/@vitest/runner/dist/index.js:577:59
                [90mat[39m Array.map ([36m<anonymous>[39m)
-               [90mat[39m callSuiteHook ([36mnode_modules/@vitest/runner/dist/index.js:582:47[39m)
-               [90mat[39m runSuite ([36mnode_modules/@vitest/runner/dist/index.js:765:33[39m)
+               [90mat[39m callSuiteHook ([36mnode_modules/@vitest/runner/dist/index.js:577:47[39m)
+               [90mat[39m runSuite ([36mnode_modules/@vitest/runner/dist/index.js:758:33[39m)
 
 "
 `;
 
 exports[`functional:log/reporters/FancyReporter > #write > LogType.VERBOSE > should write log 1`] = `
 "
-[90m[grease:config][39m [90m❯[39m Read 19 entries for directory \\"/\\"
+[90m[grease:config][39m [90m❯[39m Read 19 entries for directory "/"
 "
 `;
 
 exports[`functional:log/reporters/FancyReporter > #write > LogType.WARN > should write log 1`] = `
 "
-[90m[grease:config][39m [33m⚠[39m This assignment will throw because \\"foo\\" is a constant [assign-to-constant]
+[90m[grease:config][39m [33m⚠[39m This assignment will throw because "foo" is a constant [assign-to-constant]
 "
 `;

@@ -47,7 +47,7 @@ exports[`unit:changelog/models/ChangelogInfile > #toString > should return infil
 ### :pencil: Documentation
 
 - [[\`857f9b0\`](https://github.com/flex-development/grease/commit/857f9b01333fe9b5c8d5a7b69bb4a4d6f50fd9c5)] code reviews
-- [[\`a8fff2f\`](https://github.com/flex-development/grease/commit/a8fff2f748de5773d2eeb43ebef8fcb2b2804b0e)] fix link to \\\\\\\\\\"Generating Release Notes\\\\\\\\\\" section
+- [[\`a8fff2f\`](https://github.com/flex-development/grease/commit/a8fff2f748de5773d2eeb43ebef8fcb2b2804b0e)] fix link to \\\\"Generating Release Notes\\\\" section
 - [[\`e74300f\`](https://github.com/flex-development/grease/commit/e74300f0bc933b992170a044390ca337497aecf5)] releasing
 - [[\`fa65fde\`](https://github.com/flex-development/grease/commit/fa65fde247ee9e709e2da7a42a59e6ef0fa1a690)] update \`Getting Started\` section in \`README\`
 - [[\`b0ad929\`](https://github.com/flex-development/grease/commit/b0ad929ece55c29d6b33521c39c0ecdb0a00f8b6)] update contributing guide

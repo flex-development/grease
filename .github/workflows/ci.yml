@@ -307,12 +307,6 @@ jobs:
         uses: andstor/file-existence-action@v2.0.0
         with:
           files: '**/__tests__/*.spec.+(ts|tsx)'
-      - id: yarn-ignore-node
-        if: |
-          steps.test-files-check.outputs.files_exists == 'true'
-          && startsWith(matrix.node-version, '16')
-        name: Set env.YARN_IGNORE_NODE
-        run: echo "YARN_IGNORE_NODE=1" >>$GITHUB_ENV
       - id: node
         if: steps.test-files-check.outputs.files_exists == 'true'
         name: Setup Node.js v${{ matrix.node-version }}
