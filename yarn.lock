@@ -29,35 +29,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/cli@npm:0.12.2":
-  version: 0.12.2
-  resolution: "@arethetypeswrong/cli@npm:0.12.2"
+"@arethetypeswrong/cli@npm:0.13.1":
+  version: 0.13.1
+  resolution: "@arethetypeswrong/cli@npm:0.13.1"
   dependencies:
-    "@arethetypeswrong/core": "npm:0.12.2"
+    "@arethetypeswrong/core": "npm:0.13.0"
     chalk: "npm:^4.1.2"
     cli-table3: "npm:^0.6.3"
     commander: "npm:^10.0.1"
-    marked: "npm:^5.1.0"
-    marked-terminal: "npm:^5.2.0"
-    node-fetch: "npm:^2.6.4"
+    marked: "npm:^9.1.2"
+    marked-terminal: "npm:^6.0.0"
     semver: "npm:^7.5.4"
   bin:
     attw: dist/index.js
-  checksum: 64932d19dda0a14d25e6d9f44c7f05b7eb1a36ca05289be5078dea1172e3b7e8822f44198ced27dc2caf95688014d8f72314cd89a609beb4bf551ea7c925020c
+  checksum: 7ef308a1659245590e493652f2111ec09ba677cb2439cc846cb2d3867bd9e1c743d7df8dcd680f5893c9095a5f56dfc4805e1786e56b596b466f48380f1c9dce
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/core@npm:0.12.2":
-  version: 0.12.2
-  resolution: "@arethetypeswrong/core@npm:0.12.2"
+"@arethetypeswrong/core@npm:0.13.0":
+  version: 0.13.0
+  resolution: "@arethetypeswrong/core@npm:0.13.0"
   dependencies:
     "@andrewbranch/untar.js": "npm:^1.0.3"
-    fetch-ponyfill: "npm:^7.1.0"
     fflate: "npm:^0.7.4"
     semver: "npm:^7.5.4"
     typescript: "npm:^5.2.2"
     validate-npm-package-name: "npm:^5.0.0"
-  checksum: 32c20cc9eda855114afa0ded66f9747cb4937d6d3fb8060219b72584ce19ea4e670124de3a614ffdf9f51981188eb06b9dbf9ba7eaeed584973f3c969da76601
+  checksum: aac3e65cd082aacbb0eeb617473170ae4080718ea5852bf587c06b1e0807744c142ec0d89f9ffba004229a5daaa51162db5d4585dd2b5beb2e95727ec4b4ae5a
   languageName: node
   linkType: hard
 
@@ -1129,7 +1127,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@flex-development/grease@workspace:."
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.12.2"
+    "@arethetypeswrong/cli": "npm:0.13.1"
     "@commitlint/cli": "npm:18.2.0"
     "@commitlint/types": "npm:18.1.0"
     "@faker-js/faker": "npm:8.2.0"
@@ -4390,15 +4388,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fetch-ponyfill@npm:^7.1.0":
-  version: 7.1.0
-  resolution: "fetch-ponyfill@npm:7.1.0"
-  dependencies:
-    node-fetch: "npm:~2.6.1"
-  checksum: 787df06a74a708163ef9e1c7967189c885cf9f7f30d63cac9e46e4cfc1f963bdd076ab025f85b58c5e85620d27992ae6714a1888e262b1748e9fdb65d82ac678
-  languageName: node
-  linkType: hard
-
 "fflate@npm:^0.7.4":
   version: 0.7.4
   resolution: "fflate@npm:0.7.4"
@@ -5995,28 +5984,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked-terminal@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "marked-terminal@npm:5.2.0"
+"marked-terminal@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "marked-terminal@npm:6.0.0"
   dependencies:
     ansi-escapes: "npm:^6.2.0"
     cardinal: "npm:^2.1.1"
-    chalk: "npm:^5.2.0"
+    chalk: "npm:^5.3.0"
     cli-table3: "npm:^0.6.3"
-    node-emoji: "npm:^1.11.0"
-    supports-hyperlinks: "npm:^2.3.0"
+    node-emoji: "npm:^2.1.0"
+    supports-hyperlinks: "npm:^3.0.0"
   peerDependencies:
-    marked: ^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
-  checksum: 81dc91485f4e987edadb18fded71d36344cabe7ec2e8ced1945c3ad186957a7ac1f3be7fe413383ab51ed474cc1fe81bcfb3de1fd5db7f114f90f195d70df1eb
+    marked: ">=1 <10"
+  checksum: 9737a55c93876f8b8f85f28b07f1b944a3217c68fd1a6c35a24365f70913df9d1c45fa46495a718aa4c31b7df84e599fb79551d4c1d0ee04e2fb548b9f92f491
   languageName: node
   linkType: hard
 
-"marked@npm:^5.1.0":
-  version: 5.1.2
-  resolution: "marked@npm:5.1.2"
+"marked@npm:^9.1.2":
+  version: 9.1.5
+  resolution: "marked@npm:9.1.5"
   bin:
     marked: bin/marked.js
-  checksum: e51d15f79c9b2a93e8bd801cfc0f1924027f0bf9ae12c237300d34363edf9dacdfa27de0659074ade78f2ba747cdb1c8246aef144f9ccf91600ee71c87e4d169
+  checksum: 308cacc0c2678d0cc79f33ede75bf73fde85302d447c0fc2df3e4d66343f1dda10297ea8bd0d990ecdeac1d15eb3565ca7cb4f224b3de8b6adb002dd6ca1acf8
   languageName: node
   linkType: hard
 
@@ -6355,7 +6344,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-emoji@npm:2.1.0":
+"node-emoji@npm:2.1.0, node-emoji@npm:^2.1.0":
   version: 2.1.0
   resolution: "node-emoji@npm:2.1.0"
   dependencies:
@@ -6367,16 +6356,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-emoji@npm:^1.11.0":
-  version: 1.11.0
-  resolution: "node-emoji@npm:1.11.0"
-  dependencies:
-    lodash: "npm:^4.17.21"
-  checksum: 1d7ae9bcb0f23d7cdfcac5c3a90a6fd6ec584e6f7c70ff073f6122bfbed6c06284da7334092500d24e14162f5c4016e5dcd3355753cbd5b7e60de560a973248d
-  languageName: node
-  linkType: hard
-
-"node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.4, node-fetch@npm:^2.7.0":
+"node-fetch@npm:^2.6.1, node-fetch@npm:^2.7.0":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
   dependencies:
@@ -6387,20 +6367,6 @@ __metadata:
     encoding:
       optional: true
   checksum: b24f8a3dc937f388192e59bcf9d0857d7b6940a2496f328381641cb616efccc9866e89ec43f2ec956bbd6c3d3ee05524ce77fe7b29ccd34692b3a16f237d6676
-  languageName: node
-  linkType: hard
-
-"node-fetch@npm:~2.6.1":
-  version: 2.6.13
-  resolution: "node-fetch@npm:2.6.13"
-  dependencies:
-    whatwg-url: "npm:^5.0.0"
-  peerDependencies:
-    encoding: ^0.1.0
-  peerDependenciesMeta:
-    encoding:
-      optional: true
-  checksum: 72f94498d547e322207575b2778e7b3d969b0d73f35a19f258c7fb982bf0ae96e5a3a518477300ba1dd2bd22e6b05be074648ed88448c5cf1a9b7d23c6529d1a
   languageName: node
   linkType: hard
 
@@ -7808,13 +7774,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supports-hyperlinks@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "supports-hyperlinks@npm:2.3.0"
+"supports-hyperlinks@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "supports-hyperlinks@npm:3.0.0"
   dependencies:
     has-flag: "npm:^4.0.0"
     supports-color: "npm:^7.0.0"
-  checksum: 3e7df6e9eaa177d7bfbbe065c91325e9b482f48de0f7c9133603e3ffa8af31cbceac104a0941cd0266a57f8e691de6eb58b79fec237852dc84ed7ad152b116b0
+  checksum: 911075a412d8bcfbbca413e8963d56ed0975e35ff98d599ef85301aed4221428653145263828b6c58cb4cb6ff24596be83ead3cca221a88a70428af93d5e2a73
   languageName: node
   linkType: hard
 
