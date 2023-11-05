@@ -58,7 +58,7 @@ describe('unit:changelog/models/ChangelogEntry', () => {
     })
 
     it('should set #date', () => {
-      expect(subject).to.have.property('date', today)
+      expect(subject).to.have.property('date', today.replace(/T.+/, ''))
     })
 
     it('should set #groups', () => {
