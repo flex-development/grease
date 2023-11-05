@@ -1,3 +1,26 @@
+## [grease@3.0.0-alpha.4](https://github.com/flex-development/grease/compare/grease@3.0.0-alpha.3...grease@3.0.0-alpha.4) (2023-11-04)
+
+### :package: Build
+
+- [[`5a84ce0`](https://github.com/flex-development/grease/commit/5a84ce04e09e18b2271b8a242f9d8d3f351a916c)] **deps-dev:** bump chai from 5.0.0-alpha.1 to 5.0.0-alpha.2 ([#177](https://github.com/flex-development/grease/issues/177))
+- [[`4650437`](https://github.com/flex-development/grease/commit/465043751bd6267b50c5abfc6b2622ac8e038a15)] **deps-dev:** bump dprint from 0.41.0 to 0.42.3 ([#174](https://github.com/flex-development/grease/issues/174))
+- [[`2d6f75f`](https://github.com/flex-development/grease/commit/2d6f75fa8304a0a6819ae748f9308cecadbefd86)] **deps-dev:** bump dprint from 0.42.3 to 0.42.5 ([#178](https://github.com/flex-development/grease/issues/178))
+- [[`ed21536`](https://github.com/flex-development/grease/commit/ed2153692f03673680148fcec3e51cdad7dd32ca)] **deps-dev:** bump the commitlint group with 1 update ([#173](https://github.com/flex-development/grease/issues/173))
+- [[`3229098`](https://github.com/flex-development/grease/commit/3229098de052a683034a07e1604d2dfa610f5d43)] **deps-dev:** bump the commitlint group with 2 updates ([#172](https://github.com/flex-development/grease/issues/172))
+- [[`d6336a3`](https://github.com/flex-development/grease/commit/d6336a3acac34ee125d4e8794c5bb564014c2613)] **deps-dev:** bump the typescript-eslint group with 2 updates ([#169](https://github.com/flex-development/grease/issues/169))
+- [[`76755fc`](https://github.com/flex-development/grease/commit/76755fc5494a4b0ee29bb4db4e4f54b02e57c23b)] **deps:** bump the dependencies group with 2 updates ([#175](https://github.com/flex-development/grease/issues/175))
+
+### :robot: Continuous Integration
+
+- [[`8337294`](https://github.com/flex-development/grease/commit/8337294bb1a75ea2bb706ba52ceaa6b9fec866b6)] [[@dependabot](https://github.com/dependabot)] use `secrets.GH_REGISTRY_TOKEN`
+- [[`c4d1a71`](https://github.com/flex-development/grease/commit/c4d1a71fc23d081e642058673c408cec745b9692)] **workflows:** [`auto-review`] fix approval conditional
+- [[`3de94c5`](https://github.com/flex-development/grease/commit/3de94c59219e0bfcdaafcf9a4e067e2dca7b840b)] **workflows:** [`dependabot-dedupe`] run on `pull_request` activity
+- [[`1571c28`](https://github.com/flex-development/grease/commit/1571c281bbc37aec3128478318ee65bb418f699a)] **workflows:** [`dependabot-dedupe`] use `github.head_ref` in `commit` step
+
+### :bug: Fixes
+
+- [[`b7cad30`](https://github.com/flex-development/grease/commit/b7cad303ee6634ca7b7a8c58cab1ba3596d84002)] **changelog:** current date
+
 ## [grease@3.0.0-alpha.3](https://github.com/flex-development/grease/compare/grease@3.0.0-alpha.2...grease@3.0.0-alpha.3) (2023-10-22)
 
 ### :robot: Continuous Integration
@@ -425,6 +448,7 @@
 ### :wastebasket: Reverts
 
 - [[`f56dea7`](https://github.com/flex-development/grease/commit/f56dea7be7c0ab10c37972a76710b0a27362f9cd)] **node:** add types only production build
+
 
 
 
