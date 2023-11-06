@@ -31,6 +31,7 @@ on:
         required: true
         type: string
 env:
+  GITHUB_REF: refs/heads/main
   TAG: ${{ inputs.tag || github.ref_name }}
 concurrency:
   cancel-in-progress: true
