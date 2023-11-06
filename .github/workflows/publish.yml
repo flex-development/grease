@@ -75,6 +75,7 @@ jobs:
   gpr:
     needs: preflight
     permissions:
+      contents: read
       id-token: write
       packages: write
     runs-on: ubuntu-latest
@@ -105,14 +106,15 @@ jobs:
         run: cat $NPM_CONFIG_USERCONFIG
       - id: publish
         name: Publish package
-        run: ${{ needs.preflight.outputs.command }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ${{ needs.preflight.outputs.command }}
   npm:
     needs:
       - gpr
       - preflight
     permissions:
+      contents: read
       id-token: write
       packages: write
     runs-on: ubuntu-latest
@@ -143,6 +145,6 @@ jobs:
         run: cat $NPM_CONFIG_USERCONFIG
       - id: publish
         name: Publish package
-        run: ${{ needs.preflight.outputs.command }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: ${{ needs.preflight.outputs.command }}
