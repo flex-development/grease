@@ -32,11 +32,13 @@
   },
   "publishConfig": {
     "access": "public",
-    "directory": "./"
+    "directory": "./",
+    "provenance": true
   },
   "type": "module",
   "files": [
     "CHANGELOG.md",
+    "LICENSE.md",
     "dist",
     "grease.schema.json"
   ],
