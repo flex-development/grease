@@ -1,3 +1,30 @@
+## [grease@3.0.0-alpha.5](https://github.com/flex-development/grease/compare/grease@3.0.0-alpha.4...grease@3.0.0-alpha.5) (2023-11-05)
+
+### :package: Build
+
+- [[`789e518`](https://github.com/flex-development/grease/commit/789e5187e3cc8f77d1194e3eb43ee3d75fecc432)] **deps-dev:** bump @arethetypeswrong/cli from 0.12.2 to 0.13.1 ([#187](https://github.com/flex-development/grease/issues/187))
+- [[`4bf0a25`](https://github.com/flex-development/grease/commit/4bf0a25b91900063a863a5ec9574804d2ab15511)] **deps-dev:** bump eslint-plugin-unicorn from 48.0.1 to 49.0.0 ([#182](https://github.com/flex-development/grease/issues/182))
+- [[`cdc2003`](https://github.com/flex-development/grease/commit/cdc20033f934052ca11bca7fba722f84d441af80)] **deps-dev:** bump jsonc-eslint-parser from 2.3.0 to 2.4.0 ([#171](https://github.com/flex-development/grease/issues/171))
+- [[`7902717`](https://github.com/flex-development/grease/commit/7902717aadfb08f3357c5f2411a5016b04115838)] **deps-dev:** bump the typescript-eslint group with 2 updates ([#179](https://github.com/flex-development/grease/issues/179))
+- [[`c19b35e`](https://github.com/flex-development/grease/commit/c19b35ea1441a235d5db6be79bbcad62bacdb52b)] **deps-dev:** bump the vitest group from 0.34.6 to 1.0.0-beta.3
+- [[`111ec67`](https://github.com/flex-development/grease/commit/111ec67c29369f6e2788038288598dec1e928049)] **pkg:** generate provenance statements
+- [[`1baaced`](https://github.com/flex-development/grease/commit/1baaced5042866d8c8bc44be21908e5dcf6d1501)] **yarn:** bump yarn from 4.0.0-rc.53 to 4.0.1
+
+### :robot: Continuous Integration
+
+- [[`562df51`](https://github.com/flex-development/grease/commit/562df51d95eecd23f4dcc3f49d1950584c2eaca8)] **deps:** bump actions/create-github-app-token from 1.5.0 to 1.5.1 ([#183](https://github.com/flex-development/grease/issues/183))
+- [[`5a51e27`](https://github.com/flex-development/grease/commit/5a51e27cbbfafbb263df4b97d3f6ba29cb9bc479)] **deps:** bump actions/setup-node from 3.8.1 to 4.0.0 ([#168](https://github.com/flex-development/grease/issues/168))
+- [[`dbdbf0e`](https://github.com/flex-development/grease/commit/dbdbf0e85fe145d59b426f367c0cc65cc990b50e)] **workflows:** add `release-chore`
+- [[`9161ff5`](https://github.com/flex-development/grease/commit/9161ff59f650e7230a9987e55430af3cefa39040)] **workflows:** improve workflows
+
+### :sparkles: Features
+
+- [[`569291f`](https://github.com/flex-development/grease/commit/569291f2617a19dd8c5aebf557a18fc756ec647b)] **grease:** `createGreaser`
+
+### :white_check_mark: Testing
+
+- [[`ad59ade`](https://github.com/flex-development/grease/commit/ad59ade21e8581880427bab7a139d9232ee20b2f)] silence logs
+
 ## [grease@3.0.0-alpha.4](https://github.com/flex-development/grease/compare/grease@3.0.0-alpha.3...grease@3.0.0-alpha.4) (2023-11-04)
 
 ### :package: Build
@@ -448,6 +475,7 @@
 ### :wastebasket: Reverts
 
 - [[`f56dea7`](https://github.com/flex-development/grease/commit/f56dea7be7c0ab10c37972a76710b0a27362f9cd)] **node:** add types only production build
+
 
 
 
