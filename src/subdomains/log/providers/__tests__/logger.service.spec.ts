@@ -87,6 +87,21 @@ describe('unit:log/providers/LoggerService', () => {
     })
   })
 
+  describe('#setLogLevels', () => {
+    it('should return this log level', () => {
+      // Arrange
+      const cases: [keyof typeof LogLevel, UserLogLevel[]][] = [
+        ['LOG', []],
+        ['WARN', [UserLogLevel.ERROR, UserLogLevel.FATAL, UserLogLevel.WARN]]
+      ]
+
+      // Act + Expect
+      cases.forEach(([key, levels]) => {
+        expect(new TestSubject().setLogLevels(levels)).to.equal(LogLevel[key])
+      })
+    })
+  })
+
   describe('#sync', () => {
     let subject: TestSubject
 

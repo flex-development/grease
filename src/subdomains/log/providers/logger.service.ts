@@ -11,6 +11,7 @@ import type { Reporter } from '#src/log/reporters'
 import type { Colors } from '#src/log/types'
 import type { GlobalOptions } from '#src/options'
 import {
+  at,
   define,
   fallback,
   ifelse,
@@ -24,6 +25,7 @@ import {
   omit,
   select,
   set,
+  sort,
   template,
   uppercase,
   values,
@@ -270,6 +272,24 @@ class LoggerService implements ILogger {
       message,
       type: <LogType>this.log.name
     })
+  }
+
+  /**
+   * Set `this` log level to the highest level in the given log level array.
+   *
+   * @public
+   *
+   * @param {OrLowercase<UserLogLevel>[]} levels - Log levels
+   * @return {LogLevel} `this` log level
+   */
+  public setLogLevels(levels: OrLowercase<UserLogLevel>[]): LogLevel {
+    if (levels.length) {
+      this.level = at(sort(levels, (level1, level2) => {
+        return LogLevel[uppercase(level2)] - LogLevel[uppercase(level1)]
+      }), 0)
+    }
+
+    return this.level
   }
 
   /**

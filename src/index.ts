@@ -5,6 +5,7 @@
 
 export * from './decorators'
 export * from './enums'
+export { default as createGreaser } from './grease.create'
 export { default as GreaseModule } from './grease.module'
 export { default as GreaseService } from './grease.service'
 export type * from './interfaces'
