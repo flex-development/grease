@@ -11,14 +11,14 @@ set -e
 # 5. analyze types
 # 6. print package size report
 # 7. get release version data
-# 8. get release branch name
-# 9. create release branch
-# 10. push release branch
-# 11. cleanup
+# 8. create release chore commit
+# 9. cleanup
 #
 # References:
 #
+# - https://git-scm.com/docs/git-commit
 # - https://github.com/arethetypeswrong/arethetypeswrong.github.io
+# - https://jqlang.github.io
 
 yarn typecheck
 yarn test:cov
@@ -27,7 +27,5 @@ yarn check:types:build
 attw package.tgz
 yarn pkg-size
 RELEASE_VERSION=$(node ./dist/cli.mjs bump -j $@)
-RELEASE_BRANCH=release/$(jq .version -r <<<$RELEASE_VERSION)
-git branch $RELEASE_BRANCH
-git push origin --no-verify --set-upstream $RELEASE_BRANCH
+git commit --allow-empty -S -s -m "release(chore): $(jq .version -r <<<$RELEASE_VERSION)"
 yarn clean:pack
