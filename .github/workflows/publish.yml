@@ -23,16 +23,13 @@ name: publish
 on:
   release:
     types:
-      - published
+      - created
   workflow_dispatch:
     inputs:
       tag:
         description: release tag
         required: true
         type: string
-env:
-  GITHUB_REF: refs/heads/main
-  TAG: ${{ inputs.tag || github.ref_name }}
 concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ inputs.tag || github.ref_name }}
@@ -49,18 +46,17 @@ jobs:
         name: Print environment variables and event payload
         uses: hmarr/debug-action@v2.1.0
       - id: checkout
-        name: Checkout ${{ env.TAG }}
+        name: Checkout ${{ github.ref_name }}
         uses: actions/checkout@v4.1.1
         with:
           persist-credentials: false
-          ref: ${{ env.TAG }}
       - id: version
         name: Get package version
         run: echo "result=$(jq .version package.json -r)" >>$GITHUB_OUTPUT
       - id: artifact
         name: Get release artifact download URL
         run: |
-          echo "result=${{ github.event_name == 'release' && github.event.release.assets[0].browser_download_url || format('{0}/{1}/releases/download/{2}/%40{3}-{4}-{5}.tgz', github.server_url, github.repository, env.TAG, github.repository_owner, github.event.repository.name, steps.version.outputs.result) }}" >>$GITHUB_OUTPUT
+          echo "result=${{ github.event_name == 'release' && github.event.release.assets[0].browser_download_url || format('{0}/{1}/releases/download/{2}/%40{3}-{4}-{5}.tgz', github.server_url, github.repository, inputs.tag || github.ref_name, github.repository_owner, github.event.repository.name, steps.version.outputs.result) }}" >>$GITHUB_OUTPUT
       - id: dist-tag
         name: Get dist tag
         uses: flex-development/dist-tag-action@1.1.2
@@ -85,11 +81,8 @@ jobs:
         ${{ format('{0}/{1}/pkgs/npm/{2}', github.server_url, github.repository, github.event.repository.name) }}
     steps:
       - id: checkout
-        name: Checkout ${{ env.TAG }}
+        name: Checkout ${{ github.ref_name }}
         uses: actions/checkout@v4.1.1
-        with:
-          persist-credentials: false
-          ref: ${{ github.sha }}
       - id: npmrc-cleanup
         name: Remove stale .npmrc file
         run: rm .npmrc
@@ -124,11 +117,8 @@ jobs:
         ${{ format('https://npmjs.com/package/@{0}/v/{1}', github.repository, needs.preflight.outputs.version) }}
     steps:
       - id: checkout
-        name: Checkout ${{ env.TAG }}
+        name: Checkout ${{ github.ref_name }}
         uses: actions/checkout@v4.1.1
-        with:
-          persist-credentials: false
-          ref: ${{ github.sha }}
       - id: npmrc-cleanup
         name: Remove stale .npmrc file
         run: rm .npmrc
