@@ -1169,7 +1169,7 @@ __metadata:
     cspell: "npm:7.3.8"
     dprint: "npm:0.42.5"
     editorconfig: "npm:2.0.0"
-    envinfo: "npm:7.10.0"
+    envinfo: "npm:7.11.0"
     esbuild: "npm:0.19.5"
     eslint: "npm:8.53.0"
     eslint-import-resolver-typescript: "npm:3.6.1"
@@ -3645,12 +3645,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"envinfo@npm:7.10.0":
-  version: 7.10.0
-  resolution: "envinfo@npm:7.10.0"
+"envinfo@npm:7.11.0":
+  version: 7.11.0
+  resolution: "envinfo@npm:7.11.0"
   bin:
     envinfo: dist/cli.js
-  checksum: d4db29c5a405081759c57c0e74ffa6adab09b7477ca105587252643394f13ab128ad4c8f755b15334b5f1901cef091acc76c71b695ce0f27853ebf147c882075
+  checksum: 8cba09db181329b243fe02b3384ec275ebf93d5d3663c31e2064697aa96576c7de9b7e1c878a250f8eaec0db8026bace747709dcdc8d8a4ecd9a653cdbc08926
   languageName: node
   linkType: hard
 

@@ -152,7 +152,7 @@
     "cspell": "7.3.8",
     "dprint": "0.42.5",
     "editorconfig": "2.0.0",
-    "envinfo": "7.10.0",
+    "envinfo": "7.11.0",
     "eslint": "8.53.0",
     "eslint-import-resolver-typescript": "3.6.1",
     "eslint-plugin-chai-expect": "3.0.0",
