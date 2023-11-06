@@ -1,3 +1,9 @@
+## [grease@3.0.0-alpha.7](https://github.com/flex-development/grease/compare/grease@3.0.0-alpha.6...grease@3.0.0-alpha.7) (2023-11-06)
+
+### :robot: Continuous Integration
+
+- [[`c53f998`](https://github.com/flex-development/grease/commit/c53f9987b905f84e52c36c5f6605ec2393b9f8b9)] **workflows:** [`publish`] fix provenance statement generation
+
 ## [grease@3.0.0-alpha.6](https://github.com/flex-development/grease/compare/grease@3.0.0-alpha.5...grease@3.0.0-alpha.6) (2023-11-05)
 
 ### :robot: Continuous Integration
@@ -481,6 +487,7 @@
 ### :wastebasket: Reverts
 
 - [[`f56dea7`](https://github.com/flex-development/grease/commit/f56dea7be7c0ab10c37972a76710b0a27362f9cd)] **node:** add types only production build
+
 
 
 
