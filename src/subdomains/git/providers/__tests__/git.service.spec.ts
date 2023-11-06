@@ -5,7 +5,8 @@
 
 import sha from '#fixtures/git/grease/sha'
 import pkg from '#pkg' assert { type: 'json' }
-import { LogModule } from '#src/log'
+import { LogModule, LoggerService } from '#src/log'
+import { noop } from '@flex-development/tutils'
 import { Test } from '@nestjs/testing'
 import TestSubject from '../git.service'
 
@@ -20,6 +21,11 @@ describe('unit:git/providers/GitService', () => {
   })
 
   describe('#exec', () => {
+    beforeEach(() => {
+      // @ts-expect-error ts(2345)
+      vi.spyOn(LoggerService.prototype, 'write').mockImplementation(noop)
+    })
+
     it('should return command output', async () => {
       // Arrange
       const args: string[] = ['config', '--get', 'remote.origin.url']

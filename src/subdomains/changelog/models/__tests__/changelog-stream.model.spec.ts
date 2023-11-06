@@ -7,7 +7,7 @@ import sha from '#fixtures/git/grease/sha'
 import gc from '#gc' assert { type: 'json' }
 import { ChangelogOperation } from '#src/changelog/operations'
 import { LoggerService, UserLogLevel } from '#src/log'
-import { cast, get, type Nullable } from '@flex-development/tutils'
+import { cast, get, noop, type Nullable } from '@flex-development/tutils'
 import ChangelogFormatter from '../changelog-formatter.model'
 import TestSubject from '../changelog-stream.model'
 
@@ -108,6 +108,11 @@ describe('unit:changelog/models/ChangelogStream', () => {
             to: sha
           })
         })
+      })
+
+      beforeEach(() => {
+        // @ts-expect-error ts(2345)
+        vi.spyOn(LoggerService.prototype, 'write').mockImplementationOnce(noop)
       })
 
       it('should return changelog chunk', () => {
