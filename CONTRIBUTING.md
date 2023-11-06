@@ -348,7 +348,7 @@ e.g:
 
 1. Get a version bump recommendation
    - `yarn bump:recommend`
-2. Create release branch
+2. Create release chore commit
    - `yarn release <new-version>`
    - `yarn release major`
    - `yarn release minor`
@@ -357,8 +357,10 @@ e.g:
    - `yarn release preminor --preid <dist-tag>`
    - `yarn release prepatch --preid <dist-tag>`
    - `yarn release prerelease --preid <dist-tag>`
-3. Monitor workflows
-   1. [`release-branch`](.github/workflows/release-branch.yml)
+3. Push release chore commit
+4. Monitor workflows
+   1. [`release-chore`](.github/workflows/release-chore.yml)
+      - create release branch
       - bump manifest version
       - add changelog entry for new release
       - create release pr

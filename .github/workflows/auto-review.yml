@@ -46,7 +46,7 @@ jobs:
         run: |
           GITHUB_TOKEN=
 
-          if [[ $GITHUB_ACTOR == flex-development[bot] ]]; then
+          if [[ $GITHUB_ACTOR == 'flex-development[bot]' ]]; then
             GITHUB_TOKEN=${{ secrets.GH_REPO_TOKEN }}
           else
             GITHUB_TOKEN=${{ steps.bot-token.outputs.token }}

@@ -38,7 +38,6 @@ sortbrk
 sortcmt
 sortgrp
 stringafiable
-tohgarashi
 tryit
 tscu
 unstub

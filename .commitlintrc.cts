@@ -21,6 +21,7 @@ const config: UserConfig = {
       scopes([
         'bump',
         'changelog',
+        'chore',
         'config',
         'git',
         'grease',
