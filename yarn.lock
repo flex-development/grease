@@ -1190,7 +1190,7 @@ __metadata:
     is-ci: "npm:3.0.1"
     is-unicode-supported: "npm:2.0.0"
     json5: "npm:2.2.3"
-    jsonc-eslint-parser: "npm:2.3.0"
+    jsonc-eslint-parser: "npm:2.4.0"
     lint-staged: "npm:15.0.2"
     node-emoji: "npm:2.1.0"
     node-notifier: "npm:10.0.1"
@@ -5611,7 +5611,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonc-eslint-parser@npm:2.3.0, jsonc-eslint-parser@npm:^2.0.4":
+"jsonc-eslint-parser@npm:2.4.0":
+  version: 2.4.0
+  resolution: "jsonc-eslint-parser@npm:2.4.0"
+  dependencies:
+    acorn: "npm:^8.5.0"
+    eslint-visitor-keys: "npm:^3.0.0"
+    espree: "npm:^9.0.0"
+    semver: "npm:^7.3.5"
+  checksum: bd1d41c852c3488414605a1754617aa7c240ed6730a25a7fd7fb76473e92efdc5ba1728ad3f08f8069de3a19abf1fd275c2b145eb51e2f7f6ca293c8105e1ffe
+  languageName: node
+  linkType: hard
+
+"jsonc-eslint-parser@npm:^2.0.4":
   version: 2.3.0
   resolution: "jsonc-eslint-parser@npm:2.3.0"
   dependencies:
