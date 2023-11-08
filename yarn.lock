@@ -1151,7 +1151,7 @@ __metadata:
     "@flex-development/pkg-types": "npm:3.0.0"
     "@flex-development/tsconfig-utils": "npm:2.0.2"
     "@flex-development/tutils": "npm:6.0.0-alpha.25"
-    "@nestjs/common": "npm:10.2.7"
+    "@nestjs/common": "npm:10.2.8"
     "@nestjs/core": "npm:10.2.8"
     "@nestjs/cqrs": "npm:10.2.6"
     "@nestjs/testing": "npm:10.2.8"
@@ -1192,7 +1192,7 @@ __metadata:
     eslint-plugin-promise: "npm:6.1.1"
     eslint-plugin-unicorn: "npm:49.0.0"
     eslint-plugin-yml: "npm:1.10.0"
-    fast-glob: "npm:3.3.1"
+    fast-glob: "npm:3.3.2"
     growl: "npm:1.10.5"
     husky: "npm:8.0.3"
     is-ci: "npm:3.0.1"
@@ -1632,9 +1632,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/common@npm:10.2.7":
-  version: 10.2.7
-  resolution: "@nestjs/common@npm:10.2.7"
+"@nestjs/common@npm:10.2.8":
+  version: 10.2.8
+  resolution: "@nestjs/common@npm:10.2.8"
   dependencies:
     iterare: "npm:1.2.1"
     tslib: "npm:2.6.2"
@@ -1649,7 +1649,7 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 0d1a1ddeeb97493eb71e49fa2db8f312b90434627e60e92f86fcd144100ec81901a0649bcd5558604455436ca60288405f2699825e57702b65d0057aa4f5ad4e
+  checksum: 790ca53c06acea6e3c93f82e5bee8bca0f47ef2aeae41902e41fc68b1d674be7563e6c6ef23070d629935baa6bf6f7b36c668a0205d200cdcfa82c4c1047714a
   languageName: node
   linkType: hard
 
@@ -4364,7 +4364,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.1, fast-glob@npm:^3.3.2":
+"fast-glob@npm:3.3.2, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.1, fast-glob@npm:^3.3.2":
   version: 3.3.2
   resolution: "fast-glob@npm:3.3.2"
   dependencies:
