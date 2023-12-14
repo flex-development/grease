@@ -1204,7 +1204,7 @@ __metadata:
     node-notifier: "npm:10.0.1"
     pkg-size: "npm:2.4.0"
     prettier: "npm:3.1.1"
-    reflect-metadata: "npm:0.1.14"
+    reflect-metadata: "npm:0.2.0"
     rxjs: "npm:7.8.1"
     semver: "npm:7.5.4"
     sh-syntax: "npm:0.4.1"
@@ -7059,10 +7059,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reflect-metadata@npm:0.1.14":
-  version: 0.1.14
-  resolution: "reflect-metadata@npm:0.1.14"
-  checksum: fcab9c17ec3b9fea0e2f748c2129aceb57c24af6d8d13842b8a77c8c79dde727d7456ce293e76e8d7b267d1dbf93eea4c5b3c9101299a789a075824f2e40f1ee
+"reflect-metadata@npm:0.2.0":
+  version: 0.2.0
+  resolution: "reflect-metadata@npm:0.2.0"
+  checksum: 3420a06adad491c4f4e2294786f7a20032ca53159f188733844d0fd545ab039396ec6043c794348ad36787fc3cf8ac44186d8a2d59c2b3d67e68cd9934bc84af
   languageName: node
   linkType: hard
 
