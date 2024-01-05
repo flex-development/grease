@@ -29,11 +29,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/cli@npm:0.13.3":
-  version: 0.13.3
-  resolution: "@arethetypeswrong/cli@npm:0.13.3"
+"@arethetypeswrong/cli@npm:0.13.5":
+  version: 0.13.5
+  resolution: "@arethetypeswrong/cli@npm:0.13.5"
   dependencies:
-    "@arethetypeswrong/core": "npm:0.13.3"
+    "@arethetypeswrong/core": "npm:0.13.5"
     chalk: "npm:^4.1.2"
     cli-table3: "npm:^0.6.3"
     commander: "npm:^10.0.1"
@@ -42,20 +42,21 @@ __metadata:
     semver: "npm:^7.5.4"
   bin:
     attw: dist/index.js
-  checksum: d3889383536496f62d4fcd1416fc9f8b9ef5bfa8806ca81bb166827373572e165bfc0cf164d8e915ca9920a974c41d1d8fa06aa743696fa165c926452c920dec
+  checksum: 0d18fbd69324a6e1d4fc7daf2f0ff1e1cd9d2400da48b73c1fe213575e58779f5352541a7a737798b18ae07e0e1c77ab889ab1e77e45127be795d2eafc0fa5e2
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/core@npm:0.13.3":
-  version: 0.13.3
-  resolution: "@arethetypeswrong/core@npm:0.13.3"
+"@arethetypeswrong/core@npm:0.13.5":
+  version: 0.13.5
+  resolution: "@arethetypeswrong/core@npm:0.13.5"
   dependencies:
     "@andrewbranch/untar.js": "npm:^1.0.3"
     fflate: "npm:^0.7.4"
     semver: "npm:^7.5.4"
-    typescript: "npm:5.3.2"
+    ts-expose-internals-conditionally: "npm:1.0.0-empty.0"
+    typescript: "npm:5.3.3"
     validate-npm-package-name: "npm:^5.0.0"
-  checksum: 7101ecade8ba275fad8d36f4f53374d64c4ac01b97db4bd981534866d993fdef3cb00e77add3bd2d31132e98c36e19b7041d46fad27620c8e6d1c426d61c6572
+  checksum: ded85c7c998b6b790b99f0c1aa771ab036a7b4cf5fb3ca4322b909535e35249d52e27e1d35ce64dd717c3775f5e226b3e4f1c1aee53d0c5560b75f1b851d59f5
   languageName: node
   linkType: hard
 
@@ -1140,7 +1141,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@flex-development/grease@workspace:."
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.13.3"
+    "@arethetypeswrong/cli": "npm:0.13.5"
     "@commitlint/cli": "npm:18.4.4"
     "@commitlint/types": "npm:18.4.4"
     "@faker-js/faker": "npm:8.3.1"
@@ -8025,6 +8026,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-expose-internals-conditionally@npm:1.0.0-empty.0":
+  version: 1.0.0-empty.0
+  resolution: "ts-expose-internals-conditionally@npm:1.0.0-empty.0"
+  checksum: 6b4f546fc59f04f68d579f1bc0704541ec17521f84d32a15b45bef5dbc7a787143a065e19541cc5b64ff494f16f223bce59f3f5bf10ec538e5739e23c0efb878
+  languageName: node
+  linkType: hard
+
 "tsconfck@npm:^2.1.0":
   version: 2.1.2
   resolution: "tsconfck@npm:2.1.2"
@@ -8175,13 +8183,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.3.2":
-  version: 5.3.2
-  resolution: "typescript@npm:5.3.2"
+"typescript@npm:5.3.3":
+  version: 5.3.3
+  resolution: "typescript@npm:5.3.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 415e5fb6611f5713e460bad48039f00bcfdbde53a2f911727862d5aa9c5d5edd250059a419df382d8f031709e15a169c41eb62b6a401da5eec7ac0f4e359d6ac
+  checksum: 6e4e6a14a50c222b3d14d4ea2f729e79f972fa536ac1522b91202a9a65af3605c2928c4a790a4a50aa13694d461c479ba92cedaeb1e7b190aadaa4e4b96b8e18
   languageName: node
   linkType: hard
 
@@ -8195,13 +8203,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>":
-  version: 5.3.2
-  resolution: "typescript@patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=29ae49"
+"typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>":
+  version: 5.3.3
+  resolution: "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=29ae49"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 43c3346528a1b410b9ee7f218d709ce8d1336eb8e47b0f8bb43954f98ed43fd11e35de398c9a5f4a085b6889c89782362789b00db7aac862bd09d083058a01a2
+  checksum: 57bf073a0b88f9bf76e5a24be3df864a8f9d0e70f8316969f4992ae26e30cb8d078708922da2ade1f2c8d1faee13b28bcb69876ebb1e37910e31c54aa9126aa2
   languageName: node
   linkType: hard
 
