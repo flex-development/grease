@@ -143,8 +143,8 @@
     "@typescript-eslint/eslint-plugin": "6.19.0",
     "@typescript-eslint/parser": "6.19.0",
     "@vates/toggle-scripts": "1.0.0",
-    "@vitest/coverage-v8": "1.0.0-beta.3",
-    "@vitest/expect": "1.0.0-beta.3",
+    "@vitest/coverage-v8": "1.2.0",
+    "@vitest/expect": "1.2.0",
     "chai": "5.0.0",
     "chai-each": "0.0.1",
     "chai-string": "1.5.0",
@@ -181,7 +181,7 @@
     "typescript": "5.2.2",
     "vite": "5.0.11",
     "vite-tsconfig-paths": "4.2.3",
-    "vitest": "1.0.0-beta.3",
+    "vitest": "1.2.0",
     "yaml-eslint-parser": "1.2.2"
   },
   "resolutions": {
