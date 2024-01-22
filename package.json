@@ -123,7 +123,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.13.5",
-    "@commitlint/cli": "18.4.4",
+    "@commitlint/cli": "18.5.0",
     "@commitlint/types": "18.4.4",
     "@faker-js/faker": "8.3.1",
     "@flex-development/commitlint-config": "1.0.1",
