@@ -145,7 +145,7 @@
     "@vates/toggle-scripts": "1.0.0",
     "@vitest/coverage-v8": "1.0.0-beta.3",
     "@vitest/expect": "1.0.0-beta.3",
-    "chai": "5.0.0",
+    "chai": "5.0.3",
     "chai-each": "0.0.1",
     "chai-string": "1.5.0",
     "cross-env": "7.0.3",
@@ -186,7 +186,7 @@
   },
   "resolutions": {
     "@flex-development/nest-commander@npm:1.0.0-alpha.1": "patch:@flex-development/nest-commander@npm%3A1.0.0-alpha.1#patches/@flex-development/nest-commander+1.0.0-alpha.1.dev.patch",
-    "chai": "5.0.0",
+    "chai": "5.0.3",
     "loupe": "3.0.1"
   },
   "engines": {
