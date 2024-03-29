@@ -29,11 +29,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/cli@npm:0.13.6":
-  version: 0.13.6
-  resolution: "@arethetypeswrong/cli@npm:0.13.6"
+"@arethetypeswrong/cli@npm:0.15.2":
+  version: 0.15.2
+  resolution: "@arethetypeswrong/cli@npm:0.15.2"
   dependencies:
-    "@arethetypeswrong/core": "npm:0.13.6"
+    "@arethetypeswrong/core": "npm:0.15.1"
     chalk: "npm:^4.1.2"
     cli-table3: "npm:^0.6.3"
     commander: "npm:^10.0.1"
@@ -42,21 +42,21 @@ __metadata:
     semver: "npm:^7.5.4"
   bin:
     attw: dist/index.js
-  checksum: d55dd895794fb84e912ca785bcfdad1201387e0e1f3f086bb44a2f4e6defed53f15074db09ed1a34de07b1283cf5620bc8c7b265cb56371cc6a4eb48b35fbb55
+  checksum: c0a7088a6766555f74dd2872691598cafb4930b00ae82fa6b5eb8014fc1aa31272dda77eaf39f0fe1a7df3197fac99cd0acfb5e2f4412315b6776a868eaa1850
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/core@npm:0.13.6":
-  version: 0.13.6
-  resolution: "@arethetypeswrong/core@npm:0.13.6"
+"@arethetypeswrong/core@npm:0.15.1":
+  version: 0.15.1
+  resolution: "@arethetypeswrong/core@npm:0.15.1"
   dependencies:
     "@andrewbranch/untar.js": "npm:^1.0.3"
-    fflate: "npm:^0.7.4"
+    fflate: "npm:^0.8.2"
     semver: "npm:^7.5.4"
     ts-expose-internals-conditionally: "npm:1.0.0-empty.0"
     typescript: "npm:5.3.3"
     validate-npm-package-name: "npm:^5.0.0"
-  checksum: 448c1138fbc9c35c9ca7845172471ba6a56fb1c2c0200547169873df55c55094ec61ad620106ebb1a621a06903f4077e392674f15534b167602266e9f7a93481
+  checksum: af07d7d0d93926b019d8dc412cee251db972e443be181ef4ef79d28d61f76542b2911a381397ab3ddc23d9a669d830994b4f3b0033f8244f3750027f319595af
   languageName: node
   linkType: hard
 
@@ -1139,7 +1139,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@flex-development/grease@workspace:."
   dependencies:
-    "@arethetypeswrong/cli": "npm:0.13.6"
+    "@arethetypeswrong/cli": "npm:0.15.2"
     "@commitlint/cli": "npm:19.2.1"
     "@commitlint/types": "npm:19.0.3"
     "@faker-js/faker": "npm:8.4.1"
@@ -4429,10 +4429,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fflate@npm:^0.7.4":
-  version: 0.7.4
-  resolution: "fflate@npm:0.7.4"
-  checksum: 27f61b3536c3a23b0ccdab4b616103be0e8e7241924cda063486822c50ae11930eb1ce6e34dedbfccb2705d04a66380d04e28c67387e1dd48159d41ea14bfda5
+"fflate@npm:^0.8.2":
+  version: 0.8.2
+  resolution: "fflate@npm:0.8.2"
+  checksum: 2bd26ba6d235d428de793c6a0cd1aaa96a06269ebd4e21b46c8fd1bd136abc631acf27e188d47c3936db090bf3e1ede11d15ce9eae9bffdc4bfe1b9dc66ca9cb
   languageName: node
   linkType: hard
 
