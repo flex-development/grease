@@ -70,14 +70,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/helper-validator-identifier@npm:^7.22.5":
-  version: 7.22.20
-  resolution: "@babel/helper-validator-identifier@npm:7.22.20"
-  checksum: df882d2675101df2d507b95b195ca2f86a3ef28cb711c84f37e79ca23178e13b9f0d8b522774211f51e40168bf5142be4c1c9776a150cddb61a0d5bf3e95750b
-  languageName: node
-  linkType: hard
-
-"@babel/helper-validator-identifier@npm:^7.24.5":
+"@babel/helper-validator-identifier@npm:^7.22.5, @babel/helper-validator-identifier@npm:^7.24.5":
   version: 7.24.5
   resolution: "@babel/helper-validator-identifier@npm:7.24.5"
   checksum: 38aaf6a64a0ea2e84766165b461deda3c24fd2173dff18419a2cc9e1ea1d3e709039aee94db29433a07011492717c80900a5eb564cdca7d137757c3c69e26898
@@ -2393,16 +2386,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.10.0, acorn@npm:^8.5.0, acorn@npm:^8.9.0":
-  version: 8.10.0
-  resolution: "acorn@npm:8.10.0"
-  bin:
-    acorn: bin/acorn
-  checksum: 522310c20fdc3c271caed3caf0f06c51d61cb42267279566edd1d58e83dbc12eebdafaab666a0f0be1b7ad04af9c6bc2a6f478690a9e6391c3c8b165ada917dd
-  languageName: node
-  linkType: hard
-
-"acorn@npm:^8.11.3":
+"acorn@npm:^8.10.0, acorn@npm:^8.11.3, acorn@npm:^8.5.0, acorn@npm:^8.9.0":
   version: 8.11.3
   resolution: "acorn@npm:8.11.3"
   bin:
@@ -7396,7 +7380,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:7.6.0, semver@npm:^7.0.0, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.5.0, semver@npm:^7.5.3, semver@npm:^7.5.4, semver@npm:^7.6.0":
+"semver@npm:7.6.0":
   version: 7.6.0
   resolution: "semver@npm:7.6.0"
   dependencies:
@@ -7416,7 +7400,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.6.1":
+"semver@npm:^7.0.0, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.5.0, semver@npm:^7.5.3, semver@npm:^7.5.4, semver@npm:^7.6.0, semver@npm:^7.6.1":
   version: 7.6.2
   resolution: "semver@npm:7.6.2"
   bin:
