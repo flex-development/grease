@@ -436,6 +436,8 @@ jobs:
       - id: version
         name: Extract version metadata
         uses: flex-development/manver-action@1.1.0
+        with:
+          manifest: ${{ env.PACKAGE_DIRECTORY }}/package.json
       - id: tarball
         name: Get tarball path
         run: |
