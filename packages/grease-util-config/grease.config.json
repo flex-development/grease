@@ -1,8 +1,7 @@
 {
   "$schema": "./grease.schema.json",
+  "extends": "../../grease.config.json",
   "tag": {
-    "message": "release: {tag}",
-    "sign": true
-  },
-  "tagprefix": "grease-util-config@"
+    "prefix": "grease-util-config@"
+  }
 }

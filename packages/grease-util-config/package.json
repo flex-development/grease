@@ -52,8 +52,8 @@
   "imports": {
     "#fixtures/*": "./__fixtures__/*.mts",
     "#lib/*": {
-      "grease": "./src/lib/*.mts",
-      "default": "./dist/lib/*.mjs"
+      "grease": "./src/*.mts",
+      "default": "./dist/*.mjs"
     },
     "#tests/*": "./__tests__/*.mts"
   },

@@ -119,7 +119,7 @@ function config(this: void, env: ConfigEnv): ViteUserConfig {
                 ignoreSourceErrors: false,
                 include: ['**/__tests__/*.spec-d.mts'],
                 only: true,
-                tsconfig: 'tsconfig.json'
+                tsconfig: pathe.resolve('tsconfig.json')
               }
             }
           }

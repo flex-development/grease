@@ -65,6 +65,10 @@ In browsers with [`esm.sh`][esmsh]:
 
 **TODO**: api
 
+### `defineConfig`
+
+**TODO**: `defineConfig`
+
 ## Types
 
 This package is fully typed with [TypeScript][].

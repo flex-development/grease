@@ -2,6 +2,6 @@
   "$schema": "../grease-util-config/grease.schema.json",
   "extends": "../../grease.config.json",
   "tag": {
-    "prefix": "grease@"
+    "prefix": "grease-util-symbol@"
   }
 }

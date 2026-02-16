@@ -3,4 +3,4 @@
  * @module grease-util-config
  */
 
-export {}
+export { default as defineConfig } from '#lib/define-config'

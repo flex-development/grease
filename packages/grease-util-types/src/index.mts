@@ -3,4 +3,7 @@
  * @module grease-util-types
  */
 
-export type {}
+export type { default as Awaitable } from '#lib/awaitable'
+export type { default as GetUserConfig } from '#lib/get-user-config'
+export type { default as UserConfig } from '#lib/user-config'
+export type { default as UserConfigOption } from '#lib/user-config-option'
