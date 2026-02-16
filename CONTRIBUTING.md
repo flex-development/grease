@@ -19,7 +19,7 @@ Follow the steps below to setup your local development environment:
    cd grease
    ```
 
-2. Install binaries with [Homebrew][1]
+2. Install binaries with [Homebrew][]
 
    ```sh
    brew bundle --file ./Brewfile
@@ -31,7 +31,7 @@ Follow the steps below to setup your local development environment:
    nvm use
    ```
 
-4. [Configure commit signing][2]
+4. [Configure commit signing][gpg-commit-signature-verification]
 
 5. Update `~/.gitconfig`
 
@@ -51,12 +51,13 @@ Follow the steps below to setup your local development environment:
    yarn
    ```
 
-   **Note**: This project uses [Yarn 2][3]. Consult [`.yarnrc.yml`](.yarnrc.yml) for an overview of configuration
-   options and required environment variables. Furthermore, if you already have a global Yarn configuration, or any
-   `YARN_*` environment variables set, an error will be thrown if any settings conflict with the project's Yarn
-   configuration, or the Yarn 2 API. Missing environment variables will also yield an error.
+   **Note**: This project uses [Yarn 2][yarn].
+   Consult [`.yarnrc.yml`](.yarnrc.yml) for an overview of configuration options and required environment variables.
+   Furthermore, if you already have a global Yarn configuration, or any `YARN_*` environment variables set, an error
+   will be thrown if any settings conflict with the project's Yarn configuration, or the Yarn 2 API.
+   Missing environment variables will also yield an error.
 
-7. [ZSH][4] setup
+7. [ZSH][ohmyzsh] setup
 
 8. Update `$ZDOTDIR/.zprofile`:
 
@@ -105,14 +106,13 @@ Follow the steps below to setup your local development environment:
 | name                |
 | ------------------- |
 | `CODECOV_TOKEN`     |
-| `GITHUB_TOKEN`      |
 | `HOMEBREW_BREWFILE` |
 | `NODE_NO_WARNINGS`  |
 | `ZSH_DOTENV_FILE`   |
 
 #### GitHub Actions
 
-Variables are prefixed by `secrets.` in [workflow](.github/workflows/) files.
+Variables are prefixed by `secrets.` and `vars.` in [workflow](.github/workflows/) files.
 
 ### Git Config
 
@@ -122,7 +122,7 @@ See [`.github/.gitconfig`](.github/.gitconfig) for an exhaustive list.
 
 ## Contributing Code
 
-[Husky][5] is used to locally enforce coding and commit message standards, as well as run tests pre-push.
+[Husky][] is used to locally enforce coding and commit message standards, as well as run tests pre-push.
 
 Any code merged into the [trunk](#branching-model) must confront the following criteria:
 
@@ -133,7 +133,8 @@ Any code merged into the [trunk](#branching-model) must confront the following c
 
 ### Branching Model
 
-This project follows a [Trunk Based Development][6] workflow, specifically the [short-lived branch style][7].
+This project follows a [Trunk Based Development][tbd] workflow, specifically the [short-lived branch
+style][tbd-short-lived-feature-branches].
 
 - Trunk Branch: `main`
 - Short-Lived Branches: `feat/*`, `hotfix/*`, `release/*`
@@ -156,7 +157,8 @@ When creating a new branch, the name should match the following format:
 
 ### Commit Messages
 
-This project follows [Conventional Commit][8] standards and uses [commitlint][9] to enforce those standards.
+This project follows [Conventional Commit][conventionalcommits] standards
+and uses [commitlint][] to enforce those standards.
 
 This means every commit must conform to the following format:
 
@@ -168,13 +170,13 @@ This means every commit must conform to the following format:
  │     │      │
  │     │      └─⫸ optional breaking change flag
  │     │
- │     └─⫸ see .commitlintrc.cts
+ │     └─⫸ see .commitlintrc.ts
  │
  └─⫸ build|ci|chore|docs|feat|fix|perf|refactor|revert|style|test|wip
 
 [body]
 
-[BREAKING CHANGE: <change>]
+[BREAKING-CHANGE: <change>]
 
 [footer(s)]
 ```
@@ -192,50 +194,56 @@ This means every commit must conform to the following format:
 - `revert`: Revert past changes
 - `style`: Changes that do not affect the meaning of the code
 - `test`: Change that impact the test suite
-- `wip`: Working on changes, but you need to go to bed :wink:
+- `wip`: Working on changes, but you need to go to bed \:wink:
 
 e.g:
 
 - `build(deps-dev): bump cspell from 6.7.0 to 6.8.0`
 - `perf: lighten initial load`
 
-See [`.commitlintrc.cts`](.commitlintrc.cts) to view all commit guidelines.
+See [`.commitlintrc.ts`](.commitlintrc.ts) to view all commit guidelines.
 
 ### Code Style
 
-[dprint][10] is used to format code and [ESLint][11] to lint files.
+[dprint][] is used to format code and [ESLint][] to lint files.
 
 - [`.dprint.jsonc`](.dprint.jsonc)
-- [`.eslintignore`](.eslintignore)
-- [`.eslintrc.base.cjs`](.eslintrc.base.cjs)
-- [`.eslintrc.cjs`](.eslintrc.cjs)
+- [`eslint.config.mjs`](eslint.config.mjs)
 
 ### Making Changes
 
-Source code is located in [`src`](src) directory.
+This repository is formatted as a monorepo.
+
+The source code for each package is located in its `src` directory.
 
 ### Documentation
 
-- JavaScript & TypeScript: [JSDoc][12]; linted with [`eslint-plugin-jsdoc`][13]
+- JavaScript & TypeScript: [JSDoc][]; linted with [`eslint-plugin-jsdoc`][eslint-plugin-jsdoc]
 
 Before making a pull request, be sure your code is well documented, as it will be part of your code review.
 
 ### Testing
 
-This project uses [Vitest][14] to run tests.
+This project uses [Vitest][] to run tests.
 
 [Husky](#contributing-code) is configured to run tests against changed files.
 
-Be sure to use [`it.skip`][15] or [`it.todo`][16] where appropriate.
+Be sure to use [`it.skip`][vitest-test-skip] or [`it.todo`][vitest-test-todo] where appropriate.
 
 #### Running Tests
 
 - `yarn test`
+- `yarn test:reports`
+- `yarn test:ui`
 - `yarn test:cov`
+- `yarn test:cov:reports`
+- `yarn test:cov:ui`
+- `yarn typecheck`
+- `yarn typecheck:ui`
 
 #### Code Coverage
 
-Code coverage is reported using [Codecov][17].
+Code coverage is reported using [Codecov][].
 
 To manually upload coverage reports:
 
@@ -249,15 +257,15 @@ To manually upload coverage reports:
    exec $SHELL
    ```
 
-4. Install [Codecov Uploader][18]
+4. Install [Codecov Uploader][codecov-uploader]
 
 5. Run `yarn codecov`
 
 ### Getting Help
 
-If you need help, make note of any issues in their respective files in the form of a [JSDoc comment][12]. If you need
-help with a test, don't forget to use [`it.skip`][15] and/or [`it.todo`][16]. Afterwards, [start a discussion in the Q&A
-category][19].
+If you need help, make note of any issues in their respective files in the form of a [JSDoc comment][jsdoc]. If you need
+help with a test, don't forget to use [`it.skip`][vitest-test-skip] and/or [`it.todo`][vitest-test-todo]. Afterwards,
+[start a discussion in the Q\&A category][qa].
 
 ## Labels
 
@@ -279,9 +287,9 @@ If you haven't found a related open issue, or feel that a closed issue should be
 A well-written issue
 
 - contains a well-written summary of the bug, feature, or improvement
-- contains a [minimal, reproducible example][20] (if applicable)
+- contains a [minimal, reproducible example][mre] (if applicable)
 - includes links to related articles and documentation (if any)
-- includes an emoji in the title :wink:
+- includes an emoji in the title \:wink:
 
 ## Pull Requests
 
@@ -330,7 +338,7 @@ When squashing, be sure to follow [commit message standards](#commit-messages):
  │     │      │
  │     │      └─⫸ optional breaking change flag
  │     │
- │     └─⫸ see .commitlintrc.cts
+ │     └─⫸ see .commitlintrc.ts
  │
  └─⫸ build|ci|chore|docs|feat|fix|perf|refactor|release|revert|style|test
 ```
@@ -347,7 +355,7 @@ e.g:
 > This is so invalid or malicious versions cannot be published without merging those changes into `main` first.
 
 1. Get a version bump recommendation
-   - `yarn bump:recommend`
+   - `grease bump --recommend`
 2. Create release chore commit
    - `yarn release <new-version>`
    - `yarn release major`
@@ -358,39 +366,62 @@ e.g:
    - `yarn release prepatch --preid <dist-tag>`
    - `yarn release prerelease --preid <dist-tag>`
 3. Push release chore commit
+
+<!--
 4. Monitor workflows
    1. [`release-chore`](.github/workflows/release-chore.yml)
       - create release branch
-      - bump manifest version
-      - add changelog entry for new release
+      - bump manifest versions
+      - add changelog entries for each new release
       - create release pr
    2. [`release`](.github/workflows/release.yml)
-      - create and push new tag
-      - create and publish github release
-      - ensure all relevant issues are closed
+      - create and push new tags
+      - create and publish github releases
    3. [`publish`](.github/workflows/publish.yml)
-      - publish package to [github package registry][21]
-      - publish package to [npm][22]
+      - publish package to [github package registry][gpr]
+      - publish packages to [npm][]
+-->
 
-[1]: https://brew.sh
-[2]: https://docs.github.com/authentication/managing-commit-signature-verification/about-commit-signature-verification#gpg-commit-signature-verification
-[3]: https://yarnpkg.com/getting-started
-[4]: https://github.com/ohmyzsh/ohmyzsh
-[5]: https://github.com/typicode/husky
-[6]: https://trunkbaseddevelopment.com
-[7]: https://trunkbaseddevelopment.com/styles/#short-lived-feature-branches
-[8]: https://conventionalcommits.org
-[9]: https://github.com/conventional-changelog/commitlint
-[10]: https://dprint.dev/
-[11]: https://eslint.org
-[12]: https://jsdoc.app
-[13]: https://github.com/gajus/eslint-plugin-jsdoc
-[14]: https://vitest.dev
-[15]: https://vitest.dev/api/#test-skip
-[16]: https://vitest.dev/api/#test-todo
-[17]: https://codecov.io
-[18]: https://docs.codecov.com/docs/codecov-uploader
-[19]: https://github.com/flex-development/grease/discussions/new?category=q-a
-[20]: https://stackoverflow.com/help/minimal-reproducible-example
-[21]: https://github.com/features/packages
-[22]: https://npmjs.com
+[codecov-uploader]: https://docs.codecov.com/docs/codecov-uploader
+
+[codecov]: https://codecov.io
+
+[commitlint]: https://github.com/conventional-changelog/commitlint
+
+[conventionalcommits]: https://conventionalcommits.org
+
+[dprint]: https://dprint.dev
+
+[eslint-plugin-jsdoc]: https://github.com/gajus/eslint-plugin-jsdoc
+
+[eslint]: https://eslint.org
+
+[gpg-commit-signature-verification]: https://docs.github.com/authentication/managing-commit-signature-verification/about-commit-signature-verification#gpg-commit-signature-verification
+
+<!-- [gpr]: https://github.com/features/packages -->
+
+[homebrew]: https://brew.sh
+
+[husky]: https://github.com/typicode/husky
+
+[jsdoc]: https://jsdoc.app
+
+[mre]: https://stackoverflow.com/help/minimal-reproducible-example
+
+<!-- [npm]: https://npmjs.com -->
+
+[ohmyzsh]: https://github.com/ohmyzsh/ohmyzsh
+
+[qa]: https://github.com/flex-development/grease/discussions/new?category=q-a
+
+[tbd-short-lived-feature-branches]: https://trunkbaseddevelopment.com/styles/#short-lived-feature-branches
+
+[tbd]: https://trunkbaseddevelopment.com
+
+[vitest-test-skip]: https://vitest.dev/api/#test-skip
+
+[vitest-test-todo]: https://vitest.dev/api/#test-todo
+
+[vitest]: https://vitest.dev
+
+[yarn]: https://yarnpkg.com/getting-started

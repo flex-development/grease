@@ -4,7 +4,6 @@
 #
 # References:
 #
-# - https://cli.github.com/manual/gh_auth_status
 # - https://cli.github.com/manual/gh_pr_merge
 # - https://docs.github.com/actions/learn-github-actions/contexts
 # - https://docs.github.com/actions/learn-github-actions/expressions
@@ -19,10 +18,16 @@
 
 ---
 name: auto-merge
-on: pull_request
+on:
+  pull_request:
+    types:
+      - opened
+      - ready_for_review
+      - reopened
+      - synchronize
 jobs:
   auto-merge:
-    if: github.event.pull_request.auto_merge == null && !github.event.pull_request.draft
+    if: ${{ !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
     steps:
       - id: debug
@@ -30,23 +35,19 @@ jobs:
         uses: hmarr/debug-action@v3.0.0
       - id: bot-token
         name: Get bot token
-        uses: actions/create-github-app-token@v1.10.0
+        uses: actions/create-github-app-token@v2.2.1
         with:
           app-id: ${{ secrets.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_PRIVATE_KEY }}
-      - id: github-token
-        name: Set env.GITHUB_TOKEN
-        run: echo "GITHUB_TOKEN=${{ steps.bot-token.outputs.token }}" >>$GITHUB_ENV
       - id: checkout
         name: Checkout ${{ github.head_ref }}
-        uses: actions/checkout@v4.1.5
+        uses: actions/checkout@v6.0.1
         with:
           persist-credentials: false
           ref: ${{ github.head_ref }}
           token: ${{ steps.bot-token.outputs.token }}
-      - id: gh-auth
-        name: Check gh authentication state
-        run: gh auth status
       - id: enable
         name: Enable auto-merge
+        env:
+          GITHUB_TOKEN: ${{ steps.bot-token.outputs.token }}
         run: gh pr merge ${{ github.event.number }} --auto --squash

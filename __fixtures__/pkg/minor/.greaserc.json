@@ -1,6 +1,0 @@
-{
-  "$schema": "../../../grease.schema.json",
-  "cwd": "__fixtures__/pkg/minor",
-  "level": "debug",
-  "tagprefix": "pkg-minor@"
-}

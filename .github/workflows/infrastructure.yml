@@ -18,7 +18,7 @@
 # - https://docs.github.com/webhooks-and-events/webhooks/webhook-events-and-payloads#workflow_dispatch
 # - https://github.com/actions/checkout
 # - https://github.com/actions/create-github-app-token
-# - https://github.com/flex-development/rice-action
+# - https://github.com/flex-development/repostructure-action
 # - https://github.com/hmarr/debug-action
 
 ---
@@ -45,19 +45,19 @@ jobs:
         uses: hmarr/debug-action@v3.0.0
       - id: bot-token
         name: Get bot token
-        uses: actions/create-github-app-token@v1.10.0
+        uses: actions/create-github-app-token@v2.2.1
         with:
           app-id: ${{ secrets.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_PRIVATE_KEY }}
       - id: checkout
         name: Checkout ${{ github.ref_name }}@${{ github.sha }}
-        uses: actions/checkout@v4.1.5
+        uses: actions/checkout@v6.0.1
         with:
           persist-credentials: false
           ref: ${{ github.sha }}
           token: ${{ steps.bot-token.outputs.token }}
       - id: update
         name: Update repository infrastructure
-        uses: flex-development/rice-action@1.0.0
+        uses: flex-development/repostructure-action@1.0.0
         with:
           token: ${{ steps.bot-token.outputs.token }}

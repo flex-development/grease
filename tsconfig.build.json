@@ -1,15 +1,21 @@
 {
   "compilerOptions": {
-    "declaration": true,
-    "lib": ["dom", "es2022"],
+    "allowImportingTsExtensions": false,
+    "allowJs": false,
+    "checkJs": false,
+    "customConditions": ["grease"],
+    "declarationMap": false,
     "noEmitOnError": true,
-    "skipLibCheck": false,
-    "target": "es2022"
+    "sourceMap": false,
+    "target": "es2024"
   },
-  "exclude": ["**/__mocks__", "**/__tests__"],
+  "exclude": ["**/__mocks__/**", "**/__tests__/**"],
   "extends": "./tsconfig.json",
-  "files": [
-    "./typings/class-validator/esm2015/metadata/ValidationMetadata.d.ts"
-  ],
-  "include": ["./dist/*", "./src/*"]
+  "files": [],
+  "include": ["dist/**/*", "src/**/**.mts"],
+  "references": [
+    {
+      "path": "packages/grease/tsconfig.build.json"
+    }
+  ]
 }

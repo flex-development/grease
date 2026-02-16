@@ -2,10 +2,10 @@
   "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
   "allowCompoundWords": true,
   "caseSensitive": false,
-  "dictionaries": ["@flex-development/grease"],
+  "dictionaries": ["grease"],
   "dictionaryDefinitions": [
     {
-      "name": "@flex-development/grease",
+      "name": "grease",
       "path": "./.dictionary.txt"
     }
   ],
@@ -13,32 +13,25 @@
   "failFast": false,
   "flagWords": [],
   "ignorePaths": [
-    "**/*.log",
     "**/*.patch",
     "**/*.snap",
+    "**/*.wasm",
     "**/.*ignore",
     "**/.gitconfig",
     "**/CHANGELOG.md",
     "**/LICENSE.md",
     "**/RELEASE_NOTES.md",
-    "**/__fixtures__/git/**/*.txt",
-    "**/scratch.*",
     ".cspell.json",
     ".dictionary.txt",
     ".git/",
     ".husky/_/",
     ".vscode/settings.json",
     ".yarn/",
-    "dist/",
     "patches/",
     "yarn.lock"
   ],
-  "ignoreRegExpList": [
-    "/@flex-development\\/.*/",
-    "/from\\s+(['\"]).*\\1/",
-    "import\\(.*\\)"
-  ],
-  "ignoreWords": [],
+  "ignoreRegExpList": [],
+  "ignoreWords": ["docast", "fldv"],
   "language": "en-US",
   "patterns": [],
   "readonly": true,

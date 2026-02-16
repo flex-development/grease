@@ -1,0 +1,71 @@
+{
+  "name": "@flex-development/grease",
+  "description": "Release workflow tools",
+  "version": "3.0.0-alpha.9",
+  "keywords": [
+    "bump",
+    "changelog",
+    "cli",
+    "commit",
+    "commit-analyzer",
+    "conventional-changelog",
+    "conventional-commits",
+    "conventionalcommits",
+    "git",
+    "github",
+    "gitlab",
+    "node",
+    "nodejs",
+    "release",
+    "semver",
+    "tag",
+    "typescript",
+    "version"
+  ],
+  "license": "BSD-3-Clause",
+  "homepage": "https://github.com/flex-development/grease/tree/main/packages/flex-development/grease",
+  "repository": {
+    "directory": "packages/grease",
+    "type": "git",
+    "url": "git+https://github.com/flex-development/grease.git"
+  },
+  "bugs": "https://github.com/flex-development/grease/issues",
+  "author": {
+    "name": "Lexus Drumgold",
+    "url": "https://github.com/unicornware"
+  },
+  "publishConfig": {
+    "access": "public",
+    "diff-dst-prefix": "grease",
+    "diff-src-prefix": "grease",
+    "directory": "./",
+    "executableFiles": [],
+    "node-options": null,
+    "pack-destination": ".",
+    "parseable": true,
+    "prefer-dedupe": true,
+    "provenance": true,
+    "tag-version-prefix": "grease"
+  },
+  "type": "module",
+  "files": [
+    "CHANGELOG.md",
+    "LICENSE.md",
+    "README.md",
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "grease": "./src/index.mts",
+      "default": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "dependencies": {
+    "@flex-development/grease-cli": "workspace:*",
+    "@flex-development/grease-util-config": "workspace:*"
+  },
+  "sideEffects": false
+}

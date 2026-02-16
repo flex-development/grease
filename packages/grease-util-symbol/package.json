@@ -1,0 +1,57 @@
+{
+  "name": "@flex-development/grease-util-symbol",
+  "description": "",
+  "version": "0.0.0",
+  "keywords": [
+    "grease",
+    "symbol",
+    "typescript",
+    "util",
+    "utility"
+  ],
+  "license": "BSD-3-Clause",
+  "homepage": "https://github.com/flex-development/grease/tree/main/packages/flex-development/grease-util-symbol",
+  "repository": {
+    "directory": "packages/grease-util-symbol",
+    "type": "git",
+    "url": "git+https://github.com/flex-development/grease.git"
+  },
+  "bugs": "https://github.com/flex-development/grease/issues",
+  "author": {
+    "name": "Lexus Drumgold",
+    "url": "https://github.com/unicornware"
+  },
+  "publishConfig": {
+    "access": "public",
+    "diff-dst-prefix": "grease-util-symbol",
+    "diff-src-prefix": "grease-util-symbol",
+    "directory": "./",
+    "executableFiles": [],
+    "node-options": null,
+    "pack-destination": ".",
+    "parseable": true,
+    "prefer-dedupe": true,
+    "provenance": true,
+    "tag-version-prefix": "grease-util-symbol"
+  },
+  "type": "module",
+  "files": [
+    "CHANGELOG.md",
+    "LICENSE.md",
+    "README.md",
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "grease": "./src/index.mts",
+      "default": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "imports": {
+    "#lib/*": "./src/*.mts"
+  },
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "sideEffects": false
+}

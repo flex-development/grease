@@ -1,0 +1,67 @@
+{
+  "name": "@flex-development/grease-util-config",
+  "description": "",
+  "version": "0.0.0",
+  "keywords": [
+    "config",
+    "grease",
+    "typescript",
+    "util",
+    "utility"
+  ],
+  "license": "BSD-3-Clause",
+  "homepage": "https://github.com/flex-development/grease/tree/main/packages/flex-development/grease-util-config",
+  "repository": {
+    "directory": "packages/grease-util-config",
+    "type": "git",
+    "url": "git+https://github.com/flex-development/grease.git"
+  },
+  "bugs": "https://github.com/flex-development/grease/issues",
+  "author": {
+    "name": "Lexus Drumgold",
+    "url": "https://github.com/unicornware"
+  },
+  "publishConfig": {
+    "access": "public",
+    "diff-dst-prefix": "grease-util-config",
+    "diff-src-prefix": "grease-util-config",
+    "directory": "./",
+    "executableFiles": [],
+    "node-options": null,
+    "pack-destination": ".",
+    "parseable": true,
+    "prefer-dedupe": true,
+    "provenance": true,
+    "tag-version-prefix": "grease-util-config"
+  },
+  "type": "module",
+  "files": [
+    "CHANGELOG.md",
+    "LICENSE.md",
+    "README.md",
+    "dist",
+    "grease.schema.json"
+  ],
+  "exports": {
+    ".": {
+      "grease": "./src/index.mts",
+      "default": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "imports": {
+    "#fixtures/*": "./__fixtures__/*.mts",
+    "#lib/*": {
+      "grease": "./src/lib/*.mts",
+      "default": "./dist/lib/*.mjs"
+    },
+    "#tests/*": "./__tests__/*.mts"
+  },
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "dependencies": {
+    "@flex-development/grease-util-types": "workspace:*",
+    "@flex-development/mlly": "1.0.0-beta.6"
+  },
+  "sideEffects": false
+}

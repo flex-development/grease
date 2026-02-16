@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": false,
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "extends": "../../tsconfig.build.json",
+  "include": ["src/**/**.mts"],
+  "references": [
+    {
+      "path": "../grease-cli/tsconfig.build.json"
+    },
+    {
+      "path": "../grease-util-config/tsconfig.build.json"
+    }
+  ]
+}

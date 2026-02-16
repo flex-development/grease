@@ -1,0 +1,59 @@
+{
+  "name": "@flex-development/grease-util-types",
+  "description": "grease utility types",
+  "version": "0.0.0",
+  "keywords": [
+    "grease",
+    "types",
+    "typescript",
+    "util",
+    "utility"
+  ],
+  "license": "BSD-3-Clause",
+  "homepage": "https://github.com/flex-development/grease/tree/main/packages/grease-util-types",
+  "repository": {
+    "directory": "packages/grease-util-types",
+    "type": "git",
+    "url": "git+https://github.com/flex-development/grease.git"
+  },
+  "bugs": "https://github.com/flex-development/grease/issues",
+  "author": {
+    "name": "Lexus Drumgold",
+    "url": "https://github.com/unicornware"
+  },
+  "publishConfig": {
+    "access": "public",
+    "diff-dst-prefix": "grease-util-types",
+    "diff-src-prefix": "grease-util-types",
+    "directory": "./",
+    "executableFiles": [],
+    "node-options": null,
+    "pack-destination": ".",
+    "parseable": true,
+    "prefer-dedupe": true,
+    "provenance": true,
+    "tag-version-prefix": "grease-util-types"
+  },
+  "type": "module",
+  "files": [
+    "CHANGELOG.md",
+    "LICENSE.md",
+    "README.md",
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "grease": "./src/index.mts",
+      "default": "./dist/index.d.mts"
+    },
+    "./package.json": "./package.json"
+  },
+  "imports": {
+    "#lib/*": "./src/*.mts"
+  },
+  "types": "./dist/index.d.mts",
+  "scripts": {
+    "post:build": "trash \"dist/*.d.mts\" !dist/index.d.mts"
+  },
+  "sideEffects": false
+}

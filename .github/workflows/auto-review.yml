@@ -20,7 +20,13 @@
 
 ---
 name: auto-review
-on: pull_request
+on:
+  pull_request:
+    types:
+      - opened
+      - ready_for_review
+      - reopened
+      - synchronize
 concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -37,7 +43,7 @@ jobs:
         uses: hmarr/debug-action@v3.0.0
       - id: bot-token
         name: Get bot token
-        uses: actions/create-github-app-token@v1.10.0
+        uses: actions/create-github-app-token@v2.2.1
         with:
           app-id: ${{ secrets.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_PRIVATE_KEY }}
@@ -46,7 +52,8 @@ jobs:
         run: |
           GITHUB_TOKEN=
 
-          if [[ $GITHUB_ACTOR == 'flex-development[bot]' ]]; then
+          if [[ $GITHUB_ACTOR == '${{ vars.BOT_NAME }}' ]]; then
+            # bots cannot approve their own pull request.
             GITHUB_TOKEN=${{ secrets.GH_REPO_TOKEN }}
           else
             GITHUB_TOKEN=${{ steps.bot-token.outputs.token }}
@@ -58,14 +65,14 @@ jobs:
         run: gh auth status
       - id: checkout
         name: Checkout ${{ github.head_ref }}
-        uses: actions/checkout@v4.1.5
+        uses: actions/checkout@v6.0.1
         with:
           persist-credentials: false
           ref: ${{ github.head_ref }}
           token: ${{ steps.bot-token.outputs.token }}
       - id: status-checks
         name: Wait for status checks to complete
-        uses: jchen1/wait-for-green@v1.0.8
+        uses: jchen1/wait-for-green@v2.0.0
         with:
           check_interval: 45
           commit: ${{ github.head_ref }}

@@ -6,11 +6,6 @@
 
 ---
 version: 2
-registries:
-  github:
-    token: ${{ secrets.GH_REGISTRY_TOKEN }}
-    type: npm-registry
-    url: https://npm.pkg.github.com
 updates:
   - package-ecosystem: github-actions
     commit-message:
@@ -31,34 +26,19 @@ updates:
       commitlint:
         patterns:
           - '@commitlint/*'
-      dependencies:
-        dependency-type: production
-      eslint:
-        patterns:
-          - '@types/eslint'
-          - eslint
       flex-development:
-        dependency-type: development
         patterns:
           - '@flex-development/*'
-      nestjs:
-        dependency-type: development
+      remark:
         patterns:
-          - '@nestjs/*'
-          - rxjs
-      typescript-eslint:
-        patterns:
-          - '@typescript-eslint/*'
+          - 'remark-*'
+          - remark
       vitest:
         patterns:
           - '@vitest/*'
-          - vitest*
-    ignore:
-      - dependency-name: eslint-plugin-import
+          - vitest
     labels:
       - scope:dependencies
       - type:build
-    registries:
-      - github
     schedule:
       interval: daily

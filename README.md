@@ -1,60 +1,95 @@
-# :rocket: grease
+# \:rocket: grease
 
-[![github release](https://img.shields.io/github/v/release/flex-development/grease.svg?include_prereleases&sort=semver)](https://github.com/flex-development/grease/releases/latest)
-[![npm](https://img.shields.io/npm/v/@flex-development/grease.svg)](https://npmjs.com/package/@flex-development/grease)
+[![github release](https://img.shields.io/github/v/release/flex-development/grease.svg?include_prereleases\&sort=semver)](https://github.com/flex-development/grease/releases/latest)
+[![codecov](https://codecov.io/github/flex-development/grease/graph/badge.svg?token=1KBBYBINOA)](https://codecov.io/github/flex-development/grease)
 [![module type: esm](https://img.shields.io/badge/module%20type-esm-brightgreen)](https://github.com/voxpelli/badges-cjs-esm)
-[![license](https://img.shields.io/github/license/flex-development/grease.svg)](LICENSE.md)
-[![conventional commits](https://img.shields.io/badge/-conventional%20commits-fe5196?logo=conventional-commits&logoColor=ffffff)](https://conventionalcommits.org/)
-[![typescript](https://img.shields.io/badge/-typescript-3178c6?logo=typescript&logoColor=ffffff)](https://typescriptlang.org/)
-[![vitest](https://img.shields.io/badge/-vitest-6e9f18?style=flat&logo=vitest&logoColor=ffffff)](https://vitest.dev/)
-[![yarn](https://img.shields.io/badge/-yarn-2c8ebb?style=flat&logo=yarn&logoColor=ffffff)](https://yarnpkg.com/)
+[![conventional commits](https://img.shields.io/badge/-conventional%20commits-fe5196?logo=conventional-commits\&logoColor=ffffff)](https://conventionalcommits.org/)
+[![typescript](https://img.shields.io/badge/-typescript-3178c6?logo=typescript\&logoColor=ffffff)](https://typescriptlang.org/)
+[![vitest](https://img.shields.io/badge/-vitest-6e9f18?style=flat\&logo=vitest\&logoColor=ffffff)](https://vitest.dev/)
+[![yarn](https://img.shields.io/badge/-yarn-2c8ebb?style=flat\&logo=yarn\&logoColor=ffffff)](https://yarnpkg.com/)
 
-Release workflow tool for Node.js and CLI environments
+a release workflow tool
 
 ## Contents
 
 - [What is this?](#what-is-this)
+- [When should I use this?](#when-should-i-use-this)
 - [Install](#install)
 - [Use](#use)
-- [Types](#types)
-- [Contribute](#contribute)
+- [Architecture](#architecture)
+- [Project](#project)
+  - [Version](#version)
+  - [Contribute](#contribute)
+  - [Sponsor](#sponsor)
 
 ## What is this?
 
-**TODO**: package overview
+**TODO**: what is this?
+
+## When should I use this?
+
+**TODO**: when should I use this?
 
 ## Install
 
-This package is [ESM only][1].
+This package is [ESM only][esm].
+
+In Node.js (version 20+) with [yarn][]:
 
 ```sh
-yarn add -D @flex-development/grease
-```
-
-From Git:
-
-```sh
-yarn add -D @flex-development/grease@flex-development/grease
+yarn add @flex-development/grease
 ```
 
 <blockquote>
   <small>
-    See <a href='https://yarnpkg.com/protocol/git'>Git Protocol | Yarn</a>
-    &nbsp;for details on requesting a specific branch, commit, or tag.
+    See <a href='https://yarnpkg.com/protocol/git'>Git - Protocols | Yarn</a>
+    &nbsp;for details regarding installing from Git.
   </small>
 </blockquote>
 
+In Deno with [`esm.sh`][esmsh]:
+
+```ts
+import { /* … */ } from 'https://esm.sh/@flex-development/grease'
+```
+
+In browsers with [`esm.sh`][esmsh]:
+
+```html
+<script type="module">
+  import { /* … */ } from 'https://esm.sh/@flex-development/grease'
+</script>
+```
+
 ## Use
 
-**TODO**: usage docs
+**TODO**: use
 
-## Types
+## Architecture
 
-This package is fully typed with [TypeScript][2].
+**TODO**: architecture
 
-## Contribute
+## Project
+
+### Version
+
+grease adheres to [semver][].
+
+### Contribute
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
-[1]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
-[2]: https://www.typescriptlang.org
+This project has a [code of conduct](./CODE_OF_CONDUCT.md).
+By interacting with this repository, organization, or community you agree to abide by its terms.
+
+### Sponsor
+
+Consider sponsoring to support maintenance, tests, and long-term stability!
+
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[esmsh]: https://esm.sh
+
+[semver]: https://semver.org
+
+[yarn]: https://yarnpkg.com

@@ -1,6 +1,6 @@
-# REPOSITORY INFRASTRUCTURE SETTINGS
+# REPOSITORY INFRASTRUCTURE
+# https://github.com/flex-development/repostructure-action
 ---
-# https://docs.github.com/rest/branches/branch-protection#update-branch-protection
 branches:
   - name: main
     protection:
@@ -22,52 +22,39 @@ branches:
       required_status_checks:
         checks:
           - context: add-to-project
+          - context: artifacts (grease)
+          - context: artifacts (grease-cli)
+          - context: artifacts (grease-util-config)
+          - context: artifacts (grease-util-symbol)
+          - context: artifacts (grease-util-types)
           - context: auto-merge
           - context: auto-review
-          - context: build
-          - context: changelog
           - context: codecov/changes
-            app_id: 254
           - context: codecov/patch
-            app_id: 254
           - context: codecov/project
-            app_id: 254
-          - context: codecov/project/bump
-            app_id: 254
-          - context: codecov/project/changelog
-            app_id: 254
-          - context: codecov/project/commands
-            app_id: 254
-          - context: codecov/project/decorators
-            app_id: 254
-          - context: codecov/project/git
-            app_id: 254
-          - context: codecov/project/models
-            app_id: 254
-          - context: codecov/project/options
-            app_id: 254
-          - context: codecov/project/providers
-            app_id: 254
+          - context: codecov/project/grease
+          - context: codecov/project/grease-cli
+          - context: codecov/project/grease-util-config
+          - context: codecov/project/grease-util-symbol
           - context: commitlint
           - context: dependabot-dedupe
           - context: format
-          - context: gitguardian
           - context: lint
           - context: spelling
-          - context: test (18)
-          - context: test (19)
+          - context: test (24)
+          - context: test (23)
+          - context: test (22)
+          - context: test (21)
           - context: test (20)
-          - context: typescript (5.1.6)
-          - context: typescript (5.2.2)
-          - context: typescript (latest)
+          - context: test-bun (canary)
+          - context: test-bun (latest)
+          - context: typescript
         strict: true
       restrictions: null
-# https://docs.github.com/rest/deployments/environments#create-or-update-an-environment
 environments:
   - environment_name: gpr
   - environment_name: npm
   - environment_name: release
-# https://docs.github.com/rest/issues/labels#create-a-label
 labels:
   - name: flag:breaking-change
     description: contains changes that require major version bump
@@ -84,6 +71,21 @@ labels:
   - name: flag:needs-refactor
     description: code improvements required before being merged
     color: fbca04
+  - name: package:grease
+    description: '@flex-development/grease'
+    color: c6cde1
+  - name: package:grease-cli
+    description: '@flex-development/grease-cli'
+    color: c6cde1
+  - name: package:grease-util-config
+    description: '@flex-development/grease-util-config'
+    color: c6cde1
+  - name: package:grease-util-symbol
+    description: '@flex-development/grease-util-symbol'
+    color: c6cde1
+  - name: package:grease-util-types
+    description: '@flex-development/grease-util-types'
+    color: c6cde1
   - name: scope:bump
     description: version bumping
     color: 74cefc
@@ -99,14 +101,11 @@ labels:
   - name: scope:dependencies
     description: dependency updates
     color: 74cefc
-  - name: scope:esm
-    description: es modules
-    color: 74cefc
-  - name: scope:git
-    description: git integration
-    color: 74cefc
   - name: scope:install
     description: package install
+    color: 74cefc
+  - name: scope:internal
+    description: internal-only api
     color: 74cefc
   - name: scope:patches
     description: patches
@@ -114,17 +113,11 @@ labels:
   - name: scope:release
     description: package release
     color: 74cefc
-  - name: scope:shell
-    description: shell integration
-    color: 74cefc
   - name: scope:tests
     description: testing
     color: 74cefc
   - name: scope:ts
     description: typescript support
-    color: 74cefc
-  - name: scope:validation
-    description: validation logic
     color: 74cefc
   - name: status:awaiting-answers
     description: needs clarification or more information from author
@@ -180,11 +173,17 @@ labels:
   - name: type:docs
     description: documentation improvements
     color: 0052cc
+  - name: type:bug
+    description: bug reports
+    color: 0052cc
+  - name: type:epic
+    description: epics
+    color: 0052cc
   - name: type:feat
-    description: new features and improvements
+    description: new features
     color: 0052cc
   - name: type:fix
-    description: bug reports and fixes
+    description: bug fixes
     color: 0052cc
   - name: type:perf
     description: performance updates
@@ -195,10 +194,12 @@ labels:
   - name: type:refactor
     description: code improvements
     color: 0052cc
+  - name: type:story
+    description: user stories
+    color: 0052cc
   - name: type:task
     description: project tasks
     color: 0052cc
-# https://docs.github.com/rest/repos/repos#update-a-repository
 repository:
   allow_auto_merge: true
   allow_merge_commit: false
@@ -209,18 +210,13 @@ repository:
   automated_security_fixes: true
   default_branch: main
   delete_branch_on_merge: true
-  description: 🚀 Release workflow tool for Node.js and CLI environments
+  description: 🚀 release workflow tools
   has_issues: true
   has_projects: true
   has_wiki: false
   homepage: https://github.com/flex-development/grease
   is_template: false
   private: false
-  security_and_analysis:
-    secret_scanning:
-      status: enabled
-    secret_scanning_push_protection:
-      status: disabled
   squash_merge_commit_message: BLANK
   squash_merge_commit_title: PR_TITLE
   topics:
@@ -244,3 +240,4 @@ repository:
   visibility: public
   vulnerability_alerts: true
   web_commit_signoff_required: true
+teams: []

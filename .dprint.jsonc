@@ -1,38 +1,31 @@
 {
   "$schema": "https://dprint.dev/schemas/v0.json",
   "excludes": [
-    "!**/__fixtures__/**/dist/",
-    "!**/__fixtures__/**/node_modules/",
-    "!**/typings/**/dist/",
+    "!*.scratch.*",
+    "!scratch.*",
     "**/*.patch",
     "**/*.snap",
-    "**/*config.*.timestamp*",
-    "**/.temp/",
-    "**/.vercel/",
-    "**/__fixtures__/git/**/*.txt",
-    "**/__tests__/report.json",
-    "**/coverage/",
-    "**/dist/",
-    "**/node_modules",
-    "**/tsconfig*temp.json",
+    "**/CHANGELOG.md",
+    "**/LICENSE.md",
+    "**/RELEASE_NOTES.md",
     ".git/",
     ".husky/_/",
     ".yarn/",
-    "CHANGELOG.md",
-    "LICENSE.md",
-    "RELEASE_NOTES.md",
+    "node_modules/",
     "yarn.lock"
   ],
   "exec": {
     "commands": [
       {
-        "command": "node ./dprint/prettier.mjs {{file_path}}",
-        "exts": ["json5", "yaml", "yml"],
+        "cacheKeyFiles": ["package.json"],
+        "command": "node --experimental-strip-types --experimental-transform-types ./dprint/remark.mts {{file_path}}",
+        "exts": ["md", "mdx"],
         "stdin": true
       },
       {
-        "command": "node ./dprint/shfmt.mjs {{file_path}}",
-        "exts": ["sh", "txt", "zsh"],
+        "cacheKeyFiles": [".editorconfig"],
+        "command": "node --experimental-strip-types --experimental-transform-types ./dprint/shfmt.mts {{file_path}}",
+        "exts": ["sh", "zsh"],
         "fileNames": [
           ".editorconfig",
           ".env",
@@ -43,7 +36,6 @@
           ".gitattributes",
           ".gitconfig",
           ".gitignore",
-          ".markdownlintignore",
           ".npmrc",
           ".nvmrc",
           "Brewfile",
@@ -53,35 +45,25 @@
         ],
         "stdin": true
       }
-    ]
+    ],
+    "cwd": "${configDir}"
   },
-  "incremental": true,
   "indentWidth": 2,
   "json": {
     "associations": ["**/*.{jsonc,json}"],
     "array.preferSingleLine": false,
     "commentLine.forceSpaceAfterSlashes": true,
     "ignoreNodeCommentText": "dprint-ignore",
-    "object.preferSingleLine": false
+    "object.preferSingleLine": false,
+    "trailingCommas": "never"
   },
   "lineWidth": 80,
-  "markdown": {
-    "associations": ["**/*.{md,mdx}"],
-    "emphasisKind": "asterisks",
-    "ignoreDirective": "dprint-ignore",
-    "ignoreEndDirective": "dprint-ignore-end",
-    "ignoreFileDirective": "dprint-ignore-file",
-    "ignoreStartDirective": "dprint-ignore-start",
-    "lineWidth": 120,
-    "strongKind": "asterisks",
-    "textWrap": "maintain"
-  },
   "newLineKind": "lf",
   "plugins": [
-    "https://plugins.dprint.dev/typescript-0.87.1.wasm",
-    "https://plugins.dprint.dev/json-0.17.4.wasm",
-    "https://plugins.dprint.dev/markdown-0.16.0.wasm",
-    "https://plugins.dprint.dev/exec-0.4.3.json@42343548b8022c99b1d750be6b894fe6b6c7ee25f72ae9f9082226dd2e515072"
+    "https://plugins.dprint.dev/typescript-0.95.12.wasm",
+    "https://plugins.dprint.dev/json-0.21.0.wasm",
+    "https://plugins.dprint.dev/g-plane/pretty_yaml-v0.5.1.wasm",
+    "https://plugins.dprint.dev/exec-0.6.0.json@a054130d458f124f9b5c91484833828950723a5af3f8ff2bd1523bd47b83b364"
   ],
   "typescript": {
     "arrowFunction.useParentheses": "preferNone",
@@ -89,13 +71,13 @@
     "binaryExpression.operatorPosition": "sameLine",
     "binaryExpression.spaceSurroundingBitwiseAndArithmeticOperator": true,
     "bracePosition": "sameLine",
-    "commentLine.forceSpaceAfterSlashes": true,
+    "commentLine.forceSpaceAfterSlashes": false,
     "constructSignature.spaceAfterNewKeyword": true,
     "constructor.spaceBeforeParentheses": false,
     "constructorType.spaceAfterNewKeyword": true,
     "doWhileStatement.spaceAfterWhileKeyword": true,
     "enumDeclaration.memberSpacing": "maintain",
-    "exportDeclaration.forceMultiLine": false,
+    "exportDeclaration.forceMultiLine": "never",
     "exportDeclaration.forceSingleLine": false,
     "exportDeclaration.sortNamedExports": "maintain",
     "exportDeclaration.spaceSurroundingNamedExports": true,
@@ -110,15 +92,15 @@
     "ifStatement.spaceAfterIfKeyword": true,
     "ignoreFileCommentText": "dprint-ignore-file",
     "ignoreNodeCommentText": "dprint-ignore",
-    "importDeclaration.forceMultiLine": false,
+    "importDeclaration.forceMultiLine": "never",
     "importDeclaration.forceSingleLine": false,
     "importDeclaration.sortNamedImports": "maintain",
     "importDeclaration.spaceSurroundingNamedImports": true,
     "jsx.bracketPosition": "nextLine",
     "jsx.forceNewLinesSurroundingContent": false,
-    "jsx.multiLineParens": "always",
+    "jsx.multiLineParens": "prefer",
     "jsx.quoteStyle": "preferSingle",
-    "jsxExpressionContainer.spaceSurroundingExpression": true,
+    "jsxExpressionContainer.spaceSurroundingExpression": false,
     "jsxSelfClosingElement.spaceBeforeSlash": true,
     "memberExpression.linePerExpression": false,
     "method.spaceBeforeParentheses": false,
@@ -147,5 +129,20 @@
     "useBraces": "maintain",
     "whileStatement.spaceAfterWhileKeyword": true
   },
-  "useTabs": false
+  "useTabs": false,
+  "yaml": {
+    "braceSpacing": false,
+    "bracketSpacing": false,
+    "flowMap.preferSingleLine": false,
+    "flowSequence.preferSingleLine": false,
+    "formatComments": true,
+    "ignoreCommentDirective": "dprint-ignore",
+    "indentBlockSequenceInMap": true,
+    "lineBreak": "lf",
+    "printWidth": 100,
+    "quotes": "preferSingle",
+    "trailingComma": false,
+    "trimTrailingWhitespaces": true,
+    "trimTrailingZero": false
+  }
 }

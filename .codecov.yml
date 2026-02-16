@@ -4,12 +4,12 @@
 ---
 codecov:
   notify:
-    after_n_builds: 3
+    after_n_builds: 7
     wait_for_ci: true
   require_ci_to_pass: true
 
 comment:
-  after_n_builds: 3
+  after_n_builds: 7
   behavior: default
   layout: header,diff,flags,components,tree,footer
   require_base: false
@@ -24,46 +24,22 @@ component_management:
       - type: project
         target: 100%
   individual_components:
-    - component_id: bump
-      name: bump
+    - component_id: grease
+      name: grease
       paths:
-        - src/subdomains/bump/**/*.ts
-    - component_id: changelog
-      name: changelog
+        - packages/grease/**/*.mts
+    - component_id: grease-cli
+      name: grease-cli
       paths:
-        - src/subdomains/changelog/**/*.ts
-    - component_id: config
-      name: config
+        - packages/grease-cli/**/*.mts
+    - component_id: grease-util-config
+      name: grease-util-config
       paths:
-        - src/subdomains/config/**/*.ts
-    - component_id: commands
-      name: commands
+        - packages/grease-util-config/**/*.mts
+    - component_id: grease-util-symbol
+      name: grease-util-symbol
       paths:
-        - src/cli/commands/*.ts
-    - component_id: decorators
-      name: decorators
-      paths:
-        - src/decorators/*.ts
-    - component_id: git
-      name: git
-      paths:
-        - src/subdomains/git/**/*.ts
-    - component_id: log
-      name: log
-      paths:
-        - src/subdomains/log/**/*.ts
-    - component_id: models
-      name: models
-      paths:
-        - src/models/*.ts
-    - component_id: options
-      name: options
-      paths:
-        - src/options/*.ts
-    - component_id: providers
-      name: providers
-      paths:
-        - src/providers/*.ts
+        - packages/grease-util-symbol/**/*.mts
 
 coverage:
   precision: 2
@@ -112,15 +88,31 @@ coverage:
         threshold: 0%
 
 flags:
+  bun-canary:
+    carryforward: false
+    paths:
+      - src/
+  bun-latest:
+    carryforward: false
+    paths:
+      - src/
+  node24:
+    carryforward: false
+    paths:
+      - src/
+  node23:
+    carryforward: false
+    paths:
+      - src/
+  node22:
+    carryforward: false
+    paths:
+      - src/
+  node21:
+    carryforward: false
+    paths:
+      - src/
   node20:
-    carryforward: false
-    paths:
-      - src/
-  node19:
-    carryforward: false
-    paths:
-      - src/
-  node18:
     carryforward: false
     paths:
       - src/
@@ -129,13 +121,13 @@ github_checks:
   annotations: true
 
 ignore:
+  - '**/*.d.mts'
   - '**/__mocks__/**'
   - '**/__tests__/**'
-  - '**/index.ts'
-  - '**/interfaces/'
-  - '**/types/'
-  - src/cli/commands/*.opts.ts
-  - src/subdomains/**/*.module.ts
+  - '**/index.mts'
+  - '**/interfaces/**'
+  - '**/types/**'
+  - '!packages/*/src/index.mts'
 
 profiling:
   critical_files_paths: []

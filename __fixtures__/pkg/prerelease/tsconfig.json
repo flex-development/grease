@@ -1,7 +1,0 @@
-{
-  "compilerOptions": {
-    "outDir": "__fixtures__/pkg/prerelease/dist",
-    "rootDir": "../../.."
-  },
-  "extends": "../../../tsconfig.json"
-}
