@@ -53,5 +53,8 @@
   },
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
+  "dependencies": {
+    "@flex-development/grease-util-types": "workspace:*"
+  },
   "sideEffects": false
 }

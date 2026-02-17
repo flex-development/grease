@@ -1,6 +1,6 @@
 /**
  * @file defineConfig
- * @module grease-util-config/defineConfig
+ * @module grease-util-config/lib/defineConfig
  */
 
 import type {

@@ -87,7 +87,7 @@ function config(this: void, env: ConfigEnv): ViteUserConfig {
       },
       passWithNoTests: true,
       projects: workspaces.flatMap((workspace, groupOrder) => {
-        return ['node' as const, 'happy-dom' as const].map(environment => {
+        return ['node' as const, 'edge-runtime' as const].map(environment => {
           /**
            * The workspace test configuration.
            *
@@ -191,7 +191,7 @@ function config(this: void, env: ConfigEnv): ViteUserConfig {
         printBasicPrototype: false,
         printFunctionName: true
       },
-      snapshotSerializers: [],
+      snapshotSerializers: [pathe.resolve('__tests__/serializers/cwd.mts')],
       unstubEnvs: true,
       unstubGlobals: true
     }

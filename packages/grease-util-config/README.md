@@ -15,7 +15,10 @@
 - [Install](#install)
 - [Use](#use)
 - [API](#api)
+  - [`defineConfig`](#defineconfig)
+  - [`readConfig`](#readconfig)
 - [Types](#types)
+  - [`ReadConfigOptions`](#readconfigoptions)
 - [Contribute](#contribute)
 
 ## What is this?
@@ -69,9 +72,17 @@ In browsers with [`esm.sh`][esmsh]:
 
 **TODO**: `defineConfig`
 
+### `readConfig`
+
+**TODO**: `readConfig`
+
 ## Types
 
 This package is fully typed with [TypeScript][].
+
+### `ReadConfigOptions`
+
+**TODO**: `ReadConfigOptions`
 
 ## Contribute
 

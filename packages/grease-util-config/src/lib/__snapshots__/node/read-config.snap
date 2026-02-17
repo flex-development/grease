@@ -1,0 +1,40 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`unit:lib/readConfig > should return resolved config ("#fixtures/grease.config") 1`] = `
+{
+  "config": {
+    "tag": {
+      "sign": true,
+    },
+  },
+  "url": file://\${process.cwd()}/packages/grease-util-config/__fixtures__/grease.config.mts,
+}
+`;
+
+exports[`unit:lib/readConfig > should return resolved config ("./packages/grease-util-config/__fixtures__/package.json") 1`] = `
+{
+  "config": {
+    "extends": "@flex-development/grease-config",
+  },
+  "url": file://\${process.cwd()}/packages/grease-util-config/__fixtures__/package.json,
+}
+`;
+
+exports[`unit:lib/readConfig > should return resolved config ("__fixtures__/empty.json") 1`] = `
+{
+  "config": {},
+  "url": file://\${process.cwd()}/__fixtures__/empty.json,
+}
+`;
+
+exports[`unit:lib/readConfig > should return resolved config ("packages/grease-util-config/__fixtures__/grease.config.json") 1`] = `
+{
+  "config": {
+    "tag": {
+      "message": "release: {tag}",
+      "sign": true,
+    },
+  },
+  "url": file://\${process.cwd()}/packages/grease-util-config/__fixtures__/grease.config.json,
+}
+`;

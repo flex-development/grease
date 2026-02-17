@@ -3,5 +3,6 @@
 exports[`e2e:grease-util-config > should expose public api 1`] = `
 [
   "defineConfig",
+  "readConfig",
 ]
 `;

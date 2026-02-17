@@ -4,10 +4,10 @@
  */
 
 import type TestSubject from '#lib/user-config'
-import type { OptionalKeys } from '@flex-development/tutils'
+import type { RequiredKeys } from '@flex-development/tutils'
 
 describe('unit-d:UserConfig', () => {
   it('should have no required keys', () => {
-    expectTypeOf<OptionalKeys<TestSubject>>().toEqualTypeOf<never>()
+    expectTypeOf<RequiredKeys<TestSubject>>().toEqualTypeOf<never>()
   })
 })

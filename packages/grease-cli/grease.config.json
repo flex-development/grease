@@ -1,6 +1,6 @@
 {
   "$schema": "../grease-util-config/grease.schema.json",
-  "extends": "../../grease.config.json",
+  "extends": "../../package.json",
   "tag": {
     "prefix": "grease-util-cli@"
   }

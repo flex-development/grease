@@ -9,6 +9,9 @@
   "include": ["src/**/**.mts"],
   "references": [
     {
+      "path": "../grease-util-symbol/tsconfig.build.json"
+    },
+    {
       "path": "../grease-util-types/tsconfig.build.json"
     }
   ]

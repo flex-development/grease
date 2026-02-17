@@ -23,6 +23,12 @@
     "#tests/*": "./__tests__/*.mts",
     "#utils/*": "./utils/*.mts"
   },
+  "grease": {
+    "tag": {
+      "message": "release: {tag}",
+      "sign": true
+    }
+  },
   "remarkConfig": {
     "plugins": [
       "@flex-development/remark-preset"
@@ -68,6 +74,7 @@
     "@arethetypeswrong/cli": "0.18.2",
     "@commitlint/cli": "20.4.1",
     "@commitlint/types": "20.4.0",
+    "@edge-runtime/vm": "5.0.0",
     "@flex-development/commitlint-config": "1.0.1",
     "@flex-development/eslint-config": "1.1.1",
     "@flex-development/pathe": "4.0.2",

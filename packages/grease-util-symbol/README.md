@@ -15,6 +15,7 @@
 - [Install](#install)
 - [Use](#use)
 - [API](#api)
+  - [`configExtensions`](#configextensions)
 - [Types](#types)
 - [Contribute](#contribute)
 
@@ -64,6 +65,10 @@ In browsers with [`esm.sh`][esmsh]:
 ## API
 
 **TODO**: api
+
+### `configExtensions`
+
+**TODO**: `configExtensions`
 
 ## Types
 

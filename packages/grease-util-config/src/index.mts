@@ -3,4 +3,5 @@
  * @module grease-util-config
  */
 
-export { default as defineConfig } from '#lib/define-config'
+export type * from '#interfaces/index'
+export * from '#lib/index'

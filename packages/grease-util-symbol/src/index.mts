@@ -3,4 +3,4 @@
  * @module grease-util-symbol
  */
 
-export {}
+export { default as configExtensions } from '#lib/config-extensions'

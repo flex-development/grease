@@ -51,17 +51,26 @@
   },
   "imports": {
     "#fixtures/*": "./__fixtures__/*.mts",
+    "#interfaces/*": "./src/interfaces/*.mts",
+    "#internal/*": {
+      "grease": "./src/internal/*.mts",
+      "default": "./dist/internal/*.mjs"
+    },
     "#lib/*": {
-      "grease": "./src/*.mts",
-      "default": "./dist/*.mjs"
+      "grease": "./src/lib/*.mts",
+      "default": "./dist/lib/*.mjs"
     },
     "#tests/*": "./__tests__/*.mts"
   },
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
   "dependencies": {
+    "@flex-development/grease-util-symbol": "workspace:*",
     "@flex-development/grease-util-types": "workspace:*",
-    "@flex-development/mlly": "1.0.0-beta.6"
+    "@flex-development/mlly": "1.0.0-beta.6",
+    "@flex-development/pathe": "4.0.2",
+    "json5": "2.2.3",
+    "strip-bom": "5.0.0"
   },
   "sideEffects": false
 }

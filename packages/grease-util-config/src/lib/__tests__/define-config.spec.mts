@@ -1,12 +1,12 @@
 /**
  * @file Unit Tests - defineConfig
- * @module grease-util-config/tests/unit/defineConfig
+ * @module grease-util-config/lib/tests/unit/defineConfig
  */
 
 import testSubject from '#lib/define-config'
 import type { UserConfigOption } from '@flex-development/grease-util-types'
 
-describe('unit:defineConfig', () => {
+describe('unit:lib/defineConfig', () => {
   it.each<[unknown?]>([
     [],
     [[]],

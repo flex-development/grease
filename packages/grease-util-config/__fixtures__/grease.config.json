@@ -1,5 +1,4 @@
 {
-  "$schema": "./packages/grease-util-config/grease.schema.json",
   "tag": {
     "message": "release: {tag}",
     "sign": true

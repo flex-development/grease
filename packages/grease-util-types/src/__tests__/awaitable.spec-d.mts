@@ -8,12 +8,13 @@ import type { UserConfig } from '@flex-development/grease-util-types'
 
 describe('unit-d:Awaitable', () => {
   type T = UserConfig | null | undefined
+  type Subject = TestSubject<T>
 
   it('should extract PromiseLike<T>', () => {
-    expectTypeOf<TestSubject<T>>().extract<PromiseLike<T>>().not.toBeNever()
+    expectTypeOf<Subject>().extract<PromiseLike<T>>().not.toBeNever()
   })
 
   it('should extract T', () => {
-    expectTypeOf<TestSubject<T>>().extract<T>().not.toBeNever()
+    expectTypeOf<Subject>().extract<T>().not.toBeNever()
   })
 })

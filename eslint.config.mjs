@@ -12,6 +12,11 @@ import fldv from '@flex-development/eslint-config'
  * @type {import('eslint').Linter.Config[]}
  * @const config
  */
-const config = [...fldv.configs.node]
+const config = [
+  ...fldv.configs.node,
+  {
+    ignores: ['__fixtures__/empty.json']
+  }
+]
 
 export default config
